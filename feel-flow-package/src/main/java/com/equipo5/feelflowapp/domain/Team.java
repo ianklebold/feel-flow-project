@@ -1,10 +1,6 @@
 package com.equipo5.feelflowapp.domain;
 
-import com.equipo5.feelflowapp.domain.users.RegularUser;
-import com.equipo5.feelflowapp.domain.users.TeamLeader;
-import jakarta.persistence.Column;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.JdbcTypeCode;
@@ -19,6 +15,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@Entity
 public class Team {
     @Id
     @GeneratedValue(generator = "UUID")
@@ -29,9 +26,14 @@ public class Team {
 
     private String name;
     private String descriptionProject;
+
+    @ManyToOne
     private EnterPrise enterPrise;
+
+    @OneToOne(cascade = CascadeType.ALL)
     private TeamLeader teamLeader;
 
     @Builder.Default
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "team")
     private List<RegularUser> regularUsers = new ArrayList<>();
 }

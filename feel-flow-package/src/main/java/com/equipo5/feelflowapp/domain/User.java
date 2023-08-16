@@ -1,4 +1,4 @@
-package com.equipo5.feelflowapp.domain.users;
+package com.equipo5.feelflowapp.domain;
 
 
 import com.equipo5.feelflowapp.domain.enumerations.teamRoles.TeamRoles;
@@ -15,7 +15,8 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Table(name = "user_model")
+@Entity(name = "user_model")
+@Inheritance(strategy = InheritanceType.JOINED)
 public class User {
     @Id
     @GeneratedValue(generator = "UUID")
