@@ -1,4 +1,4 @@
-package com.equipo5.feelflowapp.domain;
+package com.equipo5.feelflowapp.domain.users;
 
 
 import com.equipo5.feelflowapp.domain.enumerations.teamRoles.TeamRoles;

@@ -1,6 +1,6 @@
-package com.equipo5.feelflowapp.repository;
+package com.equipo5.feelflowapp.repository.users;
 
-import com.equipo5.feelflowapp.domain.User;
+import com.equipo5.feelflowapp.domain.users.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

@@ -1,5 +1,7 @@
 package com.equipo5.feelflowapp.domain;
 
+import com.equipo5.feelflowapp.domain.users.RegularUser;
+import com.equipo5.feelflowapp.domain.users.TeamLeader;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;

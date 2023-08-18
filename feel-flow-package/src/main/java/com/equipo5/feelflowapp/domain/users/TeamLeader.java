@@ -1,5 +1,6 @@
-package com.equipo5.feelflowapp.domain;
+package com.equipo5.feelflowapp.domain.users;
 
+import com.equipo5.feelflowapp.domain.Team;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.PrimaryKeyJoinColumn;
