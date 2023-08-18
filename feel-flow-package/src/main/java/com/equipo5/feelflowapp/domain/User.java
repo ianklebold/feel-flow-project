@@ -8,6 +8,7 @@ import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 
+import java.util.List;
 import java.util.UUID;
 
 @Getter
@@ -31,4 +32,11 @@ public class User {
 
     @Enumerated(EnumType.STRING)
     private TeamRoles role;
+
+    @ManyToMany(cascade = CascadeType.MERGE)
+    @JoinTable(name = "user_authority",
+    joinColumns = {@JoinColumn(name = "USER_ID",referencedColumnName = "ID")},
+    inverseJoinColumns = {@JoinColumn(name = "AUTHORITY_ID",referencedColumnName = "ID")})
+    private List<Authority> authorities;
+
 }
