@@ -6,6 +6,9 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.PrimaryKeyJoinColumn;
 import lombok.*;
 
+import java.util.List;
+import java.util.UUID;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -15,4 +18,10 @@ import lombok.*;
 public class RegularUser extends User{
     @ManyToOne
     private Team team;
+
+    @Builder
+    public RegularUser(UUID uuid, String name, String email, String password, List<Authority> authorities, Team team) {
+        super(uuid, name, email, password, authorities);
+        this.team = team;
+    }
 }

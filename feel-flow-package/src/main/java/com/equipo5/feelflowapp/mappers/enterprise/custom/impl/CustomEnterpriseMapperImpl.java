@@ -11,12 +11,9 @@ import java.util.UUID;
 public class CustomEnterpriseMapperImpl implements CustomEnterpriseMapper {
     @Override
     public EnterPrise getEnterpriseFromAdmin(AdminDTO admin) {
-
-        EnterPrise.builder()
+        return EnterPrise.builder()
                 .uuid(UUID.randomUUID())
                 .name(admin.getEnterpriseDTO().getName())
                 .build();
-
-        return null;
     }
 }

@@ -29,9 +29,6 @@ public class User {
     private String email;
     private String password;
 
-    @Enumerated(EnumType.STRING)
-    private TeamRoles role;
-
     @ManyToMany(cascade = CascadeType.MERGE)
     @JoinTable(name = "user_authority",
             joinColumns = @JoinColumn(name = "USER_ID", referencedColumnName = "uuid"),

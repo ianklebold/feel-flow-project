@@ -6,6 +6,9 @@ import jakarta.persistence.OneToOne;
 import jakarta.persistence.PrimaryKeyJoinColumn;
 import lombok.*;
 
+import java.util.List;
+import java.util.UUID;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -16,4 +19,10 @@ public class TeamLeader extends User{
 
     @OneToOne(mappedBy = "teamLeader")
     private Team team;
+
+    @Builder
+    public TeamLeader(UUID uuid, String name, String email, String password, List<Authority> authorities, Team team) {
+        super(uuid, name, email, password, authorities);
+        this.team = team;
+    }
 }

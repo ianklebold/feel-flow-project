@@ -16,6 +16,7 @@ public class Authority {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @Enumerated(EnumType.STRING)
     private TeamRoles teamRoles;
 
     @ManyToMany(mappedBy = "authorities")

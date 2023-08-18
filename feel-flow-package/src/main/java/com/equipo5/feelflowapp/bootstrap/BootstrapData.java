@@ -25,7 +25,7 @@ public class BootstrapData implements CommandLineRunner {
     }
 
     private void loadAuthorityData(){
-        if (authorityRepository.count() > 3){
+        if (authorityRepository.count() < 3){
             Authority teamLeaderAuthority = Authority.builder()
                     .teamRoles(TeamRoles.TEAM_LEADER)
                     .users(Collections.emptyList())

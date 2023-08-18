@@ -41,7 +41,6 @@ public class AdminServiceImpl implements AdminService {
 
         Optional<Authority> authority = authorityService.findAuthorityByTeamRoles(TeamRoles.ADMIN);
         authority.ifPresent(value -> admin.setAuthorities(List.of(value)));
-        admin.setAuthorities(List.of());
 
         EnterPrise enterPrise = customEnterpriseMapper.getEnterpriseFromAdmin(adminDTO);
 
