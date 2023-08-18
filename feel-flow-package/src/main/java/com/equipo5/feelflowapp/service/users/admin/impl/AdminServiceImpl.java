@@ -32,7 +32,7 @@ public class AdminServiceImpl implements AdminService {
     private final PasswordEncoder passwordEncoder;
 
     @Override
-    public Admin createAdmin(AdminDTO adminDTO) {
+    public AdminDTO createAdmin(AdminDTO adminDTO) {
 
         Admin admin = adminMapper.adminDtoToAdmin(adminDTO);
 
@@ -50,6 +50,8 @@ public class AdminServiceImpl implements AdminService {
 
         admin.setEnterPrise(enterPrise);
 
-        return adminRepository.save(admin);
+        Admin adminCreated =  adminRepository.save(admin);
+
+        return adminMapper.adminToAdminDto(adminCreated);
     }
 }

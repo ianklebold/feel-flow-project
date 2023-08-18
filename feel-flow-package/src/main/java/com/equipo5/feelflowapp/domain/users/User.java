@@ -15,7 +15,6 @@ import java.util.UUID;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 @Entity(name = "user_model")
 @Inheritance(strategy = InheritanceType.JOINED)
 public class User {
@@ -35,8 +34,8 @@ public class User {
 
     @ManyToMany(cascade = CascadeType.MERGE)
     @JoinTable(name = "user_authority",
-    joinColumns = {@JoinColumn(name = "USER_ID",referencedColumnName = "ID")},
-    inverseJoinColumns = {@JoinColumn(name = "AUTHORITY_ID",referencedColumnName = "ID")})
+            joinColumns = @JoinColumn(name = "USER_ID", referencedColumnName = "uuid"),
+            inverseJoinColumns = @JoinColumn(name = "AUTHORITY_ID", referencedColumnName = "id"))
     private List<Authority> authorities;
 
 }

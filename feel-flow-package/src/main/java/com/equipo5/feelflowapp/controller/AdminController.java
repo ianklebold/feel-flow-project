@@ -1,10 +1,11 @@
 package com.equipo5.feelflowapp.controller;
 
-import com.equipo5.feelflowapp.domain.users.Admin;
 import com.equipo5.feelflowapp.dto.users.admin.AdminDTO;
 import com.equipo5.feelflowapp.service.users.admin.AdminService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -18,15 +19,16 @@ import org.springframework.web.bind.annotation.RestController;
 public class AdminController {
 
     private final AdminService adminService;
+    public  static final String ADMIN_PATH = "/api/v1/admin";
 
     @PostMapping()
     public ResponseEntity createAdmin(@RequestBody AdminDTO admin){
 
-        Admin adminResponse = adminService.createAdmin(admin);
+        AdminDTO adminCreated = adminService.createAdmin(admin);
 
-        return null;
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Location",ADMIN_PATH+"/"+adminCreated.getUuid().toString());
+
+        return new ResponseEntity(headers, HttpStatus.CREATED);
     }
-
-
-
 }

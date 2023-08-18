@@ -10,6 +10,7 @@ import lombok.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 @Entity
 @PrimaryKeyJoinColumn(name = "admin_persona")
 public class Admin extends User{

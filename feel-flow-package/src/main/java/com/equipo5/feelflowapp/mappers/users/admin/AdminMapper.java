@@ -10,5 +10,7 @@ public interface AdminMapper {
 
     @Mapping(source = "enterpriseDTO", target = "enterPrise")
     Admin adminDtoToAdmin(AdminDTO adminDTO);
+
+    @Mapping(source = "enterPrise", target = "enterpriseDTO")
     AdminDTO adminToAdminDto(Admin admin);
 }
