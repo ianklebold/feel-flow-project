@@ -1,7 +1,7 @@
 package com.equipo5.feelflowapp.controller;
 
 import com.equipo5.feelflowapp.domain.users.Admin;
-import com.equipo5.feelflowapp.dto.AdminDTO;
+import com.equipo5.feelflowapp.dto.users.admin.AdminDTO;
 import com.equipo5.feelflowapp.service.users.admin.AdminService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

@@ -1,5 +1,6 @@
-package com.equipo5.feelflowapp.dto;
+package com.equipo5.feelflowapp.dto.users.admin;
 
+import com.equipo5.feelflowapp.dto.enterprise.EnterpriseDTO;
 import lombok.*;
 
 @Builder
@@ -11,5 +12,5 @@ public class AdminDTO {
     private String name;
     private String email;
     private String password;
-    private String enterpriseName;
+    private EnterpriseDTO enterpriseDTO;
 }
