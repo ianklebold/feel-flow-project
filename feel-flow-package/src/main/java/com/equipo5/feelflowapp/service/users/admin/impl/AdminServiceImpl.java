@@ -7,6 +7,7 @@ import com.equipo5.feelflowapp.dto.AdminDTO;
 import com.equipo5.feelflowapp.mappers.users.admin.AdminMapper;
 import com.equipo5.feelflowapp.repository.users.AuthorityRepository;
 import com.equipo5.feelflowapp.repository.users.admin.AdminRepository;
+import com.equipo5.feelflowapp.service.authority.AuthorityService;
 import com.equipo5.feelflowapp.service.users.admin.AdminService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,12 +22,9 @@ import java.util.UUID;
 @RequiredArgsConstructor
 @Service
 public class AdminServiceImpl implements AdminService {
-
     private final AdminRepository adminRepository;
-    private final AuthorityRepository authorityRepository;
-
+    private final AuthorityService authorityService;
     private final AdminMapper adminMapper;
-
     private final PasswordEncoder passwordEncoder;
 
     @Override
@@ -34,13 +32,11 @@ public class AdminServiceImpl implements AdminService {
 
         Admin admin = adminMapper.adminDtoToAdmin(adminDTO);
 
-        admin.setPassword(passwordEncoder.encode(adminDTO.getPassword()));
         admin.setUuid(UUID.randomUUID());
+        admin.setPassword(passwordEncoder.encode(adminDTO.getPassword()));
 
-        Optional<Authority> authority = authorityRepository.findAuthorityByTeamRoles(TeamRoles.ADMIN);
+        Optional<Authority> authority = authorityService.findAuthorityByTeamRoles(TeamRoles.ADMIN);
         authority.ifPresent(value -> admin.setAuthorities(List.of(value)));
-
-
         admin.setAuthorities(List.of());
 
         return adminRepository.save(admin);
