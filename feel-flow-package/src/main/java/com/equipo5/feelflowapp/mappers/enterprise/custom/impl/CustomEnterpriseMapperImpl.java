@@ -14,7 +14,7 @@ public class CustomEnterpriseMapperImpl implements CustomEnterpriseMapper {
 
         EnterPrise.builder()
                 .uuid(UUID.randomUUID())
-                .name(admin.getEnterpriseName())
+                .name(admin.getEnterpriseDTO().getName())
                 .build();
 
         return null;
