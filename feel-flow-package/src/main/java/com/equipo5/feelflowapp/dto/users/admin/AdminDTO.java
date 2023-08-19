@@ -20,6 +20,10 @@ public class AdminDTO {
     @NotNull(message = ValidationAdminMessages.VALIDATION_MESSAGE_ADMIN_NOT_NULL_NAME)
     private String name;
 
+    @NotBlank(message = ValidationAdminMessages.VALIDATION_MESSAGE_ADMIN_NOT_BLANK_SURNAME)
+    @NotNull(message = ValidationAdminMessages.VALIDATION_MESSAGE_ADMIN_NOT_NULL_SURNAME)
+    private String surname;
+
     @NotNull(message = ValidationAdminMessages.VALIDATION_MESSAGE_ADMIN_NOT_NULL_EMAIL)
     @NotBlank(message = ValidationAdminMessages.VALIDATION_MESSAGE_ADMIN_NOT_BLANK_EMAIL)
     @Email(message = ValidationAdminMessages.VALIDATION_MESSAGE_ADMIN_NOT_WELL_FORMED_EMAIL)
