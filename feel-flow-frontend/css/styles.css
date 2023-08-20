@@ -1,0 +1,41 @@
+/* Estilos generales */
+#FF-Background {
+    background-color: rgba(69, 130, 158, 0.323);
+    border-radius: 100px;
+}
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+  }
+  
+  /* Imágenes responsivas */
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+  
+  /* Formulario */
+  .card {
+    width: 100%;
+  }
+  
+  /* Tamaños de fuente relativos */
+  h1, h3 {
+    font-size: 2rem;
+  }
+  
+  /* Media Query para pantallas más pequeñas */
+  @media (max-width: 768px) {
+    .page-header {
+      padding: 30px;
+    }
+    
+    .card {
+      margin-top: 20px;
+    }
+    
+    h1, h3 {
+      font-size: 1.5rem;
+    }
+  }
