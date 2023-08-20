@@ -17,6 +17,8 @@ import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.equipo5.feelflowapp.constants.validation.security.TokenJwtConfig.*;
+
 public class JwtAutheticationFilter extends UsernamePasswordAuthenticationFilter {
 
     private final  AuthenticationManager authenticationManager;
@@ -46,17 +48,17 @@ public class JwtAutheticationFilter extends UsernamePasswordAuthenticationFilter
     @Override
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException {
         String username = ((org.springframework.security.core.userdetails.User) authResult.getPrincipal()).getUsername();
-        String originalInput = "algun_token_con_alguna_frase_secreta." + username;
+        String originalInput = SECRET_KEY + "." + username;
         String token = Base64.getEncoder().encodeToString(originalInput.getBytes());
 
-        response.addHeader("Authorization","Bearer" + token);
+        response.addHeader(HEADER_AUTHORIZATION,PREFIX_BEARER + token);
         Map<String,Object> body = new HashMap<>();
         body.put("token",token);
         body.put("message",String.format("%s Haz iniciado sesion con exito",username));
         body.put("username",username);
         response.getWriter().write(new ObjectMapper().writeValueAsString(body));
         response.setStatus(200);
-        response.setContentType("application/json");
+        response.setContentType(TOKEN_TYPE_AUTHORIZATION);
     }
 
     @Override
@@ -67,6 +69,6 @@ public class JwtAutheticationFilter extends UsernamePasswordAuthenticationFilter
 
         response.getWriter().write(new ObjectMapper().writeValueAsString(body));
         response.setStatus(401);
-        response.setContentType("application/json");
+        response.setContentType(TOKEN_TYPE_AUTHORIZATION);
     }
 }

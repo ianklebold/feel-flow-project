@@ -1,6 +1,7 @@
 package com.equipo5.feelflowapp.security;
 
 import com.equipo5.feelflowapp.security.filters.JwtAutheticationFilter;
+import com.equipo5.feelflowapp.security.filters.JwtValidationFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -35,6 +36,9 @@ public class SpringSecurityConfig {
 
         //Filtro de autenticacion --> Busqueda con JPA
         httpSecurity.addFilter(new JwtAutheticationFilter(this.authenticationConfiguration.getAuthenticationManager()));
+
+        //Filtro de validacion de token
+        httpSecurity.addFilterAfter(new JwtValidationFilter(this.authenticationConfiguration.getAuthenticationManager()),JwtAutheticationFilter.class);
 
         httpSecurity.authorizeHttpRequests(
                         auth -> auth.requestMatchers("/api/v1/**").permitAll()
