@@ -1,0 +1,11 @@
+$feelflow: rgb(114, 228, 238);
+
+$theme-colors: (
+    "feelflow": $feelflow
+);
+
+$custom-colors: (
+  "custom-color": rgb(114, 228, 238)
+);
+
+$theme-colors: map-merge($theme-colors, $custom-colors);

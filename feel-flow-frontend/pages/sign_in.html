@@ -4,10 +4,9 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <link rel="apple-touch-icon" sizes="76x76" href="../img/apple-icon.png">
-  <link rel="icon" type="image/png" href="../img/favicon.png">
+  <link rel="icon" type="image/png" href="../img/logos/FeelFlow.png">
   <title>
-    Soft UI Dashboard by Creative Tim
+    FeelFlow Login
   </title>
   <!--     Fonts and icons     -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
@@ -20,79 +19,83 @@
   <link href="../css/nucleo-svg.css" rel="stylesheet" />
   <!-- CSS Files -->
   <link id="pagestyle" href="../css/soft-ui-dashboard.css?v=1.0.3" rel="stylesheet" />
+  <link rel="stylesheet" href="../scss/soft-ui-dashboard/custom/_styles.scss">
 </head>
 
 <body class="">
-  <main class="main-content  mt-0">
-    <section class="h-100 gradient-form">
-      <div class="page-header min-vh-75">
-        <div class="container text-center py-5 h-100">
-          <div class="row align-items-center" id="FF-Background">
-            
-            <div class="col-md-6">
-              <div class="centered-image text-center">
-                <h2 class="font-weight-bolder text-info text-gradient">FEEL FLOW</h2>
-                <img src="../img/logos/FeelFlow.png" alt="Logo FeelFlow">
-              </div>
+  <main class="main-content">
+    <section class="h-100">
+      <div class="container py-5 h-100">
+        <div class="row justify-content-center"></div>
+        <div class="card" id="FF-Background">
+          <div class="row">
+            <div class="col-md">
+              <h2 class="text-gradient text-center mt-3">Feel Flow</h2>
+              <img src="../img/logos/FeelFlow.png" class="img-fluid mx-auto d-block" alt="Logo FeelFlow">
             </div>
-            <div class="col-md offset-md-2">
-              <div class="card col-md-9">
-                <div>
-                  <h3 class="font-weight-bolder text-info text-gradient">Bienvenido de nuevo</h3>
-                  <p  class="mb-0">Ingrese sus datos para iniciar sesión</p>
+            <div class="col-md">
+              <div class="card-title">
+                <h2 class="text-gradient text-center mt-3">Bienvenido de nuevo</h2>
+                <!--<h4 class="subtitle">Ingrese sus datos</h4>-->
+              </div>
+              <div class="row justify-content-center">
+                <div class="col-sm-6">
+                  <hr class="custom-hr mt-5 mb-3">
+                  <div class="card-body">
+                    <form class="needs-validation" role="form" id="login-form" novalidate>
+                      <div class="mb-3 form-floating shadow-lg">
+                        <input type="email" class="form-control" id="email" placeholder="email" required>
+                        <label for="email">Usuario</label>
+                      </div>
+                      <div class="mb-3 form-floating shadow-lg">
+                        <input type="password" class="form-control" id="password" placeholder="Password"
+                          required>
+                        <label for="password">Contraseña</label>
+                      </div>
+                      <div class="text-center">
+                        <button type="submit" class="btn _ini_ses mt-4">Iniciar Sesión</button>
+                      </div>
+                    </form>
+                    <div id="message-container" class="text-center"></div> <!--Para mostrar el error de autenticación-->
+                  </div>
+                  <hr class="custom-hr mt-2">
                 </div>
-                <div class="card-body">
-                  <form role="form">
-                    <div class="mb-3 form-floating">
-                      <!-- <input type="email" class="form-control" placeholder="Email" aria-label="Email" aria-describedby="email-addon"> -->
-                      <input type="email" class="form-control" id="floatingInputGroup1" placeholder="Email">
-                      <label for="floatingInputGroup1">Usuario</label>
-                    </div>
-
-                    <div class="mb-3 form-floating">
-                      <input type="password" class="form-control" id="floatingInputGroup1" placeholder="Password">
-                      <label for="floatingInputGroup1">Contraseña</label>
-                      <!-- <input type="email" class="form-control" placeholder="Password" aria-label="Password" aria-describedby="password-addon">-->
-                    </div>
-                    <div class="text-center">
-                      <button type="button" class="btn bg-gradient-info w-100 mt-4 mb-0">Iniciar Sesión</button>
-                    </div>
-                  </form>
-                </div>
-                <div class="card-footer text-center pt-0 px-lg-2 px-1">
-                  <p class="mb-4 text-sm mx-auto">
-                    No tienes cuenta?
-                    <a href="javascript:;" class="text-info text-gradient font-weight-bold">Registrarse</a>
-                  </p>
+              </div>
+              <div class="card-footer">
+                <div class="row text-center">
+                  <a id="FF-5-Pass" href="">¿Olvidaste tu Contraseña</a>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
+      </div>
     </section>
   </main>
   <!-- -------- START FOOTER 3 w/ COMPANY DESCRIPTION WITH LINKS & SOCIAL ICONS & COPYRIGHT ------- -->
   <footer class="footer">
     <div class="container">
-      </div>
-      <div class="row">
-        <div class="col-8 mx-auto text-center mt-1">
-          <p class="mb-0 text-secondary">
-            Copyright © <script>
-              document.write(new Date().getFullYear())
-            </script> Feel Flow UTN FRRe.
-          </p>
-        </div>
+      <div class="row text-center">
+        <p id="frase"></P>
+        <!--
+        <p class="text-secondary">
+          Copyright © <script>
+            document.write(new Date().getFullYear())
+          </script> Feel Flow UTN FRRe.
+        </p>
+        -->
       </div>
     </div>
   </footer>
   <!-- -------- END FOOTER 3 w/ COMPANY DESCRIPTION WITH LINKS & SOCIAL ICONS & COPYRIGHT ------- -->
   <!--   Core JS Files   -->
-  <script src="../assets/js/core/popper.min.js"></script>
-  <script src="../assets/js/core/bootstrap.min.js"></script>
-  <script src="../assets/js/plugins/perfect-scrollbar.min.js"></script>
-  <script src="../assets/js/plugins/smooth-scrollbar.min.js"></script>
+  <script src="../js/core/popper.min.js"></script>
+  <script src="../js/core/bootstrap.min.js"></script>
+  <script src="../js/plugins/perfect-scrollbar.min.js"></script>
+  <script src="../js/plugins/smooth-scrollbar.min.js"></script>
+  <script src="../js/InicioSesion.js"></script>
+  <script src="../js/frasesInicio.js"></script>
   <script>
     var win = navigator.platform.indexOf('Win') > -1;
     if (win && document.querySelector('#sidenav-scrollbar')) {
@@ -105,7 +108,7 @@
   <!-- Github buttons -->
   <script async defer src="https://buttons.github.io/buttons.js"></script>
   <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
-  <script src="../assets/js/soft-ui-dashboard.min.js?v=1.0.3"></script>
+  <script src="../js/soft-ui-dashboard.min.js?v=1.0.3"></script>
 </body>
 
 </html>
