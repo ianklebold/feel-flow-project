@@ -2,3 +2,142 @@
     background-color: rgba(69, 130, 158, 0.323);
     border-radius: 100px;
 }
+
+  body {
+    font-family: Arial, sans-serif;
+  }
+
+  .navbar {
+    background-color: #343a40;
+  }
+
+  .navbar-brand {
+    font-weight: bold;
+  }
+
+  .nav-search {
+    display: flex;
+    align-items: center;
+  }
+
+  .nav-search input[type="search"] {
+    border: none;
+    border-radius: 20px;
+    padding: 5px 10px;
+  }
+
+  .nav-icons .nav-link {
+    font-size: 20px;
+  }
+
+  .nav-search-btn {
+    margin-left: 10px;
+  }
+
+  .vertical-navbar {
+    background-color: #343a40;
+    color: #fff;
+    min-height: 100vh;
+  }
+
+  .vertical-navbar a.nav-link {
+    display: flex;
+    align-items: center;
+    color: #fff;
+    padding: 10px 20px;
+  }
+
+  .vertical-navbar a.nav-link:hover {
+    background-color: #495057;
+  }
+
+  .vertical-navbar-heading {
+    text-align: center;
+    padding: 10px;
+  }
+
+  .main-content {
+    margin-left: 250px;
+    padding: 20px;
+  }
+
+  /* Customize dropdown appearance */
+  .dropdown-menu {
+    background-color: #343a40;
+    border: none;
+  }
+
+  .dropdown-item {
+    color: #fff;
+  }
+
+  .dropdown-item:hover {
+    background-color: #495057;
+  }
+
+  .news-card {
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s;
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    margin-bottom: 15px;
+  }
+
+  .news-card:hover {
+    transform: translateY(-5px);
+  }
+
+  .news-card-icon {
+    font-size: 24px;
+    margin-right: 10px;
+  }
+
+  .news-card-content {
+    flex: 1;
+  }
+
+  .news-card-title {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+
+  .news-card-text {
+    font-size: 14px;
+  }
+
+  .news-container {
+    max-height: 400px;
+    overflow-y: auto;
+  }
+
+  .news-container {
+  max-height: 400px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #adb5bd #212529;
+}
+
+.news-container::-webkit-scrollbar {
+  width: 8px;
+}
+
+.news-container::-webkit-scrollbar-track {
+  background-color: #212529;
+}
+
+.news-container::-webkit-scrollbar-thumb {
+  background-color: #adb5bd;
+  border-radius: 4px;
+  border: 2px solid #212529;
+}
+
+.news-container::-webkit-scrollbar-thumb:hover {
+  background-color: #868e96;
+}
+
+
+  
