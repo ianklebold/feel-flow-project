@@ -15,7 +15,7 @@ const listUsers = async (email, password) => {
   if (!isAuthenticated) {
     messageContainer.textContent = "Usuario o contraseña incorrectos.";
   } else {
-    window.location.href = "../pages/sign_up.html";
+    window.location.href = "../pages/Home.html";
   }
 };
 
