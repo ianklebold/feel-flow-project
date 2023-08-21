@@ -23,8 +23,8 @@ public class Admin extends User{
     private EnterPrise enterPrise;
 
     @Builder
-    public Admin(UUID uuid, String name, String email, String password, List<Authority> authorities, EnterPrise enterPrise) {
-        super(uuid, name, email, password, authorities);
+    public Admin(UUID uuid, String name,String surname, String email, String password, List<Authority> authorities, EnterPrise enterPrise) {
+        super(uuid, name,surname, email, password, authorities);
         this.enterPrise = enterPrise;
     }
 }
