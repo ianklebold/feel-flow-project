@@ -46,6 +46,7 @@ h1, h3 {
 .custom-hr {
     border-top: 10px solid rgb(30, 77, 127); 
     border-radius: 10px;
+    width: 100%;
 }
 
 .title {
@@ -67,13 +68,26 @@ h1, h3 {
     color: transparent;  
 }
 
-.background-gradient {
+button._ini_ses {
     color: #fbb93e;
     background: linear-gradient(180deg, #65bce8 0%, #306485 100%);
     transition: all .1s;
+    color: #000;
+    border-radius: 50px;
+    border-color: transparent;
 }
 
-.background-gradient:hover {
+button._ini_ses:hover {
     background: linear-gradient(180deg, #fbcd83 0%, #fbb93e 100%);
     transition: all .1s;
+    color: #000;
+}
+
+input.form-control {
+    background-color: #bdefe9;
+    border-color: transparent;
+}
+
+a#FF-5-Pass {
+    color: blue;
 }
