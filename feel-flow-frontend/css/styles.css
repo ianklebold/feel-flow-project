@@ -19,10 +19,11 @@ img {
 }
 
 /* Formulario */
+/* Con comentar esto seguro que se va a romper alguna página, pero no me sirve que este aca
 .card {
-    width: 100%;
+  width: 100%;
 }
-
+*/
 /* Tamaños de fuente relativos */
 h1, h3 {
     font-size: 2rem;

@@ -1,62 +1,66 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Home</title>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-<link rel="stylesheet" href="../css/styles.css">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Home</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="stylesheet" href="../css/styles.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.css">
 
 
 </head>
+
 <body>
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    
-        <img id="homelogo" src="../img/logos/FeelFlow.png" height="50px" alt="">
-      <a class="navbar-brand" href="#">Feel Flow</a>
-      <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
-        <div class="navbar-nav">
-          <div class="nav-search">
-            <div class="input-group">
-              <span class="input-group-text"><i class="fas fa-search"></i></span>
-              <input class="form-control" type="search" placeholder="Buscar" aria-label="Buscar">
-            </div>
+    <img id="homelogo" src="../img/logos/FeelFlow.png" height="50px" alt="">
+    <a class="navbar-brand" href="#">Feel Flow</a>
+    <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
+      <div class="navbar-nav">
+        <div class="nav-search">
+          <div class="input-group">
+            <span class="input-group-text"><i class="fas fa-search"></i></span>
+            <input class="form-control" type="search" placeholder="Buscar" aria-label="Buscar">
           </div>
-          <div class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="notificationDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              <i class="fas fa-bell"></i>
-            </a>
-            <div class="dropdown-menu dropdown-menu-end" aria-labelledby="notificationDropdown">
-              <a class="dropdown-item" href="#">Ian F te ha enviado un mensaje</a>
-              <a class="dropdown-item" href="#">Mati S ha reaccionado con un sticker</a>
-            </div>
+        </div>
+        <div class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="notificationDropdown" role="button" data-bs-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+            <i class="fas fa-bell"></i>
+          </a>
+          <div class="dropdown-menu dropdown-menu-end" aria-labelledby="notificationDropdown">
+            <a class="dropdown-item" href="#">Ian F te ha enviado un mensaje</a>
+            <a class="dropdown-item" href="#">Mati S ha reaccionado con un sticker</a>
           </div>
-          <div class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="settingsDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              <i class="fas fa-cog"></i>
-            </a>
-            <div class="dropdown-menu dropdown-menu-end" aria-labelledby="settingsDropdown">
-              <a class="dropdown-item" href="#">Opción 1</a>
-              <a class="dropdown-item" href="#">Opción 2</a>
-              <a class="dropdown-item" href="#">Opción 3</a>
-            </div>
+        </div>
+        <div class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="settingsDropdown" role="button" data-bs-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+            <i class="fas fa-cog"></i>
+          </a>
+          <div class="dropdown-menu dropdown-menu-end" aria-labelledby="settingsDropdown">
+            <a class="dropdown-item" href="#">Opción 1</a>
+            <a class="dropdown-item" href="#">Opción 2</a>
+            <a class="dropdown-item" href="#">Opción 3</a>
           </div>
-          <div class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              <i class="fas fa-user"></i>
-            </a>
-            <div class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
-              <a class="dropdown-item" href="#">Mi Perfil</a>
-              <a class="dropdown-item" href="../pages/sign_in.html" id="logoutLink">Cerrar sesión</a>
-            </div>
+        </div>
+        <div class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+            <i class="fas fa-user"></i>
+          </a>
+          <div class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+            <a class="dropdown-item" href="#">Mi Perfil</a>
+            <a class="dropdown-item" href="../pages/sign_in.html" id="logoutLink">Cerrar sesión</a>
           </div>
         </div>
       </div>
     </div>
+    </div>
   </nav>
-  
+
   <div class="d-flex">
     <nav class="vertical-navbar p-3">
       <ul class="nav flex-column">
@@ -76,10 +80,10 @@
           </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="#">
-              <i class="fa fa-puzzle-piece me-2"></i> Modulos
-            </a>
-          </li>
+          <a class="nav-link" href="#">
+            <i class="fa fa-puzzle-piece me-2"></i> Modulos
+          </a>
+        </li>
         <li class="nav-item">
           <a class="nav-link" href="#">
             <i class="fa fa-pie-chart me-2"></i> Dashboard
@@ -87,7 +91,7 @@
         </li>
       </ul>
     </nav>
-  
+
     <div class="main-content">
       <h1 class="mb-4">Ultimas novedades</h1>
       <p class="mb-5">Aquí puedes encontrar información importante y administrar tus opciones.</p>
@@ -130,6 +134,7 @@
   </footer>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>
 
 
@@ -165,5 +170,3 @@
     }
   });
 </script>
-
-
