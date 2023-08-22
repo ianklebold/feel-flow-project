@@ -6,6 +6,12 @@ body {
     font-family: Arial, sans-serif;
 }
 
+#homelogo{
+height: 50px ;
+padding-left: 15px;
+padding-right: 10px;
+}
+
 /* Imágenes responsivas */
 img {
     max-width: 100%;
@@ -51,6 +57,124 @@ h1, h3 {
     width: 100%;
 }
 
+  body {
+    font-family: Arial, sans-serif;
+  }
+
+  .navbar {
+    background-color: #343a40;
+  }
+
+  .navbar-brand {
+    font-weight: bold;
+  }
+
+  .nav-search {
+    display: flex;
+    align-items: center;
+  }
+
+  .nav-search input[type="search"] {
+    border: none;
+    border-radius: 20px;
+    padding: 5px 10px;
+  }
+
+  .nav-icons .nav-link {
+    font-size: 20px;
+  }
+
+  .nav-search-btn {
+    margin-left: 10px;
+  }
+
+  .vertical-navbar {
+    background-color: #343a40;
+    color: #fff;
+    min-height: 100vh;
+  }
+
+  .vertical-navbar a.nav-link {
+    display: flex;
+    align-items: center;
+    color: #fff;
+    padding: 10px 20px;
+  }
+
+  .vertical-navbar a.nav-link:hover {
+    background-color: #495057;
+  }
+
+  .vertical-navbar-heading {
+    text-align: center;
+    padding: 10px;
+  }
+
+  .main-content {
+    margin-left: 250px;
+    padding: 20px;
+  }
+
+  /* Customize dropdown appearance */
+  .dropdown-menu {
+    background-color: #343a40;
+    border: none;
+  }
+
+  .dropdown-item {
+    color: #fff;
+  }
+
+  .dropdown-item:hover {
+    background-color: #495057;
+  }
+
+  .news-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: space-between;
+  }
+  
+  .news-card {
+    width: calc(90% - 10px); /* 33.33% del ancho y margen de 10px */
+    background-color: #f8f9fa;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s;
+  }
+  
+  .news-card:hover {
+    transform: translateY(-5px);
+  }
+  
+  .news-card-icon {
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
+  
+  .news-card-content {
+    flex: 1;
+    text-align: center;
+  }
+  
+  .news-card-title {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  
+  .news-card-text {
+    font-size: 14px;
+  }
+  
+
+  
 .title {
     color: rgb(0, 0, 0);
     text-shadow: 7px 4px 5px rgb(84, 137, 216);
@@ -61,6 +185,8 @@ h1, h3 {
     color: rgb(0, 0, 0);
 }
 */
+
+
 
 #frase {
     font-style: italic;
@@ -103,6 +229,11 @@ a#FF-5-Pass {
     color: red;
     font-size: 13px;
 } /*mensaje de usuario o contraseña incorrectos*/
+
+img#logo {
+    align-items: center;
+    position: relative;
+}
 
 img#logo {
     align-items: center;
