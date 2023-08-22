@@ -1,8 +1,12 @@
 package com.equipo5.feelflowapp.constants.validation.security;
 
-public class TokenJwtConfig {
-    public static final String SECRET_KEY = "algun_token_con_alguna_frase_secreta";
+import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.security.Keys;
 
+import java.security.Key;
+
+public class TokenJwtConfig {
+    public static final Key SECRET_KEY = Keys.secretKeyFor(SignatureAlgorithm.ES256);
     public static final  String PREFIX_BEARER = "Bearer ";
 
     public static final  String HEADER_AUTHORIZATION = "Authorization";

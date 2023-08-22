@@ -1,10 +1,15 @@
 package com.equipo5.feelflowapp.security.filters;
 
+import com.equipo5.feelflowapp.security.constructors.SimpleGrantedAuthorityJsonConstructor;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.JwtException;
+import io.jsonwebtoken.Jwts;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
@@ -17,6 +22,7 @@ import java.util.*;
 
 import static com.equipo5.feelflowapp.constants.validation.security.TokenJwtConfig.*;
 
+@Slf4j
 public class JwtValidationFilter extends BasicAuthenticationFilter {
     public JwtValidationFilter(AuthenticationManager authenticationManager) {
         super(authenticationManager);
@@ -32,22 +38,31 @@ public class JwtValidationFilter extends BasicAuthenticationFilter {
             return;
         }
 
-        String token = header.replace("Bearer ","");
-        byte[] tokenDecodeBytes = Base64.getDecoder().decode(token);
-        String tokenDecode = new String(tokenDecodeBytes);
-        String[] tokenArray = tokenDecode.split("\\.");
-        String secret = tokenArray[0];
-        String username = tokenArray[1];
+        String token = header.replace(PREFIX_BEARER,"");
 
-        if (SECRET_KEY.equals(secret)){
-            List<GrantedAuthority> authorities = new ArrayList<>();
+        try{
+            log.info("Token : " + token);
+            Claims claims = Jwts.parserBuilder()
+                    .setSigningKey(SECRET_KEY)
+                    .build()//Se valida la firma del token
+                    .parseClaimsJwt(token)
+                    .getBody();
 
-            authorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
+            String username = claims.getSubject();
+
+            Object authoritiesClaims = claims.get("authorities");
+
+            Collection<? extends GrantedAuthority> authorities = Arrays.asList(new ObjectMapper()
+                    .addMixIn(SimpleGrantedAuthority.class, SimpleGrantedAuthorityJsonConstructor.class)
+                    .readValue(authoritiesClaims.toString().getBytes(),SimpleGrantedAuthority[].class));
+
             UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(username,null,authorities);
             SecurityContextHolder.getContext().setAuthentication(authentication);
             chain.doFilter(request,response);
-        }else {
+
+        }catch (JwtException jwtException){
             Map<String,String> body = new HashMap<>();
+            body.put("error",jwtException.getMessage());
             body.put("message","El token JWT no es valido");
 
             response.getWriter().write(new ObjectMapper().writeValueAsString(body));

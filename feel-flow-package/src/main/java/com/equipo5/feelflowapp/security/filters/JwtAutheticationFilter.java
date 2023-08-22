@@ -1,7 +1,10 @@
 package com.equipo5.feelflowapp.security.filters;
 
+import com.equipo5.feelflowapp.domain.enumerations.teamRoles.TeamRoles;
 import com.equipo5.feelflowapp.domain.users.User;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -10,12 +13,11 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import java.io.IOException;
-import java.util.Base64;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 import static com.equipo5.feelflowapp.constants.validation.security.TokenJwtConfig.*;
 
@@ -48,8 +50,21 @@ public class JwtAutheticationFilter extends UsernamePasswordAuthenticationFilter
     @Override
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException {
         String username = ((org.springframework.security.core.userdetails.User) authResult.getPrincipal()).getUsername();
-        String originalInput = SECRET_KEY + "." + username;
-        String token = Base64.getEncoder().encodeToString(originalInput.getBytes());
+
+        Collection<? extends GrantedAuthority> roles = authResult.getAuthorities();
+        boolean isAdmin = roles.stream().anyMatch(role -> role.getAuthority().equals(TeamRoles.ADMIN.name()));
+        //Los claims se usan para guardar cualquier tipo de dato en el token
+        Claims claims = Jwts.claims();
+        claims.put("authorities",new ObjectMapper().writeValueAsString(roles));
+        claims.put("isAdmin",isAdmin);
+
+        String token = Jwts.builder()
+                .setClaims(claims)
+                .setSubject(username)
+                .signWith(SECRET_KEY)
+                .setIssuedAt(new Date())
+                .setExpiration(new Date(System.currentTimeMillis() + 3600000)) //Una hora de sesion
+                .compact();
 
         response.addHeader(HEADER_AUTHORIZATION,PREFIX_BEARER + token);
         Map<String,Object> body = new HashMap<>();

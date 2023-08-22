@@ -37,8 +37,12 @@ public class JpaUserDetailsService implements UserDetailsService {
 
         User userExist = user.get();
 
-        List<GrantedAuthority> authorities = new ArrayList<>();
-        authorities.add(new SimpleGrantedAuthority(userExist.getAuthorities().get(0).getTeamRoles().toString()));
+        List<GrantedAuthority> authorities = new ArrayList<>(
+                userExist.getAuthorities()
+                        .stream()
+                        .map(role -> new SimpleGrantedAuthority(role.getTeamRoles().toString()))
+                        .toList()
+        );
 
         return new org.springframework.security.core.userdetails.User(
                 userExist.getEmail(),
