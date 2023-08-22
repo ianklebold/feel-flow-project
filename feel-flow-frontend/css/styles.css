@@ -37,14 +37,16 @@ h1, h3 {
     }
 }
 
-/*Estilo para la pantalla sign_in */
+/*---------------------------------Estilo para la pantalla sign_in ---------------------------------*/
 #FF-Background {
     background-color: rgba(69, 130, 158, 0.323);
     border-radius: 100px;
 } /*Este también se usa en el sign_up*/
 
+/*-----------------------------------Formulario de inicio de sesión-------------------------------------*/
+
 .custom-hr {
-    border-top: 10px solid rgb(30, 77, 127); 
+    border-top: 5px solid rgb(30, 77, 127); 
     border-radius: 10px;
     width: 100%;
 }
@@ -54,27 +56,32 @@ h1, h3 {
     text-shadow: 7px 4px 5px rgb(84, 137, 216);
 }
 
+/*
 .subtitle {
     color: rgb(0, 0, 0);
 }
+*/
 
 #frase {
     font-style: italic;
 }
 
+/*
 .text-gradient {
     background: linear-gradient(rgb(4, 99, 242),rgb(209, 127, 242));
     background-clip: text;
     color: transparent;  
 }
+*/
 
 button._ini_ses {
-    color: #fbb93e;
+    /*color: #fbb93e;
     background: linear-gradient(180deg, #65bce8 0%, #306485 100%);
     transition: all .1s;
     color: #000;
+    border-color: transparent;*/
     border-radius: 50px;
-    border-color: transparent;
+    
 }
 
 button._ini_ses:hover {
@@ -84,18 +91,18 @@ button._ini_ses:hover {
 }
 
 input.form-control {
-    background-color: #bdefe9;
+    background-color: whitesmoke;
     border-color: transparent;
 }
 
 a#FF-5-Pass {
     color: blue;
-}
+} /*olvide contraseña*/
 
 #message-container {
     color: red;
     font-size: 13px;
-}
+} /*mensaje de usuario o contraseña incorrectos*/
 
 img#logo {
     align-items: center;
