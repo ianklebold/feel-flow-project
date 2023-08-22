@@ -228,3 +228,7 @@ img#logo {
     position: relative;
 }
 
+img#logo {
+    align-items: center;
+    position: relative;
+}
