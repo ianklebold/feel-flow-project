@@ -41,6 +41,8 @@ h1, h3 {
 #FF-Background {
     background-color: rgba(69, 130, 158, 0.323);
     border-radius: 100px;
+    padding-top: 20px;
+    padding-bottom: 10px;
 } /*Este también se usa en el sign_up*/
 
 /*-----------------------------------Formulario de inicio de sesión-------------------------------------*/
