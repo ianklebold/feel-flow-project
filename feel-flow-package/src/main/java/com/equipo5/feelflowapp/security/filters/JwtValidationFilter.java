@@ -45,7 +45,7 @@ public class JwtValidationFilter extends BasicAuthenticationFilter {
             Claims claims = Jwts.parserBuilder()
                     .setSigningKey(SECRET_KEY)
                     .build()//Se valida la firma del token
-                    .parseClaimsJwt(token)
+                    .parseClaimsJws(token)
                     .getBody();
 
             String username = claims.getSubject();
