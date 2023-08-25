@@ -1,21 +1,21 @@
 /* Estilos generales */
 
 body {
-    margin: 0;
-    padding: 0;
-    font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
 }
 
-#homelogo{
-height: 50px ;
-padding-left: 15px;
-padding-right: 10px;
+#homelogo {
+  height: 50px;
+  padding-left: 15px;
+  padding-right: 10px;
 }
 
 /* Imágenes responsivas */
 img {
-    max-width: 100%;
-    height: auto;
+  max-width: 100%;
+  height: auto;
 }
 
 /* Formulario */
@@ -25,160 +25,166 @@ img {
 }
 */
 /* Tamaños de fuente relativos */
-h1, h3 {
-    font-size: 2rem;
+h1,
+h3 {
+  font-size: 2rem;
 }
 
 /* Media Query para pantallas más pequeñas */
 @media (max-width: 768px) {
-    .page-header {
-        padding: 30px;
-    }
+  .page-header {
+    padding: 30px;
+  }
 
-    .card {
-        margin-top: 20px;
-    }
+  .card {
+    margin-top: 20px;
+  }
 
-    h1, h3 {
-        font-size: 1.5rem;
-    }
+  h1,
+  h3 {
+    font-size: 1.5rem;
+  }
 }
 
 /*---------------------------------Estilo para la pantalla sign_in ---------------------------------*/
 #FF-Background {
-    background-color: rgba(69, 130, 158, 0.323);
-    border-radius: 100px;
-} /*Este también se usa en el sign_up*/
+  background-color: rgba(69, 130, 158, 0.323);
+  border-radius: 50px;
+}
+
+/*Este también se usa en el sign_up*/
 
 /*-----------------------------------Formulario de inicio de sesión-------------------------------------*/
 
 .custom-hr {
-    border-top: 5px solid rgb(30, 77, 127); 
-    border-radius: 10px;
-    width: 100%;
+  border-top: 5px solid rgb(30, 77, 127);
+  border-radius: 20px;
+  width: 100%;
 }
 
-  body {
-    font-family: Arial, sans-serif;
-  }
+body {
+  font-family: Arial, sans-serif;
+}
 
-  .navbar {
-    background-color: #343a40;
-  }
+.navbar {
+  background-color: #343a40;
+}
 
-  .navbar-brand {
-    font-weight: bold;
-  }
+.navbar-brand {
+  font-weight: bold;
+}
 
-  .nav-search {
-    display: flex;
-    align-items: center;
-  }
+.nav-search {
+  display: flex;
+  align-items: center;
+}
 
-  .nav-search input[type="search"] {
-    border: none;
-    border-radius: 20px;
-    padding: 5px 10px;
-  }
+.nav-search input[type="search"] {
+  border: none;
+  border-radius: 20px;
+  padding: 5px 10px;
+}
 
-  .nav-icons .nav-link {
-    font-size: 20px;
-  }
+.nav-icons .nav-link {
+  font-size: 20px;
+}
 
-  .nav-search-btn {
-    margin-left: 10px;
-  }
+.nav-search-btn {
+  margin-left: 10px;
+}
 
-  .vertical-navbar {
-    background-color: #343a40;
-    color: #fff;
-    min-height: 100vh;
-  }
+.vertical-navbar {
+  background-color: #343a40;
+  color: #fff;
+  min-height: 100vh;
+}
 
-  .vertical-navbar a.nav-link {
-    display: flex;
-    align-items: center;
-    color: #fff;
-    padding: 10px 20px;
-  }
+.vertical-navbar a.nav-link {
+  display: flex;
+  align-items: center;
+  color: #fff;
+  padding: 10px 20px;
+}
 
-  .vertical-navbar a.nav-link:hover {
-    background-color: #495057;
-  }
+.vertical-navbar a.nav-link:hover {
+  background-color: #495057;
+}
 
-  .vertical-navbar-heading {
-    text-align: center;
-    padding: 10px;
-  }
+.vertical-navbar-heading {
+  text-align: center;
+  padding: 10px;
+}
 
-  .main-content {
-    margin-left: 250px;
-    padding: 20px;
-  }
+/*
+.main-content {
+  margin-left: 250px;
+  padding: 20px;
+}
+*/
+/* Customize dropdown appearance */
+.dropdown-menu {
+  background-color: #343a40;
+  border: none;
+}
 
-  /* Customize dropdown appearance */
-  .dropdown-menu {
-    background-color: #343a40;
-    border: none;
-  }
+.dropdown-item {
+  color: #fff;
+}
 
-  .dropdown-item {
-    color: #fff;
-  }
+.dropdown-item:hover {
+  background-color: #495057;
+}
 
-  .dropdown-item:hover {
-    background-color: #495057;
-  }
+.news-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: space-between;
+}
 
-  .news-container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    justify-content: space-between;
-  }
-  
-  .news-card {
-    width: calc(90% - 10px); /* 33.33% del ancho y margen de 10px */
-    background-color: #f8f9fa;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-    transition: transform 0.2s;
-  }
-  
-  .news-card:hover {
-    transform: translateY(-5px);
-  }
-  
-  .news-card-icon {
-    font-size: 24px;
-    margin-bottom: 10px;
-  }
-  
-  .news-card-content {
-    flex: 1;
-    text-align: center;
-  }
-  
-  .news-card-title {
-    font-size: 18px;
-    font-weight: bold;
-    margin-bottom: 10px;
-  }
-  
-  .news-card-text {
-    font-size: 14px;
-  }
-  
+.news-card {
+  width: calc(90% - 10px);
+  /* 33.33% del ancho y margen de 10px */
+  background-color: #f8f9fa;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s;
+}
 
-  
+.news-card:hover {
+  transform: translateY(-5px);
+}
+
+.news-card-icon {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.news-card-content {
+  flex: 1;
+  text-align: center;
+}
+
+.news-card-title {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.news-card-text {
+  font-size: 14px;
+}
+
+
+
 .title {
-    color: rgb(0, 0, 0);
-    text-shadow: 7px 4px 5px rgb(84, 137, 216);
+  color: rgb(0, 0, 0);
+  text-shadow: 7px 4px 5px rgb(84, 137, 216);
 }
 
 /*
@@ -190,7 +196,7 @@ h1, h3 {
 
 
 #frase {
-    font-style: italic;
+  font-style: italic;
 }
 
 /*
@@ -202,41 +208,47 @@ h1, h3 {
 */
 
 button._ini_ses {
-    /*color: #fbb93e;
+  /*color: #fbb93e;
     background: linear-gradient(180deg, #65bce8 0%, #306485 100%);
     transition: all .1s;
     color: #000;
     border-color: transparent;*/
-    border-radius: 50px;
-    
+  border-radius: 50px;
+  color: white;
+
 }
 
 button._ini_ses:hover {
-    background: linear-gradient(180deg, #fbcd83 0%, #fbb93e 100%);
-    transition: all .1s;
-    color: #000;
+  background: linear-gradient(180deg, #fbcd83 0%, #fbb93e 100%);
+  transition: all .1s;
+  color: #000;
 }
 
 input.form-control {
-    background-color: whitesmoke;
-    border-color: transparent;
+  background-color: whitesmoke;
+  border-color: transparent;
 }
 
 a#FF-5-Pass {
-    color: blue;
-} /*olvide contraseña*/
+  color: blue;
+}
+
+/*olvide contraseña*/
 
 #message-container {
-    color: red;
-    font-size: 13px;
-} /*mensaje de usuario o contraseña incorrectos*/
+  color: red;
+  font-size: 13px;
+}
+
+/*mensaje de usuario o contraseña incorrectos*/
 
 img#logo {
-    align-items: center;
-    position: relative;
+  align-items: center;
+  position: relative;
 }
 
 img#logo {
-    align-items: center;
-    position: relative;
+  align-items: center;
+  position: relative;
 }
+
