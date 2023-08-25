@@ -1,5 +1,6 @@
 package com.equipo5.feelflowapp.security;
 
+import com.equipo5.feelflowapp.repository.users.UserRepository;
 import com.equipo5.feelflowapp.security.filters.JwtAutheticationFilter;
 import com.equipo5.feelflowapp.security.filters.JwtValidationFilter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,9 @@ public class SpringSecurityConfig {
 
     @Autowired
     private AuthenticationConfiguration authenticationConfiguration;
+
+    @Autowired
+    private UserRepository userRepository;
 
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
@@ -45,7 +49,7 @@ public class SpringSecurityConfig {
                                 .anyRequest()
                                 .authenticated()
                 ).csrf(AbstractHttpConfigurer::disable)
-                .addFilter(new JwtAutheticationFilter(this.authenticationConfiguration.getAuthenticationManager()))
+                .addFilter(new JwtAutheticationFilter(this.authenticationConfiguration.getAuthenticationManager(),userRepository))
                 .addFilter(new JwtValidationFilter(this.authenticationConfiguration.getAuthenticationManager()));
         return httpSecurity.build();
     }
