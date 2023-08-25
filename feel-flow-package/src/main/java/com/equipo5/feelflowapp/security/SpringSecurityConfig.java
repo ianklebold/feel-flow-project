@@ -35,16 +35,18 @@ public class SpringSecurityConfig {
     SecurityFilterChain configure(HttpSecurity httpSecurity) throws Exception{
 
         //Filtro de autenticacion --> Busqueda con JPA
-        httpSecurity.addFilter(new JwtAutheticationFilter(this.authenticationConfiguration.getAuthenticationManager()));
+        //httpSecurity.addFilter(new JwtAutheticationFilter(this.authenticationConfiguration.getAuthenticationManager()));
 
         //Filtro de validacion de token
-        httpSecurity.addFilterAfter(new JwtValidationFilter(this.authenticationConfiguration.getAuthenticationManager()),JwtAutheticationFilter.class);
+        //httpSecurity.addFilterAfter(new JwtValidationFilter(this.authenticationConfiguration.getAuthenticationManager()),JwtAutheticationFilter.class);
 
         httpSecurity.authorizeHttpRequests(
                         auth -> auth.requestMatchers("/api/v1/**").permitAll()
                                 .anyRequest()
                                 .authenticated()
-                ).csrf(AbstractHttpConfigurer::disable);
+                ).csrf(AbstractHttpConfigurer::disable)
+                .addFilter(new JwtAutheticationFilter(this.authenticationConfiguration.getAuthenticationManager()))
+                .addFilter(new JwtValidationFilter(this.authenticationConfiguration.getAuthenticationManager()));
         return httpSecurity.build();
     }
 }
