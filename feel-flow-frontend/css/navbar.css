@@ -1,5 +1,24 @@
-#homelogo{
-    height: 50px ;
+#homelogo {
+    height: 50px;
     padding-left: 15px;
-    padding-right: 10px;
+    padding-right: 10px;
 }
+
+.bg-feelflow {
+    background-color: rgba(69, 130, 158, 1);
+}
+
+.bg-feelflow-light {
+    background-color: rgba(69, 130, 158, 0.70);
+}
+
+.lista li.nav-FF {
+    padding: 10px;
+    transition: background-color 0.3s;
+}
+
+.lista li.nav-FF:hover {
+    background-color: #f0f0f0; 
+}
+
+/*----------------------------------------------------BOOSTRAP-----------------------------------*/
