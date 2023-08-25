@@ -1,33 +1,44 @@
 package com.equipo5.feelflowapp.service.users;
 
+import com.equipo5.feelflowapp.domain.users.Admin;
 import com.equipo5.feelflowapp.domain.users.User;
 import com.equipo5.feelflowapp.dto.users.UserDTO;
 import com.equipo5.feelflowapp.dto.users.UserUpdateDTO;
 import com.equipo5.feelflowapp.mappers.users.UserMapper;
+import com.equipo5.feelflowapp.repository.locator.LocatorUserRepository;
 import com.equipo5.feelflowapp.repository.users.UserRepository;
+import com.equipo5.feelflowapp.repository.users.admin.AdminRepository;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 import java.util.UUID;
 
+@Slf4j
+@RequiredArgsConstructor
 @Service
 public class UserServiceImpl implements UserService{
 
-    UserMapper userMapper;
-    UserRepository userRepository;
+    private final UserMapper userMapper;
+    private final UserRepository userRepository;
+
 
     @Override
+    @Transactional
     public Optional<UserDTO> updateUser(UUID uuidUser, UserUpdateDTO userUpdateDTO) {
 
-        Optional<UserDTO> userDTO = getUserById(uuidUser);
+        Optional<User> userDTO = userRepository.findById(uuidUser);
 
         if (userDTO.isPresent()){
 
-            User user = userMapper.userDtoToUser(userDTO.get());
+            User user = userDTO.get();
 
-            user.setName(userDTO.get().getName());
-            user.setSurname(userDTO.get().getSurname());
-            user.setUsername(userDTO.get().getUsername());
+            user.setName(userUpdateDTO.getName());
+            user.setSurname(userUpdateDTO.getSurname());
+            user.setUsername(userUpdateDTO.getUsername());
+
 
             userRepository.save(user);
 
