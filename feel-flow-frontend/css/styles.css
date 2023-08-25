@@ -1,11 +1,11 @@
 /* Estilos generales */
-
+/*
 body {
   margin: 0;
   padding: 0;
   font-family: Arial, sans-serif;
 }
-
+*/
 #homelogo {
   height: 50px;
   padding-left: 15px;
@@ -250,3 +250,8 @@ img#logo {
   position: relative;
 }
 
+#formulario-reg{
+  margin-left: 12px; 
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
