@@ -121,16 +121,16 @@ body {
 */
 /* Customize dropdown appearance */
 .dropdown-menu {
-  background-color: #343a40;
+  background-color: white;
   border: none;
 }
 
 .dropdown-item {
-  color: #fff;
+  color: black;
 }
 
 .dropdown-item:hover {
-  background-color: #495057;
+  background-color: rgb(108, 117, 125, 0.2);
 }
 
 .news-container {
@@ -254,4 +254,12 @@ img#logo {
   margin-left: 12px; 
   margin-top: 20px;
   margin-bottom: 20px;
+}
+
+.centered-div {
+  position: absolute;
+  top: 50%; /* Mover el div hacia la mitad vertical */
+  left: 50%; /* Mover el div hacia la mitad horizontal */
+  transform: translate(-50%, -50%); /* Ajustar para centrar exactamente */
+  /* Estilos para el contenido centrado */
 }

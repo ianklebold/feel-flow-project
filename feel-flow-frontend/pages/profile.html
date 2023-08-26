@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -19,26 +18,18 @@
     <!--Animaciones-->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
-    <!-- CSS Files 
-    <link id="pagestyle" href="../css/soft-ui-dashboard.css?v=1.0.3" rel="stylesheet" />-->
+    <!-- CSS Files -->
     <link rel="stylesheet" href="../css/styles.css">
-    <!--
-    <link rel="stylesheet" href="../css/navbar.css">
-    <link rel="stylesheet" href="../css/feel-flow.css">
-    <link rel="stylesheet" href="../css/FeelFlow-Profile.css">
-    <link rel="stylesheet" href="../css/boostrap.css">
-    -->
     <link rel="stylesheet" href="../css/Estilos-Feel-Flow.css">
-
-    <!--Sin esto se rompe lo que hizo Juampi, la barra de arriba y la del costado
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"> -->
+    <link rel="stylesheet" href="../css/navbar.css">
 </head>
 
-<body class="">
-    <nav class="navbar navbar-expand-lg bg-feelflow">
+<body class="" style="background-color: whitesmoke;">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-feelflow">
         <img id="homelogo" src="../img/logos/FeelFlow.png" height="50px" alt="">
-        <a class="navbar-brand" href="#" style="color: white;">Feel Flow</a>
+        <a class="navbar-brand" href="#">Feel Flow</a>
         <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
             <div class="navbar-nav">
                 <div class="nav-search">
@@ -74,38 +65,39 @@
                         <i class="fas fa-user"></i>
                     </a>
                     <div class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
-                        <a class="dropdown-item" href="#">Mi Perfil</a>
+                        <a class="dropdown-item" href="../pages/profile.html">Mi Perfil</a>
                         <a class="dropdown-item" href="../pages/sign_in.html" id="logoutLink">Cerrar sesión</a>
                     </div>
                 </div>
             </div>
         </div>
+        </div>
     </nav>
     <div class="d-flex">
-        <nav class="vertical-navbar bg-feelflow-light p-3">
-            <ul class="nav flex-column lista">
-                <li class="nav-item">
-                    <a class="nav-FF active" href="#">
+        <nav class="vertical-navbar p-3 bg-feelflow-light">
+            <ul class="nav flex-column">
+                <li class="custom-nav-item">
+                    <a class="custom-nav-link active" href="../pages/Home.html">
                         <i class="fas fa-home me-2"></i> Home
                     </a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">
-                        <i class="far fa-user-circle me-2"></i>Lideres
+                <li class="custom-nav-item">
+                    <a class="custom-nav-link" href="#">
+                        <i class="far fa-user-circle me-2"></i> Lideres
                     </a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">
-                        <i class="fa fa-users me-2"></i>Equipos
+                <li class="custom-nav-item">
+                    <a class="custom-nav-link" href="#">
+                        <i class="fa fa-users me-2"></i> Equipos
                     </a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">
+                <li class="custom-nav-item">
+                    <a class="custom-nav-link" href="#">
                         <i class="fa fa-puzzle-piece me-2"></i> Modulos
                     </a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">
+                <li class="custom-nav-item">
+                    <a class="custom-nav-link" href="#">
                         <i class="fa fa-pie-chart me-2"></i> Dashboard
                     </a>
                 </li>
@@ -115,7 +107,7 @@
             <div class="page-header pancarta min-height-300 border-radius-xl mt-4"
                 style="background-image: url('../img/curved-images/curved0.jpg'); background-position-y: 50%;">
                 <span class="mask opacity-6"></span> <!--Se puede añadir la clase: bg-gradient-primary-->
-            </div> 
+            </div>
             <div class="card card-body blur shadow-blur mx-6 mt-n6 overflow-hidden" style="border-radius: 25px;">
                 <div class="row gx-4">
                     <div class="col-auto">
@@ -131,8 +123,10 @@
                         </div>
                     </div>
                     <div class="col-lg-4 col-md-6 my-sm-auto ms-sm-auto me-sm-0 mx-auto mt-3 text-end">
-                        <a class="nav-link mb-0 px-0 py-1 " data-bs-toggle="tab" href="javascript:;" role="tab" aria-selected="false">
-                            <i class="fas fa-user-edit text-secondary text-sm" data-bs-toggle="tooltip" data-bs-placement="top"></i>
+                        <a class="nav-link mb-0 px-0 py-1 " data-bs-toggle="tab" href="javascript:;" role="tab"
+                            aria-selected="false">
+                            <i class="fas fa-user-edit text-secondary text-sm" data-bs-toggle="tooltip"
+                                data-bs-placement="top"></i>
                             <span class="ms-1">Editar Perfil</span>
                         </a>
                     </div>
@@ -158,19 +152,23 @@
                         <div class="card-body p-0 ps-3  mb-4">
                             <!--<p class="text-sm" id="descripcion"></p>-->
                             <ul class="list-group list-group-horizontal text-sm">
-                                <li class="list-group-item border-0 ps-0"> <strong class="text-dark">Nombre Completo: </strong></li>
+                                <li class="list-group-item border-0 ps-0"> <strong class="text-dark">Nombre Completo:
+                                    </strong></li>
                                 <li class="list-group-item border-0 ps-0" id="Nombre"></li>
                             </ul>
                             <ul class="list-group list-group-horizontal text-sm">
-                                <li class="list-group-item border-0 ps-0"> <strong class="text-dark">Email: </strong></li>
+                                <li class="list-group-item border-0 ps-0"> <strong class="text-dark">Email: </strong>
+                                </li>
                                 <li class="list-group-item border-0 ps-0" id="correo"></li>
                             </ul>
                             <ul class="list-group list-group-horizontal text-sm">
-                                <li class="list-group-item border-0 ps-0"> <strong class="text-dark">Empresa: </strong></li>
+                                <li class="list-group-item border-0 ps-0"> <strong class="text-dark">Empresa: </strong>
+                                </li>
                                 <li class="list-group-item border-0 ps-0" id="empresa"></li>
                             </ul>
                             <ul class="list-group list-group-horizontal text-sm">
-                                <li class="list-group-item border-0 ps-0"> <strong class="text-dark">Equipo: </strong></li>
+                                <li class="list-group-item border-0 ps-0"> <strong class="text-dark">Equipo: </strong>
+                                </li>
                                 <li class="list-group-item border-0 ps-0" id="equipo"></li>
                             </ul>
                             <ul class="list-group list-group-horizontal text-sm">
@@ -203,6 +201,39 @@
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
     <script src="../js/soft-ui-dashboard.min.js?v=1.0.3"></script>
+
+    <!--Pop up cerrar sesion-->
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const logoutLink = document.querySelector("#logoutLink");
+
+            if (logoutLink) {
+                logoutLink.addEventListener("click", function (event) {
+                    event.preventDefault();
+
+                    Swal.fire({
+                        title: "Cerrar sesión",
+                        text: "¿Estás seguro de que deseas cerrar sesión?",
+                        icon: "warning",
+                        showCancelButton: true,
+                        confirmButtonColor: "#dc3545",
+                        cancelButtonColor: "#1e7bf0", //#1e7bf0
+                        confirmButtonText: '<span style="color: white;">Sí, cerrar sesión</span>',
+                        cancelButtonText: '<span style="color: white;">Cancelar</span>',
+                        customClass: {
+                            popup: "bg-white text-white",
+                            confirmButton: "btn btn-danger",
+                            cancelButton: "btn btn-secondary",
+                        },
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            window.location.href = logoutLink.href;
+                        }
+                    });
+                });
+            }
+        });
+    </script>
 </body>
 
 </html>
