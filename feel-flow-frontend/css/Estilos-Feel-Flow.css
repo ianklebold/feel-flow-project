@@ -19326,7 +19326,7 @@ fieldset:disabled .btn {
 
 .breadcrumb-item {
   font-size: 0.875rem;
-  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
 .breadcrumb-item.text-white::before {
@@ -21615,7 +21615,9 @@ hr.horizontal.gray-light {
 }
 
 .navbar-vertical .navbar-nav>.nav-item .nav-link.active .icon {
-  background-image: linear-gradient(310deg, #0099cc 0%, #3399ff 100%);
+  border-width: 1px;
+  border-style: outset;
+  background-color: rgba(245, 245, 245, 0.5);
 } /*Color del cuadrado del ícono en el nav vertical*/
 
 .navbar-vertical .navbar-nav>.nav-item .nav-link.active .icon svg .color-background,
