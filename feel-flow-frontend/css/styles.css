@@ -60,14 +60,38 @@ h3 {
   width: 100%;
 }
 
-body {
+i.fa {
+  color: #000;
+}
+
+span.nav-link-text {
+  color: #000;
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+  font-size: medium;
+}
+
+span.font-weight-bold {
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+  font-size: large;
+}
+
+span.buscador {
+  background-color: gainsboro;
+}
+
+ul.dropdown-menu {
+  list-style: none;
+}
+
+/*
+body { No esta mal pero se pisa con todo, definir si es la letra que queremos
   font-family: Arial, sans-serif;
-}
-
+}*/
+/*
 .navbar {
-  background-color: #343a40;
-}
-
+  background-color: rgba(69, 130, 158, 0.323);
+} Lo agregue en la misma clase del Estilos-Feel-Flow
+*/
 .navbar-brand {
   font-weight: bold;
 }
@@ -113,12 +137,11 @@ body {
   padding: 10px;
 }
 
-/*
+
 .main-content {
   margin-left: 250px;
   padding: 20px;
 }
-*/
 /* Customize dropdown appearance */
 .dropdown-menu {
   background-color: white;
