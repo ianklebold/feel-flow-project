@@ -20,7 +20,7 @@ const listUsers = async (email, password) => {
 };
 
 document.getElementById("login-form").addEventListener("submit", function (event) {
-  event.preventDefault(); // Evita enviar el formulario
+  event.preventDefault();
 
   const emailInput = document.getElementById("email");
   const passwordInput = document.getElementById("password");
