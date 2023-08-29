@@ -2,16 +2,16 @@
 <testng-results ignored="0" total="1" passed="1" failed="0" skipped="0">
   <reporter-output>
   </reporter-output>
-  <suite started-at="2023-08-29T19:57:32 ART" name="Carina Demo Tests - Hello World" finished-at="2023-08-29T19:57:32 ART" duration-ms="112">
+  <suite started-at="2023-08-29T20:03:34 ART" name="Carina Demo Tests - Hello World" finished-at="2023-08-29T20:03:34 ART" duration-ms="107">
     <groups>
     </groups>
-    <test started-at="2023-08-29T19:57:32 ART" name="Hello World test" finished-at="2023-08-29T19:57:32 ART" duration-ms="112">
+    <test started-at="2023-08-29T20:03:34 ART" name="Hello World test" finished-at="2023-08-29T20:03:34 ART" duration-ms="107">
       <class name="com.equipo5.carina.demo.HelloWorld">
-        <test-method signature="helloWorld()[pri:0, instance:com.equipo5.carina.demo.HelloWorld@6094ad4]" started-at="2023-08-29T19:57:32 ART" name="helloWorld" finished-at="2023-08-29T19:57:32 ART" duration-ms="24" status="PASS">
+        <test-method signature="helloWorld()[pri:0, instance:com.equipo5.carina.demo.HelloWorld@2c0d7099]" started-at="2023-08-29T20:03:34 ART" name="helloWorld" finished-at="2023-08-29T20:03:34 ART" duration-ms="24" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- helloWorld -->
-        <test-method is-config="true" signature="onCarinaAfterMethod()[pri:0, instance:com.equipo5.carina.demo.HelloWorld@6094ad4]" started-at="2023-08-29T19:57:32 ART" name="onCarinaAfterMethod" finished-at="2023-08-29T19:57:32 ART" duration-ms="3" status="PASS">
+        <test-method is-config="true" signature="onCarinaAfterMethod()[pri:0, instance:com.equipo5.carina.demo.HelloWorld@2c0d7099]" started-at="2023-08-29T20:03:34 ART" name="onCarinaAfterMethod" finished-at="2023-08-29T20:03:34 ART" duration-ms="2" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- onCarinaAfterMethod -->
