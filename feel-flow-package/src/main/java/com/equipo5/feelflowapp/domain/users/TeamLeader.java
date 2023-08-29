@@ -21,8 +21,8 @@ public class TeamLeader extends User{
     private Team team;
 
     @Builder
-    public TeamLeader(UUID uuid, String name, String email, String password, List<Authority> authorities, Team team) {
-        super(uuid, name, email, password, authorities);
+    public TeamLeader(UUID uuid, String name,String surname, String email, String password, List<Authority> authorities, Team team) {
+        super(uuid, name,surname, email, password, authorities);
         this.team = team;
     }
 }

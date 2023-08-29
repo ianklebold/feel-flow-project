@@ -2,6 +2,7 @@ package com.equipo5.feelflowapp.dto.users.admin;
 
 import com.equipo5.feelflowapp.constants.validation.admin.ValidationAdminMessages;
 import com.equipo5.feelflowapp.dto.enterprise.EnterpriseDTO;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.*;
 import lombok.*;
 
@@ -19,6 +20,10 @@ public class AdminDTO {
     @NotNull(message = ValidationAdminMessages.VALIDATION_MESSAGE_ADMIN_NOT_NULL_NAME)
     private String name;
 
+    @NotBlank(message = ValidationAdminMessages.VALIDATION_MESSAGE_ADMIN_NOT_BLANK_SURNAME)
+    @NotNull(message = ValidationAdminMessages.VALIDATION_MESSAGE_ADMIN_NOT_NULL_SURNAME)
+    private String surname;
+
     @NotNull(message = ValidationAdminMessages.VALIDATION_MESSAGE_ADMIN_NOT_NULL_EMAIL)
     @NotBlank(message = ValidationAdminMessages.VALIDATION_MESSAGE_ADMIN_NOT_BLANK_EMAIL)
     @Email(message = ValidationAdminMessages.VALIDATION_MESSAGE_ADMIN_NOT_WELL_FORMED_EMAIL)
@@ -26,9 +31,9 @@ public class AdminDTO {
 
     @NotNull(message = ValidationAdminMessages.VALIDATION_MESSAGE_ADMIN_NOT_NULL_PASSWORD)
     @NotBlank(message = ValidationAdminMessages.VALIDATION_MESSAGE_ADMIN_NOT_BLANK_PASSWORD)
-    @Pattern(regexp = "^(?=.*[A-Z])(?=.*\\\\d).{8,99}$", message = ValidationAdminMessages.VALIDATION_MESSAGE_ADMIN_NOT_WELL_FORMED_PASSWORD)
+    @Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#&()–[{}]:;',?/*~$^+=<>]).{8,99}$", message = ValidationAdminMessages.VALIDATION_MESSAGE_ADMIN_NOT_WELL_FORMED_PASSWORD)
     private String password;
 
-    @NotNull()
+    @Valid
     private EnterpriseDTO enterpriseDTO;
 }
