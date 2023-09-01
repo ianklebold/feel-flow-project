@@ -32,46 +32,31 @@ const listUsers = async (email) => {
                                         <label for="floatingInputGroup1">Nombre</label>
             `
             apellido = `<input type="email" class="form-control" id="Nombre" placeholder="Apellido" required value="${Apellido}">
-            <label for="floatingInputGroup1">Apellido</label>
+                                        <label for="floatingInputGroup1">Apellido</label>
             `
             mail += `<input type="email" class="form-control" id="Nombre" placeholder="Nombre" required value="${Email}">
-                    <label for="floatingInputGroup1">Email</label>
+                                        <label for="floatingInputGroup1">Email</label>
             `
             empresa += `<input type="email" class="form-control" id="Nombre" placeholder="Nombre" required value="${Empresa}">
-                    <label for="floatingInputGroup1">Empresa</label>
+                                        <label for="floatingInputGroup1">Empresa</label>
             `
         }
         
     });
+    document.getElementById("name").innerHTML = Nombre2;
+    document.getElementById("rol").innerHTML = Rol;
     document.getElementById("Nombre").innerHTML = name;
     document.getElementById("Apellido").innerHTML = apellido;
     document.getElementById("Email").innerHTML = mail;
     document.getElementById("Empresa").innerHTML = empresa;
-    /*
-    document.getElementById("rol").innerHTML = Rol;
-    document.getElementById("Nombre").innerHTML = Nombre;
-    document.getElementById("correo").innerHTML = Email;
-    document.getElementById("empresa").innerHTML = Empresa;
-    document.getElementById("equipo").innerHTML = Equipo;
-    document.getElementById("Rol").innerHTML = Rol;
-    */
-
+    document.addEventListener("DOMContentLoaded", function() {
+        document.getElementById('miBoton').addEventListener('click', function() {
+            window.location.href = "../pages/Home.html";
+        });
+    });
 
 };
 
 window.addEventListener("load", function (){
-    listUsers("Sincere@april.biz");
+    listUsers("Sincere@april.biz"); /*Aca deberiamos ir a buscar el mail del user en alguna parte que no tengo ni puta idea donde es*/
 })
-
-/*
-document.getElementById("edit-form").addEventListener("submit", function (event) {
-    event.preventDefault();
-
-    const emailInput = document.getElementById("email");
-    const passwordInput = document.getElementById("password");
-
-    const email = emailInput.value;
-    const password = passwordInput.value;
-
-    listUsers(email, password);
-});*/
