@@ -1,7 +1,7 @@
 const listUsers = async (email) => {
     const response = await fetch('https://jsonplaceholder.typicode.com/users');
     const users = await response.json();
-  
+
     let name = ``;
     let mail = ``;
     let empresa = ``;
@@ -21,12 +21,12 @@ const listUsers = async (email) => {
             Email += `${user.email}`
             Empresa += `${user.company.name}`
             Equipo += `${user.website}`
-            
+
             /*Descripcion += `Hola`*/
             arreglo = Nombre2.split(" ");
-            Nombre=arreglo[0];
-            Apellido=arreglo[1];
-            
+            Nombre = arreglo[0];
+            Apellido = arreglo[1];
+
             name += `
             <input type="email" class="form-control" id="Nombre" placeholder="Nombre" required value="${Nombre}">
                                         <label for="floatingInputGroup1">Nombre</label>
@@ -41,7 +41,7 @@ const listUsers = async (email) => {
                                         <label for="floatingInputGroup1">Empresa</label>
             `
         }
-        
+
     });
     document.getElementById("name").innerHTML = Nombre2;
     document.getElementById("rol").innerHTML = Rol;
@@ -49,14 +49,17 @@ const listUsers = async (email) => {
     document.getElementById("Apellido").innerHTML = apellido;
     document.getElementById("Email").innerHTML = mail;
     document.getElementById("Empresa").innerHTML = empresa;
-    document.addEventListener("DOMContentLoaded", function() {
-        document.getElementById('miBoton').addEventListener('click', function() {
-            window.location.href = "../pages/Home.html";
-        });
+
+    document.getElementById("edit-form").addEventListener("submit", function (event) {
+        event.preventDefault();
+        const nuevaPagina = "../pages/profile.html";
+        window.location.href = nuevaPagina;
     });
 
 };
 
-window.addEventListener("load", function (){
-    listUsers("Sincere@april.biz"); /*Aca deberiamos ir a buscar el mail del user en alguna parte que no tengo ni puta idea donde es*/
+window.addEventListener("load", function () {
+    listUsers("Sincere@april.biz"); 
+    /*Aca deberiamos ir a buscar el mail del user en alguna parte que no tengo ni puta idea donde es*/
 })
+
