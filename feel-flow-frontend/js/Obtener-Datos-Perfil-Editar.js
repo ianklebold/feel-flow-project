@@ -28,17 +28,20 @@ const listUsers = async (email) => {
             Apellido = arreglo[1];
 
             name += `
-            <input type="email" class="form-control" id="Nombre" placeholder="Nombre" required value="${Nombre}">
-                                        <label for="floatingInputGroup1">Nombre</label>
+                <input type="email" class="form-control" id="Nombre" placeholder="Nombre" required value="${Nombre}">
+                <label for="floatingInputGroup1">Nombre</label>
             `
-            apellido = `<input type="email" class="form-control" id="Nombre" placeholder="Apellido" required value="${Apellido}">
-                                        <label for="floatingInputGroup1">Apellido</label>
+            apellido = `
+                <input type="email" class="form-control" id="Nombre" placeholder="Apellido" required value="${Apellido}">
+                <label for="floatingInputGroup1">Apellido</label>
             `
-            mail += `<input type="email" class="form-control" id="Nombre" placeholder="Nombre" required value="${Email}">
-                                        <label for="floatingInputGroup1">Email</label>
+            mail += `
+                <input type="email" class="form-control" id="Nombre" placeholder="Nombre" required value="${Email}">
+                <label for="floatingInputGroup1">Email</label>
             `
-            empresa += `<input type="email" class="form-control" id="Nombre" placeholder="Nombre" required value="${Empresa}">
-                                        <label for="floatingInputGroup1">Empresa</label>
+            empresa += `
+                <input type="email" class="form-control" id="Nombre" placeholder="Nombre" required value="${Empresa}">
+                <label for="floatingInputGroup1">Empresa</label>
             `
         }
 
@@ -51,15 +54,15 @@ const listUsers = async (email) => {
     document.getElementById("Empresa").innerHTML = empresa;
 
     document.getElementById("edit-form").addEventListener("submit", function (event) {
+        /*Falta controlar si se modificaron datos y enviarlos a algun lado*/
         event.preventDefault();
-        const nuevaPagina = "../pages/profile.html";
-        window.location.href = nuevaPagina;
+        window.location.href = "../pages/profile.html";
     });
 
 };
 
 window.addEventListener("load", function () {
-    listUsers("Sincere@april.biz"); 
+    listUsers("Sincere@april.biz");
     /*Aca deberiamos ir a buscar el mail del user en alguna parte que no tengo ni puta idea donde es*/
 })
 
