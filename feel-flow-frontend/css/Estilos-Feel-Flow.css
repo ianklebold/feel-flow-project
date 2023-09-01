@@ -21548,6 +21548,11 @@ hr.horizontal.gray-light {
   height: 4.875rem;
 }
 
+.sidenav-footer {
+  height: 4.875rem;
+}
+
+
 .sidenav-footer .card.card-background:after {
   opacity: 0.65;
 }
