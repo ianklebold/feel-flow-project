@@ -40,8 +40,8 @@
 }
 
 body {
-  margin: 0;
-  font-family: var(--bs-font-sans-serif);
+  margin: 0;/*
+  font-family: var(--bs-font-sans-serif);*/
   font-size: 1rem;
   font-weight: 400;
   line-height: 1.5;
@@ -4653,9 +4653,9 @@ fieldset:disabled .btn {
   display: block;
   width: 100%;
   padding: 0.3rem 1rem;
-  clear: both;
+  clear: both;/*
   font-weight: 400;
-  color: #67748e;
+  color: #67748e;*/
   text-align: inherit;
   white-space: nowrap;
   background-color: transparent;
@@ -4959,7 +4959,7 @@ fieldset:disabled .btn {
 }
 
 .navbar {
-  position: relative;
+  position: relative; 
   display: flex;
   flex-wrap: wrap;
   align-items: center;
@@ -4968,6 +4968,7 @@ fieldset:disabled .btn {
   padding-right: 1rem;
   padding-bottom: 0.5rem;
   padding-left: 1rem;
+  background-color: rgba(69, 130, 158, 0.323);
 }
 
 .navbar>.container,
@@ -19325,6 +19326,7 @@ fieldset:disabled .btn {
 
 .breadcrumb-item {
   font-size: 0.875rem;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
 .breadcrumb-item.text-white::before {
@@ -19370,7 +19372,7 @@ fieldset:disabled .btn {
 }
 
 .card .card-body {
-  font-family: "Open Sans";
+  /*font-family: "Open Sans";*/
   padding: 1.5rem;
 }
 
@@ -20174,7 +20176,7 @@ label,
 }
 
 .icon-shape i {
-  color: #fff;
+  color: black;
   opacity: 0.8;
   top: 11px;
   position: relative;
@@ -20824,15 +20826,15 @@ hr.horizontal.gray-light {
 .navbar-vertical .navbar-brand>img,
 .navbar-vertical .navbar-brand-img {
   max-width: 100%;
-  max-height: 2rem;
+  max-height: 3rem; /*Este me marca el tamaño del logo de la navbar vertical*/
 }
 
 .navbar-vertical .navbar-nav .nav-link {
   padding-left: 1rem;
   padding-right: 1rem;
   font-weight: 500;
-  color: #67748e;
-}
+  color: #4682a066;
+}/*Color de los iconos que están inactivos*/
 
 .navbar-vertical .navbar-nav .nav-link>i {
   min-width: 1.8rem;
@@ -20872,8 +20874,8 @@ hr.horizontal.gray-light {
   top: 0;
   bottom: 0;
   width: 100%;
-  max-width: 15.625rem !important;
-  overflow-y: auto;
+  max-width: 15.625rem !important;/*
+  overflow-y: auto;*/
   padding: 0;
   box-shadow: none;
 }
@@ -21546,6 +21548,11 @@ hr.horizontal.gray-light {
   height: 4.875rem;
 }
 
+.sidenav-footer {
+  height: 4.875rem;
+}
+
+
 .sidenav-footer .card.card-background:after {
   opacity: 0.65;
 }
@@ -21604,12 +21611,19 @@ hr.horizontal.gray-light {
 
 .navbar-vertical .navbar-nav>.nav-item .nav-link.active {
   color: #344767;
-  background-color: #fff;
+  background-color: rgba(69, 130, 158, 0.323);
+}
+
+.navbar-vertical .navbar-nav>.nav-item .nav-link:hover {
+  color: #344767;
+  background-color: rgba(69, 130, 158, 0.323);
 }
 
 .navbar-vertical .navbar-nav>.nav-item .nav-link.active .icon {
-  background-image: linear-gradient(310deg, #cb0c9f 0%, #cb0c9f 100%);
-}
+  border-width: 1px;
+  border-style: outset;
+  background-color: rgba(245, 245, 245, 0.5);
+} /*Color del cuadrado del ícono en el nav vertical*/
 
 .navbar-vertical .navbar-nav>.nav-item .nav-link.active .icon svg .color-background,
 .navbar-vertical .navbar-nav>.nav-item .nav-link.active .icon svg .color-foreground {
@@ -23226,6 +23240,7 @@ p {
 
 .font-weight-bolder {
   font-weight: 700 !important;
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
 }
 
 .font-italic {
