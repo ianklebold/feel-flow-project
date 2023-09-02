@@ -5,19 +5,19 @@ document.addEventListener('DOMContentLoaded', function () {
       event.preventDefault();
   
       // Obtener los valores de los campos del formulario
-      const nombre = document.getElementById('Nombre').value;
-      const apellido = document.getElementById('Apellido').value;
+      const name = document.getElementById('Nombre').value;
+      const surname = document.getElementById('Apellido').value;
       const email = document.getElementById('email').value;
-      const contraseña = document.getElementById('floatingInputGroup1').value;
-      const empresa = document.getElementById('Empresa').value;
+      const password = document.getElementById('floatingInputGroup1').value;
+      const enterpriseDTO = document.getElementById('Empresa').value;
   
       // Crear un objeto con los datos a enviar
       const datos = {
-        nombre,
-        apellido,
+        name,
+        surname,
         email,
-        contraseña,
-        empresa
+        password,
+        enterpriseDTO
       };
   
       // Realizar una solicitud POST al backend
