@@ -64,5 +64,5 @@ const listUsers = async (email) => {
 window.addEventListener("load", function () {
     listUsers("Sincere@april.biz");
     /*Aca deberiamos ir a buscar el mail del user en alguna parte que no tengo ni puta idea donde es*/
-})
+});
 
