@@ -1,0 +1,39 @@
+#homelogo {
+    height: 50px;
+    padding-left: 15px;
+    padding-right: 10px;
+}
+
+.bg-feelflow {
+    background-color: rgba(69, 130, 158, 1);
+}
+
+.bg-feelflow-light {
+    background-color: rgba(69, 130, 158, 0.70);
+}
+
+/* Estilos para los elementos de la lista */
+.custom-nav-item {
+    margin-top: 5px;
+    width: 100%;
+    display: block;
+  }
+  
+  .custom-nav-item a {
+    padding: 10px;
+    margin-bottom: 10px; /* Aumentar el margen vertical entre elementos */
+    transition: background-color 0.3s, border-radius 0.3s; /* Agregar una transición suave */
+    border-radius: 0;
+    color: white; /* Cambiar el color del texto */
+    text-decoration: none; /* Quitar subrayado de los enlaces */
+    display: block;
+  }
+
+  
+  /* Estilos cuando el mouse está sobre un elemento */
+  .custom-nav-link:hover {
+    background-color: rgb(255, 255, 255, 0.30); /* Cambiar el color de fondo al sombreado deseado */
+    color: white ;
+    border-radius: 10px;
+    display: block;
+  }
