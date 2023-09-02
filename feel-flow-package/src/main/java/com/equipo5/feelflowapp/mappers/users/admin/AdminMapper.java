@@ -12,13 +12,13 @@ public interface AdminMapper {
 
     @Mapping(source = "enterpriseDTO", target = "enterPrise")
     @Mapping(source = "name", target = "name")
-    @Mapping(source = "email", target = "email")
+    @Mapping(source = "username", target = "username")
     @Mapping(source = "password", target = "password")
     Admin adminDtoToAdmin(AdminDTO adminDTO);
 
     @Mapping(source = "enterPrise", target = "enterpriseDTO")
     @Mapping(source = "name", target = "name")
-    @Mapping(source = "email", target = "email")
+    @Mapping(source = "username", target = "username")
     @Mapping(source = "password", target = "password")
     AdminDTO adminToAdminDto(Admin admin);
 }
