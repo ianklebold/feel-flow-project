@@ -2,6 +2,7 @@ package com.equipo5.feelflowapp.security.filters;
 
 import com.equipo5.feelflowapp.domain.enumerations.teamRoles.TeamRoles;
 import com.equipo5.feelflowapp.domain.users.User;
+import com.equipo5.feelflowapp.repository.users.UserRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -9,6 +10,7 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -25,8 +27,11 @@ public class JwtAutheticationFilter extends UsernamePasswordAuthenticationFilter
 
     private final  AuthenticationManager authenticationManager;
 
-    public JwtAutheticationFilter(AuthenticationManager authenticationManager) {
+    private final UserRepository userRepository;
+
+    public JwtAutheticationFilter(AuthenticationManager authenticationManager,UserRepository userRepository) {
         this.authenticationManager = authenticationManager;
+        this.userRepository = userRepository;
     }
 
     @Override
@@ -51,12 +56,15 @@ public class JwtAutheticationFilter extends UsernamePasswordAuthenticationFilter
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException {
         String username = ((org.springframework.security.core.userdetails.User) authResult.getPrincipal()).getUsername();
 
+        Optional<User> user = userRepository.findByUsername(username);
+
         Collection<? extends GrantedAuthority> roles = authResult.getAuthorities();
         boolean isAdmin = roles.stream().anyMatch(role -> role.getAuthority().equals(TeamRoles.ADMIN.name()));
         //Los claims se usan para guardar cualquier tipo de dato en el token
         Claims claims = Jwts.claims();
         claims.put("authorities",new ObjectMapper().writeValueAsString(roles));
         claims.put("isAdmin",isAdmin);
+        user.ifPresent(value -> claims.put("id", value.getUuid()));
 
         String token = Jwts.builder()
                 .setClaims(claims)
