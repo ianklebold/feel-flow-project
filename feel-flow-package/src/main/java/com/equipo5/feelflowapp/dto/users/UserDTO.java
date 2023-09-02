@@ -1,5 +1,6 @@
 package com.equipo5.feelflowapp.dto.users;
 
+import com.equipo5.feelflowapp.dto.enterprise.EnterpriseInfoHomeDTO;
 import lombok.*;
 
 import java.util.UUID;
@@ -14,4 +15,5 @@ public class UserDTO {
     private String name;
     private String surname;
     private String username;
+    private EnterpriseInfoHomeDTO enterpriseInfoHomeDTO;
 }
