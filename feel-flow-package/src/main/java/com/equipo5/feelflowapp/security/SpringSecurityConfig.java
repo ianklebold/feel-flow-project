@@ -18,6 +18,7 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 
 import java.util.Arrays;
+import java.util.List;
 
 @Configuration
 @EnableWebSecurity
@@ -36,7 +37,7 @@ public class SpringSecurityConfig {
     @Bean //El objeto que se devuelve, se lo guarda en el contexto de spring para que otros componentes lo puedan usar
     SecurityFilterChain configure(HttpSecurity httpSecurity) throws Exception{
         httpSecurity.authorizeHttpRequests(
-                        auth -> auth.requestMatchers("/api/v1/").permitAll()
+                        auth -> auth.requestMatchers("/api/v1/**").permitAll()
                                 .anyRequest()
                                 .authenticated()
                 ).csrf(AbstractHttpConfigurer::disable)
@@ -47,16 +48,17 @@ public class SpringSecurityConfig {
     @Bean
     CorsConfigurationSource corsConfigurationSource(){
         CorsConfiguration config = new CorsConfiguration();
-        config.setAllowedOriginPatterns(Arrays.asList("http://127.0.0.1:5500"));
+        config.setAllowedOrigins(Arrays.asList("http://127.0.0.1:5500/"));
         config.setAllowedMethods(Arrays.asList("GET","POST","PUT","DELETE"));
         config.setAllowedHeaders(Arrays.asList("Authorization","Content-Type"));
         config.setAllowCredentials(true);
 
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/",config);
+        source.registerCorsConfiguration("/**",config);
         return source;
     }
+
 
 
     @Bean
