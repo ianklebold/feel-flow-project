@@ -1,26 +1,24 @@
+import { GetUser } from "./GetPerfil";
+
 const idLocation = localStorage.getItem('idLocation');
 const token = localStorage.getItem('Token');
 console.log(token)
-function GetUser(id, token) {
-  let url = `http://localhost:8080/api/v1/user/${id}`;
-  // Realizar una solicitud POST al backend
-  fetch(url, {
-    method: 'GET',
-    headers: {
-      'Authorization': `Bearer ${token}`
-    }
-  })
-  .then(response => {
-    if (response.status === 200) {
-      return response.json(); 
-    } else {
-      throw new Error('Error al recuperar los datos');
-    }
-  })
-  .then(data => {
-    console.log(data);
-  })
-}
+
+window.addEventListener("load", function () {
+    
+  GetUser(idLocation, token)
+    .then(data => {
+      // Aquí puedes trabajar con los datos JSON recibidos
+      console.log(data);
+    })
+    .catch(error => {
+      // Manejo de errores, por ejemplo, mostrar un mensaje de error
+      console.error(error);
+    });
+
+})
+
+
 /*
 const listUsers = async (email) => {
     const response = await fetch('https://jsonplaceholder.typicode.com/users');
@@ -56,7 +54,17 @@ const listUsers = async (email) => {
 */
 window.addEventListener("load", function () {
     
-    GetUser(idLocation,token);
+    GetUser(idLocation, token)
+      .then(data => {
+        // Aquí puedes trabajar con los datos JSON recibidos
+        console.log(data);
+      })
+      .catch(error => {
+        // Manejo de errores, por ejemplo, mostrar un mensaje de error
+        console.log("hola")
+        console.error(error);
+      });
+
 })
 
 /*
