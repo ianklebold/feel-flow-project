@@ -19,61 +19,82 @@ document.addEventListener('DOMContentLoaded', function () {
       },
       body: JSON.stringify(datos)
     })
-    .then(response => {
-      if (response.status === 200) {
-        //const headers = response.body.token;
-        console.log(response)
-        
-        /*
-        const token = headers.get('User-Agent');
-        const locationHeader = headers.get('Location');
-        
-        // Muestra los valores de los encabezados en la consola
-        console.log('Token:', token);
-        console.log('Location Header:', locationHeader);/*
-        return response.headers.json();*/
-    
-        // Continúa con el procesamiento de la respuesta si es necesario
-      } else {
-        // Maneja errores, por ejemplo, muestra un mensaje de error
-        throw new Error('Error al iniciar sesión');
-      }
-    })
-    .then(data => {
-      console.log(data.json);
-    })
-    .catch(error => {
-      // Manejo de errores, por ejemplo, mostrar un mensaje de error
-      console.error(error);
-      messageContainer.textContent = "Usuario o contraseña incorrectos.";
-    });
-      /*.then(response => { ESTE ES EL CODIGO ANTIGUO
+      .then(response => {
         if (response.status === 200) {
-          window.location.href = "../pages/Home.html";
-          document.getElementById("idinicio").innerHTML = response.username
-          document.getElementById("tkninicio").innerHTML = response.password
-          return response.json(); // Esto asume que la respuesta es un JSON directo
+          console.log(response.statusText);
+          return response.text();
+          //const headers = response.body.token;
+          //console.log(response)
+
+          /*
+          const token = headers.get('User-Agent');
+          const locationHeader = headers.get('Location');
+          
+          // Muestra los valores de los encabezados en la consola
+          console.log('Token:', token);
+          console.log('Location Header:', locationHeader);/*
+          return response.headers.json();*/
+
+          // Continúa con el procesamiento de la respuesta si es necesario
         } else {
+          // Maneja errores, por ejemplo, muestra un mensaje de error
           throw new Error('Error al iniciar sesión');
         }
       })
       .then(data => {
-        // Si la respuesta es un objeto que contiene un campo 'json', entonces accede a 'data.json'
-        // por ejemplo, data.json sería algo como data.json
-        console.log(data.json);
+        console.log(data);
+        const body_login = JSON.parse(data);
+        console.log(body_login.token);
 
-        // Ahora puedes trabajar con 'data.json' según sea necesario
+        const token = body_login.token; // Reemplaza con tu token JWT real
 
-        // Finalmente, puedes redirigir al usuario a otra página
-        
+        // Dividir el token en sus partes (encabezado, carga útil y firma)
+        const partesToken = token.split('.');
+
+        // Decodificar la carga útil (parte en el índice 1) utilizando atob()
+        const payloadDecodificado = atob(partesToken[1]);
+
+        // El payload decodificado es una cadena JSON, por lo que puedes analizarla en un objeto JavaScript
+        const payloadObjeto = JSON.parse(payloadDecodificado);
+
+
+        console.log('Payload decodificado:', payloadObjeto);
+        console.log(payloadObjeto.id)
+        //localStorage.setItem('idLocation', body_login.token);
+        //window.location.href = "../pages/Home.html";
+      })
+      .catch(error => {
+        // Manejo de errores, por ejemplo, mostrar un mensaje de error
+        console.error(error);
+        messageContainer.textContent = "Usuario o contraseña incorrectos.";
+      });
+    /*.then(response => { ESTE ES EL CODIGO ANTIGUO
+      if (response.status === 200) {
         window.location.href = "../pages/Home.html";
         document.getElementById("idinicio").innerHTML = response.username
         document.getElementById("tkninicio").innerHTML = response.password
-      })
-      .catch(error => {
-        console.error(error);
-        messageContainer.textContent = "Usuario o contraseña incorrectos.";
-      });*/
+        return response.json(); // Esto asume que la respuesta es un JSON directo
+      } else {
+        throw new Error('Error al iniciar sesión');
+      }
+    })
+    .then(data => {
+      // Si la respuesta es un objeto que contiene un campo 'json', entonces accede a 'data.json'
+      // por ejemplo, data.json sería algo como data.json
+      console.log(data.json);
+
+      // Ahora puedes trabajar con 'data.json' según sea necesario
+
+      // Finalmente, puedes redirigir al usuario a otra página
+      
+      window.location.href = "../pages/Home.html";
+      document.getElementById("idinicio").innerHTML = response.username
+      document.getElementById("tkninicio").innerHTML = response.password
+    })
+    .catch(error => {
+      console.error(error);
+      messageContainer.textContent = "Usuario o contraseña incorrectos.";
+    });*/
   });
 });
 
