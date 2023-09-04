@@ -1,3 +1,27 @@
+const idLocation = localStorage.getItem('idLocation');
+const token = localStorage.getItem('Token');
+console.log(token)
+function GetUser(id, token) {
+  let url = `http://localhost:8080/api/v1/user/${id}`;
+  // Realizar una solicitud POST al backend
+  fetch(url, {
+    method: 'GET',
+    headers: {
+      'Authorization': `Bearer ${token}`
+    }
+  })
+  .then(response => {
+    if (response.status === 200) {
+      return response.json(); 
+    } else {
+      throw new Error('Error al recuperar los datos');
+    }
+  })
+  .then(data => {
+    console.log(data);
+  })
+}
+/*
 const listUsers = async (email) => {
     const response = await fetch('https://jsonplaceholder.typicode.com/users');
     const users = await response.json();
@@ -8,7 +32,6 @@ const listUsers = async (email) => {
     let Email = ``;
     let Empresa = ``;
     let Equipo = ``;
-    /*let Descripcion = ``;*/
     users.forEach((user) => {
         if (user.email === email) {
             Nombre += `${user.name}`
@@ -16,23 +39,11 @@ const listUsers = async (email) => {
             Email += `${user.email}`
             Empresa += `${user.company.name}`
             Equipo += `${user.website}`
-            
-            /*Descripcion += `Hola`*/
-            /*
-            tableBody += `
-            <li class="list-group-item border-0 ps-0 pt-0 text-sm"> <strong class="text-dark">Nombre Completo: </strong>${user.name}</li>
-            <li class="list-group-item border-0 ps-0 text-sm"> <strong class="text-dark">Email: </strong>${user.email}</li>
-            <li class="list-group-item border-0 ps-0 text-sm"> <strong class="text-dark">Empresa: </strong>${user.company.name}</li>
-            <li class="list-group-item border-0 ps-0 text-sm"> <strong class="text-dark">Equipo: </strong>${user.website}</li>
-            <li class="list-group-item border-0 ps-0 pb-0"> <strong class="text-dark">Rol: </strong>${user.username}</li>
-            `*/
         }
         
     });
     document.getElementById("name").innerHTML = Nombre;
     document.getElementById("rol").innerHTML = Rol;
-    /*document.getElementById("descripcion").innerHTML = Descripcion;*/
-    /*document.getElementById("data").innerHTML = tableBody;*/
     document.getElementById("Nombre").innerHTML = Nombre;
     document.getElementById("correo").innerHTML = Email;
     document.getElementById("empresa").innerHTML = Empresa;
@@ -42,9 +53,10 @@ const listUsers = async (email) => {
 
 
 };
-
-window.addEventListener("load", function (){
-    listUsers("Sincere@april.biz");
+*/
+window.addEventListener("load", function () {
+    
+    GetUser(idLocation,token);
 })
 
 /*

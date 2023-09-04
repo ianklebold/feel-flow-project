@@ -60,6 +60,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         console.log('Payload decodificado:', payloadObjeto);
         console.log(payloadObjeto.id)
+        localStorage.setItem('Token', token)
         localStorage.setItem('idLocation', payloadObjeto.id);
         window.location.href = "../pages/Home.html";
       })
