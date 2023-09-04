@@ -19,27 +19,61 @@ document.addEventListener('DOMContentLoaded', function () {
       },
       body: JSON.stringify(datos)
     })
-      .then(response => {
-        if (response.status == 200) {
-          // El registro se realizó con éxito, puedes redirigir al usuario a otra página
+    .then(response => {
+      if (response.status === 200) {
+        //const headers = response.body.token;
+        console.log(response)
+        
+        /*
+        const token = headers.get('User-Agent');
+        const locationHeader = headers.get('Location');
+        
+        // Muestra los valores de los encabezados en la consola
+        console.log('Token:', token);
+        console.log('Location Header:', locationHeader);/*
+        return response.headers.json();*/
+    
+        // Continúa con el procesamiento de la respuesta si es necesario
+      } else {
+        // Maneja errores, por ejemplo, muestra un mensaje de error
+        throw new Error('Error al iniciar sesión');
+      }
+    })
+    .then(data => {
+      console.log(data.json);
+    })
+    .catch(error => {
+      // Manejo de errores, por ejemplo, mostrar un mensaje de error
+      console.error(error);
+      messageContainer.textContent = "Usuario o contraseña incorrectos.";
+    });
+      /*.then(response => { ESTE ES EL CODIGO ANTIGUO
+        if (response.status === 200) {
           window.location.href = "../pages/Home.html";
-          console.log(response.token);
-          console.log(response.Authorization);
-          /*
-          console.log(response.headers.get('Location'));
-          console.log(response);
-          //window.location.href = 'pagina_de_exito.html';
-          */
+          document.getElementById("idinicio").innerHTML = response.username
+          document.getElementById("tkninicio").innerHTML = response.password
+          return response.json(); // Esto asume que la respuesta es un JSON directo
         } else {
-          // Manejar errores, por ejemplo, mostrar un mensaje de error
-          /*console.error('Error al registrar usuario');*/
-          messageContainer.textContent = "Usuario o contraseña incorrectos.";
+          throw new Error('Error al iniciar sesión');
         }
       })
+      .then(data => {
+        // Si la respuesta es un objeto que contiene un campo 'json', entonces accede a 'data.json'
+        // por ejemplo, data.json sería algo como data.json
+        console.log(data.json);
+
+        // Ahora puedes trabajar con 'data.json' según sea necesario
+
+        // Finalmente, puedes redirigir al usuario a otra página
+        
+        window.location.href = "../pages/Home.html";
+        document.getElementById("idinicio").innerHTML = response.username
+        document.getElementById("tkninicio").innerHTML = response.password
+      })
       .catch(error => {
-        // Manejar errores de red u otros errores
-        console.error('Error de red:', error);
-      });
+        console.error(error);
+        messageContainer.textContent = "Usuario o contraseña incorrectos.";
+      });*/
   });
 });
 
