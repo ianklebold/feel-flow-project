@@ -60,8 +60,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
         console.log('Payload decodificado:', payloadObjeto);
         console.log(payloadObjeto.id)
-        //localStorage.setItem('idLocation', body_login.token);
-        //window.location.href = "../pages/Home.html";
+        localStorage.setItem('idLocation', payloadObjeto.id);
+        window.location.href = "../pages/Home.html";
       })
       .catch(error => {
         // Manejo de errores, por ejemplo, mostrar un mensaje de error
