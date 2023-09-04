@@ -1,56 +1,48 @@
-const id = localStorage.getItem('idLocation')
+const idLocation = localStorage.getItem('idLocation');
 const listUsers = async (id) => {
-  const response = await fetch('http://localhost:8080/api/v1/user/' + id);
-  const users = await response.json();
+  try {
+    const response = await fetch(`http://localhost:8080/api/v1/user/${idLocation}`);
+    if (!response.ok) {
+      throw new Error(`Error en la solicitud: ${response.status}`);
+    }
+    
+    const user = await response.json();
 
-  let name = ``;
-  let mail = ``;
-  //let empresa = ``;
-  let Nombre = ``;
-  let Rol = ``;
-  let Email = ``;
-  //let Empresa = ``;
-  let Equipo = ``;
-  let arreglo = ``;
-  let Apellido = ``;
-  let Nombre2 = ``;
+    let Nombre = '';
+    let Email = '';
 
+    Nombre += user.name;
+    Email += user.username;
 
-  Nombre2 += `${user.name}`
-  //Rol += `${user.username}`
-  Email += `${user.username}`
-  Equipo += `${user.website}`
+    const arreglo = Nombre.split(" ");
+    const name = arreglo[0];
+    const apellido = arreglo[1];
 
-  arreglo = Nombre2.split(" ");
-  Nombre = arreglo[0];
-  Apellido = arreglo[1];
+    const inputNombre = document.getElementById('epnombre');
+    inputNombre.value = name;
 
-  name += `${Nombre}`
-  const inputNombre = document.getElementById('epnombre');
-  inputNombre.value = name;
+    const inputApellido = document.getElementById('epapellido');
+    inputApellido.value = apellido;
 
-  apellido = `${Apellido}`
-  const inputApellido = document.getElementById('epapellido');
-  inputApellido.value = apellido;
+    const inputEmail = document.getElementById('epemail');
+    inputEmail.value = Email;
 
-  mail += `${Email}`
-  const inputEmail = document.getElementById('epemail');
-  inputEmail.value = mail;
-
+    // Mostrar los datos en los elementos HTML
+    document.getElementById("name").innerHTML = user.name;
+    document.getElementById("rol").innerHTML = user.role;
+  } catch (error) {
+    console.error('Error en la solicitud:', error.message);
+  }
 };
 
-document.getElementById("name").innerHTML = Nombre2;
-document.getElementById("rol").innerHTML = Rol;
-
 document.getElementById("edit-form").addEventListener("submit", function (event) {
-  /*Falta controlar si se modificaron datos y enviarlos a algún lado*/
+  /* Falta controlar si se modificaron datos y enviarlos a algún lugar */
   event.preventDefault();
   window.location.href = "../pages/profile.html";
 });
-  
 
 window.addEventListener("load", function () {
-  listUsers("id");
+  listUsers(idLocation);
 });
 
 document.addEventListener('DOMContentLoaded', function () {
