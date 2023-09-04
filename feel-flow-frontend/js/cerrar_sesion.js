@@ -21,7 +21,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 },
             }).then((result) => {
                 if (result.isConfirmed) {
-                    window.location.href = logoutLink.href;
+                    window.location.href = "../pages/sign_in.html";
                 }
             });
         });

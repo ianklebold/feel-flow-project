@@ -10,7 +10,7 @@ public class ValidationAdminMessages {
 
     public static final String VALIDATION_MESSAGE_ADMIN_NOT_BLANK_EMAIL = "El email no puede ser vacio";
 
-    public static final String VALIDATION_MESSAGE_ADMIN_NOT_WELL_FORMED_EMAIL = "No se cumple con el formato de email";
+    public static final String VALIDATION_MESSAGE_NOT_WELL_FORMED_EMAIL = "No se cumple con el formato de email";
 
     public static final String VALIDATION_MESSAGE_ADMIN_NOT_NULL_PASSWORD = "La password no puede ser nulo";
 

@@ -26,8 +26,8 @@ public class AdminDTO {
 
     @NotNull(message = ValidationAdminMessages.VALIDATION_MESSAGE_ADMIN_NOT_NULL_EMAIL)
     @NotBlank(message = ValidationAdminMessages.VALIDATION_MESSAGE_ADMIN_NOT_BLANK_EMAIL)
-    @Email(message = ValidationAdminMessages.VALIDATION_MESSAGE_ADMIN_NOT_WELL_FORMED_EMAIL)
-    private String email;
+    @Email(message = ValidationAdminMessages.VALIDATION_MESSAGE_NOT_WELL_FORMED_EMAIL)
+    private String username;
 
     @NotNull(message = ValidationAdminMessages.VALIDATION_MESSAGE_ADMIN_NOT_NULL_PASSWORD)
     @NotBlank(message = ValidationAdminMessages.VALIDATION_MESSAGE_ADMIN_NOT_BLANK_PASSWORD)

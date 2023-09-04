@@ -1,54 +1,56 @@
-const listUsers = async (email) => {
-  const response = await fetch('https://jsonplaceholder.typicode.com/users');
+const id = localStorage.getItem('idLocation')
+const listUsers = async (id) => {
+  const response = await fetch('http://localhost:8080/api/v1/user/' + id);
   const users = await response.json();
 
   let name = ``;
   let mail = ``;
+  //let empresa = ``;
   let Nombre = ``;
   let Rol = ``;
   let Email = ``;
+  //let Empresa = ``;
   let Equipo = ``;
   let arreglo = ``;
   let Apellido = ``;
   let Nombre2 = ``;
 
-  users.forEach((user) => {
-    if (user.email === email) {
-      Nombre2 += `${user.name}`
-      Rol += `${user.username}`
-      Email += `${user.email}`
-      Equipo += `${user.website}`
 
-      arreglo = Nombre2.split(" ");
-      Nombre = arreglo[0];
-      Apellido = arreglo[1];
+  Nombre2 += `${user.name}`
+  //Rol += `${user.username}`
+  Email += `${user.username}`
+  Equipo += `${user.website}`
 
-      name += `${Nombre}`
-      const inputNombre = document.getElementById('epnombre');
-      inputNombre.value = name;
+  arreglo = Nombre2.split(" ");
+  Nombre = arreglo[0];
+  Apellido = arreglo[1];
 
-      apellido = `${Apellido}`
-      const inputApellido = document.getElementById('epapellido');
-      inputApellido.value = apellido;
+  name += `${Nombre}`
+  const inputNombre = document.getElementById('epnombre');
+  inputNombre.value = name;
 
-      mail += `${Email}`
-      const inputEmail = document.getElementById('epemail');
-      inputEmail.value = mail;
-    }
-  });
+  apellido = `${Apellido}`
+  const inputApellido = document.getElementById('epapellido');
+  inputApellido.value = apellido;
 
-  document.getElementById("name").innerHTML = Nombre2;
-  document.getElementById("rol").innerHTML = Rol;
+  mail += `${Email}`
+  const inputEmail = document.getElementById('epemail');
+  inputEmail.value = mail;
 
-  document.getElementById("edit-form").addEventListener("submit", function (event) {
-    /*Falta controlar si se modificaron datos y enviarlos a algún lado*/
-    event.preventDefault();
-    window.location.href = "../pages/profile.html";
-  });
 };
 
+document.getElementById("name").innerHTML = Nombre2;
+document.getElementById("rol").innerHTML = Rol;
+
+document.getElementById("edit-form").addEventListener("submit", function (event) {
+  /*Falta controlar si se modificaron datos y enviarlos a algún lado*/
+  event.preventDefault();
+  window.location.href = "../pages/profile.html";
+});
+  
+
 window.addEventListener("load", function () {
-  listUsers("Sincere@april.biz");
+  listUsers("id");
 });
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -60,20 +62,12 @@ document.addEventListener('DOMContentLoaded', function () {
     //Empresa: document.getElementById('epempresa')
   };
 
-  // Variables para rastrear los valores iniciales de los campos
-  const valoresIniciales = {
-    Nombre: campos.Nombre.value,
-    Apellido: campos.Apellido.value,
-    Email: campos.Email.value,
-    //Empresa: campos.Empresa.value
-  };
-
   // Variable para rastrear si se realizaron cambios en los campos
   let cambiosRealizados = false;
 
   // Función para verificar si un campo ha cambiado y no está vacío
   function campoHaCambiadoYNoEstaVacio(campo) {
-    return campo.value !== valoresIniciales[campo.id] && campo.value.trim() !== '';
+    return campo.value !== campo.defaultValue && campo.value.trim() !== '';
   }
 
   // Función para verificar si un campo está vacío
