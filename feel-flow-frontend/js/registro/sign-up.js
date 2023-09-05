@@ -58,7 +58,7 @@ document.addEventListener('DOMContentLoaded', function () {
         if (response.status == 201) {
           console.log(response.headers.get('Location'));
           console.log(response);
-          //window.location.href = 'pagina_de_exito.html';
+          window.location.href = '../pages/sign_in.html';
         } else {
           console.error('Error al registrar usuario');
         }
