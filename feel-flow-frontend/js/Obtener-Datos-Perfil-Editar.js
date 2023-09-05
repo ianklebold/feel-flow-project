@@ -1,4 +1,82 @@
+import { GetUser } from "../js/GetPerfil.js";
+
 const idLocation = localStorage.getItem('idLocation');
+const token = localStorage.getItem('Token');
+
+document.addEventListener('DOMContentLoaded', function () {
+  const botonGuardar = document.getElementById('miBoton');
+  const campos = {
+    Nombre: document.getElementById('epnombre'),
+    Apellido: document.getElementById('epapellido'),
+    Email: document.getElementById('epemail'),
+    //Empresa: document.getElementById('epempresa')
+  };
+  // Variable para rastrear si se realizaron cambios en los campos
+  let cambiosRealizados = false;
+  // Función para verificar si un campo ha cambiado y no está vacío
+  function campoHaCambiadoYNoEstaVacio(campo) {
+    return campo.value !== campo.defaultValue && campo.value.trim() !== '';
+  }
+  // Función para verificar si un campo está vacío
+  function campoEstaVacio(campo) {
+    return campo.value.trim() === '';
+  }
+  // Función para verificar y habilitar/deshabilitar el botón "Guardar"
+  function actualizarEstadoBoton() {
+    const algunCampoHaCambiado = Object.values(campos).some(campoHaCambiadoYNoEstaVacio);
+    const algunCampoEstaVacio = Object.values(campos).some(campoEstaVacio);
+    botonGuardar.disabled = !algunCampoHaCambiado || algunCampoEstaVacio;
+  }
+  // Agregar escucha de eventos "input" a los campos
+  Object.values(campos).forEach((campo) => {
+    campo.addEventListener('input', function () {
+      cambiosRealizados = true;
+      actualizarEstadoBoton();
+    });
+  });
+  // Llama a esta función para configurar el estado inicial del botón
+  actualizarEstadoBoton();
+});
+
+document.getElementById("edit-form").addEventListener("submit", function (event) {
+  event.preventDefault();
+  window.location.href = "../pages/profile.html";
+});
+
+window.addEventListener("load", function () {
+  GetUser(idLocation, token)
+    .then(data => {
+      MostrarUsuario(data)
+    })
+    .catch(error => {
+      console.error(error);
+    });
+
+})
+
+function MostrarUsuario(usuario) {
+  let Nombre = `${usuario.name}` + ` ` + `${usuario.surname}`;
+  let Rol = `Administrador`;
+
+  document.getElementById("name").innerHTML = Nombre;
+  document.getElementById("rol").innerHTML = Rol;
+  document.getElementById('epnombre').value = `${usuario.name}`;
+  document.getElementById('epapellido').value = `${usuario.surname}`;
+  document.getElementById('epemail').value = `${usuario.username}`;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+/*
 const listUsers = async (id) => {
   try {
     const response = await fetch(`http://localhost:8080/api/v1/user/${idLocation}`);
@@ -36,7 +114,6 @@ const listUsers = async (id) => {
 };
 
 document.getElementById("edit-form").addEventListener("submit", function (event) {
-  /* Falta controlar si se modificaron datos y enviarlos a algún lugar */
   event.preventDefault();
   window.location.href = "../pages/profile.html";
 });
@@ -85,3 +162,4 @@ document.addEventListener('DOMContentLoaded', function () {
   // Llama a esta función para configurar el estado inicial del botón
   actualizarEstadoBoton();
 });
+*/
