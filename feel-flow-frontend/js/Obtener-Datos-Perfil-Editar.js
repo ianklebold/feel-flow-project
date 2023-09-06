@@ -1,4 +1,9 @@
-import { GetUser } from "../js/GetPerfil.js";
+import { GetUser } from "../js/functions/GetPerfil.js";
+import { UpdateUser } from "../js/functions/UpdatePerfil.js";
+
+const upName = ``;
+const upSurname = ``;
+const upUser = ``;
 
 const idLocation = localStorage.getItem('idLocation');
 const token = localStorage.getItem('Token');
@@ -8,8 +13,7 @@ document.addEventListener('DOMContentLoaded', function () {
   const campos = {
     Nombre: document.getElementById('epnombre'),
     Apellido: document.getElementById('epapellido'),
-    Email: document.getElementById('epemail'),
-    //Empresa: document.getElementById('epempresa')
+    Email: document.getElementById('epemail')
   };
   // Variable para rastrear si se realizaron cambios en los campos
   let cambiosRealizados = false;
@@ -40,6 +44,16 @@ document.addEventListener('DOMContentLoaded', function () {
 
 document.getElementById("edit-form").addEventListener("submit", function (event) {
   event.preventDefault();
+  let newName = document.getElementById('epnombre').value;
+  let newSurname = document.getElementById('epapellido').value;
+  let newUsername = document.getElementById('epemail').value;
+  UpdateUser(idLocation, token, newName, newSurname, newUsername)
+    .then(data => {
+      console.log(data)
+    })
+    .catch(error => {
+      console.error(error);
+    });
   window.location.href = "../pages/profile.html";
 });
 
@@ -63,6 +77,9 @@ function MostrarUsuario(usuario) {
   document.getElementById('epnombre').value = `${usuario.name}`;
   document.getElementById('epapellido').value = `${usuario.surname}`;
   document.getElementById('epemail').value = `${usuario.username}`;
+  upName = `${usuario.name}`;
+  upSurname = `${usuario.surname}`;
+  upUser = `${usuario.username}`;
 }
 
 

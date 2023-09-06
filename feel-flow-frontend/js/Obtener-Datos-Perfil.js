@@ -1,4 +1,4 @@
-import { GetUser } from "../js/GetPerfil.js";
+import { GetUser } from "../js/functions/GetPerfil.js";
 
 const idLocation = localStorage.getItem('idLocation');
 const token = localStorage.getItem('Token');
