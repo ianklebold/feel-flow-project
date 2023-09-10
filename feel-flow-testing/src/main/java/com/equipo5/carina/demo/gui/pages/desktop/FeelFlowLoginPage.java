@@ -10,7 +10,7 @@ public class FeelFlowLoginPage extends AbstractPage {
     
     public FeelFlowLoginPage(WebDriver driver) {
         super(driver);
-        setPageAbsoluteURL("https://www.feelflow.com/");
+        setPageAbsoluteURL("http://127.0.0.1:5500/feel-flow-frontend/pages/sign_in.html");
     }
     
     @FindBy(xpath = "//*[@id=\"login-form\"]/div[3]/button")
@@ -22,7 +22,7 @@ public class FeelFlowLoginPage extends AbstractPage {
     @FindBy(xpath = "//*[@id=\"password\"]")
     private ExtendedWebElement passwordInput;
 
-    @FindBy(xpath = "//*[@id='submit-button']")
+    @FindBy(xpath = "//*[@id=\"login-form\"]/div[3]/button")
     private ExtendedWebElement submitLogginButton;
 
     @FindBy(xpath = "//*[@id=\"message-container\"]")

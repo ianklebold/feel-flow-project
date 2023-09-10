@@ -1,3 +1,4 @@
+com\equipo5\carina\demo\FeelFlowSingUpPageTest.class
 com\equipo5\carina\demo\APISampleTest.class
 com\equipo5\carina\demo\DBSampleTest$1.class
 com\equipo5\carina\demo\CryptoSampleTest.class
@@ -14,3 +15,4 @@ com\equipo5\carina\demo\AmazonS3Test.class
 com\equipo5\carina\demo\DBSampleTest.class
 com\equipo5\carina\demo\regression\dataprovider\XlsDataproviderRetryTest.class
 com\equipo5\carina\demo\regression\dataprovider\DataproviderRetryTest2.class
+com\equipo5\carina\demo\FeelFlowLoginPageTest.class
