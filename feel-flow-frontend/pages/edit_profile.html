@@ -294,10 +294,22 @@
                         <div class="card-body p-0 ps-3 mb-2">
                             <div class="row justify-content-around">
                                 <form class="needs-validation " role="form" id="edit-form" novalidate>
-                                    <div class="mb-3 form-floating shadow-lg" id="Nombre"> </div>
-                                    <div class="mb-3 form-floating shadow-lg" id="Apellido"></div>
-                                    <div class="mb-3 form-floating shadow-lg" id="Email"></div>
-                                    <div class="mb-3 form-floating shadow-lg" id="Empresa"></div>
+                                    <div class="mb-3 form-floating shadow-lg" id="Nombre"> 
+                                        <input type="text" class="form-control" id="epnombre" placeholder="Nombre" required >
+                                        <label for="floatingInputGroup1">Nombre</label>
+                                    </div>
+                                    <div class="mb-3 form-floating shadow-lg" id="Apellido">
+                                        <input type="text" class="form-control" id="epapellido" placeholder="Apellido" required >
+                                        <label for="floatingInputGroup1">Apellido</label>
+                                    </div>
+                                    <div class="mb-3 form-floating shadow-lg" id="Email">
+                                        <input type="email" class="form-control" id="epemail" placeholder="Email" required >
+                                        <label for="floatingInputGroup1">Email</label>
+                                    </div>
+                                 <!--  <div class="mb-3 form-floating shadow-lg" id="Empresa">
+                                        <input type="email" class="form-control" id="epempresa" placeholder="Empresa" required >
+                                        <label for="floatingInputGroup1">Empresa</label>
+                                    </div>--> 
                                     <div class="text-center">
                                         <button type="submit" id="miBoton" class="btn bg-gradient-dark _ini_ses w-100 my-4 mt-4">Guardar</button>
                                     </div>
@@ -312,7 +324,9 @@
     </main>
     <!--   Core JS Files   -->
     <script src="../js/core/bootstrap.min.js"></script> <!--Sin este no anda el dropdown-->
-    <script src="../js/Obtener-Datos-Perfil-Editar.js"></script>
+    <script type="module" src="../js/functions/GetPerfil.js"></script>
+    <script type="module" src="../js/functions/UpdatePerfil.js"></script>
+    <script type="module" src="../js/Obtener-Datos-Perfil-Editar.js"></script>
     <!-- Github buttons -->
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
