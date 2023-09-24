@@ -11,12 +11,16 @@ import lombok.NoArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.UUID;
+
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
 public class TeamDTO {
+
+    private UUID uuid;
 
     @NotBlank(message = ValidationTeamMessages.VALIDATION_MESSAGE_TEAM_NOT_BLANK_NAME)
     @NotNull(message = ValidationTeamMessages.VALIDATION_MESSAGE_TEAM_NOT_NULL_NAME)
