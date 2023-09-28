@@ -32,7 +32,7 @@ public class TeamController {
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.add("Location",TEAM_PATH.concat("/").concat(teamCreated.getUuid().toString()));
 
-        return new ResponseEntity(httpHeaders, HttpStatus.CREATED);
+        return new ResponseEntity(teamCreated.getTeamLeaderDTO(),httpHeaders, HttpStatus.CREATED);
     }
 
     @GetMapping(PATH_ID+"/team-leader")

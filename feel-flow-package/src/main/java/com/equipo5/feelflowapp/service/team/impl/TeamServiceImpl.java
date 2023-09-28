@@ -14,6 +14,8 @@ import com.equipo5.feelflowapp.service.enterprise.EnterpriseService;
 import com.equipo5.feelflowapp.service.team.TeamService;
 import com.equipo5.feelflowapp.service.users.teamleader.TeamLeaderService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Objects;
@@ -32,14 +34,17 @@ public class TeamServiceImpl implements TeamService {
     private final TeamLeaderMapper teamLeaderMapper;
 
     private final EnterpriseService enterpriseService;
+
+    private final PasswordEncoder passwordEncoder;
     @Override
     public TeamDTO createTeam(TeamDTO teamDTO) {
         Team teamToCreate = teamMapper.teamDtoToTeam(teamDTO);
 
         setEnterprise(teamToCreate);
         setTeamLeader(teamToCreate,teamDTO);
-
-        return teamMapper.teamToTeamDto(teamRepository.save(teamToCreate));
+        teamRepository.save(teamToCreate);
+        teamToCreate.getTeamLeader().setPassword(teamDTO.getTeamLeaderDTO().getPassword());
+        return teamMapper.teamToTeamDto(teamToCreate);
     }
 
     @Override
