@@ -42,20 +42,27 @@
                     <div class="row justify-content-center" id="formulario-reg">
                         <div class="col-sm-12">
                             <div class="card-title">
-                                <h3 class="text-dark font-weight-bolder text-gradient">Datos del equipo</h3>
+                                <h3 class="text-dark font-weight-bolder text-gradient">Datos del Equipo</h3>
                             </div>
                             <div class="row justify-content-around">
                                 <hr class="custom-hr-eq mt-2 prueba">
                                 <form id="registro-formulario" class="needs-validation" role="form" novalidate>
                                     <div class="mb-3 form-floating shadow-lg">
-                                        <input type="email" class="form-control" id="Nombre" placeholder="Nombre"
+                                        <input type="email" class="form-control" id="NombreTeam" placeholder="Nombre"
                                             required>
-                                        <label for="floatingInputGroup1">Nombre</label>
+                                        <label for="floatingInputGroup1">Nombre Team</label>
                                     </div>
                                     <div class="mb-3 form-floating shadow-lg">
+                                        <input type="email" class="form-control" id="Descripcion"
+                                            placeholder="Descripcion" required>
                                         <label for="floatingInputGroup1">Descripcion</label>
-                                        <textarea id="descripcion" name="descripcion"></textarea>
                                     </div>
+                                    <!--
+                                    <div class="mb-3 form-floating shadow-lg">
+                                        <label for="floatingInputGroup1">Descripcion</label>
+                                        <textarea class="form-control" id="descripcion" name="descripcion"></textarea>
+                                    </div>
+                                    -->
                                     <div class="card-title">
                                         <h3 class="text-dark font-weight-bolder text-gradient">Datos del Team Lead</h3>
                                     </div>
@@ -79,14 +86,15 @@
                                             placeholder="Password">
                                         <label for="floatingInputGroup1">Contraseña</label>
                                     </div>
-                                    <div class="text-center">
+                                    <div class="text-center d-flex justify-content-center">
+                                        <button type="submit" class="registrar" id="botonOculto" style="display: none;"></button>
                                         <button type="button" class="btn bg-gradient-dark _ini_ses w-100 my-4 mt-4"
-                                            data-bs-toggle="modal" data-bs-target="#copiedPopup">
+                                            data-bs-toggle="modal" data-bs-target="#copiedPopup" id="registrarButton">
                                             Crear y Registrar
                                         </button>
                                     </div>
                                 </form>
-
+                                <div id="message-container" class="text-center"></div><!-- Errores -->
                                 <!-- Popup -->
                                 <div class="modal fade" id="copiedPopup" tabindex="-1"
                                     aria-labelledby="copiedPopupLabel" aria-hidden="true">
@@ -99,17 +107,20 @@
                                             </div>
                                             <div class="modal-body">
                                                 <div class="form-group input-group justify-content-around">
-                                                    <input type="text" class="form-control" id="copiedText" value="Email: hola@gmail.com " readonly>
+                                                    <input type="text" class="form-control" id="copiedText"
+                                                        value="Email: hola@gmail.com " readonly>
                                                     <span class="input-group-append">
-                                                        <button type="button" id="copyButton" class="btn bg-gradient-dark my-2 mt-2" >
-                                                            <i class="fa fa-clipboard" aria-hidden="true" style="color: #f8f9fa;"></i>
+                                                        <button type="button" id="copyButton"
+                                                            class="btn bg-gradient-dark my-2 mt-2">
+                                                            <i class="fa fa-clipboard" aria-hidden="true"
+                                                                style="color: #f8f9fa;"></i>
                                                         </button>
                                                     </span>
                                                 </div>
                                             </div>
 
                                             <div class="modal-footer justify-content-center">
-                                                <button type="button" class="btn bg-gradient-danger my-1 mt-2"
+                                                <button type="button" class="btn bg-gradient-danger my-1 mt-2" id="closePopUp"
                                                     data-bs-dismiss="modal">Cerrar</button>
                                             </div>
                                         </div>
@@ -154,12 +165,13 @@
         <script async defer src="https://buttons.github.io/buttons.js"></script>
         <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
         <script src="../js/soft-ui-dashboard.min.js?v=1.0.3"></script>
-        <script>
+        <script src="../../js/team-register/register_team.js"></script>
+        <script src="../../js/team-register/pop_up_invite_lead.js"></script>
+        <script src="../../js/team-register/copy_to_clipboard.js"></script>
+        <!-- <script>
             document.getElementById('registrarButton').addEventListener('click', function () {
-                // Realiza acciones de registro o cualquier otro proceso aquí
-                // ...
 
-                // Muestra el popup modal
+                document.getElementById("botonOculto").click();
                 $('#copiedPopup').modal('show');
             }); 
         </script>
@@ -180,7 +192,7 @@
                     });
             });
 
-        </script>
+        </script> -->
     </body>
 
 </html>
