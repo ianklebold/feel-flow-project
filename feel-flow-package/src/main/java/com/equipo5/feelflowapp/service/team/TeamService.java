@@ -12,4 +12,6 @@ public interface TeamService {
 
     Optional<TeamLeaderDTO> teamLeaderByTeam(UUID uuid) throws NotFoundException;
 
+    Optional<TeamDTO> getTeamById(UUID uuid) throws NotFoundException;
+
 }

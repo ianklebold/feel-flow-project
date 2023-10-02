@@ -1,20 +1,17 @@
 package com.equipo5.feelflowapp.controller;
 
 import com.equipo5.feelflowapp.constants.validation.admin.ValidationAdminMessages;
-import com.equipo5.feelflowapp.constants.validation.enterPrise.ValidationEnterpriseMessages;
 import com.equipo5.feelflowapp.domain.users.Admin;
 import com.equipo5.feelflowapp.dto.enterprise.EnterpriseDTO;
 import com.equipo5.feelflowapp.dto.users.admin.AdminDTO;
 import com.equipo5.feelflowapp.repository.users.admin.AdminRepository;
 
-import static org.hamcrest.core.Is.is;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nimbusds.jose.shaded.gson.Gson;
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.json.JSONArray;
-import org.json.JSONObject;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -39,7 +36,6 @@ import java.util.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 

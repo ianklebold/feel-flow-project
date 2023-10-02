@@ -62,6 +62,17 @@ public class TeamServiceImpl implements TeamService {
         }
     }
 
+    @Override
+    public Optional<TeamDTO> getTeamById(UUID uuid) throws NotFoundException {
+        Optional<Team> team = teamRepository.findById(uuid);
+
+        if (team.isEmpty()){
+            throw new NotFoundException("Team not found");
+        }
+
+        return Optional.of(teamMapper.teamToTeamDto(team.get()));
+    }
+
     private void setTeamLeader(Team teamToCreate,TeamDTO teamDTO){
         TeamLeader teamLeader =  teamLeaderService.createTeamLeader(teamDTO.getTeamLeaderDTO());
         teamToCreate.setTeamLeader(teamLeader);

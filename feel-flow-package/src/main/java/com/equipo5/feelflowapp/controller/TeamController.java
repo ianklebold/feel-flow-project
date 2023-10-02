@@ -1,8 +1,10 @@
 package com.equipo5.feelflowapp.controller;
 
 import com.equipo5.feelflowapp.dto.team.TeamDTO;
+import com.equipo5.feelflowapp.dto.users.invitation.InvitationTeamDTO;
 import com.equipo5.feelflowapp.dto.users.teamleader.TeamLeaderDTO;
 import com.equipo5.feelflowapp.exception.notfound.NotFoundException;
+import com.equipo5.feelflowapp.service.users.invitation.InvitationService;
 import com.equipo5.feelflowapp.service.team.TeamService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -25,6 +27,8 @@ public class TeamController {
 
     private final TeamService teamService;
 
+    private final InvitationService invitationService;
+
     @PostMapping()
     public ResponseEntity createTeam(@Validated @RequestBody TeamDTO teamDTO){
         TeamDTO teamCreated = teamService.createTeam(teamDTO);
@@ -43,6 +47,18 @@ public class TeamController {
                 return new ResponseEntity(teamLeaderDTO,HttpStatus.OK);
             }
             return new ResponseEntity(HttpStatus.NOT_FOUND);
+        }catch (NotFoundException notFoundException){
+            return new ResponseEntity(notFoundException.getMessage(),HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @PostMapping(PATH_ID+"/invite")
+    public ResponseEntity inviteToTeam(@PathVariable(value = "idTeam") UUID idTeam){
+        try {
+
+            InvitationTeamDTO invitationTeamDTO = invitationService.createInvitation(idTeam);
+            return new ResponseEntity(invitationTeamDTO,HttpStatus.OK);
+
         }catch (NotFoundException notFoundException){
             return new ResponseEntity(notFoundException.getMessage(),HttpStatus.NOT_FOUND);
         }
