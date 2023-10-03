@@ -13,5 +13,6 @@ public class InvitationTeamDTO {
     private String uuid;
     private TeamDTO teamDTO;
     private RegularUserDTO regularUserDTO;
+    private boolean isApproved;
     private boolean isExpirated;
 }

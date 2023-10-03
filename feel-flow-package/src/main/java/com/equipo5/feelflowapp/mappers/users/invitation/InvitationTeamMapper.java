@@ -12,5 +12,8 @@ public interface InvitationTeamMapper {
     @Mapping(source = "regularUser",target = "regularUserDTO")
     @Mapping(source = "uuid", target = "uuid")
     @Mapping(source = "expirationDate", target = "isExpirated")
+    @Mapping(source = "approved", target = "isApproved")
     InvitationTeamDTO invitationTeamToInvitationTeamDTO(InvitationTeam invitationTeam);
+
+    InvitationTeam invitationTeamDtoToInvitationTeam(InvitationTeamDTO invitationTeamDTO);
 }

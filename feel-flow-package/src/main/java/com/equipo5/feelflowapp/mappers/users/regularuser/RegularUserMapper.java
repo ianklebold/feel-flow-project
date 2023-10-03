@@ -12,5 +12,15 @@ public interface RegularUserMapper {
     @Mapping(source = "name",target = "name")
     @Mapping(source = "surname",target = "surname")
     @Mapping(source = "username",target = "username")
+    @Mapping(source = "password",target = "password")
+    @Mapping(source = "team",target = "teamDTO")
     RegularUserDTO regularUserToRegularUserDTO(RegularUser regularUser);
+
+    @Mapping(source = "uuid",target = "uuid")
+    @Mapping(source = "name",target = "name")
+    @Mapping(source = "surname",target = "surname")
+    @Mapping(source = "username",target = "username")
+    @Mapping(source = "password",target = "password")
+    @Mapping(source = "teamDTO",target = "team")
+    RegularUser regularUserDtoToRegularUser(RegularUserDTO regularUserDTO);
 }
