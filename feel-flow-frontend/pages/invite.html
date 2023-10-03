@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Home</title>
+  <title>Mi Equipo</title>
   <link rel="icon" type="image/png" href="../img/logos/FeelFlow.png">
   <!--Iconos-->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.css">
@@ -13,6 +13,64 @@
   <!--Estilos-->
   <link rel="stylesheet" href="../css/styles.css">
   <link rel="stylesheet" href="../css/Estilos-Feel-Flow.css">
+
+  <style>
+    .news-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center; /* Espacio entre las tarjetas */
+    }
+
+    .news-card {
+      width: calc(33.33% - 10px); /* Ancho del 33.33% (3 por fila) y resta 10px de margen entre cada tarjeta */
+      margin: 5px; /* Espaciado entre las tarjetas */
+    }
+
+    .invite-button {
+      display: flex;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .invite-button button {
+      margin-left: 10px;
+    }
+
+    .custom-invite-button {
+  background-color: #c0d4dc; /* Color de fondo para el botón "Invitar miembros" */
+}
+
+/* Estilo para el botón "Listo" en la ventana modal de SweetAlert */
+.swal2-confirm.custom-confirm-button {
+  background-color: #c0d4dc;
+  color: #000; /* Cambia el color del texto si es necesario */
+}
+
+/* Estilo para el botón "Invitar miembros" con la clase "custom-invite-button" */
+.custom-invite-button {
+  background-color: #c0d4dc; /* Color de fondo constante */
+  color: #fff; /* Color del texto en el botón */
+  /* Otros estilos como bordes, márgenes, etc. */
+}
+
+/* Desactiva cualquier cambio de color en el estado hover de la clase "custom-invite-button" */
+.custom-invite-button:hover {
+  background-color: #c0d4dc !important; /* !important puede ayudar a anular estilos anteriores */
+  color: #fff !important; /* !important puede ayudar a anular estilos anteriores */
+}
+
+#inviteMembersButton {
+  background-color: #c0d4dc !important;
+  color: #000000 !important;
+  border-color: transparent !important;
+  outline: none !important; /* Anula el estilo predeterminado de outline en :hover */
+  /* Otros estilos como márgenes, padding, etc. */
+}
+
+
+
+ </style>
+
 </head>
 
 <body class="g-sidenav-show  bg-gray-100">
@@ -28,7 +86,7 @@
     <div class="collapse navbar-collapse  w-auto  max-height-vh-100 h-100" id="sidenav-collapse-main">
       <ul class="navbar-nav">
         <li class="nav-item"> <!--Home-->
-          <a class="nav-link active" href="../pages/home.html">
+          <a class="nav-link" href="../pages/home.html">
             <div
               class="icon icon-shape icon-sm shadow border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="fas fa-home"></i>
@@ -55,7 +113,7 @@
           </a>
         </li>
         <li class="nav-item"> <!--Equipos-->
-          <a class="nav-link  " href="../pages/team.html">
+          <a class="nav-link active" href="../pages/team.html">
             <div
               class="icon icon-shape icon-sm shadow border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="fa fa-users"></i>
@@ -125,7 +183,7 @@
         <nav aria-label="breadcrumb">
           <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
             <li class="breadcrumb-item text-sm"><a class="opacity-5" href="../pages/home.html">Feel Flow</a></li>
-            <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Home</li>
+            <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Equipos</li>
           </ol>
         </nav>
         <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4 justify-content-end" id="navbar">
@@ -248,33 +306,39 @@
     <!-- End Navbar -->
     <!--      Hasta aca lo que va si o si   -->
     <div class="container-fluid">
-      <h2 class="text-center mt-2 mb-4">Ultimas novedades</h2>
-      <p class="text-center mb-5">Aquí puedes encontrar información importante y administrar tus opciones.</p>
-      <div class="row justify-content-center">
-        <div class="col-md-6">
-          <div class="news-container">
-            <div class="card news-card">
-              <i class="fa fa-birthday-cake news-card-icon"></i>
-              <div class="news-card-content">
-                <h5 class="card-title news-card-title">Feliz cumpleaños</h5>
-                <p class="card-text news-card-text">Hoy es el cumpleaños de Ian 'Pelo Lacio' F</p>
+        <h2 class="text-center mt-2 mb-4">Nombre del Equipo</h2>        
+        <div class="row justify-content-end"> <!-- Alinea los elementos a la derecha -->
+          <div class="col-md-2"> <!-- Cambia el ancho de la columna según tus necesidades -->
+            <button class="btn btn-primary" id="inviteMembersButton">Invitar miembros</button>
+        </div>
+        </div>
+        <div class="row justify-content-center">
+          <div class="col-md-12">
+            <div class="news-container">
+              <div class="card news-card">
+                <i class="fa fa-birthday-cake news-card-icon"></i>
+                <div class="news-card-content">
+                  <h5 class="card-title news-card-title">Facundo B</h5>
+                </div>
               </div>
-            </div>
-            <div class="card news-card">
-              <i class="fas fa-bullhorn news-card-icon"></i>
-              <div class="news-card-content">
-                <h5 class="card-title news-card-title">Nuevo sprint comenzado</h5>
-                <p class="card-text news-card-text">El sprint 3 comienza oficialmente hoy</p>
+              <div class="card news-card">
+                <i class="fa fa-bug news-card-icon"></i>
+                <div class="news-card-content">
+                  <h5 class="card-title news-card-title">Matias S</h5>
+                </div>
               </div>
-            </div>
-            <div class="card news-card">
-              <i class="fa fa-bug news-card-icon"></i>
-              <div class="news-card-content">
-                <h5 class="card-title news-card-title">Se cayo producción</h5>
-                <p class="card-text news-card-text">Mati no mergeo bien</p>
+              <div class="card news-card">
+                <i class="fa fa-bug news-card-icon"></i>
+                <div class="news-card-content">
+                  <h5 class="card-title news-card-title">Ian F</h5>
+                </div>
               </div>
-            </div>
-            <!-- Agrega más novedades aquí... -->
+              <div class="card news-card">
+                <i class="fa fa-bug news-card-icon"></i>
+                <div class="news-card-content">
+                  <h5 class="card-title news-card-title">Juan Z</h5>
+                </div>
+              </div>             
           </div>
         </div>
       </div>
@@ -297,6 +361,56 @@
   <script src="../js/plugins/chartjs.min.js"></script>
   <script src="../js/core/popper.min.js"></script>
   -->
+
+<script>
+  // Agrega un evento de clic al botón "Invitar miembros" (puede mantener su código original)
+  /*document.getElementById('inviteMembersButton').addEventListener('click', function () {
+    Swal.fire({
+      title: '<strong>Link de Invitación:</strong>',
+      icon: 'info',
+      html: '<a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">links</a> ',
+      showCloseButton: true,
+      focusConfirm: false,
+      confirmButtonText: 'Listo',
+      confirmButtonAriaLabel: 'Thumbs up, great!',
+    });
+  });*/
+  // Agrega un evento de clic al botón "Invitar miembros"
+document.getElementById('inviteMembersButton').addEventListener('click', function () {
+  // Crear el contenido HTML del modal con el botón de copiar
+  const modalContent = `
+    <strong>Link de Invitación:</strong>
+    <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">LINK</a>
+    <button class="btn btn-primary mt-2" id="copyButton">Copiar link</button>
+  `;
+
+  // Mostrar el modal de SweetAlert
+    Swal.fire({
+      title: modalContent,
+      icon: 'info',
+      focusConfirm: false,
+      confirmButtonText: 'Listo',
+      confirmButtonAriaLabel: 'Thumbs up, great!',
+      });
+
+  // Agregar un evento de clic al botón "Copiar al portapapeles" en el modal
+  document.getElementById('copyButton').addEventListener('click', function () {
+    // Obtener el texto que se encuentra en el campo de entrada
+    const textoACopiar = document.getElementById('copiedText').value;
+
+    // Copiar el texto al portapapeles
+    navigator.clipboard.writeText(textoACopiar)
+      .then(function () {
+      })
+      .catch(function (error) {
+        // Error al copiar el texto
+        console.error('Error al copiar el texto: ', error);
+      });
+  });
+});
+
+</script>
+
 </body>
 
 </html>

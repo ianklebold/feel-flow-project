@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Home</title>
+  <title>Mi Equipo</title>
   <link rel="icon" type="image/png" href="../img/logos/FeelFlow.png">
   <!--Iconos-->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.css">
@@ -13,6 +13,22 @@
   <!--Estilos-->
   <link rel="stylesheet" href="../css/styles.css">
   <link rel="stylesheet" href="../css/Estilos-Feel-Flow.css">
+
+  <style>
+    .news-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center; /* Espacio entre las tarjetas */
+    }
+
+    .news-card {
+      width: calc(33.33% - 10px); /* Ancho del 33.33% (3 por fila) y resta 10px de margen entre cada tarjeta */
+      margin: 5px; /* Espaciado entre las tarjetas */
+    }
+
+
+ </style>
+
 </head>
 
 <body class="g-sidenav-show  bg-gray-100">
@@ -28,7 +44,7 @@
     <div class="collapse navbar-collapse  w-auto  max-height-vh-100 h-100" id="sidenav-collapse-main">
       <ul class="navbar-nav">
         <li class="nav-item"> <!--Home-->
-          <a class="nav-link active" href="../pages/home.html">
+          <a class="nav-link " href="../pages/home.html">
             <div
               class="icon icon-shape icon-sm shadow border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="fas fa-home"></i>
@@ -55,7 +71,7 @@
           </a>
         </li>
         <li class="nav-item"> <!--Equipos-->
-          <a class="nav-link  " href="../pages/team.html">
+          <a class="nav-link active" href="../pages/team.html">
             <div
               class="icon icon-shape icon-sm shadow border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="fa fa-users"></i>
@@ -125,7 +141,7 @@
         <nav aria-label="breadcrumb">
           <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
             <li class="breadcrumb-item text-sm"><a class="opacity-5" href="../pages/home.html">Feel Flow</a></li>
-            <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Home</li>
+            <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Equipos</li>
           </ol>
         </nav>
         <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4 justify-content-end" id="navbar">
@@ -248,33 +264,39 @@
     <!-- End Navbar -->
     <!--      Hasta aca lo que va si o si   -->
     <div class="container-fluid">
-      <h2 class="text-center mt-2 mb-4">Ultimas novedades</h2>
-      <p class="text-center mb-5">Aquí puedes encontrar información importante y administrar tus opciones.</p>
-      <div class="row justify-content-center">
-        <div class="col-md-6">
-          <div class="news-container">
-            <div class="card news-card">
-              <i class="fa fa-birthday-cake news-card-icon"></i>
-              <div class="news-card-content">
-                <h5 class="card-title news-card-title">Feliz cumpleaños</h5>
-                <p class="card-text news-card-text">Hoy es el cumpleaños de Ian 'Pelo Lacio' F</p>
+        <h2 class="text-center mt-2 mb-4">Mis Equipos</h2>
+        <div class="row justify-content-end"> <!-- Alinea los elementos a la derecha -->
+          <div class="col-md-2"> <!-- Cambia el ancho de la columna según tus necesidades -->
+            <button class="btn btn-primary" id="inviteMembersButton">Crear Equipo</button>
+        </div>
+        </div>
+        <div class="row justify-content-center">
+          <div class="col-md-12">
+            <div class="news-container">
+              <div class="card news-card">
+                <i class="fa fa-birthday-cake news-card-icon"></i>
+                <div class="news-card-content">
+                  <h5 class="card-title news-card-title">Equipo Oro</h5>
+                </div>
               </div>
-            </div>
-            <div class="card news-card">
-              <i class="fas fa-bullhorn news-card-icon"></i>
-              <div class="news-card-content">
-                <h5 class="card-title news-card-title">Nuevo sprint comenzado</h5>
-                <p class="card-text news-card-text">El sprint 3 comienza oficialmente hoy</p>
+              <div class="card news-card">
+                <i class="fa fa-bug news-card-icon"></i>
+                <div class="news-card-content">
+                  <h5 class="card-title news-card-title">Equipo Plata</h5>
+                </div>
               </div>
-            </div>
-            <div class="card news-card">
-              <i class="fa fa-bug news-card-icon"></i>
-              <div class="news-card-content">
-                <h5 class="card-title news-card-title">Se cayo producción</h5>
-                <p class="card-text news-card-text">Mati no mergeo bien</p>
+              <div class="card news-card">
+                <i class="fa fa-bug news-card-icon"></i>
+                <div class="news-card-content">
+                  <h5 class="card-title news-card-title">Equipo Bronce</h5>
+                </div>
               </div>
-            </div>
-            <!-- Agrega más novedades aquí... -->
+              <div class="card news-card">
+                <i class="fa fa-bug news-card-icon"></i>
+                <div class="news-card-content">
+                  <h5 class="card-title news-card-title">Equipo Peso Arg</h5>
+                </div>
+              </div>             
           </div>
         </div>
       </div>
@@ -297,6 +319,7 @@
   <script src="../js/plugins/chartjs.min.js"></script>
   <script src="../js/core/popper.min.js"></script>
   -->
+ 
 </body>
 
 </html>
