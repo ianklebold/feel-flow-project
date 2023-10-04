@@ -13,6 +13,7 @@
   <!--Estilos-->
   <link rel="stylesheet" href="../css/styles.css">
   <link rel="stylesheet" href="../css/Estilos-Feel-Flow.css">
+  
 
   <style>
     .news-container {
@@ -74,6 +75,7 @@
 </head>
 
 <body class="g-sidenav-show  bg-gray-100">
+    <script src="../js/invitar.js"></script>
   <aside class="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3 "
     id="sidenav-main">
     <div class="sidenav-header">
@@ -361,56 +363,6 @@
   <script src="../js/plugins/chartjs.min.js"></script>
   <script src="../js/core/popper.min.js"></script>
   -->
-
-<script>
-  // Agrega un evento de clic al botón "Invitar miembros" (puede mantener su código original)
-  /*document.getElementById('inviteMembersButton').addEventListener('click', function () {
-    Swal.fire({
-      title: '<strong>Link de Invitación:</strong>',
-      icon: 'info',
-      html: '<a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">links</a> ',
-      showCloseButton: true,
-      focusConfirm: false,
-      confirmButtonText: 'Listo',
-      confirmButtonAriaLabel: 'Thumbs up, great!',
-    });
-  });*/
-  // Agrega un evento de clic al botón "Invitar miembros"
-document.getElementById('inviteMembersButton').addEventListener('click', function () {
-  // Crear el contenido HTML del modal con el botón de copiar
-  const modalContent = `
-    <strong>Link de Invitación:</strong>
-    <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">LINK</a>
-    <button class="btn btn-primary mt-2" id="copyButton">Copiar link</button>
-  `;
-
-  // Mostrar el modal de SweetAlert
-    Swal.fire({
-      title: modalContent,
-      icon: 'info',
-      focusConfirm: false,
-      confirmButtonText: 'Listo',
-      confirmButtonAriaLabel: 'Thumbs up, great!',
-      });
-
-  // Agregar un evento de clic al botón "Copiar al portapapeles" en el modal
-  document.getElementById('copyButton').addEventListener('click', function () {
-    // Obtener el texto que se encuentra en el campo de entrada
-    const textoACopiar = document.getElementById('copiedText').value;
-
-    // Copiar el texto al portapapeles
-    navigator.clipboard.writeText(textoACopiar)
-      .then(function () {
-      })
-      .catch(function (error) {
-        // Error al copiar el texto
-        console.error('Error al copiar el texto: ', error);
-      });
-  });
-});
-
-</script>
-
 </body>
 
 </html>
