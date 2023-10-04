@@ -1,3 +1,18 @@
+import { GetUser } from "../../js/functions/GetPerfil.js";
+
+const idLocation = localStorage.getItem('idLocation');
+const token = localStorage.getItem('Token');
+
+window.addEventListener("load", function () {
+    GetUser(idLocation, token)
+        .then(data => {
+            console.log(data);
+        })
+        .catch(error => {
+            console.error(error);
+        });
+})
+
 document.addEventListener('DOMContentLoaded', function () {
     const formulario = document.getElementById('registro-formulario');
     const nombreTeamInput = document.getElementById('NombreTeam');
@@ -42,21 +57,24 @@ document.addEventListener('DOMContentLoaded', function () {
         const username = emailInput.value;
         const password = passwordInput.value;
         const nameTeam = nombreTeamInput.value;
-        const description = descripcionInput.value;
+        const descriptionTeam = descripcionInput.value;
 
+    
         const datos = {
             nameTeam,
-            description,
+            descriptionTeam,
             name,
             surname,
             username,
             password
         };
-
+        
+        console.log(datos);
         fetch('http://localhost:8080/api/v1/team', {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
             },
             body: JSON.stringify(datos)
         })
