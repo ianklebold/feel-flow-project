@@ -2,97 +2,107 @@ import { GetUser } from "../functions/GetPerfil.js";
 
 const idLocation = localStorage.getItem('idLocation');
 const token = localStorage.getItem('Token');
+console.log(token)
 
 const aside = document.getElementById('separador');
-//const tabla = document.getElementById('03-04-Tabla-Equipos');
+const titulo_pagina = document.getElementById('title');
+const pagina = titulo_pagina.textContent;
 
-//const campoBusqueda = document.getElementById('03-03-buscador');
-//campoBusqueda.addEventListener('input', Buscar);
+const listaDeModulos = {
+    Home: {
+        nombre: 'Home',
+        perfiles: ['Administrador', 'Team Leader', 'Miembro del Equipo'],
+        logo: 'fa-home',
+        link: '../Home.html'
+    },
+    Dashboard: {
+        nombre: 'Dashboard',
+        perfiles: ['Administrador', 'Team Leader', 'Miembro del Equipo'],
+        logo: 'fa-pie-chart',
+        link: '../Home.html'
+    },
+    Lideres: {
+        nombre: 'Lideres',
+        perfiles: ['Administrador'],
+        logo: 'fa-user-circle',
+        link: '../Home.html'
+    },
+    Equipos: {
+        nombre: 'Equipos',
+        perfiles: ['Administrador', 'Team Leader', 'Miembro del Equipo'],
+        logo: 'fa-users',
+        link: '../Teams.html'
+    },
+    Modulos: {
+        nombre: 'Modulos',
+        perfiles: ['Administrador', 'Team Leader', 'Miembro del Equipo'],
+        logo: 'fa-puzzle-piece',
+        link: '../Home.html'
+    },
+    Usuarios: {
+        nombre: 'Usuarios',
+        perfiles: ['Administrador', 'Team Leader'],
+        logo: 'fa-user-circle',
+        link: '../Home.html'
+    },
+};
 
-function crearMenu(logo, equipo, lider) {
-    var fila = document.createElement('tr');
-    var columna1 = document.createElement('td');
-    var divColumna1 = document.createElement('div');
-    divColumna1.classList.add('d-flex', 'px-2', 'py-1');
+function crearMenu(modulo, logo_icon) {
+    var lista = document.createElement('li');
+    lista.classList.add('nav-item')
+    var etiqueta_a = document.createElement('a');
+    etiqueta_a.classList.add('nav-link')
+    if (modulo == pagina) {
+        etiqueta_a.classList.add('active');
+    }
+    etiqueta_a.href = '../pages/profile.html';
 
-    var divlogo = document.createElement('div');
-    var imagen = document.createElement('img');
-    imagen.src = logo;
-    imagen.classList.add('avatar', 'avatar-sm', 'me-3');
+    var div_contenedor = document.createElement('div');
+    div_contenedor.classList.add('icon', 'icon-shape', 'icon-sm', 'shadow', 'border-radius-md', 'text-center', 'me-2', 'd-flex', 'align-items-center', 'justify-content-center');
 
-    var divNombre = document.createElement('div');
-    divNombre.classList.add('d-flex', 'flex-column', 'justify-content-center');
-    var Nombre = document.createElement('h6');
-    Nombre.classList.add('mb-0', 'text-xs');
-    Nombre.textContent = equipo;
+    var icono = document.createElement('i');
+    icono.classList.add('fa', logo_icon);
 
-    divlogo.appendChild(imagen);
-    divNombre.appendChild(Nombre);
-    divColumna1.appendChild(divlogo);
-    divColumna1.appendChild(divNombre);
-    columna1.appendChild(divColumna1);
+    var nombre_modulo = document.createElement('span');
+    nombre_modulo.classList.add('nav-link-text', 'ms-1');
+    nombre_modulo.textContent = modulo;
 
-    // Crear la segunda celda (td) y su contenido
-    var columna2 = document.createElement('td');
-    var Team_leader = document.createElement('p');
-    Team_leader.classList.add('text-xs', 'font-weight-bold', 'mb-0');
-    Team_leader.textContent = lider;
+    div_contenedor.appendChild(icono);
+    etiqueta_a.appendChild(div_contenedor);
+    etiqueta_a.appendChild(nombre_modulo);
+    lista.appendChild(etiqueta_a);
 
-    columna2.appendChild(Team_leader);
-
-    fila.appendChild(columna1);
-    fila.appendChild(columna2);
-
-    var tabla = document.getElementById('03-04-Equipos');
-    tabla.insertAdjacentElement("afterbegin", fila);
+    var divisor = document.getElementById('separador');
+    divisor.insertAdjacentElement("beforebegin", lista);
 }
 
-// Podemos agregar una busqueda por palabras claves, x ejemplo, si tenemos el "Equipo azul" traerlo buscando por la palabra "azul"
-// Se puede usar "fuse" para hacer esto, pero necesitamos la lista de equipos completa que de momento no tenemos
-
-// function Buscar() {
-//     const nombreEquipo = document.getElementById('03-03-01-Equipo').value.toLowerCase();
-//     const teamLeader = document.getElementById('03-03-02-TL').value.toLowerCase();
-
-//     // Recorre las filas de la tabla y muestra u oculta según los valores de búsqueda
-//     const filas = tabla.getElementsByTagName('tr');
-//     for (let i = 1; i < filas.length; i++) { // Empezamos desde 1 para omitir la fila de encabezado
-//         const fila = filas[i];
-//         const celdas = fila.getElementsByTagName('td');
-
-//         const nombreEquipoEnTabla = celdas[0].textContent.toLowerCase();
-//         const teamLeaderEnTabla = celdas[1].textContent.toLowerCase();
-
-//         if (nombreEquipoEnTabla.indexOf(nombreEquipo) || teamLeaderEnTabla.indexOf(teamLeader)) {
-//             fila.style.display = 'none'; // Oculta la fila si no coincide con ninguno de los criterios
-//         } else {
-//             fila.style.display = ''; // Muestra la fila si coincide con alguno de los criterios
-//         }
-//     }
-// }
+function obtenerModulosDisponibles(perfil) {
+    const modulosDisponibles = [];
+  
+    for (const modulo in listaDeModulos) {
+      if (listaDeModulos[modulo].perfiles.includes(perfil)) {
+        modulosDisponibles.push(listaDeModulos[modulo]);
+      }
+    }
+  
+    return modulosDisponibles;
+}
 
 function MostrarPantalla(usuario) {
-
-    if (usuario.isAdmin) {
-        var logo = "../img/apple-icon.png"
-        var equipo = "Equipo rojo"
-        var tl = "El pepe"
-        crearMenu(logo, equipo, tl)
-        var logo = "../img/apple-icon.png"
-        var equipo = "Equipo rojo"
-        var tl = "El pepe"
-        crearMenu(logo, equipo, tl)
-        var logo = "../img/apple-icon.png"
-        var equipo = "Equipo rojo"
-        var tl = "El pepe"
-        crearMenu(logo, equipo, tl)
-        var logo = "../img/apple-icon.png"
-        var equipo = "Equipo azul"
-        var tl = "yo"
-        crearMenu(logo, equipo, tl)
+    const partesToken = token.split('.');
+    const payloadDecodificado = atob(partesToken[1]);
+    const payloadObjeto = JSON.parse(payloadDecodificado);
+    console.log(payloadObjeto.authorities)
+    if (payloadObjeto.isAdmin) {
+        var perfilUsuario = 'Administrador'
+        var modulosUsuario = obtenerModulosDisponibles(perfilUsuario);
+        for (var menu in modulosUsuario) {
+            crearMenu(modulosUsuario[menu].nombre, modulosUsuario[menu].logo);
+        }
+        
+        crearMenu(menu, logo)
     } else {
-        console.log("hola")
-        //window.location.href = "../pages/Home.html";
+        window.location.href = "../pages/Home.html";
     }   
 }
 
