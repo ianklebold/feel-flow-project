@@ -1,19 +1,20 @@
-import { GetUser } from "../../js/functions/GetPerfil.js";
+//import { GetUser } from "../../js/functions/GetPerfil.js";
 
-const idLocation = localStorage.getItem('idLocation');
+//const idLocation = localStorage.getItem('idLocation');
 const token = localStorage.getItem('Token');
-
-window.addEventListener("load", function () {
-    GetUser(idLocation, token)
-        .then(data => {
-            console.log(data);
-        })
-        .catch(error => {
-            console.error(error);
-        });
-})
+console.log("token: ", {token})
+// window.addEventListener("load", function () {
+//     GetUser(idLocation, token)
+//         .then(data => {
+//             //console.log(data);
+//         })
+//         .catch(error => {
+//             console.error(error);
+//         });
+// })
 
 document.addEventListener('DOMContentLoaded', function () {
+    
     const formulario = document.getElementById('registro-formulario');
     const nombreTeamInput = document.getElementById('NombreTeam');
     const descripcionInput = document.getElementById('Descripcion');
@@ -59,22 +60,25 @@ document.addEventListener('DOMContentLoaded', function () {
         const nameTeam = nombreTeamInput.value;
         const descriptionTeam = descripcionInput.value;
 
-    
-        const datos = {
-            nameTeam,
-            descriptionTeam,
+        const teamLeaderDTO = {
             name,
             surname,
             username,
             password
+        }
+    
+        const datos = {
+            nameTeam,
+            descriptionTeam,
+            teamLeaderDTO
         };
         
-        console.log(datos);
-        fetch('http://localhost:8080/api/v1/team', {
+        //console.log(datos);
+        fetch(`http://localhost:8080/api/v1/team`, {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json'
             },
             body: JSON.stringify(datos)
         })
@@ -84,12 +88,16 @@ document.addEventListener('DOMContentLoaded', function () {
             // })
             .then(response => {
                 if (response.status == 201) {
-                    console.log(response.body.get('username'));
-                    console.log(response);
+                    //console.log(response.body.get('username'));
+                    //console.log(response.body);
+                    console.log(response.json().body);
                 } else {
                     console.error('Error al crear y registrar Equipo con su Team Lead');
                 }
             })
+            .then(data => {
+                console.log(data);
+            }) 
             .catch(error => {
                 console.error('Error de red:', error);
             });
