@@ -32,3 +32,47 @@ document.getElementById('inviteMembersButton').addEventListener('click', functio
   });
 });
 
+//Aca comienza la funcionalidad de la pagina
+
+import { GetUser } from "../js/functions/GetPerfil.js";
+
+const idLocation = localStorage.getItem('idLocation');
+const token = localStorage.getItem('Token');
+
+
+window.addEventListener("load", function () {
+    GetUser(idLocation, token)
+        .then(data => {
+            MostrarPantalla(data)
+        })
+        .catch(error => {
+            console.error(error);
+        });
+})
+
+
+
+function MostrarPantalla(usuario) {
+  // Dividir el token en sus partes (encabezado, carga útil y firma)
+  const partesToken = token.split('.');
+
+  // Decodificar la carga útil (parte en el índice 1) utilizando atob()
+  const payloadDecodificado = atob(partesToken[1]);
+
+  // El payload decodificado es una cadena JSON, por lo que puedes analizarla en un objeto JavaScript
+  const payloadObjeto = JSON.parse(payloadDecodificado);
+
+  if (payloadObjeto.isTeamLeader || payloadObjeto.isAdmin) {
+      // Si el usuario es Team Leader o Admin, muestra el botón "Invitar miembros"
+      document.getElementById('inviteMembersButton').style.display = 'block';
+  } else {
+      // Si no es Team Leader ni Admin, redirige a la página "Mi equipo"
+      console.log("Acceso denegado");
+      window.location.href = "ruta-a-mi-equipo.html";
+  }
+}
+
+
+
+
+
