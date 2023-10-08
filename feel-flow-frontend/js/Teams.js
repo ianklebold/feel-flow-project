@@ -15,7 +15,8 @@ window.addEventListener("load", function () {
             MostrarPantalla(data)
         })
         .catch(error => {
-            console.error(error);
+            window.location.href = "../pages/sign_in.html"; // Usuario no logueado
+            console.error(error); 
         });
 })
 
@@ -82,14 +83,8 @@ function Buscar() {
 }
 
 function MostrarPantalla(usuario) {
-
-   //Dividir el token en sus partes(encabezado, carga útil y firma)
     const partesToken = token.split('.');
-
-    // Decodificar la carga útil (parte en el índice 1) utilizando atob()
     const payloadDecodificado = atob(partesToken[1]);
-
-    // El payload decodificado es una cadena JSON, por lo que puedes analizarla en un objeto JavaScript
     const payloadObjeto = JSON.parse(payloadDecodificado);
 
     if (payloadObjeto.isAdmin) {
@@ -110,7 +105,6 @@ function MostrarPantalla(usuario) {
         var tl = "yo"
         crearFila(logo, equipo, tl)
     } else {
-        console.log("hola")
         window.location.href = ""; //Aca deberia ir a la pagina de visualizacion de equipos
     }   
      
