@@ -18,6 +18,11 @@ img {
   height: auto;
 }
 
+.fila:hover {
+  background-color: rgba(69, 130, 158, 0.323);
+  cursor: pointer;
+}
+
 /* Formulario */
 /* Con comentar esto seguro que se va a romper alguna página, pero no me sirve que este aca
 .card {

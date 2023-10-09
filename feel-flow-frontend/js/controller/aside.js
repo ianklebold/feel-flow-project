@@ -7,46 +7,54 @@ const aside = document.getElementById('separador');
 const titulo_pagina = document.querySelector('title');
 const pagina = titulo_pagina.textContent;
 
+const partesToken = token.split('.');
+const payloadDecodificado = atob(partesToken[1]);
+const payloadObjeto = JSON.parse(payloadDecodificado);
+
+const autoridad = payloadObjeto.authorities;
+const autoridad_rol = JSON.parse(autoridad);
+const rol = autoridad_rol[0].authority;
+
 const listaDeModulos = {
     Home: {
         nombre: 'Home',
-        perfiles: ['Administrador', 'Team Leader', 'Miembro del Equipo'],
+        perfiles: ['ADMIN', 'TEAM_LEADER', 'USER_REGULAR'],
         logo: 'fa-home',
-        link: '../Home.html'
+        link: '../pages/Home.html'
     },
     Dashboard: {
         nombre: 'Dashboard',
-        perfiles: ['Administrador', 'Team Leader', 'Miembro del Equipo'],
+        perfiles: ['ADMIN', 'TEAM_LEADER', 'USER_REGULAR'],
         logo: 'fa-pie-chart',
-        link: '../Home.html'
+        link: '../pages/Home.html'
     },
     Lideres: {
         nombre: 'Lideres',
-        perfiles: ['Administrador'],
+        perfiles: ['ADMIN'],
         logo: 'fa-user-circle',
-        link: '../Home.html'
+        link: '../pages/Home.html'
     },
     Equipos: {
         nombre: 'Equipos',
-        perfiles: ['Administrador', 'Team Leader', 'Miembro del Equipo'],
+        perfiles: ['ADMIN', 'TEAM_LEADER', 'USER_REGULAR'],
         logo: 'fa-users',
-        link: '../Teams.html'
+        link: '../pages/Teams.html'
     },
     Modulos: {
         nombre: 'Modulos',
-        perfiles: ['Administrador', 'Team Leader', 'Miembro del Equipo'],
+        perfiles: ['ADMIN', 'TEAM_LEADER', 'USER_REGULAR'],
         logo: 'fa-puzzle-piece',
-        link: '../Home.html'
+        link: '../pages/Home.html'
     },
     Usuarios: {
         nombre: 'Usuarios',
-        perfiles: ['Administrador', 'Team Leader'],
+        perfiles: ['ADMIN', 'TEAM_LEADER'],
         logo: 'fa-user-circle',
-        link: '../Home.html'
+        link: '../pages/Home.html'
     },
 };
 
-function crearMenu(modulo, logo_icon, nom_user) {
+function crearMenu(modulo, logo_icon) {
     var lista = document.createElement('li');
     lista.classList.add('nav-item')
     var etiqueta_a = document.createElement('a');
@@ -73,15 +81,6 @@ function crearMenu(modulo, logo_icon, nom_user) {
 
     var divisor = document.getElementById('separador');
     divisor.insertAdjacentElement("beforebegin", lista);
-
-    // var nombre_usuario = document.createElement('h6');
-    // nombre_usuario.classList.add('ps-4', 'ms-2', 'text-uppercase', 'text-xs', 'font-weight-bolder', 'opacity-6');
-    // nombre_usuario.textContent = nom_user;
-
-    // divisor.insertAdjacentElement("beforebegin", nombre_usuario);
-
-    //<h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">Nombre del usuario</h6>
-
 }
 
 function obtenerModulosDisponibles(perfil) {
@@ -97,17 +96,12 @@ function obtenerModulosDisponibles(perfil) {
 }
 
 function MostrarPantalla(usuario) {
-    const partesToken = token.split('.');
-    const payloadDecodificado = atob(partesToken[1]);
-    const payloadObjeto = JSON.parse(payloadDecodificado);
-    console.log(payloadObjeto.authorities.authority);
     let Nombre = `${usuario.name}` + `   ` + `${usuario.surname}`;
 
     if (payloadObjeto.isAdmin) {
-        var perfilUsuario = 'Administrador'
-        var modulosUsuario = obtenerModulosDisponibles(perfilUsuario);
+        var modulosUsuario = obtenerModulosDisponibles(rol);
         for (var menu in modulosUsuario) {
-            crearMenu(modulosUsuario[menu].nombre, modulosUsuario[menu].logo, Nombre);
+            crearMenu(modulosUsuario[menu].nombre, modulosUsuario[menu].logo);
         }
         
         //crearMenu(menu, logo)

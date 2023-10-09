@@ -1,4 +1,5 @@
 import { GetUser } from "../js/functions/GetPerfil.js";
+import { GetEquipos } from "./functions/GetEquipos.js";
 
 const idLocation = localStorage.getItem('idLocation');
 const token = localStorage.getItem('Token');
@@ -9,7 +10,16 @@ const tabla = document.getElementById('03-04-Tabla-Equipos');
 const campoBusqueda = document.getElementById('03-03-buscador');
 campoBusqueda.addEventListener('input', Buscar);
 
+const partesToken = token.split('.');
+const payloadDecodificado = atob(partesToken[1]);
+const payloadObjeto = JSON.parse(payloadDecodificado);
+
+const autoridad = payloadObjeto.authorities;
+const autoridad_rol = JSON.parse(autoridad);
+const rol = autoridad_rol[0].authority;
+
 window.addEventListener("load", function () {
+
     GetUser(idLocation, token)
         .then(data => {
             MostrarPantalla(data)
@@ -22,6 +32,7 @@ window.addEventListener("load", function () {
 
 function crearFila(logo, equipo, lider) {
     var fila = document.createElement('tr');
+    fila.classList.add('fila')
     var columna1 = document.createElement('td');
     var divColumna1 = document.createElement('div');
     divColumna1.classList.add('d-flex', 'px-2', 'py-1');
@@ -82,34 +93,24 @@ function Buscar() {
     }
 }
 
-function MostrarPantalla(usuario) {
-    const partesToken = token.split('.');
-    const payloadDecodificado = atob(partesToken[1]);
-    const payloadObjeto = JSON.parse(payloadDecodificado);
-    console.log(payloadObjeto.authorities.authority);
-    if (payloadObjeto.isAdmin) {
-        var logo = "../img/apple-icon.png"
-        var equipo = "Equipo rojo"
-        var tl = "El pepe"
-        crearFila(logo, equipo, tl)
-        var logo = "../img/apple-icon.png"
-        var equipo = "Equipo rojo"
-        var tl = "El pepe"
-        crearFila(logo, equipo, tl)
-        var logo = "../img/apple-icon.png"
-        var equipo = "Equipo rojo"
-        var tl = "El pepe"
-        crearFila(logo, equipo, tl)
-        var logo = "../img/apple-icon.png"
-        var equipo = "Equipo azul"
-        var tl = "yo"
-        crearFila(logo, equipo, tl)
+function MostrarPantalla() {
+        
+    if (rol == 'ADMIN') {
+        GetEquipos(token)
+            .then(data => {
+                for (let team in data) {
+                    var nameTeam = data[team].nameTeam;
+                    var teamLeaderDTO = data[team].teamLeaderDTO.name + ' ' + data[team].teamLeaderDTO.surname;
+                    var logo = "../img/apple-icon.png";
+                    crearFila(logo, nameTeam, teamLeaderDTO);
+                }
+            })
+            .catch(error => {
+                window.location.href = "../pages/sign_in.html"; // Usuario no logueado
+                console.error(error); 
+            });
     } else {
-        window.location.href = ""; //Aca deberia ir a la pagina de visualizacion de equipos
+        //window.location.href = ""; //Aca deberia ir a la pagina de visualizacion de equipos
     }   
      
 }
-
-
-
-
