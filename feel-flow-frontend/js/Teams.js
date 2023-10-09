@@ -86,7 +86,7 @@ function MostrarPantalla(usuario) {
     const partesToken = token.split('.');
     const payloadDecodificado = atob(partesToken[1]);
     const payloadObjeto = JSON.parse(payloadDecodificado);
-
+    console.log(payloadObjeto.authorities.authority);
     if (payloadObjeto.isAdmin) {
         var logo = "../img/apple-icon.png"
         var equipo = "Equipo rojo"

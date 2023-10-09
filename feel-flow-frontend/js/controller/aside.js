@@ -100,6 +100,7 @@ function MostrarPantalla(usuario) {
     const partesToken = token.split('.');
     const payloadDecodificado = atob(partesToken[1]);
     const payloadObjeto = JSON.parse(payloadDecodificado);
+    console.log(payloadObjeto.authorities.authority);
     let Nombre = `${usuario.name}` + `   ` + `${usuario.surname}`;
 
     if (payloadObjeto.isAdmin) {
@@ -122,11 +123,11 @@ function MostrarPantalla(usuario) {
 
 window.addEventListener("load", function () {
     GetUser(idLocation, token)
-    .then(data => {
-      MostrarPantalla(data)
-    })
-    .catch(error => {
-      console.error(error);
-    });
+        .then(data => {
+        MostrarPantalla(data)
+        })
+        .catch(error => {
+        console.error(error);
+        });
 })
 
