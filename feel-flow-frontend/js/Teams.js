@@ -30,9 +30,10 @@ window.addEventListener("load", function () {
         });
 })
 
-function crearFila(logo, equipo, lider) {
+function crearFila(logo, equipo, lider, id_equipo) {
     var fila = document.createElement('tr');
     fila.classList.add('fila')
+    fila.setAttribute('data-equipo-id', id_equipo)
     var columna1 = document.createElement('td');
     var divColumna1 = document.createElement('div');
     divColumna1.classList.add('d-flex', 'px-2', 'py-1');
@@ -92,6 +93,19 @@ function Buscar() {
         }
     }
 }
+const tablaEquipos = document.getElementById("03-04-Tabla-Equipos");
+
+tablaEquipos.addEventListener("click", function (event) {
+  const fila = event.target.closest("tr"); // Obtiene la fila clicada
+  if (fila) {
+    const equipoId = fila.getAttribute("data-equipo-id"); // Obtiene el ID del equipo
+    if (equipoId) {
+        localStorage.setItem('IdEquipo', equipoId);
+        window.location.href = '../pages/Home.html'; //Reemplazar por página de visualizar equipo
+    }
+  }
+});
+
 
 function MostrarPantalla() {
         
@@ -102,7 +116,8 @@ function MostrarPantalla() {
                     var nameTeam = data[team].nameTeam;
                     var teamLeaderDTO = data[team].teamLeaderDTO.name + ' ' + data[team].teamLeaderDTO.surname;
                     var logo = "../img/apple-icon.png";
-                    crearFila(logo, nameTeam, teamLeaderDTO);
+                    var uuid = data[team].uuid;
+                    crearFila(logo, nameTeam, teamLeaderDTO, uuid);
                 }
             })
             .catch(error => {
@@ -110,7 +125,7 @@ function MostrarPantalla() {
                 console.error(error); 
             });
     } else {
-        //window.location.href = ""; //Aca deberia ir a la pagina de visualizacion de equipos
+        window.location.href = ""; //Aca deberia ir a la pagina de visualizacion de equipos
     }   
      
 }

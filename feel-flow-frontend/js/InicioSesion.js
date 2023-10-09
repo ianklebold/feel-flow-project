@@ -40,8 +40,6 @@ document.addEventListener('DOMContentLoaded', function () {
         const payloadDecodificado = atob(partesToken[1]); // Decodificar la carga útil (parte en el índice 1) utilizando atob()
         const payloadObjeto = JSON.parse(payloadDecodificado); // El payload decodificado es una cadena JSON, por lo que puedes analizarla en un objeto JavaScript
 
-        console.log('Payload decodificado:', payloadObjeto);
-        console.log(payloadObjeto.id);
         localStorage.setItem('Token', token);
         localStorage.setItem('idLocation', payloadObjeto.id);
 
