@@ -1,6 +1,7 @@
 document.getElementById('copyButton').addEventListener('click', function () {
     // Obtener el texto que se encuentra en el campo de entrada
     const textoACopiar = document.getElementById('copiedText').value;
+    console.log(textoACopiar)
 
     // Copiar el texto al portapapeles
     navigator.clipboard.writeText(textoACopiar)
