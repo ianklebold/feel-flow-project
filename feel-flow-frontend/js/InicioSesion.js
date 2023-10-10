@@ -1,5 +1,5 @@
 const mensaje = document.createElement('div');
-mensaje.classList.add('text-centerm', 'text-sm', 'text-danger');
+mensaje.classList.add('text-center', 'text-sm', 'text-danger');
 mensaje.textContent = "Usuario o contraseña incorrectos.";
 mensaje.style.display = 'none';
 const formulario = document.getElementById('login-form');
