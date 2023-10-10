@@ -6,6 +6,7 @@ import com.equipo5.feelflowapp.domain.enumerations.teamRoles.TeamRoles;
 import com.equipo5.feelflowapp.domain.users.TeamLeader;
 import com.equipo5.feelflowapp.dto.team.TeamDTO;
 import com.equipo5.feelflowapp.dto.team.TeamListDTO;
+import com.equipo5.feelflowapp.dto.team.TeamUpdateDTO;
 import com.equipo5.feelflowapp.dto.users.teamleader.TeamLeaderDTO;
 import com.equipo5.feelflowapp.exception.notfound.NotFoundException;
 import com.equipo5.feelflowapp.exception.notfound.NotFoundTeamException;
@@ -106,6 +107,25 @@ public class TeamServiceImpl implements TeamService {
                 return teams.stream().filter(teamOfList -> team.get().getUuid().equals(teamOfList.getUuid())).findFirst();
             }
             return Optional.of(teamListMapper.teamToTeamListDto(team.get()));
+        }
+
+        return Optional.empty();
+    }
+
+    @Override
+    public Optional<TeamListDTO> updateTeam(UUID uuid, TeamUpdateDTO teamDTO) throws NotFoundException {
+        Optional<TeamListDTO> teamListDTO = getTeamById(uuid);
+
+        Optional<Team> team = teamRepository.findById(uuid);
+
+        if (teamListDTO.isPresent() && team.isPresent()){
+            team.get().setName(teamDTO.getNameTeam());
+            team.get().setDescriptionProject(teamDTO.getDescriptionTeam());
+            teamRepository.save(team.get());
+
+            teamListDTO.get().setNameTeam(teamDTO.getNameTeam());
+            teamListDTO.get().setDescriptionTeam(teamDTO.getDescriptionTeam());
+            return teamListDTO;
         }
 
         return Optional.empty();
