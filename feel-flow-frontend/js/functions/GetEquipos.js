@@ -12,3 +12,33 @@ export async function GetEquipos(token) {
         throw new Error('Error al recuperar los datos');
     }
 }
+
+export async function GetEquipo(token) {
+    let url = `http://localhost:8080/api/v1/team`;
+    const response = await fetch(url, {
+        method: 'GET',
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+    });
+    if (response.status === 200) {
+        return response.json();
+    } else {
+        throw new Error('Error al recuperar los datos');
+    }
+}
+
+export async function GetEquipobyID(token, id) {
+    let url = `http://localhost:8080/api/v1/team/${id}`;
+    const response = await fetch(url, {
+        method: 'GET',
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+    });
+    if (response.status === 200) {
+        return response.json();
+    } else {
+        throw new Error('Error al recuperar los datos');
+    }
+}

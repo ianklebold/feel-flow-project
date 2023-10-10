@@ -3,7 +3,6 @@ import { GetUser } from "../functions/GetPerfil.js";
 const idLocation = localStorage.getItem('idLocation');
 const token = localStorage.getItem('Token');
 
-const aside = document.getElementById('separador');
 const titulo_pagina = document.querySelector('title');
 const pagina = titulo_pagina.textContent;
 
@@ -26,13 +25,13 @@ const listaDeModulos = {
         nombre: 'Dashboard',
         perfiles: ['ADMIN', 'TEAM_LEADER', 'USER_REGULAR'],
         logo: 'fa-pie-chart',
-        link: '../pages/Home.html'
+        link: '../pages/proximamente.html'
     },
     Lideres: {
         nombre: 'Lideres',
         perfiles: ['ADMIN'],
         logo: 'fa-user-circle',
-        link: '../pages/Home.html'
+        link: '../pages/proximamente.html'
     },
     Equipos: {
         nombre: 'Equipos',
@@ -44,17 +43,17 @@ const listaDeModulos = {
         nombre: 'Modulos',
         perfiles: ['ADMIN', 'TEAM_LEADER', 'USER_REGULAR'],
         logo: 'fa-puzzle-piece',
-        link: '../pages/Home.html'
+        link: '../pages/proximamente.html'
     },
     Usuarios: {
         nombre: 'Usuarios',
         perfiles: ['ADMIN', 'TEAM_LEADER'],
         logo: 'fa-user-circle',
-        link: '../pages/Home.html'
+        link: '../pages/proximamente.html'
     },
 };
 
-function crearMenu(modulo, logo_icon) {
+function crearMenu(modulo, logo_icon, ruta) {
     var lista = document.createElement('li');
     lista.classList.add('nav-item')
     var etiqueta_a = document.createElement('a');
@@ -62,7 +61,7 @@ function crearMenu(modulo, logo_icon) {
     if (modulo == pagina) {
         etiqueta_a.classList.add('active');
     }
-    etiqueta_a.href = '../pages/profile.html';
+    etiqueta_a.href = ruta;
 
     var div_contenedor = document.createElement('div');
     div_contenedor.classList.add('icon', 'icon-shape', 'icon-sm', 'shadow', 'border-radius-md', 'text-center', 'me-2', 'd-flex', 'align-items-center', 'justify-content-center');
@@ -101,7 +100,7 @@ function MostrarPantalla(usuario) {
     if (payloadObjeto.isAdmin) {
         var modulosUsuario = obtenerModulosDisponibles(rol);
         for (var menu in modulosUsuario) {
-            crearMenu(modulosUsuario[menu].nombre, modulosUsuario[menu].logo);
+            crearMenu(modulosUsuario[menu].nombre, modulosUsuario[menu].logo, modulosUsuario[menu].link);
         }
         
         //crearMenu(menu, logo)

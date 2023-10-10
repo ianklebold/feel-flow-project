@@ -101,7 +101,7 @@ tablaEquipos.addEventListener("click", function (event) {
     const equipoId = fila.getAttribute("data-equipo-id"); // Obtiene el ID del equipo
     if (equipoId) {
         localStorage.setItem('IdEquipo', equipoId);
-        window.location.href = '../pages/Home.html'; //Reemplazar por página de visualizar equipo
+        window.location.href = '../pages/MyTeam.html'; //Reemplazar por página de visualizar equipo
     }
   }
 });
@@ -125,7 +125,7 @@ function MostrarPantalla() {
                 console.error(error); 
             });
     } else {
-        window.location.href = ""; //Aca deberia ir a la pagina de visualizacion de equipos
+        window.location.href = "../pages/MyTeam.html"; //Aca deberia ir a la pagina de visualizacion de equipos
     }   
      
 }
