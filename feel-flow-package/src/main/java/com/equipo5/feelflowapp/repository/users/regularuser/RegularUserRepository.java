@@ -1,6 +1,5 @@
 package com.equipo5.feelflowapp.repository.users.regularuser;
 
-import com.equipo5.feelflowapp.domain.Team;
 import com.equipo5.feelflowapp.domain.users.RegularUser;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -15,5 +14,5 @@ public interface RegularUserRepository extends JpaRepository<RegularUser, UUID> 
             WHERE um.username = :username
             """,
             nativeQuery = true)
-    String findByUsername(@Param("username") String username);
+    String findTeamByUsername(@Param("username") String username);
 }

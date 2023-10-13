@@ -15,5 +15,5 @@ public interface TeamLeaderRepository extends JpaRepository<TeamLeader, UUID> {
             WHERE um.username = :username
             """,
         nativeQuery = true)
-    String findByUsername(@Param("username") String username);
+    String findTeamByUsername(@Param("username") String username);
 }

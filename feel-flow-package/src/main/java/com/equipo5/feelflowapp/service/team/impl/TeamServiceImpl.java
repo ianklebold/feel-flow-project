@@ -3,6 +3,7 @@ package com.equipo5.feelflowapp.service.team.impl;
 import com.equipo5.feelflowapp.domain.EnterPrise;
 import com.equipo5.feelflowapp.domain.Team;
 import com.equipo5.feelflowapp.domain.enumerations.teamRoles.TeamRoles;
+import com.equipo5.feelflowapp.domain.users.Admin;
 import com.equipo5.feelflowapp.domain.users.TeamLeader;
 import com.equipo5.feelflowapp.dto.team.TeamDTO;
 import com.equipo5.feelflowapp.dto.team.TeamListDTO;
@@ -15,6 +16,7 @@ import com.equipo5.feelflowapp.mappers.users.team.TeamListMapper;
 import com.equipo5.feelflowapp.mappers.users.team.TeamMapper;
 import com.equipo5.feelflowapp.mappers.users.teamleader.TeamLeaderMapper;
 import com.equipo5.feelflowapp.repository.team.TeamRepository;
+import com.equipo5.feelflowapp.repository.users.admin.AdminRepository;
 import com.equipo5.feelflowapp.repository.users.regularuser.RegularUserRepository;
 import com.equipo5.feelflowapp.repository.users.teamleader.TeamLeaderRepository;
 import com.equipo5.feelflowapp.service.enterprise.EnterpriseService;
@@ -36,6 +38,8 @@ public class TeamServiceImpl implements TeamService {
     private final TeamLeaderRepository teamLeaderRepository;
 
     private final RegularUserRepository regularUserRepository;
+
+    private final AdminRepository adminRepository;
     private final TeamMapper teamMapper;
 
     private final TeamLeaderService teamLeaderService;
@@ -78,14 +82,20 @@ public class TeamServiceImpl implements TeamService {
         Optional<? extends GrantedAuthority> role = userService.getRoleByCurrentUser();
         String teamId = "";
         if (role.isPresent()){
+            String username = userService.getUsernameByCurrentUser();
             if (TeamRoles.ADMIN.name().equals(role.get().getAuthority())){
-                return teamRepository.findAll().stream()
+
+                Optional<Admin> admin = adminRepository.findByUsername(username);
+
+                return admin.map(value -> value.getEnterPrise().getTeam()
+                        .stream()
                         .map(teamListMapper::teamToTeamListDto)
-                        .toList();
+                        .toList()).orElse(Collections.emptyList());
+
             }else if (TeamRoles.TEAM_LEADER.name().equals(role.get().getAuthority())){
-                teamId = teamLeaderRepository.findByUsername(userService.getUsernameByCurrentUser());
+                teamId = teamLeaderRepository.findTeamByUsername(username);
             }else {
-                teamId = regularUserRepository.findByUsername(userService.getUsernameByCurrentUser());
+                teamId = regularUserRepository.findTeamByUsername(username);
             }
         }
         Optional<Team> team = teamRepository.findById(UUID.fromString(teamId));
