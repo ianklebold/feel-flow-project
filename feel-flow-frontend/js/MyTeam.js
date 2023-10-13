@@ -5,19 +5,22 @@ const Id_Equipo = localStorage.getItem('IdEquipo');
 const tkn = localStorage.getItem('Token');
 
 window.addEventListener("load", function () {
+    var admin;
     if (Id_Equipo) {
+        admin = true;
         GetEquipobyID(tkn, Id_Equipo)
             .then(data => {
-                MostrarDatos(data);
+                MostrarDatos(data, admin);
             })
             .catch(error => {
                 //window.location.href = "../pages/Teams.html"; // Error al recuperar el equipo solicitado
                 console.error(error); 
             });
     } else {
+        admin = false;
         GetEquipo(tkn)
             .then(data => {
-                MostrarDatos(data);
+                MostrarDatos(data, admin);
             })
             .catch(error => {
                 window.location.href = "../pages/sign_in.html"; // Usuario no logueado
@@ -29,8 +32,28 @@ window.addEventListener("load", function () {
     
 })
 
-function MostrarDatos(info) {
+function ActualizarNav(info) {
+
+    
+}
+
+function MostrarDatos(info, admin) {
     // Insertar el path en el nav
+    if (admin) {
+        //<li class="breadcrumb-item text-sm"><a class="opacity-5" href="../pages/Teams.html">Equipos</a></li>
+        var path_team = document.createElement('li');
+        path_team.classList.add('breadcrumb-item', 'text-sm');
+
+        var path_link = document.createElement('a');
+        path_link.classList.add('opacity-5');
+        path_link.href = '../pages/Teams.html';
+        path_link.textContent = 'Equipos';
+
+        path_team.appendChild(path_link);
+
+        var path = document.getElementById('02-01-Path');
+        path.insertAdjacentElement("beforeend", path_team);
+    }
     // <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Equipos</li>
     var path_myteam = document.createElement('li');
     path_myteam.classList.add('breadcrumb-item', 'text-sm', 'text-dark', 'active');
