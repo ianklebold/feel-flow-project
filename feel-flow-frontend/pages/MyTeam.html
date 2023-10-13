@@ -47,10 +47,10 @@
             navbar-scroll="true">
             <div class="container-fluid py-1 px-3">
                 <nav aria-label="breadcrumb">
-                    <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
-                        <li class="breadcrumb-item text-sm"><a class="opacity-5" href="../pages/home.html">Feel Flow</a>
-                        </li>
-                        <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Equipos</li>
+                    <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5" id="02-01-Path">
+                        <li class="breadcrumb-item text-sm"><a class="opacity-5" href="../pages/home.html">Feel Flow</a></li>
+                        <li class="breadcrumb-item text-sm"><a class="opacity-5" href="../pages/Teams.html">Equipos</a></li>
+                        <!-- <li class="breadcrumb-item text-sm text-dark active" aria-current="page">My Equipos</li> -->
                     </ol>
                 </nav>
                 <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4 justify-content-end" id="navbar">
@@ -183,14 +183,13 @@
                 <div class="row">
                     <div class="col-auto">
                         <div class="avatar avatar-xl position-relative">
-                            <img src="../img/bruce-mars.jpg" alt="Imágen de perfil"
+                            <img src="../img/logos/my-team.png" alt="Imágen de perfil"
                                 class="w-100 border-radius-lg shadow-sm">
                         </div>
                     </div>
                     <div class="col-auto my-auto">
                         <div class="h-100" id="03-01-Detalles-Equipo">
-                            <h5 class="mb-1" id="name"></h5>
-                            <p class="mb-0 font-weight-bold text-sm" id="rol"></p>
+                            <!-- <h5 class="mb-1" id="name">Equipo</h5> -->
                         </div>
                     </div>
                     <div class="col-lg-4 col-md-6 my-sm-auto ms-sm-auto me-sm-0 mx-auto mt-3 text-end">
@@ -210,8 +209,9 @@
                     <h4 class="mb-0">Infomación del Equipo</h4>
                 </div>
                 <hr class="horizontal my-4">
-                <div class="card-body p-0 ps-3 mb-4" id="04-01-datos-equipo">
-                    
+                <div class="card-body py-3 mb-4" id="04-01-datos-equipo"><!-- Aca se insertan los datos -->
+                    <p class="text-lg" id="04-02-Descripcion-equipo"><strong>Descripción:</strong></p>
+                    <p class="text-lg" id="04-02-Miembros-equipo"><strong>Miembros del equipo:</strong></p>
                 </div>
             </div>
         </div>

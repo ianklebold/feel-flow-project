@@ -15,7 +15,7 @@ window.addEventListener("load", function () {
                 console.error(error); 
             });
     } else {
-        GetEquipo(token)
+        GetEquipo(tkn)
             .then(data => {
                 MostrarDatos(data);
             })
@@ -30,35 +30,49 @@ window.addEventListener("load", function () {
 })
 
 function MostrarDatos(info) {
-    var lista = document.createElement('ul');
-    lista.classList.add('list-group', 'list-group-horizontal', 'text-sm');
+    // Insertar el path en el nav
+    // <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Equipos</li>
+    var path_myteam = document.createElement('li');
+    path_myteam.classList.add('breadcrumb-item', 'text-sm', 'text-dark', 'active');
+    path_myteam.setAttribute('aria-current', 'page');
+    path_myteam.textContent = info.nameTeam;
 
-    var elemento = document.createElement('li');
-    elemento.classList.add('list-group-item', 'border-0', 'ps-0');
-    elemento.textContent = "Nombre del Equipo: ";
+    var path = document.getElementById('02-01-Path');
+    path.insertAdjacentElement("beforeend", path_myteam);
 
-    var elementoNombre = document.createElement('li');
-    elementoNombre.classList.add('list-group-item', 'border-0', 'ps-0');
-    elementoNombre.textContent = info.nameTeam;
+    // Para la parte de detalles
+    var detalleNombre = document.createElement('h5');
+    detalleNombre.textContent = info.nameTeam; // Aca se inserta el nombre del equipo
+
+    var NombreEquipoXDetalles = document.getElementById('03-01-Detalles-Equipo');
+    NombreEquipoXDetalles.insertAdjacentElement("afterbegin", detalleNombre);
+
+    // Para la parte de información del equipo
+
+    var elementoNombre = document.createElement('h4');
+    elementoNombre.textContent = info.nameTeam; // Aca se inserta el nombre del equipo
     
-    var textareaElement = document.createElement('textarea');
-    textareaElement.id = 'exampleFormControlTextarea1';
-    textareaElement.rows = 3;
+    var elementoDescripcion = document.createElement('textarea');
+    elementoDescripcion.classList.add('py-1', 'form-control', 'mt-3');
+    elementoDescripcion.textContent = info.descriptionTeam; // Aca se inserta la descripción del equipo
+    elementoDescripcion.rows = 3;
+    elementoDescripcion.disabled = true;
 
-    var labelElement = document.createElement('label');
-    labelElement.setAttribute('for', 'exampleFormControlTextarea1');
-    labelElement.textContent = 'Descripción';
+    var elementoMiembros = document.createElement('textarea');
+    elementoMiembros.classList.add('py-1', 'form-control', 'mt-3');
+    elementoMiembros.textContent = info.regularUsers; // Aca se inserta la la lista de participantes del equipo
+    elementoMiembros.rows = 3;
+    elementoMiembros.disabled = true;
 
-    var divElement = document.createElement('div');
-    divElement.classList.add('form-group');
+    console.log(info)
 
-    divElement.appendChild(labelElement);
-    divElement.appendChild(textareaElement);
-    lista.appendChild(elemento);
-    lista.appendChild(elementoNombre);
-    lista.appendChild(divElement);
+    var NombreEquipo = document.getElementById('04-01-datos-equipo');
+    NombreEquipo.insertAdjacentElement("afterbegin", elementoNombre);
 
-    var tabla = document.getElementById('04-01-datos-equipo');
-    tabla.insertAdjacentElement("afterbegin", lista);
+    var DescripcionEquipo = document.getElementById('04-02-Descripcion-equipo');
+    DescripcionEquipo.insertAdjacentElement("beforeend", elementoDescripcion);
+
+    var MiembrosEquipo = document.getElementById('04-02-Miembros-equipo');
+    MiembrosEquipo.insertAdjacentElement("beforeend", elementoMiembros);
 }
 
