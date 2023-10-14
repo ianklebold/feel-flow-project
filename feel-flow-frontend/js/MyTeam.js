@@ -32,11 +32,6 @@ window.addEventListener("load", function () {
     
 })
 
-function ActualizarNav(info) {
-
-    
-}
-
 function MostrarDatos(info, admin) {
     // Insertar el path en el nav
     if (admin) {

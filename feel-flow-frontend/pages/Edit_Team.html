@@ -123,11 +123,8 @@
             navbar-scroll="true">
             <div class="container-fluid py-1 px-3">
                 <nav aria-label="breadcrumb">
-                    <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
+                    <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5" id="02-01-Path">
                         <li class="breadcrumb-item text-sm"><a class="opacity-5" href="../pages/home.html">Feel Flow</a></li>
-                        <li class="breadcrumb-item text-sm"><a class="opacity-5" href="../pages/profile.html">Equipos</a></li>
-                        <li class="breadcrumb-item text-sm"><a class="opacity-5" href="../pages/profile.html" id="02_01_Nombre_Equipo"></a></li>
-                        <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Editar Equipo</li>
                     </ol>
                 </nav>
                 <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4 justify-content-end" id="navbar">
@@ -256,60 +253,36 @@
         <!-- End Navbar -->
         <!--      Hasta aca lo que va si o si   -->
         <div class="container-fluid">
-            <div class="page-header pancarta min-height-300 border-radius-xl mt-4"
-                style="background-image: url('../img/curved-images/curved0.jpg'); background-position-y: 50%;">
-                <span class="mask opacity-6"></span> <!--Se puede añadir la clase: bg-gradient-primary-->
-            </div>
-            <div class="card card-body blur shadow-blur mx-6 mt-n6 overflow-hidden" style="border-radius: 25px;">
-                <div class="row gx-4">
-                    <!--Presentación-->
+            <div class="card card-body blur shadow-blur overflow-hidden min-height-100 mt-4">
+                <div class="row">
                     <div class="col-auto">
                         <div class="avatar avatar-xl position-relative">
-                            <img src="../img/bruce-mars.jpg" alt="Logo del equipo"
+                            <img src="../img/logos/my-team.png" alt="Imágen de perfil"
                                 class="w-100 border-radius-lg shadow-sm">
                         </div>
                     </div>
                     <div class="col-auto my-auto">
-                        <div class="h-100">
-                            <h5 class="mb-1" id="04_02_01_Nombre_Equipo"></h5>
-                            <p class="mb-0 font-weight-bold text-sm" id="04_02_02_Info_Equipo"></p>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-md-6 my-sm-auto ms-sm-auto me-sm-0 mx-auto mt-3 text-end">
-
+                        <div class="h-100" id="03-01-Detalles-Equipo"></div>
                     </div>
                 </div>
             </div>
-            <div class="container-fluid py-4">
-                <!--Detalles-->
-                <div class="row">
-                    <div class="card h-100">
-                        <div class="FFcard-header pb-0 p-3">
-                            <div class="row">
-                                <div class="col-md-8 d-flex align-items-center">
-                                    <h4 class="mb-0">Infomación del Equipo</h4>
-                                </div>
-                            </div>
+            <div class="card mt-4 h-100">
+                <div class="card-header pb-0 p-3">
+                    <h4 class="mb-0">Infomación del Equipo</h4>
+                </div>
+                <hr class="horizontal my-4">
+                <div class="card-body py-3 mb-4" id="04-01-datos-equipo"><!-- Aca se insertan los datos -->
+                    <form class="needs-validation " role="form" id="04-02-Formulario" novalidate>
+                        <div class="mb-3 form-floating" id="04-02-Nombre-Equipo"> 
+                            <p class="text-lg"><strong>Nombre:</strong></p>
                         </div>
-                        <hr class="horizontal my-2">
-                        <div class="card-body p-0 ps-3 mb-2">
-                            <div class="row justify-content-around">
-                                <form class="needs-validation " role="form" novalidate>
-                                    <div class="mb-3 form-floating shadow-lg" id="Nombre"> 
-                                        <textarea type="text" class="form-control" id="05_01_Nombre_Equipo" placeholder="Nombre" required ></textarea>
-                                        <label for="floatingInputGroup1">Nombre</label>
-                                    </div>
-                                    <div class="mb-3 form-floating shadow-lg" id="Descripción">
-                                        <textarea type="text" class="form-control" id="05_02_Descripcion_Equipo" placeholder="Descripción" required ></textarea>
-                                        <label for="floatingInputGroup1">Descripción</label>
-                                    </div>
-                                    <div class="text-center">
-                                        <button type="submit" id="miBoton" class="btn bg-gradient-dark _ini_ses w-100 my-4 mt-4">Guardar</button>
-                                    </div>
-                                </form>
-                            </div>
+                        <div class="mb-3 form-floating mt-2" id="04-02-Descripcion-Equipo">
+                            <p class="text-lg"><strong>Descripción:</strong></p>
                         </div>
-                    </div>
+                        <div class="text-center">
+                            <button type="submit" id="miBoton" class="btn bg-gradient-dark _ini_ses w-100 my-4 mt-4" style="width: 20%;">Guardar</button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
@@ -318,21 +291,14 @@
     <!--   Core JS Files   -->
     <script src="../js/core/bootstrap.min.js"></script> <!--Sin este no anda el dropdown-->
     <script type="module" src="../js/functions/GetPerfil.js"></script>
-    <script type="module" src="../js/functions/UpdatePerfil.js"></script>
-    <script type="module" src="../js/Obtener-Datos-Perfil-Editar.js"></script>
+    <script type="module" src="../js/functions/GetEquipos.js"></script>
+    <script type="module" src="../js/functions/UpdateEquipo.js"></script>
+    <script type="module" src="../js/team-edit.js"></script>
     <!-- Github buttons -->
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
-    <script src="../js/soft-ui-dashboard.min.js?v=1.0.3"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.js"></script>
     <script src="../js/cerrar_sesion.js"></script>
-    <!--    Scripts innecesarios    -->
-    <!--
-    <script src="../js/plugins/perfect-scrollbar.min.js"></script>
-    <script src="../js/plugins/smooth-scrollbar.min.js"></script>
-    <script src="../js/plugins/chartjs.min.js"></script>
-    <script src="../js/core/popper.min.js"></script>
-    -->
 </body>
 
 </html>
