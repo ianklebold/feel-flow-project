@@ -136,7 +136,8 @@ function MostrarDatos(info, admin) {
 //     });
 //   //window.location.href = "../pages/profile.html";
 // });
-
+var equiponombre = localStorage.getItem('nombreEquipo');
+var descripcionEquipo = localStorage.getItem('descripcionEquipo');
 
 function comprobarCambios(nameTeam, descriptionTeam) {
   if (document.getElementById('upNombre') !== null && document.getElementById('upDescripcion') !== null) {
@@ -146,7 +147,7 @@ function comprobarCambios(nameTeam, descriptionTeam) {
     };
     console.log(nameTeam + '||' + descriptionTeam)
     
-    if (campos.Nombre !== nameTeam || campos.Descripcion !== descriptionTeam) {
+    if (campos.Nombre !== localStorage.getItem('nombreEquipo') || campos.Descripcion !== localStorage.getItem('descripcionEquipo')) {
       //console.log(campos)
       botonGuardar.disabled = false;
     }
