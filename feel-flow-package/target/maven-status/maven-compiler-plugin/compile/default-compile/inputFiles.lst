@@ -9,6 +9,7 @@ D:\UTN\5 - Proyecto Final\Proyecto\feel-flow-project\feel-flow-package\src\main\
 D:\UTN\5 - Proyecto Final\Proyecto\feel-flow-project\feel-flow-package\src\main\java\com\equipo5\feelflowapp\service\users\admin\AdminService.java
 D:\UTN\5 - Proyecto Final\Proyecto\feel-flow-project\feel-flow-package\src\main\java\com\equipo5\feelflowapp\mappers\enterprise\custom\impl\CustomEnterpriseMapperImpl.java
 D:\UTN\5 - Proyecto Final\Proyecto\feel-flow-project\feel-flow-package\src\main\java\com\equipo5\feelflowapp\constants\validation\team\ValidationTeamMessages.java
+D:\UTN\5 - Proyecto Final\Proyecto\feel-flow-project\feel-flow-package\src\main\java\com\equipo5\feelflowapp\dto\team\TeamUpdateDTO.java
 D:\UTN\5 - Proyecto Final\Proyecto\feel-flow-project\feel-flow-package\src\main\java\com\equipo5\feelflowapp\service\auth\token\impl\TokenServiceImpl.java
 D:\UTN\5 - Proyecto Final\Proyecto\feel-flow-project\feel-flow-package\src\main\java\com\equipo5\feelflowapp\constants\validation\admin\ValidationAdminMessages.java
 D:\UTN\5 - Proyecto Final\Proyecto\feel-flow-project\feel-flow-package\src\main\java\com\equipo5\feelflowapp\domain\users\Authority.java
