@@ -14,51 +14,57 @@ const autoridad = payloadObjeto.authorities;
 const autoridad_rol = JSON.parse(autoridad);
 const rol = autoridad_rol[0].authority;
 
-const listaDeModulos = {
-    Home: {
-        nombre: 'Home',
-        perfiles: ['ADMIN', 'TEAM_LEADER', 'USER_REGULAR'],
-        logo: 'fa-home',
-        link: '../pages/Home.html'
-    },
-    Dashboard: {
-        nombre: 'Dashboard',
-        perfiles: ['ADMIN', 'TEAM_LEADER', 'USER_REGULAR'],
-        logo: 'fa-pie-chart',
-        link: '../pages/proximamente.html'
-    },
-    Lideres: {
-        nombre: 'Lideres',
-        perfiles: ['ADMIN'],
-        logo: 'fa-user-circle',
-        link: '../pages/proximamente.html'
-    },
-    Equipos: {
-        nombre: 'Equipos',
-        perfiles: ['ADMIN', 'TEAM_LEADER', 'USER_REGULAR'],
-        logo: 'fa-users',
-        link: '../pages/Teams.html'
-    },
-    Modulos: {
-        nombre: 'Modulos',
-        perfiles: ['ADMIN', 'TEAM_LEADER', 'USER_REGULAR'],
-        logo: 'fa-puzzle-piece',
-        link: '../pages/proximamente.html'
-    },
-    Usuarios: {
-        nombre: 'Usuarios',
-        perfiles: ['ADMIN', 'TEAM_LEADER'],
-        logo: 'fa-user-circle',
-        link: '../pages/proximamente.html'
-    },
-};
+// const listaDeModulos = {
+//     Home: {
+//         nombre: 'Home',
+//         perfiles: ['ADMIN', 'TEAM_LEADER', 'USER_REGULAR'],
+//         logo: 'fa-home',
+//         link: '../pages/Home.html'
+//     },
+//     Dashboard: {
+//         nombre: 'Dashboard',
+//         perfiles: ['ADMIN', 'TEAM_LEADER', 'USER_REGULAR'],
+//         logo: 'fa-pie-chart',
+//         link: '../pages/proximamente.html'
+//     },
+//     Lideres: {
+//         nombre: 'Lideres',
+//         perfiles: ['ADMIN'],
+//         logo: 'fa-user-circle',
+//         link: '../pages/proximamente.html'
+//     },
+//     Equipos: {
+//         nombre: 'Equipos',
+//         perfiles: ['ADMIN', 'TEAM_LEADER', 'USER_REGULAR'],
+//         logo: 'fa-users',
+//         link: '../pages/Teams.html'
+//     },
+//     Modulos: {
+//         nombre: 'Modulos',
+//         perfiles: ['ADMIN', 'TEAM_LEADER', 'USER_REGULAR'],
+//         logo: 'fa-puzzle-piece',
+//         link: '../pages/proximamente.html'
+//     },
+//     Usuarios: {
+//         nombre: 'Usuarios',
+//         perfiles: ['ADMIN', 'TEAM_LEADER'],
+//         logo: 'fa-user-circle',
+//         link: '../pages/proximamente.html'
+//     },
+// };
 
 function crearMenu(modulo, logo_icon, ruta) {
+    var personal = { // Creo una lista para luego insertarlos en otro lado
+        Perfil: "Perfil",
+        Configuración: "Configuración"
+    }
+
+    //Creo el módulo a insertar
     var lista = document.createElement('li');
     lista.classList.add('nav-item')
     var etiqueta_a = document.createElement('a');
     etiqueta_a.classList.add('nav-link')
-    if (modulo == pagina) {
+    if (modulo === pagina) {
         etiqueta_a.classList.add('active');
     }
     etiqueta_a.href = ruta;
@@ -78,49 +84,68 @@ function crearMenu(modulo, logo_icon, ruta) {
     etiqueta_a.appendChild(nombre_modulo);
     lista.appendChild(etiqueta_a);
 
+    // Inserto el modulo
     var divisor = document.getElementById('separador');
-    divisor.insertAdjacentElement("beforebegin", lista);
+    if (modulo in personal) {
+        divisor.insertAdjacentElement("afterend", lista);
+    } else {
+        divisor.insertAdjacentElement("beforebegin", lista);
+    }
 }
 
 function obtenerModulosDisponibles(perfil) {
-    const modulosDisponibles = [];
-  
-    for (const modulo in listaDeModulos) {
-      if (listaDeModulos[modulo].perfiles.includes(perfil)) {
-        modulosDisponibles.push(listaDeModulos[modulo]);
-      }
-    }
-  
-    return modulosDisponibles;
+    return fetch('../assets/data/modulos.json')
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Error al cargar el archivo JSON de módulos');
+            }
+            return response.json();
+        })
+        .then(data => {
+            const listaDeModulos = data;
+            const modulosDisponibles = [];
+
+            for (const modulo in listaDeModulos) {
+                if (listaDeModulos[modulo].perfiles.includes(perfil)) {
+                    modulosDisponibles.push(listaDeModulos[modulo]);
+                }
+            }
+            return modulosDisponibles;
+        });
 }
 
 function MostrarPantalla(usuario) {
     let Nombre = `${usuario.name}` + `   ` + `${usuario.surname}`;
 
     if (payloadObjeto.isAdmin) {
-        var modulosUsuario = obtenerModulosDisponibles(rol);
-        for (var menu in modulosUsuario) {
-            crearMenu(modulosUsuario[menu].nombre, modulosUsuario[menu].logo, modulosUsuario[menu].link);
-        }
-        
-        //crearMenu(menu, logo)
-        var nombre_usuario = document.createElement('h6');
-        nombre_usuario.classList.add('ps-4', 'ms-2', 'my-4', 'text-uppercase', 'text-xs', 'font-weight-bolder', 'opacity-6');
-        nombre_usuario.textContent = Nombre;
-        var divisor = document.getElementById("separador")
-        divisor.insertAdjacentElement("beforebegin", nombre_usuario);
+        obtenerModulosDisponibles(rol)
+            .then(modulosUsuario => {
+                for (var menu in modulosUsuario) {
+                    crearMenu(modulosUsuario[menu].nombre, modulosUsuario[menu].logo, modulosUsuario[menu].link);
+                }
+
+                var nombre_usuario = document.createElement('h6');
+                nombre_usuario.classList.add('ps-4', 'ms-2', 'my-4', 'text-uppercase', 'text-xs', 'font-weight-bolder', 'opacity-6');
+                nombre_usuario.textContent = Nombre;
+                var divisor = document.getElementById("separador");
+                divisor.insertAdjacentElement("beforeend", nombre_usuario);
+            })
+            .catch(error => {
+                console.error('Error al cargar los módulos disponibles:', error);
+            });
     } else {
         window.location.href = "../pages/Home.html";
-    }   
+    }
 }
+
 
 window.addEventListener("load", function () {
     GetUser(idLocation, token)
         .then(data => {
-        MostrarPantalla(data)
+            MostrarPantalla(data)
         })
         .catch(error => {
-        console.error(error);
+            console.error(error);
         });
 })
 
