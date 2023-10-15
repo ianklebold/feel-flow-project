@@ -15,6 +15,8 @@ const payloadObjeto = JSON.parse(payloadDecodificado);
 const botonGuardar = document.getElementById('miBoton');
 botonGuardar.disabled = true;
 
+console.log(equipo)
+console.log(auth)
 
 GetEquipobyID(auth, equipo)
     .then(data => {
@@ -25,10 +27,7 @@ GetEquipobyID(auth, equipo)
     .catch(error => {
         console.error(error); 
     });
-var equiponombre = localStorage.getItem('nombreEquipo');
-var descripcionEquipo = localStorage.getItem('descripcionEquipo');
-console.log(equiponombre + ' || ' + descripcionEquipo)
-comprobarCambios(equiponombre, descripcionEquipo);
+comprobarCambios();
 
 
 function MostrarDatos(info, admin) {
@@ -88,75 +87,36 @@ function MostrarDatos(info, admin) {
     NombreEquipo.insertAdjacentElement("afterend", textareaDescripcion);
 }
 
-
-
-// function campoHaCambiadoYNoEstaVacio(campo) {
-//     return campo.value !== campo.defaultValue && campo.value.trim() !== '';
-// }
-// function campoEstaVacio(campo) {
-//     return campo.value.trim() === '';
-// }
-// function actualizarEstadoBoton(botonGuardar) {
-//     const algunCampoHaCambiado = Object.values(campos).some(campoHaCambiadoYNoEstaVacio);
-//     const algunCampoEstaVacio = Object.values(campos).some(campoEstaVacio);
-//     botonGuardar.disabled = !algunCampoHaCambiado || algunCampoEstaVacio;
-// }
-
-// document.addEventListener('DOMContentLoaded', function () {
-//   const campos = {
-//     Nombre: document.getElementById('upNombre'),
-//     Descripcion: document.getElementById('upDescripcion')
-//   };
-  
-//   let cambiosRealizados = false;
-  
-//   // Agregar escucha de eventos "input" a los campos
-//   Object.values(campos).forEach((campo) => {
-//     campo.addEventListener('input', function () {
-//       cambiosRealizados = true;
-//       actualizarEstadoBoton(botonGuardar);
-//     });
-//   });
-//   // Llama a esta función para configurar el estado inicial del botón
-//   actualizarEstadoBoton(botonGuardar);
-// });
-
-// document.getElementById("04-02-Formulario").addEventListener("submit", function (event) {
-//   event.preventDefault();
-//   let newName = document.getElementById('upNombre').value;
-//   let newDescription = document.getElementById('upDescripcion').value;
-
-//   UpdateUser(equipo, auth, newName, newDescription)
-//     .then(data => {
-//       console.log(data);
-//       console.log('Exito')
-//     })
-//     .catch(error => {
-//       console.error(error);
-//     });
-//   //window.location.href = "../pages/profile.html";
-// });
-var equiponombre = localStorage.getItem('nombreEquipo');
-var descripcionEquipo = localStorage.getItem('descripcionEquipo');
-
-function comprobarCambios(nameTeam, descriptionTeam) {
+function comprobarCambios() {
   if (document.getElementById('upNombre') !== null && document.getElementById('upDescripcion') !== null) {
     const campos = {
       Nombre: document.getElementById('upNombre').value,
       Descripcion: document.getElementById('upDescripcion').value
     };
-    console.log(nameTeam + '||' + descriptionTeam)
     
     if (campos.Nombre !== localStorage.getItem('nombreEquipo') || campos.Descripcion !== localStorage.getItem('descripcionEquipo')) {
-      //console.log(campos)
-      botonGuardar.disabled = false;
-    }
-  }
-    
-  //var Nombre = document.getElementById('upNombre');
-  
-  //console.log(campos)
-  
+      if (campos.Nombre !== '' && campos.Descripcion !== '') {
+        botonGuardar.disabled = false;
+      } else {
+        botonGuardar.disabled = true;
+      }     
+    } else {
+      botonGuardar.disabled = true;
+    }  
+  }  
 }
 
 setInterval(comprobarCambios, 1000);
+
+// Agrego el enviar los datos
+
+botonGuardar.addEventListener('click', function() {
+  UpdateEquipo(equipo, auth, document.getElementById('upNombre').value, document.getElementById('upDescripcion').value)
+  .then(response => {
+    if (response) {
+      localStorage.removeItem('nombreEquipo');
+      localStorage.removeItem('descripcionEquipo');
+      window.location.href = '../pages/MyTeam.html';
+    }
+  })
+})

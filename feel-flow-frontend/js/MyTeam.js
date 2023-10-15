@@ -13,7 +13,7 @@ window.addEventListener("load", function () {
                 MostrarDatos(data, admin);
             })
             .catch(error => {
-                //window.location.href = "../pages/Teams.html"; // Error al recuperar el equipo solicitado
+                window.location.href = "../pages/Teams.html"; // Error al recuperar el equipo solicitado
                 console.error(error); 
             });
     } else {
@@ -81,8 +81,6 @@ function MostrarDatos(info, admin) {
     elementoMiembros.textContent = info.regularUsers; // Aca se inserta la la lista de participantes del equipo
     elementoMiembros.rows = 3;
     elementoMiembros.disabled = true;
-
-    console.log(info)
 
     var NombreEquipo = document.getElementById('04-01-datos-equipo');
     NombreEquipo.insertAdjacentElement("afterbegin", elementoNombre);
