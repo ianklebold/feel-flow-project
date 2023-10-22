@@ -1,4 +1,5 @@
 import { GetUser } from "../js/functions/GetPerfil.js";
+import { GetEquipos } from "./functions/GetEquipos.js";
 
 const idLocation = localStorage.getItem('idLocation');
 const token = localStorage.getItem('Token');
@@ -9,18 +10,30 @@ const tabla = document.getElementById('03-04-Tabla-Equipos');
 const campoBusqueda = document.getElementById('03-03-buscador');
 campoBusqueda.addEventListener('input', Buscar);
 
+const partesToken = token.split('.');
+const payloadDecodificado = atob(partesToken[1]);
+const payloadObjeto = JSON.parse(payloadDecodificado);
+
+const autoridad = payloadObjeto.authorities;
+const autoridad_rol = JSON.parse(autoridad);
+const rol = autoridad_rol[0].authority;
+
 window.addEventListener("load", function () {
+
     GetUser(idLocation, token)
         .then(data => {
             MostrarPantalla(data)
         })
         .catch(error => {
-            console.error(error);
+            window.location.href = "../pages/sign_in.html"; // Usuario no logueado
+            console.error(error); 
         });
 })
 
-function crearFila(logo, equipo, lider) {
+function crearFila(logo, equipo, lider, id_equipo) {
     var fila = document.createElement('tr');
+    fila.classList.add('fila')
+    fila.setAttribute('data-equipo-id', id_equipo)
     var columna1 = document.createElement('td');
     var divColumna1 = document.createElement('div');
     divColumna1.classList.add('d-flex', 'px-2', 'py-1');
@@ -80,42 +93,39 @@ function Buscar() {
         }
     }
 }
+const tablaEquipos = document.getElementById("03-04-Tabla-Equipos");
 
-function MostrarPantalla(usuario) {
+tablaEquipos.addEventListener("click", function (event) {
+  const fila = event.target.closest("tr"); // Obtiene la fila clicada
+  if (fila) {
+    const equipoId = fila.getAttribute("data-equipo-id"); // Obtiene el ID del equipo
+    if (equipoId) {
+        localStorage.setItem('IdEquipo', equipoId);
+        window.location.href = '../pages/MyTeam.html'; //Reemplazar por página de visualizar equipo
+    }
+  }
+});
 
-   //Dividir el token en sus partes(encabezado, carga útil y firma)
-    const partesToken = token.split('.');
 
-    // Decodificar la carga útil (parte en el índice 1) utilizando atob()
-    const payloadDecodificado = atob(partesToken[1]);
-
-    // El payload decodificado es una cadena JSON, por lo que puedes analizarla en un objeto JavaScript
-    const payloadObjeto = JSON.parse(payloadDecodificado);
-
-    if (payloadObjeto.isAdmin) {
-        var logo = "../img/apple-icon.png"
-        var equipo = "Equipo rojo"
-        var tl = "El pepe"
-        crearFila(logo, equipo, tl)
-        var logo = "../img/apple-icon.png"
-        var equipo = "Equipo rojo"
-        var tl = "El pepe"
-        crearFila(logo, equipo, tl)
-        var logo = "../img/apple-icon.png"
-        var equipo = "Equipo rojo"
-        var tl = "El pepe"
-        crearFila(logo, equipo, tl)
-        var logo = "../img/apple-icon.png"
-        var equipo = "Equipo azul"
-        var tl = "yo"
-        crearFila(logo, equipo, tl)
+function MostrarPantalla() {
+        
+    if (rol == 'ADMIN') {
+        GetEquipos(token)
+            .then(data => {
+                for (let team in data) {
+                    var nameTeam = data[team].nameTeam;
+                    var teamLeaderDTO = data[team].teamLeaderDTO.name + ' ' + data[team].teamLeaderDTO.surname;
+                    var logo = "../img/apple-icon.png";
+                    var uuid = data[team].uuid;
+                    crearFila(logo, nameTeam, teamLeaderDTO, uuid);
+                }
+            })
+            .catch(error => {
+                window.location.href = "../pages/sign_in.html"; // Usuario no logueado
+                console.error(error); 
+            });
     } else {
-        console.log("hola")
-        window.location.href = ""; //Aca deberia ir a la pagina de visualizacion de equipos
+        window.location.href = "../pages/MyTeam.html"; //Aca deberia ir a la pagina de visualizacion de equipos
     }   
      
 }
-
-
-
-

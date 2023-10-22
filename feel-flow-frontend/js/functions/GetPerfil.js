@@ -7,7 +7,6 @@ export async function GetUser(id, token) {
         }
     });
     if (response.status === 200) {
-        console.log(response);
         return response.json();
     } else {
         throw new Error('Error al recuperar los datos');

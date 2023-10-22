@@ -97,12 +97,18 @@ public class UserServiceImpl implements UserService{
         return Optional.empty();
     }
 
-    private Optional<? extends GrantedAuthority> getRoleByCurrentUser(){
+    @Override
+    public Optional<? extends GrantedAuthority> getRoleByCurrentUser(){
         return SecurityContextHolder.getContext()
                 .getAuthentication()
                 .getAuthorities()
                 .stream()
                 .findFirst();
+    }
+
+    @Override
+    public String getUsernameByCurrentUser() {
+         return SecurityContextHolder.getContext().getAuthentication().getName();
     }
 
     private void populateEnterprise(Admin admin, UserDTO userTarget){

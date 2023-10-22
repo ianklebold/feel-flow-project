@@ -2432,7 +2432,6 @@ progress {
 }
 
 .table {
-  /*
   --bs-table-bg: transparent;
   --bs-table-accent-bg: transparent;
   --bs-table-striped-color: #67748e;
@@ -2440,12 +2439,12 @@ progress {
   --bs-table-active-color: #67748e;
   --bs-table-active-bg: rgba(0, 0, 0, 0.1);
   --bs-table-hover-color: #67748e;
-  --bs-table-hover-bg: rgba(0, 0, 0, 0.075);*/
+  --bs-table-hover-bg: rgba(0, 0, 0, 0.075);
   width: 100%;
   margin-bottom: 1rem;
-  /*color: #67748e;*/
+  color: #67748e;
   vertical-align: top;
-  /*border-color: #e9ecef;*/
+  border-color: #e9ecef;
 }
 
 .table> :not(caption)>*>* {
