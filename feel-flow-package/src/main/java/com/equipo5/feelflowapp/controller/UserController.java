@@ -2,7 +2,7 @@ package com.equipo5.feelflowapp.controller;
 
 import com.equipo5.feelflowapp.dto.users.UserDTO;
 import com.equipo5.feelflowapp.dto.users.UserUpdateDTO;
-import com.equipo5.feelflowapp.exception.NotFoundException;
+import com.equipo5.feelflowapp.exception.notfound.NotFoundException;
 import com.equipo5.feelflowapp.service.users.UserService;
 import io.jsonwebtoken.Jwts;
 import lombok.RequiredArgsConstructor;

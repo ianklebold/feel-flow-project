@@ -21,9 +21,22 @@ document.addEventListener("DOMContentLoaded", function () {
                 },
             }).then((result) => {
                 if (result.isConfirmed) {
+                    CerrarSesion();
                     window.location.href = "../pages/sign_in.html";
                 }
             });
         });
     }
 });
+
+function CerrarSesion() {
+    var tkn = localStorage.getItem('token');
+    let url = `http://localhost:8080/api/v1/auth/logout`;
+    fetch(url, {
+        method: 'GET',
+        headers: {
+            'Authorization': `Bearer ${tkn}`
+        }
+    })
+    localStorage.removeItem('token');
+}
