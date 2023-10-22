@@ -15,9 +15,6 @@ const payloadObjeto = JSON.parse(payloadDecodificado);
 const botonGuardar = document.getElementById('miBoton');
 botonGuardar.disabled = true;
 
-console.log(equipo)
-console.log(auth)
-
 GetEquipobyID(auth, equipo)
     .then(data => {
         MostrarDatos(data, payloadObjeto.isAdmin);

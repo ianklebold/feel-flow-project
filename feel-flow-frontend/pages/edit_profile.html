@@ -39,12 +39,11 @@
             navbar-scroll="true">
             <div class="container-fluid py-1 px-3">
                 <nav aria-label="breadcrumb">
-                    <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
+                    <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5" id="02-01-Path">
                         <li class="breadcrumb-item text-sm"><a class="opacity-5" href="../pages/home.html">Feel Flow</a>
                         </li>
                         <li class="breadcrumb-item text-sm"><a class="opacity-5" href="../pages/profile.html">Perfil</a>
                         </li>
-                        <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Editar perfil</li>
                     </ol>
                 </nav>
                 <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4 justify-content-end" id="navbar">
@@ -185,58 +184,32 @@
                                 class="w-100 border-radius-lg shadow-sm">
                         </div>
                     </div>
-                    <div class="col-auto my-auto">
-                        <div class="h-100">
-                            <h5 class="mb-1" id="name"></h5>
-                            <p class="mb-0 font-weight-bold text-sm" id="rol"></p>
+                    <div class="col-auto my-auto" id="04-01-Detalles"></div>
+                </div>
+            </div>
+            <div class="card h-100 mt-4">
+                <div class="FFcard-header pb-0 p-3">
+                    <div class="row">
+                        <div class="col-md-8 d-flex align-items-center">
+                            <h4 class="mb-0">Infomación del Perfil</h4>
                         </div>
                     </div>
-                    <div class="col-lg-4 col-md-6 my-sm-auto ms-sm-auto me-sm-0 mx-auto mt-3 text-end">
-
+                </div>
+                <hr class="horizontal my-2">
+                <div class="card-body p-0 ps-3 mb-2">
+                    <div class="row justify-content-around">
+                        <form class="needs-validation " role="form" id="edit-form" novalidate>
+                            <div class="text-center">
+                                <button type="submit" id="miBoton"
+                                    class="btn bg-gradient-dark _ini_ses w-100 my-4 mt-4">Guardar</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
             <div class="container-fluid py-4">
                 <div class="row">
-                    <div class="card h-100">
-                        <div class="FFcard-header pb-0 p-3">
-                            <div class="row">
-                                <div class="col-md-8 d-flex align-items-center">
-                                    <h4 class="mb-0">Infomación del Perfil</h4>
-                                </div>
-                            </div>
-                        </div>
-                        <hr class="horizontal my-2">
-                        <div class="card-body p-0 ps-3 mb-2">
-                            <div class="row justify-content-around">
-                                <form class="needs-validation " role="form" id="edit-form" novalidate>
-                                    <div class="mb-3 form-floating shadow-lg" id="Nombre">
-                                        <input type="text" class="form-control" id="epnombre" placeholder="Nombre"
-                                            required>
-                                        <label for="floatingInputGroup1">Nombre</label>
-                                    </div>
-                                    <div class="mb-3 form-floating shadow-lg" id="Apellido">
-                                        <input type="text" class="form-control" id="epapellido" placeholder="Apellido"
-                                            required>
-                                        <label for="floatingInputGroup1">Apellido</label>
-                                    </div>
-                                    <div class="mb-3 form-floating shadow-lg" id="Email">
-                                        <input type="email" class="form-control" id="epemail" placeholder="Email"
-                                            required>
-                                        <label for="floatingInputGroup1">Email</label>
-                                    </div>
-                                    <!--  <div class="mb-3 form-floating shadow-lg" id="Empresa">
-                                        <input type="email" class="form-control" id="epempresa" placeholder="Empresa" required >
-                                        <label for="floatingInputGroup1">Empresa</label>
-                                    </div>-->
-                                    <div class="text-center">
-                                        <button type="submit" id="miBoton"
-                                            class="btn bg-gradient-dark _ini_ses w-100 my-4 mt-4">Guardar</button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
+
                 </div>
             </div>
         </div>
@@ -251,11 +224,11 @@
     <!-- Github buttons -->
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
-    <script src="../js/soft-ui-dashboard.min.js?v=1.0.3"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.js"></script>
     <script src="../js/cerrar_sesion.js"></script>
     <!--    Scripts innecesarios    -->
     <!--
+    <script src="../js/soft-ui-dashboard.min.js?v=1.0.3"></script>
     <script src="../js/plugins/perfect-scrollbar.min.js"></script>
     <script src="../js/plugins/smooth-scrollbar.min.js"></script>
     <script src="../js/plugins/chartjs.min.js"></script>
