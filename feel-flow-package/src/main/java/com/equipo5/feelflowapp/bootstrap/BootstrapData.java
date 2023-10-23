@@ -3,11 +3,13 @@ package com.equipo5.feelflowapp.bootstrap;
 import com.equipo5.feelflowapp.domain.EnterPrise;
 import com.equipo5.feelflowapp.domain.Team;
 import com.equipo5.feelflowapp.domain.enumerations.teamRoles.TeamRoles;
+import com.equipo5.feelflowapp.domain.modules.TopicTwelveSteps;
 import com.equipo5.feelflowapp.domain.users.Admin;
 import com.equipo5.feelflowapp.domain.users.Authority;
 import com.equipo5.feelflowapp.domain.users.RegularUser;
 import com.equipo5.feelflowapp.domain.users.TeamLeader;
 import com.equipo5.feelflowapp.repository.enterprise.EnterpriseRepository;
+import com.equipo5.feelflowapp.repository.modules.TopicTwelveStepsRepository;
 import com.equipo5.feelflowapp.repository.team.TeamRepository;
 import com.equipo5.feelflowapp.repository.users.AuthorityRepository;
 import com.equipo5.feelflowapp.repository.users.admin.AdminRepository;
@@ -37,6 +39,8 @@ public class BootstrapData implements CommandLineRunner {
 
     private final RegularUserRepository regularUserRepository;
 
+    private final TopicTwelveStepsRepository topicTwelveStepsRepository;
+
     private final PasswordEncoder passwordEncoder;
 
     private static final  String PASSWORD_TEMPLATE = "RiverPlatecapo@123";
@@ -48,6 +52,86 @@ public class BootstrapData implements CommandLineRunner {
         loadAdminAndEnterprises();
         loadTeamsAndTeamLeader();
         loadMembers();
+        loadTwelveStepsTopic();
+    }
+
+    private void loadTwelveStepsTopic(){
+
+        TopicTwelveSteps topicTwelveSteps1 = TopicTwelveSteps.builder()
+                .id(1L)
+                .name("Agradecer")
+                .description("Agradezca a alguien y sea agradecido con sus colegas, todos los días.")
+                .build();
+
+        TopicTwelveSteps topicTwelveSteps2 = TopicTwelveSteps.builder()
+                .id(2L)
+                .name("Dar")
+                .description("Dar algo a otra persona o hacer posible que otros le ofrezcan regalos.")
+                .build();
+
+        TopicTwelveSteps topicTwelveSteps3 = TopicTwelveSteps.builder()
+                .id(3L)
+                .name("Ayudar")
+                .description("Ayude a alguien que necesite ayuda o permita que sus colegas se ayuden entre sí.")
+                .build();
+
+        TopicTwelveSteps topicTwelveSteps4 = TopicTwelveSteps.builder()
+                .id(4L)
+                .name("Comer saludable")
+                .description("Coma bien y haga que los alimentos buenos y saludables estén fácilmente disponibles para todos.")
+                .build();
+
+        TopicTwelveSteps topicTwelveSteps5 = TopicTwelveSteps.builder()
+                .id(5L)
+                .name("Hacer ejercicio")
+                .description("Haga ejercicio y haga ejercicio con regularidad y facilite a las personas el cuidado de sus cuerpos.")
+                .build();
+
+        TopicTwelveSteps topicTwelveSteps6 = TopicTwelveSteps.builder()
+                .id(6L)
+                .name("Descansar bien")
+                .description("Descanse bien, duerma lo suficiente y permita a sus colegas refrescar sus mentes.")
+                .build();
+
+        TopicTwelveSteps topicTwelveSteps7 = TopicTwelveSteps.builder()
+                .id(7L)
+                .name("Experimentar")
+                .description("Experimente cosas nuevas, pruebe cosas y deje que la gente realice todo tipo de experimentos.")
+                .build();
+
+        TopicTwelveSteps topicTwelveSteps8 = TopicTwelveSteps.builder()
+                .id(8L)
+                .name("Caminar")
+                .description("Camine al aire libre, disfrute de la naturaleza y permita que las personas escapen de la oficina y de la ciudad.")
+                .build();
+
+        TopicTwelveSteps topicTwelveSteps9 = TopicTwelveSteps.builder()
+                .id(9L)
+                .name("Meditar")
+                .description("Medita y consigue que la gente aprenda y adopte prácticas de mindfulness.")
+                .build();
+
+        TopicTwelveSteps topicTwelveSteps10 = TopicTwelveSteps.builder()
+                .id(10L)
+                .name("Socializar")
+                .description("Socialice , relaciónese con otras personas y facilite a sus colegas el desarrollo de conexiones.")
+                .build();
+
+        TopicTwelveSteps topicTwelveSteps11 = TopicTwelveSteps.builder()
+                .id(11L)
+                .name("Establecer objetivo")
+                .description("Apunta a una meta y consigue que las personas comprendan y realicen su propio propósito.")
+                .build();
+
+        TopicTwelveSteps topicTwelveSteps12 = TopicTwelveSteps.builder()
+                .id(12L)
+                .name("Sonreir")
+                .description("Sonríe siempre que puedas, aprecia el humor y haz que tus colegas participen en actividades divertidas.")
+                .build();
+
+        topicTwelveStepsRepository.saveAll(List.of(topicTwelveSteps1,topicTwelveSteps2,topicTwelveSteps3,topicTwelveSteps4,
+                topicTwelveSteps5,topicTwelveSteps6,topicTwelveSteps7,topicTwelveSteps8,topicTwelveSteps9,
+                topicTwelveSteps10,topicTwelveSteps11,topicTwelveSteps12));
     }
 
     private void loadMembers(){
