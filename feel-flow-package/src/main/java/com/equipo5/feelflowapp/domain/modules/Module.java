@@ -1,5 +1,6 @@
 package com.equipo5.feelflowapp.domain.modules;
 
+import com.equipo5.feelflowapp.domain.Team;
 import com.equipo5.feelflowapp.domain.enumerations.modules.ModuleState;
 import jakarta.persistence.*;
 import lombok.*;
@@ -30,6 +31,9 @@ public class Module {
 
     @Enumerated(EnumType.STRING)
     private ModuleState moduleState;
+
+    @ManyToOne
+    private Team team;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "module")
     private List<PendingModule> pendingModules = new ArrayList<>();

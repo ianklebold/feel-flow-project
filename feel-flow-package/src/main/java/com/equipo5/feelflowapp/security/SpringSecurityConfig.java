@@ -51,6 +51,7 @@ public class SpringSecurityConfig {
                         auth -> auth
                                 .requestMatchers("/api/v1/user/**").permitAll()
                                 .requestMatchers("/api/v1/admin/**").permitAll()
+                                .requestMatchers("/api/v1/module/**").permitAll()
                                 .requestMatchers(HttpMethod.PUT,"/api/v1/team/{idTeam}").hasAnyAuthority("TEAM_LEADER","ADMIN")
                                 .requestMatchers("/api/v1/team/**").permitAll()
                                 .anyRequest()

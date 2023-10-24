@@ -6,11 +6,11 @@ import lombok.*;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
 @Entity
 public class Survey {
     @Id
@@ -20,6 +20,16 @@ public class Survey {
     private Long id;
 
     private String question;
-    @ManyToOne()
-    private SurveyModule surveyModule;
+
+    @Builder.Default
+    @ManyToMany()
+    private List<SurveyModule> surveyModule = new ArrayList<>();
+
+    public Survey(Long id, String question, List<SurveyModule> surveyModule) {
+        this.id = id;
+        this.question = question;
+        this.surveyModule = surveyModule;
+    }
+
+    public Survey() {}
 }

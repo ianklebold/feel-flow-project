@@ -1,23 +1,23 @@
 package com.equipo5.feelflowapp.domain.modules;
 
+import com.equipo5.feelflowapp.domain.answers.Answer;
 import com.equipo5.feelflowapp.domain.enumerations.modules.ModuleState;
 import com.equipo5.feelflowapp.domain.users.RegularUser;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 @Entity
 public class PendingModule {
     @Id
@@ -32,6 +32,9 @@ public class PendingModule {
 
     @ManyToOne
     private RegularUser regularUser;
+
+    @OneToMany
+    private List<Answer> answers;
 
     @Enumerated(EnumType.STRING)
     private ModuleState moduleState;

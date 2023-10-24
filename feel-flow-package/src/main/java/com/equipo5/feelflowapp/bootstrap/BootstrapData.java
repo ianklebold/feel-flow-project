@@ -4,12 +4,14 @@ import com.equipo5.feelflowapp.domain.EnterPrise;
 import com.equipo5.feelflowapp.domain.Team;
 import com.equipo5.feelflowapp.domain.enumerations.teamRoles.TeamRoles;
 import com.equipo5.feelflowapp.domain.modules.TopicTwelveSteps;
+import com.equipo5.feelflowapp.domain.survies.TwelveStepsSurvey;
 import com.equipo5.feelflowapp.domain.users.Admin;
 import com.equipo5.feelflowapp.domain.users.Authority;
 import com.equipo5.feelflowapp.domain.users.RegularUser;
 import com.equipo5.feelflowapp.domain.users.TeamLeader;
 import com.equipo5.feelflowapp.repository.enterprise.EnterpriseRepository;
 import com.equipo5.feelflowapp.repository.modules.TopicTwelveStepsRepository;
+import com.equipo5.feelflowapp.repository.modules.TwelveStepSurveyRepository;
 import com.equipo5.feelflowapp.repository.team.TeamRepository;
 import com.equipo5.feelflowapp.repository.users.AuthorityRepository;
 import com.equipo5.feelflowapp.repository.users.admin.AdminRepository;
@@ -21,6 +23,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
@@ -41,9 +44,15 @@ public class BootstrapData implements CommandLineRunner {
 
     private final TopicTwelveStepsRepository topicTwelveStepsRepository;
 
+    private final TwelveStepSurveyRepository twelveStepSurveyRepository;
+
     private final PasswordEncoder passwordEncoder;
 
     private static final  String PASSWORD_TEMPLATE = "RiverPlatecapo@123";
+
+    private final String TWELVE_STEPS_Question1_TEMPLATE = "Del 1-5 cuanto te eximiste en el topico?";
+
+    private final String TWELVE_STEPS_Question2_TEMPLATE = "Como podrias mejorar?";
     @Override
     public void run(String... args) throws Exception {
         log.info("Corriendo datos");
@@ -53,6 +62,31 @@ public class BootstrapData implements CommandLineRunner {
         loadTeamsAndTeamLeader();
         loadMembers();
         loadTwelveStepsTopic();
+        loadSurveyTwelveSteps();
+    }
+
+    private void loadSurveyTwelveSteps() {
+        List<TopicTwelveSteps> topicTwelveSteps = topicTwelveStepsRepository.findAll();
+
+        TwelveStepsSurvey twelveStepsSurvey1 = TwelveStepsSurvey.builder()
+                .id(1L)
+                .question(TWELVE_STEPS_Question1_TEMPLATE)
+                .surveyTopic(new ArrayList<>())
+                .build();
+
+        TwelveStepsSurvey twelveStepsSurvey2 = TwelveStepsSurvey.builder()
+                .id(2L)
+                .question(TWELVE_STEPS_Question2_TEMPLATE)
+                .surveyTopic(new ArrayList<>())
+                .build();
+
+        topicTwelveSteps.forEach(topic -> {
+                    twelveStepsSurvey1.getSurveyTopic().add(topic);
+                    twelveStepsSurvey2.getSurveyTopic().add(topic);
+                });
+
+        twelveStepSurveyRepository.save(twelveStepsSurvey1);
+        twelveStepSurveyRepository.save(twelveStepsSurvey2);
     }
 
     private void loadTwelveStepsTopic(){

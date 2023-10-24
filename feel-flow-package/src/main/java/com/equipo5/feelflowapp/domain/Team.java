@@ -1,5 +1,6 @@
 package com.equipo5.feelflowapp.domain;
 
+import com.equipo5.feelflowapp.domain.modules.Module;
 import com.equipo5.feelflowapp.domain.users.RegularUser;
 import com.equipo5.feelflowapp.domain.users.TeamLeader;
 import jakarta.persistence.*;
@@ -34,6 +35,10 @@ public class Team {
 
     @OneToOne(cascade = CascadeType.ALL)
     private TeamLeader teamLeader;
+
+    @Builder.Default
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "team")
+    private List<Module> modules = new ArrayList<>();
 
     @Builder.Default
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "team")
