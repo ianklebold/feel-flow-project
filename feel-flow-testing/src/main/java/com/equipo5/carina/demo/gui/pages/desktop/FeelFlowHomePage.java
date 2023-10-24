@@ -221,6 +221,8 @@ import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.gui.AbstractPage;
 
 public class FeelFlowHomePage extends AbstractPage {
+
+    long DEFAULT_TIMEOUT = 5;
     
     public FeelFlowHomePage(WebDriver driver) {
         super(driver);
@@ -257,6 +259,15 @@ public class FeelFlowHomePage extends AbstractPage {
     @FindBy(xpath = "/html/body/main/div/div/div/div")
     private ExtendedWebElement newsContainer;
 
+    @FindBy(xpath = "/html/body/main/nav/div/div/ul/li[3]/ul/li[2]/a")
+    private ExtendedWebElement logOutButton;
+
+    @FindBy(xpath = "/html/body/div/div")
+    private ExtendedWebElement warningLabel;
+
+    @FindBy(xpath = "/html/body/div/div/div[6]/button[1]/span")
+    private ExtendedWebElement warningLabelYesButton;
+
     // Agrega aquí más elementos identificados según la estructura de la página Home
 
     public void open() {
@@ -272,7 +283,7 @@ public class FeelFlowHomePage extends AbstractPage {
     }
 
     public boolean isNotificationDropdownDisplayed() {
-        return notificationDropdown.isElementPresent();
+        return notificationDropdown.isElementPresent(DEFAULT_TIMEOUT);
     }
 
     public void clickSettingsButton() {
@@ -280,15 +291,15 @@ public class FeelFlowHomePage extends AbstractPage {
     }
 
     public boolean isSettingsDropdownDisplayed() {
-        return settingsDropdown.isElementPresent();
+        return settingsDropdown.isElementPresent(DEFAULT_TIMEOUT);
     }
 
     public void clickProfileButton() {
-        profileButton.click();
+        profileButton.click(DEFAULT_TIMEOUT);
     }
 
     public boolean isProfileDropdownDisplayed() {
-        return profileDropdown.isElementPresent();
+        return profileDropdown.isElementPresent(DEFAULT_TIMEOUT);
     }
 
     public Object getNavbarList() {
@@ -296,11 +307,11 @@ public class FeelFlowHomePage extends AbstractPage {
     }
 
     public boolean isSettingsButtonPresent() {
-        return settingsButton.isElementPresent();
+        return settingsButton.isElementPresent(DEFAULT_TIMEOUT);
     }
 
     public boolean isProfileButtonPresent() {
-        return profileButton.isElementPresent();
+        return profileButton.isElementPresent(DEFAULT_TIMEOUT);
     }
 
     public boolean isLogoLinkPresent() {
@@ -312,7 +323,19 @@ public class FeelFlowHomePage extends AbstractPage {
     }
 
     public boolean isNewsContainerPresent() {
-        return newsContainer.isElementPresent();
+        return newsContainer.isElementPresent(DEFAULT_TIMEOUT);
+    }
+
+    public void clickLogOutButton() {
+        logOutButton.click(DEFAULT_TIMEOUT);        
+    }
+
+    public boolean isWarningLabelDisplayed() {
+      return warningLabel.isElementPresent(DEFAULT_TIMEOUT);
+    }
+
+    public void clickConfirmButton() {
+      warningLabelYesButton.click(DEFAULT_TIMEOUT);
     }
     
 }

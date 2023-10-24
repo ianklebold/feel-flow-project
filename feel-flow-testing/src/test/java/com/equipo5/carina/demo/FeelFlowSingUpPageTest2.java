@@ -74,9 +74,11 @@ public class FeelFlowSingUpPageTest2 implements IAbstractTest {
     @DataProvider(name = "validUserCredentials")
     public Object[][] validUserCredentials() {
         return new Object[][] {
-            {"Cristina", "Torres", "10/05/1999", "Avenida Italia 350", "Resistencia", "Argentina", "Accenture", "cristina.torres@accenture.com", "A12346789l@"},
-            {"Jhon", "Smith", "25/08/1985", "32th Street 453", "Londres", "Inglaterra", "Amazon", "j.smith@amazon.com", "Bc71!8293"},
-            {"Carolina Mariela", "Ramirez", "30/10/1978", "Avenida Bolivar 1097", "Medellín", "Colombia", "Microsoft", "carolina.mariela.ramirez@outlook.com", "m123*4567T"}
+            // {"Cristina", "Torres", "10/05/1999", "Avenida Italia 350", "Resistencia", "Argentina", "Accenture", "cristina.torres@accenture.com", "A12346789l@"},
+            // {"Jhon", "Smith", "25/08/1985", "32th Street 453", "Londres", "Inglaterra", "Amazon", "j.smith@amazon.com", "Bc71!8293"},
+            // {"Carolina Mariela", "Ramirez", "30/10/1978", "Avenida Bolivar 1097", "Medellín", "Colombia", "Microsoft", "carolina.mariela.ramirez@outlook.com", "m123*4567T"}
+            {"Carlota", "Torres", "10/05/1999", "Avenida Italia 350", "Resistencia", "Argentina", "Accenture", "carlota.torres@accenture.com", "A12346789l@"},
+            {"Juan", "Smith", "25/08/1985", "32th Street 453", "Londres", "Inglaterra", "Amazon", "juan.smith@amazon.com", "Bc71!8293"}
         };
     }
 
