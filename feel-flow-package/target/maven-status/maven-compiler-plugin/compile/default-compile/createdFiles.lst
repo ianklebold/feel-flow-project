@@ -15,6 +15,7 @@ com\equipo5\feelflowapp\controller\UserController.class
 com\equipo5\feelflowapp\domain\Team.class
 com\equipo5\feelflowapp\dto\team\TeamListDTO.class
 com\equipo5\feelflowapp\domain\users\RegularUser$RegularUserBuilder.class
+com\equipo5\feelflowapp\dto\team\TeamUpdateDTO$TeamUpdateDTOBuilder.class
 com\equipo5\feelflowapp\controller\TeamController.class
 com\equipo5\feelflowapp\constants\validation\teamleader\ValidationTeamLeaderMessages.class
 com\equipo5\feelflowapp\domain\users\Admin.class
@@ -56,6 +57,7 @@ com\equipo5\feelflowapp\dto\enterprise\EnterpriseInfoHomeDTO.class
 com\equipo5\feelflowapp\repository\users\AuthorityRepository.class
 com\equipo5\feelflowapp\service\enterprise\impl\EnterpriseServiceImpl.class
 com\equipo5\feelflowapp\service\authority\AuthorityService.class
+com\equipo5\feelflowapp\dto\team\TeamUpdateDTO.class
 com\equipo5\feelflowapp\dto\users\admin\AdminDTO.class
 com\equipo5\feelflowapp\service\auth\token\impl\TokenService.class
 com\equipo5\feelflowapp\dto\enterprise\EnterpriseDTO$EnterpriseDTOBuilder.class

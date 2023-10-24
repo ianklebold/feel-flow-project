@@ -1,3 +1,6 @@
+package com.equipo5.carina.demo.gui.pages.desktop;
+
+/*
 <!DOCTYPE html>
 <html lang="en">
 
@@ -237,3 +240,107 @@
 </body>
 
 </html>
+ */
+
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.FindBy;
+
+import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
+import com.zebrunner.carina.webdriver.gui.AbstractPage;
+
+public class FeelFlowEditTeamPage extends AbstractPage {
+    
+    public FeelFlowEditTeamPage(WebDriver driver) {
+        super(driver);
+        setPageAbsoluteURL("http://127.0.0.1:8000/pages/edit_profile.html");
+    }
+    
+    @FindBy(xpath = "//*[@id=\"sidenav-main\"]/div[1]/a/img")
+    private ExtendedWebElement logoLink;
+
+    @FindBy(xpath = "//*[@id=\"navbar\"]")
+    private ExtendedWebElement navbarList;
+
+    @FindBy(xpath = "/html/body/main/nav/div/div/ul/li[1]/a/i")
+    private ExtendedWebElement notificationButton;
+
+    @FindBy(xpath = "//*[@id=\"navbar\"]/ul/li[1]/ul")
+    private ExtendedWebElement notificationDropdown;
+
+    @FindBy(xpath = "/html/body/main/nav/div/div/ul/li[2]/a/i")
+    private ExtendedWebElement settingsButton;
+
+    @FindBy(xpath = "//*[@id=\"navbar\"]/ul/li[2]/ul")
+    private ExtendedWebElement settingsDropdown;
+
+    @FindBy(xpath = "/html/body/main/nav/div/div/ul/li[3]/a/i")
+    private ExtendedWebElement profileButton;
+
+    @FindBy(xpath = "//*[@id=\"navbar\"]/ul/li[3]/ul")
+    private ExtendedWebElement profileDropdown;
+
+    @FindBy(xpath = "/html/body/main/div/h2")
+    private ExtendedWebElement lastNews;
+
+    @FindBy(xpath = "/html/body/main/div/div/div/div")
+    private ExtendedWebElement newsContainer;
+
+    // Agrega aquí más elementos identificados según la estructura de la página Home
+
+    public void open() {
+        this.openURL(this.pageURL);
+    }
+
+    public void clickLogo() {
+        logoLink.click();
+    }
+
+    public void clickNotificationButton() {
+        notificationButton.click();
+    }
+
+    public boolean isNotificationDropdownDisplayed() {
+        return notificationDropdown.isElementPresent();
+    }
+
+    public void clickSettingsButton() {
+        settingsButton.click();
+    }
+
+    public boolean isSettingsDropdownDisplayed() {
+        return settingsDropdown.isElementPresent();
+    }
+
+    public void clickProfileButton() {
+        profileButton.click();
+    }
+
+    public boolean isProfileDropdownDisplayed() {
+        return profileDropdown.isElementPresent();
+    }
+
+    public Object getNavbarList() {
+        return navbarList;
+    }
+
+    public boolean isSettingsButtonPresent() {
+        return settingsButton.isElementPresent();
+    }
+
+    public boolean isProfileButtonPresent() {
+        return profileButton.isElementPresent();
+    }
+
+    public boolean isLogoLinkPresent() {
+        return logoLink.isElementPresent();
+    }
+
+    public boolean isLastNewsPresent() {
+        return lastNews.isElementPresent();
+    }
+
+    public boolean isNewsContainerPresent() {
+        return newsContainer.isElementPresent();
+    }
+    
+}

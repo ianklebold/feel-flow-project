@@ -28,6 +28,7 @@ public class FeelFlowLoginPage extends AbstractPage {
     @FindBy(xpath = "//*[@id=\"FF-Background\"]/div/div[2]/div[2]/div/div/div")
     private ExtendedWebElement errorMessage;
 
+    long DEFAULT_TIMEOUT = 5;
 
     public void open() {
         this.openURL(this.pageURL);
@@ -50,7 +51,11 @@ public class FeelFlowLoginPage extends AbstractPage {
     }
 
     public boolean isErrorMessageDisplayed() {
-        return errorMessage.isElementPresent();
+        return errorMessage.isElementPresent(DEFAULT_TIMEOUT);
+    }
+
+    public boolean isOpened() {
+        return signInButton.isElementPresent(DEFAULT_TIMEOUT);
     }
 
 }
