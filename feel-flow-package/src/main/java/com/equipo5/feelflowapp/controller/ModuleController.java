@@ -2,6 +2,9 @@ package com.equipo5.feelflowapp.controller;
 
 import com.equipo5.feelflowapp.domain.enumerations.modules.ModulesTypes;
 import com.equipo5.feelflowapp.dto.module.ModuleDTO;
+import com.equipo5.feelflowapp.exception.module.TwelveStepsModuleException;
+import com.equipo5.feelflowapp.exception.notfound.NotFoundException;
+import com.equipo5.feelflowapp.exception.notfound.NotFoundTeamException;
 import com.equipo5.feelflowapp.service.module.ModuleService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -30,9 +33,15 @@ public class ModuleController {
     @PostMapping(value = MODULE_NAME)
     public ResponseEntity createModule(@PathVariable(value = "nameModule")ModulesTypes modulesTypes){
 
-        ModuleDTO moduleDTO = moduleService.createModule(modulesTypes);
+        try {
+            ModuleDTO moduleDTO = moduleService.createModule(modulesTypes);
+            return new ResponseEntity<>("Successfully created", HttpStatus.CREATED);
+        }catch (NotFoundException e){
+            return new ResponseEntity<>(e.getMessage(),HttpStatus.NOT_FOUND);
+        }catch (TwelveStepsModuleException e){
+            return new ResponseEntity<>(e.getMessage(),HttpStatus.BAD_REQUEST);
+        }
 
-        return new ResponseEntity<>(moduleDTO, HttpStatus.CREATED);
     }
 
 

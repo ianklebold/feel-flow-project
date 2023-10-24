@@ -8,7 +8,12 @@ import com.equipo5.feelflowapp.domain.modules.PendingModule;
 import com.equipo5.feelflowapp.domain.modules.TwelveStepsModule;
 import com.equipo5.feelflowapp.domain.users.RegularUser;
 import com.equipo5.feelflowapp.dto.module.ModuleDTO;
+import com.equipo5.feelflowapp.exception.module.ModuleNotFoundException;
+import com.equipo5.feelflowapp.exception.module.TwelveStepsModuleException;
+import com.equipo5.feelflowapp.exception.notfound.NotFoundTeamException;
 import com.equipo5.feelflowapp.mappers.module.ModuleMapper;
+import com.equipo5.feelflowapp.mappers.users.UserMapper;
+import com.equipo5.feelflowapp.mappers.users.team.TeamMapper;
 import com.equipo5.feelflowapp.repository.modules.TwelveStepModuleRepository;
 import com.equipo5.feelflowapp.repository.modules.TwelveStepSurveyRepository;
 import com.equipo5.feelflowapp.repository.team.TeamRepository;
@@ -42,8 +47,12 @@ public class ModuleServiceImpl implements ModuleService {
 
     private final ModuleMapper moduleMapper;
 
+    private final UserMapper userMapper;
+
+    private final TeamMapper teamMapper;
+
     @Override
-    public ModuleDTO createModule(ModulesTypes modulesTypes) {
+    public ModuleDTO createModule(ModulesTypes modulesTypes) throws NotFoundTeamException, TwelveStepsModuleException, ModuleNotFoundException {
 
         if (ModulesTypes.TWELVE_STEPS.toString().equals(modulesTypes.toString())){
 
@@ -55,14 +64,14 @@ public class ModuleServiceImpl implements ModuleService {
             Optional<Team> team = teamRepository.findById(UUID.fromString(idTeam));
 
             if (team.isEmpty()){
-                return null;
+               throw new NotFoundTeamException("Not found Team with id : " + idTeam);
             }
 
             boolean isExistModuleActive = team.get().getModules().stream()
                     .anyMatch(module -> module instanceof TwelveStepsModule && ModuleState.ACTIVE.toString().equals( module.getModuleState().toString() ) );
 
             if(isExistModuleActive){
-                return null;
+                throw new TwelveStepsModuleException("Already exist one module active");
             }
 
             List<RegularUser> users = team.get().getRegularUsers();
@@ -93,10 +102,12 @@ public class ModuleServiceImpl implements ModuleService {
                     });
 
             Module module = twelveStepModuleRepository.save(twelveStepsModule);
-            return moduleMapper.moduleToModuleDto(module);
-        }
+            ModuleDTO moduleDTO = moduleMapper.moduleToModuleDto(module);
+            moduleDTO.setTeamDTO(teamMapper.teamToTeamDto(team.get()));
 
-        return null;
+            return moduleDTO;
+        }
+        throw new ModuleNotFoundException("Module not found");
     }
 
     private void setSurveysForTwelveSteps(TwelveStepsModule twelveStepsModule){
