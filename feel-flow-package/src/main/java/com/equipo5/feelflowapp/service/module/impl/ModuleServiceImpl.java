@@ -110,6 +110,16 @@ public class ModuleServiceImpl implements ModuleService {
         throw new ModuleNotFoundException("Module not found");
     }
 
+    @Override
+    public List<ModuleDTO> getModules(ModulesTypes modulesTypes,ModuleState moduleState) {
+        String currentUsername = userService.getUsernameByCurrentUser();
+
+        String idTeam = teamLeaderRepository.findTeamByUsername(currentUsername);
+        twelveStepModuleRepository.findTwelveModulesByTeamAndState(idTeam,moduleState.toString());
+
+        return null;
+    }
+
     private void setSurveysForTwelveSteps(TwelveStepsModule twelveStepsModule){
         twelveStepsModule.getSurveys().addAll(twelveStepSurveyRepository.findAll());
 

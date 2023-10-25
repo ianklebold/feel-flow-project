@@ -1,5 +1,6 @@
 package com.equipo5.feelflowapp.controller;
 
+import com.equipo5.feelflowapp.domain.enumerations.modules.ModuleState;
 import com.equipo5.feelflowapp.domain.enumerations.modules.ModulesTypes;
 import com.equipo5.feelflowapp.dto.module.ModuleDTO;
 import com.equipo5.feelflowapp.exception.module.TwelveStepsModuleException;
@@ -11,10 +12,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 
 @Slf4j
@@ -27,6 +27,8 @@ public class ModuleController {
     public static final String PATH_ID = "/{idModule}";
 
     public static final String MODULE_NAME = "/{nameModule}";
+
+    public static final String MODULE_STATE = MODULE_NAME + "/{stateModule}";
 
     private final ModuleService moduleService;
 
@@ -42,6 +44,14 @@ public class ModuleController {
             return new ResponseEntity<>(e.getMessage(),HttpStatus.BAD_REQUEST);
         }
 
+    }
+
+    @GetMapping(value = MODULE_STATE)
+    public List<ModuleDTO> getModules(@PathVariable(value = "nameModule")ModulesTypes modulesTypes,
+                                      @PathVariable(value = "stateModule")ModuleState moduleState){
+
+        moduleService.getModules(modulesTypes,moduleState);
+        return null;
     }
 
 

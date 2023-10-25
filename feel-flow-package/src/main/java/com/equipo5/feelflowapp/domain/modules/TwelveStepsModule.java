@@ -2,7 +2,6 @@ package com.equipo5.feelflowapp.domain.modules;
 
 import com.equipo5.feelflowapp.domain.Team;
 import com.equipo5.feelflowapp.domain.enumerations.modules.ModuleState;
-import com.equipo5.feelflowapp.domain.survies.Survey;
 import com.equipo5.feelflowapp.domain.survies.TwelveStepsSurvey;
 import jakarta.persistence.*;
 import lombok.*;
