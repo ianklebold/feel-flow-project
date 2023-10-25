@@ -2,10 +2,11 @@ package com.equipo5.feelflowapp.mappers.users.team;
 
 import com.equipo5.feelflowapp.domain.Team;
 import com.equipo5.feelflowapp.dto.team.TeamDTO;
+import com.equipo5.feelflowapp.mappers.users.teamleader.TeamLeaderMapper;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
-@Mapper
+@Mapper(uses = {TeamLeaderMapper.class})
 public interface TeamMapper {
 
 

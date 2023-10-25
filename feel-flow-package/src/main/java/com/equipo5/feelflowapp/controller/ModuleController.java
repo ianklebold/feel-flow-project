@@ -50,8 +50,7 @@ public class ModuleController {
     public List<ModuleDTO> getModules(@PathVariable(value = "nameModule")ModulesTypes modulesTypes,
                                       @PathVariable(value = "stateModule")ModuleState moduleState){
 
-        moduleService.getModules(modulesTypes,moduleState);
-        return null;
+        return moduleService.getModules(modulesTypes,moduleState);
     }
 
 

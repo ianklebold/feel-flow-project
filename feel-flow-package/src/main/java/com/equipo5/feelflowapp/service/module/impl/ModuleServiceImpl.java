@@ -25,10 +25,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 
 @Service
@@ -113,11 +110,19 @@ public class ModuleServiceImpl implements ModuleService {
     @Override
     public List<ModuleDTO> getModules(ModulesTypes modulesTypes,ModuleState moduleState) {
         String currentUsername = userService.getUsernameByCurrentUser();
-
         String idTeam = teamLeaderRepository.findTeamByUsername(currentUsername);
-        twelveStepModuleRepository.findTwelveModulesByTeamAndState(idTeam,moduleState.toString());
+        Optional<Team> team = teamRepository.findById(UUID.fromString(idTeam));
 
-        return null;
+        if (ModulesTypes.TWELVE_STEPS.equals(modulesTypes)){
+
+            List<TwelveStepsModule> twelveStepsModules = twelveStepModuleRepository.findTwelveModulesByTeamAndState(idTeam,moduleState.toString());
+
+
+
+            return twelveStepsModules.stream().map(moduleMapper::moduleToModuleDto).toList();
+        }
+
+        return Collections.emptyList();
     }
 
     private void setSurveysForTwelveSteps(TwelveStepsModule twelveStepsModule){
