@@ -80,22 +80,67 @@ document.addEventListener('DOMContentLoaded', function () {
         document.getElementById('flexCheckDefault')
       })
       .catch(error => {
+        var ctl_pas = false;
+        var ctl_usr = false;
         if (error.errorData) {
           // El servidor respondió con un error 400, error contiene la respuesta
+          var pas = true;
+          var usr = true;
           error.errorData.forEach(error => {
+            console.log(error)
             for (const campo in error) {
               var idinput = "in-" + campo;
-              document.getElementById(`${idinput}`).classList.add('incorrecto')
               const mensaje = error[campo];
+              if (campo === "password") {
+                pas = false;
+                usr = true;
+              } else {
+                usr = false;
+                pas = true
+              }
               // Insertar el mensaje de error en el HTML, por ejemplo, en un elemento div con el id 'errores':
               const divError = document.createElement('div');
               divError.classList.add('invalid-tooltip', 'text-center');
               divError.textContent = `${mensaje}`;
-              document.getElementById(`${campo}`).appendChild(divError);
-              if (document.getElementById('flexCheckDefault').checked) {
-                document.getElementById('flexCheckDefault').classList.add('incorrecto')
+              if (campo === "password") {
+                if (pas) {
+                  if (!ctl_pas) {
+                    document.getElementById(`${campo}`).appendChild(divError);
+                    document.getElementById(`${idinput}`).classList.add('incorrecto');
+                    ctl_pas = true;
+                  }
+                } else {
+                  if (ctl_pas) {
+                    document.getElementById(`${campo}`).removeChild(divError);
+                    document.getElementById(`${idinput}`).classList.remove('incorrecto');
+                    ctl_pas = false;
+                  }
+                }
+              } else {
+                if (usr) {
+                  if (!ctl_usr) {
+                    document.getElementById(`${campo}`).appendChild(divError);
+                    document.getElementById(`${idinput}`).classList.add('incorrecto');
+                    ctl_usr = true;
+                  } else {
+                    if (ctl_usr) {
+                      document.getElementById(`${campo}`).removeChild(divError);
+                      document.getElementById(`${idinput}`).classList.remove('incorrecto');
+                      ctl_usr = false;
+                    }
+                  }
+                }
               }
-              //document.querySelector('form').classList.add('was-validated');
+
+              // Controlar checkbox
+              if (!document.getElementById('flexCheckDefault').checked) {
+                document.getElementById('flexCheckDefault').classList.add('alert-danger');
+                document.getElementById('label-check').classList.add('text-danger');
+              } else {
+                document.getElementById('flexCheckDefault').classList.remove('alert-danger');
+                document.getElementById('label-check').classList.remove('text-danger');
+              }
+
             }
           });
         } else {
