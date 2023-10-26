@@ -23,6 +23,21 @@ img {
   cursor: pointer;
 }
 
+/* input.incorrecto {
+  border-color: red;
+  background-color: rgb(181, 86, 86);
+  color: red;
+} */
+
+input.form-control.incorrecto {
+  border-color: red;
+  color: red;
+}
+input.incorrecto {
+  border-color: red;
+  color: red;
+}
+
 /* Formulario */
 /* Con comentar esto seguro que se va a romper alguna página, pero no me sirve que este aca
 .card {

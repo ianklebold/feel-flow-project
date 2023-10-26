@@ -45,28 +45,28 @@
               <hr class="custom-hr mt-2">
               <form id="registro-formulario" class="needs-validation" role="form" novalidate>
                 <div class="mb-3 form-floating shadow-lg">
-                  <input type="email" class="form-control" id="Nombre" placeholder="Nombre" required>
-                  <label for="floatingInputGroup1">Nombre</label>
+                  <input type="text" class="form-control" id="Nombre" placeholder="Nombre">
+                  <label for="Nombre">Nombre</label>
                 </div>
                 <div class="mb-3 form-floating shadow-lg">
-                  <input type="email" class="form-control" id="Apellido" placeholder="Apellido" required>
-                  <label for="floatingInputGroup1">Apellido</label>
+                  <input type="text" class="form-control" id="Apellido" placeholder="Apellido">
+                  <label for="Apellido">Apellido</label>
+                </div>
+                <div class="mb-3 form-floating shadow-lg" id="username">
+                  <input type="email" class="form-control" id="in-username" placeholder="Email">
+                  <label for="in-username">Email</label>
+                </div>
+                <div class="mb-3 form-floating shadow-lg" id="password">
+                  <input type="password" class="form-control" id="in-password" placeholder="Password">
+                  <label for="in-password">Contraseña</label>
                 </div>
                 <div class="mb-3 form-floating shadow-lg">
-                  <input type="email" class="form-control" id="email" placeholder="Email" required>
-                  <label for="floatingInputGroup1">Email</label>
-                </div>
-                <div class="mb-3 form-floating shadow-lg">
-                  <input type="password" class="form-control" id="floatingInputGroup1" placeholder="Password">
-                  <label for="floatingInputGroup1">Contraseña</label>
-                </div>
-                <div class="mb-3 form-floating shadow-lg">
-                  <input type="email" class="form-control" id="Empresa" placeholder="Empresa" required>
-                  <label for="floatingInputGroup1">Empresa</label>
+                  <input type="text" class="form-control" id="Empresa" placeholder="Empresa">
+                  <label for="Empresa">Empresa</label>
                 </div>
                 <hr class="custom-hr mt-2">
                 <div class="form-check form-check-info text-left">
-                  <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" checked>
+                  <input class="form-check-input" type="checkbox" id="flexCheckDefault" checked required>
                   <label class="form-check-label" for="flexCheckDefault">
                     Acepto los <a href="javascript:;" class="text-dark text-center font-weight-bolder">términos y
                       condiciones</a>
@@ -103,7 +103,7 @@
   <script src="../js/core/bootstrap.min.js"></script>
   <script src="../js/plugins/perfect-scrollbar.min.js"></script>
   <script src="../js/plugins/smooth-scrollbar.min.js"></script>
-  <script src="../js/registro/sign-up.js"></script>
+  <script type="module" src="../js/registro/sign-up.js"></script>
   <script>
     var win = navigator.platform.indexOf('Win') > -1;
     if (win && document.querySelector('#sidenav-scrollbar')) {
@@ -116,7 +116,26 @@
   <!-- Github buttons -->
   <script async defer src="https://buttons.github.io/buttons.js"></script>
   <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
-  <script src="../js/soft-ui-dashboard.min.js?v=1.0.3"></script>
+  <!-- <script>
+    (() => {
+      'use strict'
+
+      // Fetch all the forms we want to apply custom Bootstrap validation styles to
+      const forms = document.querySelectorAll('.needs-validation')
+
+      // Loop over them and prevent submission
+      Array.from(forms).forEach(form => {
+        form.addEventListener('submit', event => {
+          if (!form.checkValidity()) {
+            event.preventDefault()
+            event.stopPropagation()
+          }
+
+          form.classList.add('was-validated')
+        }, false)
+      })
+    })()
+  </script> -->
 </body>
 
 </html>

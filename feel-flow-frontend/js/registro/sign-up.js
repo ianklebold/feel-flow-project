@@ -1,9 +1,43 @@
+async function Registrar(name, surname, username, password, enterpriseDTO) {
+  const datos = {
+    name,
+    surname,
+    username,
+    password,
+    enterpriseDTO
+  };
+
+  await fetch('http://localhost:8080/api/v1/admin', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(datos)
+  })
+    .then(response => {
+      if (response.status === 201) {
+        return response.json()
+      } else if (response.status === 400) {
+        return response.json().then(errorData => {
+          throw { errorData };
+        });
+      }
+    })
+    // .catch(error => {
+    //   if (error.errorData) {
+
+    //   } else {
+    //     console.error('Error de red:', error);
+    //   }
+    // });
+}
+
 document.addEventListener('DOMContentLoaded', function () {
   const formulario = document.getElementById('registro-formulario');
   const nombreInput = document.getElementById('Nombre');
   const apellidoInput = document.getElementById('Apellido');
-  const emailInput = document.getElementById('email');
-  const passwordInput = document.getElementById('floatingInputGroup1');
+  const emailInput = document.getElementById('in-username');
+  const passwordInput = document.getElementById('in-password');
   const empresaInput = document.getElementById('Empresa');
   const registrarseButton = document.querySelector('.btn.bg-gradient-dark._ini_ses');
 
@@ -39,32 +73,35 @@ document.addEventListener('DOMContentLoaded', function () {
     const password = passwordInput.value;
     const enterpriseDTO = empresaInput.value;
 
-    const datos = {
-      name,
-      surname,
-      username,
-      password,
-      enterpriseDTO
-    };
-
-    fetch('http://localhost:8080/api/v1/admin', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(datos)
-    })
-      .then(response => {
-        if (response.status == 201) {
-          console.log(response.headers.get('Location'));
-          console.log(response);
-          window.location.href = '../pages/sign_in.html';
-        } else {
-          console.error('Error al registrar usuario');
-        }
+    Registrar(name, surname, username, password, enterpriseDTO)
+      .then(responseData => {
+        // La solicitud se completó con éxito, responseData contiene la respuesta
+        console.log('Registro exitoso:', responseData);
+        document.getElementById('flexCheckDefault')
       })
       .catch(error => {
-        console.error('Error de red:', error);
+        if (error.errorData) {
+          // El servidor respondió con un error 400, error contiene la respuesta
+          error.errorData.forEach(error => {
+            for (const campo in error) {
+              var idinput = "in-" + campo;
+              document.getElementById(`${idinput}`).classList.add('incorrecto')
+              const mensaje = error[campo];
+              // Insertar el mensaje de error en el HTML, por ejemplo, en un elemento div con el id 'errores':
+              const divError = document.createElement('div');
+              divError.classList.add('invalid-tooltip', 'text-center');
+              divError.textContent = `${mensaje}`;
+              document.getElementById(`${campo}`).appendChild(divError);
+              if (document.getElementById('flexCheckDefault').checked) {
+                document.getElementById('flexCheckDefault').classList.add('incorrecto')
+              }
+              //document.querySelector('form').classList.add('was-validated');
+            }
+          });
+        } else {
+          // Otro tipo de error, como error de red
+          console.error('Error de red u otro error:', error);
+        }
       });
   });
 
