@@ -107,8 +107,6 @@ function MostrarPantalla(usuario) {
 }
 
 function generar_link_uuid(idTeam) {
-  // Supongamos que tienes el IdTeam y puedes utilizarlo para obtener el uuid
-  // Construye la URL del endpoint para obtener la invitación utilizando el IdTeam
   const inviteEndpoint = `http://localhost:8080/api/v1/team/${idTeam}/invite`;
 
   // Realiza la solicitud GET para obtener el uuid
