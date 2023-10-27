@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Encuestas - Feel Flow</title>
+    <link rel="icon" type="image/png" href="../img/logos/FeelFlow.png">
+    <!-- Iconos y Estilos -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/Estilos-Feel-Flow.css">
+</head>
+<body class="g-sidenav-show bg-gray-100">
+    <!-- Barra de Navegación Lateral (Sidenav) -->
+    <aside class="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3" id="sidenav-main">
+        <div class="sidenav-header">
+            <a class="navbar-brand m-2" href="../pages/home.html">
+                <img src="../img/logos/FeelFlow.png" class="navbar-brand-img" alt="main_logo">
+                <span class="ms-1 font-weight-bold">Feel Flow</span>
+            </a>
+        </div>
+        <hr class="horizontal dark custom-hr">
+        <div class="collapse navbar-collapse w-auto max-height-vh-100 h-100" id="sidenav-collapse-main">
+            <ul class="navbar-nav">
+                <!-- Se insertan los elementos desde el js -->
+                <li class="nav-item" id="separador"></li>
+                <!-- Se insertan más elementos desde el js -->
+            </ul>
+        </div>
+    </aside>
+    
+    <!-- Contenido Principal -->
+    <main class="main-content position-relative max-height-vh-100 h-100 mt-1 border-radius-lg">
+        <!-- Navbar -->
+        <nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl" id="navbarBlur" navbar-scroll="true">
+            <div class="container-fluid py-1 px-3">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
+                        <li class="breadcrumb-item text-sm"><a class="opacity-5" href="../pages/home.html">Feel Flow</a></li>
+                        <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Encuestas</li>
+                    </ol>
+                </nav>
+                <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4 justify-content-end" id="navbar">
+                    <ul class="navbar-nav align-items-center">
+                        <li class="nav-item dropdown pe-4 d-flex align-items-center">
+                            <a href="javascript:;" class="nav-link text-body p-0" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fa fa-bell cursor-pointer"></i>
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end px-2 py-3 me-sm-n4" aria-labelledby="dropdownMenuButton">
+                                <li class="mb-2">
+                                    <a class="dropdown-item border-radius-md" href="javascript:;">
+                                        <div class="d-flex py-1">
+                                            <div class="my-auto">
+                                                <img src="../img/team-2.jpg" class="avatar avatar-sm me-3">
+                                            </div>
+                                            <div class="d-flex flex-column justify-content-center">
+                                                <h6 class="text-sm font-weight-normal mb-1">
+                                                    <span class="font-weight-bold">Nuevo mensaje</span> de Laur
+                                                </h6>
+                                                <p class="text-xs text-secondary mb-0">
+                                                    <i class="fa fa-clock me-1"></i>
+                                                    Hace 13 minutos
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </li>
+                                <!-- Otras notificaciones -->
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown pe-4 d-flex">
+                            <a href="javascript:;" class="nav-link text-body p-0" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fa fa-cog fixed-plugin-button-nav cursor-pointer"></i>
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end px-2 py-3 me-sm-n4" aria-labelledby="dropdownMenuButton">
+                                <li class="mb-2">
+                                    <a class="dropdown-item border-radius-md" href="javascript:;">Personalizar</a>
+                                </li>
+                                <li class="mb-2">
+                                    <a class "dropdown-item border-radius-md" href="javascript:;">Opción 2</a>
+                                </li>
+                                <!-- Otras opciones -->
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown pe-4 d-flex">
+                            <a href="javascript:;" class="nav-link text-body font-weight-bold px-0" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fa fa-user me-sm-1"></i>
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end px-2 py-3 me-sm-n4" aria-labelledby="dropdownMenuButton">
+                                <li class="mb-2">
+                                    <a class="dropdown-item border-radius-md" href="../pages/profile.html">Mi Perfil</a>
+                                </li>
+                                <li class="mb-2">
+                                    <a class="dropdown-item border-radius-md" href="javascript:;" id="logoutLink">Cerrar Sesión</a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <!-- Fin de Navbar -->
+
+        <!-- Sección de Encuestas -->
+        <div class="container">
+            <h2 class="text-center mt-4 mb-5">Encuestas</h2>
+            <div class="row justify-content-center">
+              <div class="col-md-8">
+                <div class="news-container">
+                  <div class="card news-card mb-4">
+                    <div class="row align-items-center">
+                      <div class="col-md-9">
+                        <div class="news-card-content">
+                          <h5 class="card-title news-card-title">Set de Preguntas 1</h5>
+                        </div>
+                      </div>
+                    </div>
+                    <button class="btn btn-pink btn-send">Enviar Encuesta</button>
+                  </div>
+                  <div class="card news-card mb-4">
+                    <div class="row align-items-center">
+                      <div class="col-md-9">
+                        <div class="news-card-content">
+                          <h5 class="card-title news-card-title">Set de Preguntas 2</h5>
+                        </div>
+                      </div>
+                    </div>
+                    <button class="btn btn-pink btn-send">Enviar Encuesta</button>
+                  </div>
+                  <div class="card news-card mb-4">
+                    <div class="row align-items-center">
+                      <div class="col-md-9">
+                        <div class="news-card-content">
+                          <h5 class="card-title news-card-title">Set de Preguntas 3</h5>
+                        </div>
+                      </div>
+                    </div>
+                    <button class="btn btn-pink btn-send">Enviar Encuesta</button>
+                  </div>
+                  <!-- Puedes agregar más encuestas aquí si es necesario -->
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          
+          
+        <!-- Fin de la sección de Encuestas -->
+
+        <!-- Resto de tu contenido HTML -->
+    </main>
+
+    <!-- Scripts y enlaces a JavaScript -->
+    <script src="../js/core/bootstrap.min.js"></script> <!-- Importante para el funcionamiento del dropdown -->
+    <script type="module" src="../js/functions/GetPerfil.js"></script>
+    <script type="module" src="../js/controller/aside.js"></script>
+    <!-- Github buttons -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.js"></script>
+    <script src="../js/cerrar_sesion.js"></script>
+</body>
+</html>
