@@ -26,7 +26,7 @@ export async function GetEquipo(token) {
     if (response.status === 200) {
         return response.json();
     } else if (response.status === 403) {
-        window.location.href = '../pages/sign_in.html'
+        //window.location.href = '../pages/sign_in.html'
     } else {
         throw new Error('Error al recuperar los datos');
     }

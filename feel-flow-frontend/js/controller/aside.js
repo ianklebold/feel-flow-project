@@ -14,45 +14,6 @@ const autoridad = payloadObjeto.authorities;
 const autoridad_rol = JSON.parse(autoridad);
 const rol = autoridad_rol[0].authority;
 
-// const listaDeModulos = {
-//     Home: {
-//         nombre: 'Home',
-//         perfiles: ['ADMIN', 'TEAM_LEADER', 'USER_REGULAR'],
-//         logo: 'fa-home',
-//         link: '../pages/Home.html'
-//     },
-//     Dashboard: {
-//         nombre: 'Dashboard',
-//         perfiles: ['ADMIN', 'TEAM_LEADER', 'USER_REGULAR'],
-//         logo: 'fa-pie-chart',
-//         link: '../pages/proximamente.html'
-//     },
-//     Lideres: {
-//         nombre: 'Lideres',
-//         perfiles: ['ADMIN'],
-//         logo: 'fa-user-circle',
-//         link: '../pages/proximamente.html'
-//     },
-//     Equipos: {
-//         nombre: 'Equipos',
-//         perfiles: ['ADMIN', 'TEAM_LEADER', 'USER_REGULAR'],
-//         logo: 'fa-users',
-//         link: '../pages/Teams.html'
-//     },
-//     Modulos: {
-//         nombre: 'Modulos',
-//         perfiles: ['ADMIN', 'TEAM_LEADER', 'USER_REGULAR'],
-//         logo: 'fa-puzzle-piece',
-//         link: '../pages/proximamente.html'
-//     },
-//     Usuarios: {
-//         nombre: 'Usuarios',
-//         perfiles: ['ADMIN', 'TEAM_LEADER'],
-//         logo: 'fa-user-circle',
-//         link: '../pages/proximamente.html'
-//     },
-// };
-
 function crearMenu(modulo, logo_icon, ruta) {
     var personal = { // Creo una lista para luego insertarlos en otro lado
         Perfil: "Perfil",
@@ -117,8 +78,7 @@ function obtenerModulosDisponibles(perfil) {
 function MostrarPantalla(usuario) {
     let Nombre = `${usuario.name}` + `   ` + `${usuario.surname}`;
 
-    if (payloadObjeto.isAdmin) {
-        obtenerModulosDisponibles(rol)
+    obtenerModulosDisponibles(rol)
             .then(modulosUsuario => {
                 for (var menu in modulosUsuario) {
                     crearMenu(modulosUsuario[menu].nombre, modulosUsuario[menu].logo, modulosUsuario[menu].link);
@@ -133,13 +93,16 @@ function MostrarPantalla(usuario) {
             .catch(error => {
                 console.error('Error al cargar los módulos disponibles:', error);
             });
-    } else {
-        window.location.href = "../pages/Home.html";
-    }
+    // if (payloadObjeto.isAdmin) {
+        
+    // } else {
+    //     window.location.href = "../pages/Home.html";
+    // }
 }
 
 
 window.addEventListener("load", function () {
+    console.log(token)
     GetUser(idLocation, token)
         .then(data => {
             MostrarPantalla(data)
