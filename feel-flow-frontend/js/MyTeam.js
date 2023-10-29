@@ -28,6 +28,7 @@ window.addEventListener("load", function () {
         admin = false;
         GetEquipo(tkn)
             .then(data => {
+                console.log(data)
                 MostrarDatos(data, admin);
             })
             .catch(error => {

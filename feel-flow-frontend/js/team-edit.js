@@ -24,6 +24,7 @@ const rol = autoridad_rol[0].authority;
 
 window.addEventListener("load", function () {
   var admin;
+  console.log(rol)
   if (rol === "ADMIN") {
     admin = true;
     GetEquipobyID(auth, equipo)
@@ -40,10 +41,13 @@ window.addEventListener("load", function () {
     admin = false;
     GetEquipo(auth)
       .then(data => {
+        console.log(data)
         MostrarDatos(data[0], admin);
+        localStorage.setItem('nombreEquipo', data.nameTeam);
+        localStorage.setItem('descripcionEquipo', data.descriptionTeam);
       })
       .catch(error => {
-        //window.location.href = "../pages/sign_in.html"; // Usuario no logueado
+        window.location.href = "../pages/sign_in.html"; // Usuario no logueado
         console.error(error);
       });
   }
