@@ -3,6 +3,8 @@ import { GetUser } from "../functions/GetPerfil.js";
 const idLocation = localStorage.getItem('idLocation');
 const token = localStorage.getItem('Token');
 
+console.log(token);
+
 const titulo_pagina = document.querySelector('title');
 const pagina = titulo_pagina.textContent;
 
@@ -13,6 +15,8 @@ const payloadObjeto = JSON.parse(payloadDecodificado);
 const autoridad = payloadObjeto.authorities;
 const autoridad_rol = JSON.parse(autoridad);
 const rol = autoridad_rol[0].authority;
+
+console.log(rol)
 
 // const listaDeModulos = {
 //     Home: {
@@ -116,9 +120,8 @@ function obtenerModulosDisponibles(perfil) {
 
 function MostrarPantalla(usuario) {
     let Nombre = `${usuario.name}` + `   ` + `${usuario.surname}`;
-
-    if (payloadObjeto.isAdmin) {
-        obtenerModulosDisponibles(rol)
+    console.log(Nombre)
+    obtenerModulosDisponibles(rol)
             .then(modulosUsuario => {
                 for (var menu in modulosUsuario) {
                     crearMenu(modulosUsuario[menu].nombre, modulosUsuario[menu].logo, modulosUsuario[menu].link);
@@ -133,9 +136,11 @@ function MostrarPantalla(usuario) {
             .catch(error => {
                 console.error('Error al cargar los módulos disponibles:', error);
             });
-    } else {
-        window.location.href = "../pages/Home.html";
-    }
+    // if ((payloadObjeto.isAdmin) || (rol == 'TEAM_LEADER')) {
+        
+    // } else {
+    //     window.location.href = "../pages/Home.html";
+    // }
 }
 
 
