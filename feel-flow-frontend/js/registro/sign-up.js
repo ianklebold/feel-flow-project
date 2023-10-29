@@ -64,6 +64,9 @@ document.addEventListener('DOMContentLoaded', function () {
   passwordInput.addEventListener('input', actualizarEstadoBoton);
   empresaInput.addEventListener('input', actualizarEstadoBoton);
 
+  var ctl_pas = false;
+  var ctl_usr = false;
+
   formulario.addEventListener('submit', function (event) {
     event.preventDefault();
 
@@ -80,27 +83,27 @@ document.addEventListener('DOMContentLoaded', function () {
         document.getElementById('flexCheckDefault')
       })
       .catch(error => {
-        var ctl_pas = false;
-        var ctl_usr = false;
         if (error.errorData) {
           // El servidor respondió con un error 400, error contiene la respuesta
-          var pas = true;
-          var usr = true;
+          var pas = false;
+          var usr = false;
           error.errorData.forEach(error => {
             console.log(error)
             for (const campo in error) {
               var idinput = "in-" + campo;
+              var ctlinput = "clt-" + campo;
               const mensaje = error[campo];
               if (campo === "password") {
-                pas = false;
-                usr = true;
-              } else {
+                pas = true;
                 usr = false;
-                pas = true
+              } else {
+                usr = true;
+                pas = false;
               }
               // Insertar el mensaje de error en el HTML, por ejemplo, en un elemento div con el id 'errores':
               const divError = document.createElement('div');
               divError.classList.add('invalid-tooltip', 'text-center');
+              divError.id = ctlinput;
               divError.textContent = `${mensaje}`;
               if (campo === "password") {
                 if (pas) {
@@ -111,9 +114,10 @@ document.addEventListener('DOMContentLoaded', function () {
                   }
                 } else {
                   if (ctl_pas) {
-                    document.getElementById(`${campo}`).removeChild(divError);
+                    document.getElementById(`${ctlinput}`).remove();
                     document.getElementById(`${idinput}`).classList.remove('incorrecto');
                     ctl_pas = false;
+                    console.log("remove pass")
                   }
                 }
               } else {
@@ -124,9 +128,10 @@ document.addEventListener('DOMContentLoaded', function () {
                     ctl_usr = true;
                   } else {
                     if (ctl_usr) {
-                      document.getElementById(`${campo}`).removeChild(divError);
+                      document.getElementById(`${ctlinput}`).remove();
                       document.getElementById(`${idinput}`).classList.remove('incorrecto');
                       ctl_usr = false;
+                      console.log("remove user")
                     }
                   }
                 }
