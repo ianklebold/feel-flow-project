@@ -81,6 +81,6 @@ document.addEventListener('DOMContentLoaded', function () {
     actualizarEstadoBoton();
 
     buttonClosePopUp.addEventListener('click', function () {
-        //window.location.href = '../../pages/home.html';
+        window.location.href = '../../pages/home.html';
     });
 });
