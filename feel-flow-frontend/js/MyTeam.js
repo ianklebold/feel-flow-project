@@ -22,18 +22,17 @@ window.addEventListener("load", function () {
             })
             .catch(error => {
                 window.location.href = "../pages/Teams.html"; // Error al recuperar el equipo solicitado
-                console.error(error); 
+                console.error(error);
             });
     } else {
         admin = false;
         GetEquipo(tkn)
             .then(data => {
-                console.log(data)
-                MostrarDatos(data, admin);
+                MostrarDatos(data[0], admin);
             })
             .catch(error => {
-                //window.location.href = "../pages/sign_in.html"; // Usuario no logueado
-                console.error(error); 
+                window.location.href = "../pages/sign_in.html"; // Usuario no logueado
+                console.error(error);
             });
     }
 })
@@ -59,32 +58,81 @@ function MostrarDatos(info, admin) {
     var path_myteam = document.createElement('li');
     path_myteam.classList.add('breadcrumb-item', 'text-sm', 'text-dark', 'active');
     path_myteam.setAttribute('aria-current', 'page');
-    path_myteam.textContent = info[0].nameTeam;
+    path_myteam.textContent = info.nameTeam;
 
     var path = document.getElementById('02-01-Path');
     path.insertAdjacentElement("beforeend", path_myteam);
 
     // Para la parte de detalles
     var detalleNombre = document.createElement('h5');
-    detalleNombre.textContent = info[0].nameTeam; // Aca se inserta el nombre del equipo
+    detalleNombre.textContent = info.nameTeam; // Aca se inserta el nombre del equipo
 
     var NombreEquipoXDetalles = document.getElementById('03-01-Detalles-Equipo');
     NombreEquipoXDetalles.insertAdjacentElement("afterbegin", detalleNombre);
 
-    // Para la parte de información del equipo
+    // <a class="nav-link mb-0 px-0 py-1 " href="../pages/Edit_Team.html" role="tab" aria-selected="false">
+    //     <i class="fa fa-pencil-square text-secondary" aria-hidden="true"></i>
+    //     <span class="ms-1">Editar Equipo</span>
+    // </a>
+    // <a class="nav-link mb-0 px-0 py-1 " href="../pages/proximamente.html" role="tab" aria-selected="false">
+    //     <i class="fa fa-trash text-secondary" aria-hidden="true"></i>
+    //     <span class="ms-1">Eliminar Equipo</span>
+    // </a>
 
-    // var elementoNombre = document.createElement('h4');
-    // elementoNombre.textContent = info[0].nameTeam; // Aca se inserta el nombre del equipo
-    
+    // Crear el primer elemento "Editar Equipo"
+    if (admin) {
+        const editarEquipoLink = document.createElement('a');
+        editarEquipoLink.classList.add('nav-link', 'mb-0', 'px-0', 'py-1');
+        editarEquipoLink.href = '../pages/Edit_Team.html';
+        editarEquipoLink.setAttribute('role', 'tab');
+        editarEquipoLink.setAttribute('aria-selected', 'false');
+
+        const editarEquipoIcon = document.createElement('i');
+        editarEquipoIcon.classList.add('fa', 'fa-pencil-square', 'text-secondary');
+        editarEquipoIcon.setAttribute('aria-hidden', 'true');
+
+        const editarEquipoText = document.createElement('span');
+        editarEquipoText.classList.add('ms-1');
+        editarEquipoText.textContent = 'Editar Equipo';
+
+        editarEquipoLink.appendChild(editarEquipoIcon);
+        editarEquipoLink.appendChild(editarEquipoText);
+
+        // Crear el segundo elemento "Eliminar Equipo"
+        const eliminarEquipoLink = document.createElement('a');
+        eliminarEquipoLink.classList.add('nav-link', 'mb-0', 'px-0', 'py-1');
+        eliminarEquipoLink.href = '../pages/proximamente.html';
+        eliminarEquipoLink.setAttribute('role', 'tab');
+        eliminarEquipoLink.setAttribute('aria-selected', 'false');
+
+        const eliminarEquipoIcon = document.createElement('i');
+        eliminarEquipoIcon.classList.add('fa', 'fa-trash', 'text-secondary');
+        eliminarEquipoIcon.setAttribute('aria-hidden', 'true');
+
+        const eliminarEquipoText = document.createElement('span');
+        eliminarEquipoText.classList.add('ms-1');
+        eliminarEquipoText.textContent = 'Eliminar Equipo';
+
+        eliminarEquipoLink.appendChild(eliminarEquipoIcon);
+        eliminarEquipoLink.appendChild(eliminarEquipoText);
+
+        // Insertar los elementos en tu documento HTML
+        const container = document.getElementById('03-02-Botones'); 
+        container.insertAdjacentElement('beforeend', editarEquipoLink);
+        container.insertAdjacentElement('beforeend', eliminarEquipoLink);
+    }
+
+
+    // Para la parte de información del equipo
     var elementoDescripcion = document.createElement('textarea');
     elementoDescripcion.classList.add('py-1', 'form-control', 'mt-3');
-    elementoDescripcion.textContent = info[0].descriptionTeam; // Aca se inserta la descripción del equipo
+    elementoDescripcion.textContent = info.descriptionTeam; // Aca se inserta la descripción del equipo
     elementoDescripcion.rows = 3;
     elementoDescripcion.disabled = true;
 
     let miembros = [];
-    
-    info[0].regularUsers.forEach(item => {
+
+    info.regularUsers.forEach(item => {
         miembros.push(' ' + item.name + ' ' + item.surname)
     });
 

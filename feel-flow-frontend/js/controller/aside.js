@@ -79,21 +79,21 @@ function MostrarPantalla(usuario) {
     let Nombre = `${usuario.name}` + `   ` + `${usuario.surname}`;
 
     obtenerModulosDisponibles(rol)
-            .then(modulosUsuario => {
-                for (var menu in modulosUsuario) {
-                    crearMenu(modulosUsuario[menu].nombre, modulosUsuario[menu].logo, modulosUsuario[menu].link);
-                }
+        .then(modulosUsuario => {
+            for (var menu in modulosUsuario) {
+                crearMenu(modulosUsuario[menu].nombre, modulosUsuario[menu].logo, modulosUsuario[menu].link);
+            }
 
-                var nombre_usuario = document.createElement('h6');
-                nombre_usuario.classList.add('ps-4', 'ms-2', 'my-4', 'text-uppercase', 'text-xs', 'font-weight-bolder', 'opacity-6');
-                nombre_usuario.textContent = Nombre;
-                var divisor = document.getElementById("separador");
-                divisor.insertAdjacentElement("beforeend", nombre_usuario);
-            })
-            .catch(error => {
-                console.error('Error al cargar los módulos disponibles:', error);
-            });
-
+            var nombre_usuario = document.createElement('h6');
+            nombre_usuario.classList.add('ps-4', 'ms-2', 'my-4', 'text-uppercase', 'text-xs', 'font-weight-bolder', 'opacity-6');
+            nombre_usuario.textContent = Nombre;
+            var divisor = document.getElementById("separador");
+            divisor.insertAdjacentElement("beforeend", nombre_usuario);
+        })
+        .catch(error => {
+            console.error('Error al cargar los módulos disponibles:', error);
+        });
+}
 
 
 window.addEventListener("load", function () {
@@ -105,4 +105,3 @@ window.addEventListener("load", function () {
             console.error(error);
         });
 })
-
