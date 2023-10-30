@@ -3,8 +3,6 @@ import { GetUser } from "../functions/GetPerfil.js";
 const idLocation = localStorage.getItem('idLocation');
 const token = localStorage.getItem('Token');
 
-console.log(token);
-
 const titulo_pagina = document.querySelector('title');
 const pagina = titulo_pagina.textContent;
 
@@ -15,47 +13,6 @@ const payloadObjeto = JSON.parse(payloadDecodificado);
 const autoridad = payloadObjeto.authorities;
 const autoridad_rol = JSON.parse(autoridad);
 const rol = autoridad_rol[0].authority;
-
-console.log(rol)
-
-// const listaDeModulos = {
-//     Home: {
-//         nombre: 'Home',
-//         perfiles: ['ADMIN', 'TEAM_LEADER', 'USER_REGULAR'],
-//         logo: 'fa-home',
-//         link: '../pages/Home.html'
-//     },
-//     Dashboard: {
-//         nombre: 'Dashboard',
-//         perfiles: ['ADMIN', 'TEAM_LEADER', 'USER_REGULAR'],
-//         logo: 'fa-pie-chart',
-//         link: '../pages/proximamente.html'
-//     },
-//     Lideres: {
-//         nombre: 'Lideres',
-//         perfiles: ['ADMIN'],
-//         logo: 'fa-user-circle',
-//         link: '../pages/proximamente.html'
-//     },
-//     Equipos: {
-//         nombre: 'Equipos',
-//         perfiles: ['ADMIN', 'TEAM_LEADER', 'USER_REGULAR'],
-//         logo: 'fa-users',
-//         link: '../pages/Teams.html'
-//     },
-//     Modulos: {
-//         nombre: 'Modulos',
-//         perfiles: ['ADMIN', 'TEAM_LEADER', 'USER_REGULAR'],
-//         logo: 'fa-puzzle-piece',
-//         link: '../pages/proximamente.html'
-//     },
-//     Usuarios: {
-//         nombre: 'Usuarios',
-//         perfiles: ['ADMIN', 'TEAM_LEADER'],
-//         logo: 'fa-user-circle',
-//         link: '../pages/proximamente.html'
-//     },
-// };
 
 function crearMenu(modulo, logo_icon, ruta) {
     var personal = { // Creo una lista para luego insertarlos en otro lado
@@ -120,7 +77,7 @@ function obtenerModulosDisponibles(perfil) {
 
 function MostrarPantalla(usuario) {
     let Nombre = `${usuario.name}` + `   ` + `${usuario.surname}`;
-    console.log(Nombre)
+
     obtenerModulosDisponibles(rol)
             .then(modulosUsuario => {
                 for (var menu in modulosUsuario) {
@@ -136,12 +93,7 @@ function MostrarPantalla(usuario) {
             .catch(error => {
                 console.error('Error al cargar los módulos disponibles:', error);
             });
-    // if ((payloadObjeto.isAdmin) || (rol == 'TEAM_LEADER')) {
-        
-    // } else {
-    //     window.location.href = "../pages/Home.html";
-    // }
-}
+
 
 
 window.addEventListener("load", function () {

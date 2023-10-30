@@ -30,12 +30,19 @@
     "Equipos": {
         "nombre": "Equipos",
         "perfiles": [
-            "ADMIN",
+            "ADMIN"
+        ],
+        "logo": "fa-users",
+        "link": "../pages/Teams.html"
+    },
+    "Equipos2": {
+        "nombre": "Equipos",
+        "perfiles": [
             "TEAM_LEADER",
             "USER_REGULAR"
         ],
         "logo": "fa-users",
-        "link": "../pages/Teams.html"
+        "link": "../pages/MyTeam.html"
     },
     "Modulos": {
         "nombre": "Modulos",

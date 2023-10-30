@@ -73,7 +73,7 @@ public class UserServiceImpl implements UserService{
                     return Optional.of(userDTO);
                 }
 
-            }else if (TeamRoles.USER_REGULAR.name().equals(role.get().getAuthority())){
+            }else if (TeamRoles.TEAM_LEADER.name().equals(role.get().getAuthority())){
                 Optional<TeamLeader> teamLeader = teamLeaderRepository.findById(uuid);
 
                 if (teamLeader.isPresent()){
