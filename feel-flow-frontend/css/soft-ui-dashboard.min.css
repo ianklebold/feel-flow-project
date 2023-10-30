@@ -3517,49 +3517,17 @@ fieldset:disabled .btn {
     opacity: .65
 }
 
-.btn-primary {
-    color: #fff;
-    background-color: #cb0c9f;
-    border-color: #cb0c9f
+
+
+
+
+
+
+
+
+
 }
 
-.btn-check:focus+.btn-primary,
-.btn-primary:focus,
-.btn-primary:hover {
-    color: #fff;
-    background-color: #ad0a87;
-    border-color: #a20a7f
-}
-
-.btn-check:focus+.btn-primary,
-.btn-primary:focus {
-    box-shadow: 0 0 0 .2rem rgba(211, 48, 173, .5)
-}
-
-.btn-check:active+.btn-primary,
-.btn-check:checked+.btn-primary,
-.btn-primary.active,
-.btn-primary:active,
-.show>.btn-primary.dropdown-toggle {
-    color: #fff;
-    background-color: #a20a7f;
-    border-color: #980977
-}
-
-.btn-check:active+.btn-primary:focus,
-.btn-check:checked+.btn-primary:focus,
-.btn-primary.active:focus,
-.btn-primary:active:focus,
-.show>.btn-primary.dropdown-toggle:focus {
-    box-shadow: 0 0 0 .2rem rgba(211, 48, 173, .5)
-}
-
-.btn-primary.disabled,
-.btn-primary:disabled {
-    color: #fff;
-    background-color: #cb0c9f;
-    border-color: #cb0c9f
-}
 
 .btn-secondary {
     color: #000;
@@ -18772,29 +18740,26 @@ fieldset:disabled .btn {
     transform: translateX(-5px)
 }
 
-.btn-primary:hover,
+
 .btn.bg-gradient-primary:hover {
     background-color: #cb0c9f;
     border-color: #cb0c9f
 }
 
-.btn-primary .btn.bg-outline-primary,
+
 .btn.bg-gradient-primary .btn.bg-outline-primary {
     border: 1px solid #cb0c9f
 }
 
-.btn-primary:not(:disabled):not(.disabled).active,
-.btn-primary:not(:disabled):not(.disabled):active,
+
+
 .btn.bg-gradient-primary:not(:disabled):not(.disabled).active,
 .btn.bg-gradient-primary:not(:disabled):not(.disabled):active,
-.show>.btn-primary.dropdown-toggle,
 .show>.btn.bg-gradient-primary.dropdown-toggle {
     color: color-yiq(#cb0c9f);
     background-color: #cb0c9f
 }
 
-.btn-primary.focus,
-.btn-primary:focus,
 .btn.bg-gradient-primary.focus,
 .btn.bg-gradient-primary:focus {
     color: #fff
@@ -19120,8 +19085,6 @@ fieldset:disabled .btn {
 .btn-dark:hover,
 .btn-info,
 .btn-info:hover,
-.btn-primary,
-.btn-primary:hover,
 .btn-secondary,
 .btn-secondary:hover,
 .btn-success,

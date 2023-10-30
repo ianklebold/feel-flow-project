@@ -1,6 +1,7 @@
 package com.equipo5.feelflowapp.domain.users;
 
 
+import com.equipo5.feelflowapp.domain.enumerations.teamRoles.TeamRoles;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
