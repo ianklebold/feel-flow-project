@@ -2,6 +2,7 @@ package com.equipo5.feelflowapp.dto.users.teamleader;
 
 import com.equipo5.feelflowapp.constants.validation.admin.ValidationAdminMessages;
 import com.equipo5.feelflowapp.constants.validation.teamleader.ValidationTeamLeaderMessages;
+import com.equipo5.feelflowapp.dto.team.TeamDTO;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;

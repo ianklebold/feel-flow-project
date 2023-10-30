@@ -1,12 +1,9 @@
-var ctl_pas = false;
-var ctl_usr = false;
-
 document.addEventListener('DOMContentLoaded', function () {
   const formulario = document.getElementById('registro-formulario');
   const nombreInput = document.getElementById('Nombre');
   const apellidoInput = document.getElementById('Apellido');
-  const emailInput = document.getElementById('in-username');
-  const passwordInput = document.getElementById('in-password');
+  const emailInput = document.getElementById('email');
+  const passwordInput = document.getElementById('floatingInputGroup1');
   const empresaInput = document.getElementById('Empresa');
   const registrarseButton = document.querySelector('.btn.bg-gradient-dark._ini_ses');
 
@@ -33,9 +30,6 @@ document.addEventListener('DOMContentLoaded', function () {
   passwordInput.addEventListener('input', actualizarEstadoBoton);
   empresaInput.addEventListener('input', actualizarEstadoBoton);
 
-  var pas = false;
-  var usr = false;
-
   formulario.addEventListener('submit', function (event) {
     event.preventDefault();
 
@@ -44,104 +38,34 @@ document.addEventListener('DOMContentLoaded', function () {
     const username = emailInput.value;
     const password = passwordInput.value;
     const enterpriseDTO = empresaInput.value;
+
     const datos = {
       name,
       surname,
       username,
       password,
       enterpriseDTO
-
     };
 
-    if (!document.getElementById('flexCheckDefault').checked) {
-      document.getElementById('flexCheckDefault').classList.add('alert-danger');
-      document.getElementById('label-check').classList.add('text-danger');
-    } else {
-      document.getElementById('flexCheckDefault').classList.remove('alert-danger');
-      document.getElementById('label-check').classList.remove('text-danger');
-
-      fetch('http://localhost:8080/api/v1/admin', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(datos)
+    fetch('http://localhost:8080/api/v1/admin', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(datos)
+    })
+      .then(response => {
+        if (response.status == 201) {
+          console.log(response.headers.get('Location'));
+          console.log(response);
+          window.location.href = '../pages/sign_in.html';
+        } else {
+          console.error('Error al registrar usuario');
+        }
       })
-        .then(response => {
-          if (response.status === 201) {
-            window.location.href = '../pages/sign_in.html'
-          } else if (response.status === 400) {
-
-            response.text().then(errorText => {
-              // `errorText` contiene el cuerpo del error
-              var errorResponse = JSON.parse(errorText);
-
-              var datosErroneos = errorResponse.length;
-
-              errorResponse.forEach(error => {
-                for (const campo in error) {
-                  var idinput = "in-" + campo;
-                  var ctlinput = "clt-" + campo;
-                  const mensaje = error[campo];
-
-                  if (datosErroneos < 2) {
-                    if (pas && ctl_pas) {
-                      document.getElementById('clt-password').remove();
-                      document.getElementById('in-password').classList.remove('incorrecto');
-                      ctl_pas = false;
-                      pas = false;
-                    }
-                    if (usr && ctl_usr) {
-                      document.getElementById('clt-username').remove();
-                      document.getElementById('in-username').classList.remove('incorrecto');
-                      ctl_usr = false;
-                      usr = false;
-                    }
-                  }
-
-                  if (campo === "password") {
-                    pas = true;
-                  } else {
-                    usr = true;
-                  }
-                  // Insertar el mensaje de error en el HTML, por ejemplo, en un elemento div con el id 'errores':
-                  const divError = document.createElement('div');
-                  divError.classList.add('invalid-tooltip', 'text-center');
-                  divError.id = ctlinput;
-                  divError.textContent = `${mensaje}`;
-
-                  if (campo === "password") {
-                    if (!ctl_pas) {
-                      document.getElementById(`${campo}`).appendChild(divError);
-                      document.getElementById(`${idinput}`).classList.add('incorrecto');
-                      ctl_pas = true;
-                    }
-                  }
-
-                  if (campo === "username") {
-                    if (!ctl_usr) {
-                      document.getElementById(`${campo}`).appendChild(divError);
-                      document.getElementById(`${idinput}`).classList.add('incorrecto');
-                      ctl_usr = true;
-                    }
-                  }
-
-                  // Controlar checkbox
-                  if (!document.getElementById('flexCheckDefault').checked) {
-                    document.getElementById('flexCheckDefault').classList.add('alert-danger');
-                    document.getElementById('label-check').classList.add('text-danger');
-                  } else {
-                    document.getElementById('flexCheckDefault').classList.remove('alert-danger');
-                    document.getElementById('label-check').classList.remove('text-danger');
-                  }
-
-                }
-              });
-            });
-
-          }
-        })
-    }
+      .catch(error => {
+        console.error('Error de red:', error);
+      });
   });
 
   // Llama a esta función para configurar el estado inicial del botón

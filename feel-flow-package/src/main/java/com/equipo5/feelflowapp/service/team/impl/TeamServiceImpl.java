@@ -2,44 +2,31 @@ package com.equipo5.feelflowapp.service.team.impl;
 
 import com.equipo5.feelflowapp.domain.EnterPrise;
 import com.equipo5.feelflowapp.domain.Team;
-import com.equipo5.feelflowapp.domain.enumerations.teamRoles.TeamRoles;
-import com.equipo5.feelflowapp.domain.users.Admin;
 import com.equipo5.feelflowapp.domain.users.TeamLeader;
 import com.equipo5.feelflowapp.dto.team.TeamDTO;
-import com.equipo5.feelflowapp.dto.team.TeamListDTO;
-import com.equipo5.feelflowapp.dto.team.TeamUpdateDTO;
 import com.equipo5.feelflowapp.dto.users.teamleader.TeamLeaderDTO;
 import com.equipo5.feelflowapp.exception.notfound.NotFoundException;
-import com.equipo5.feelflowapp.exception.notfound.NotFoundTeamException;
 import com.equipo5.feelflowapp.exception.notfound.NotFoundTeamLeaderException;
-import com.equipo5.feelflowapp.mappers.users.team.TeamListMapper;
 import com.equipo5.feelflowapp.mappers.users.team.TeamMapper;
 import com.equipo5.feelflowapp.mappers.users.teamleader.TeamLeaderMapper;
 import com.equipo5.feelflowapp.repository.team.TeamRepository;
-import com.equipo5.feelflowapp.repository.users.admin.AdminRepository;
-import com.equipo5.feelflowapp.repository.users.regularuser.RegularUserRepository;
-import com.equipo5.feelflowapp.repository.users.teamleader.TeamLeaderRepository;
 import com.equipo5.feelflowapp.service.enterprise.EnterpriseService;
 import com.equipo5.feelflowapp.service.team.TeamService;
-import com.equipo5.feelflowapp.service.users.UserService;
 import com.equipo5.feelflowapp.service.users.teamleader.TeamLeaderService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
 public class TeamServiceImpl implements TeamService {
 
     private final TeamRepository teamRepository;
-
-    private final TeamLeaderRepository teamLeaderRepository;
-
-    private final RegularUserRepository regularUserRepository;
-
-    private final AdminRepository adminRepository;
     private final TeamMapper teamMapper;
 
     private final TeamLeaderService teamLeaderService;
@@ -48,9 +35,7 @@ public class TeamServiceImpl implements TeamService {
 
     private final EnterpriseService enterpriseService;
 
-    private final UserService userService;
-
-    private final TeamListMapper teamListMapper;
+    private final PasswordEncoder passwordEncoder;
     @Override
     public TeamDTO createTeam(TeamDTO teamDTO) {
         Team teamToCreate = teamMapper.teamDtoToTeam(teamDTO);
@@ -78,7 +63,6 @@ public class TeamServiceImpl implements TeamService {
     }
 
     @Override
-<<<<<<< HEAD
     public Optional<TeamDTO> getTeamById(UUID uuid) throws NotFoundException {
         Optional<Team> team = teamRepository.findById(uuid);
 
@@ -87,69 +71,6 @@ public class TeamServiceImpl implements TeamService {
         }
 
         return Optional.of(teamMapper.teamToTeamDto(team.get()));
-=======
-    public List<TeamListDTO> getAllTeams() {
-        Optional<? extends GrantedAuthority> role = userService.getRoleByCurrentUser();
-        String teamId = "";
-        if (role.isPresent()){
-            String username = userService.getUsernameByCurrentUser();
-            if (TeamRoles.ADMIN.name().equals(role.get().getAuthority())){
-
-                Optional<Admin> admin = adminRepository.findByUsername(username);
-
-                return admin.map(value -> value.getEnterPrise().getTeam()
-                        .stream()
-                        .map(teamListMapper::teamToTeamListDto)
-                        .toList()).orElse(Collections.emptyList());
-
-            }else if (TeamRoles.TEAM_LEADER.name().equals(role.get().getAuthority())){
-                teamId = teamLeaderRepository.findTeamByUsername(username);
-            }else {
-                teamId = regularUserRepository.findTeamByUsername(username);
-            }
-        }
-        Optional<Team> team = teamRepository.findById(UUID.fromString(teamId));
-        return team.map(value -> List.of(teamListMapper.teamToTeamListDto(value))).orElse(Collections.emptyList());
-    }
-
-    @Override
-    public Optional<TeamListDTO> getTeamById(UUID uuid) throws NotFoundException {
-        Optional<Team> team = teamRepository.findById(uuid);
-        Optional<? extends GrantedAuthority> role = userService.getRoleByCurrentUser();
-        if (team.isEmpty()){
-            throw new NotFoundTeamException("No se encuentra equipo con UUID : " + uuid);
-        }
-
-        if (role.isPresent()){
-            if (TeamRoles.TEAM_LEADER.name().equals(role.get().getAuthority()) || TeamRoles.USER_REGULAR.name().equals(role.get().getAuthority())){
-                List<TeamListDTO> teams = getAllTeams();
-                //Obtenemos la lista o el equipo del current user, preguntamos si el equipo que se desea acceder el current user lo integra
-                return teams.stream().filter(teamOfList -> team.get().getUuid().equals(teamOfList.getUuid())).findFirst();
-            }
-            return Optional.of(teamListMapper.teamToTeamListDto(team.get()));
-        }
-
-        return Optional.empty();
-    }
-
-    @Override
-    public Optional<TeamListDTO> updateTeam(UUID uuid, TeamUpdateDTO teamDTO) throws NotFoundException {
-        Optional<TeamListDTO> teamListDTO = getTeamById(uuid);
-
-        Optional<Team> team = teamRepository.findById(uuid);
-
-        if (teamListDTO.isPresent() && team.isPresent()){
-            team.get().setName(teamDTO.getNameTeam());
-            team.get().setDescriptionProject(teamDTO.getDescriptionTeam());
-            teamRepository.save(team.get());
-
-            teamListDTO.get().setNameTeam(teamDTO.getNameTeam());
-            teamListDTO.get().setDescriptionTeam(teamDTO.getDescriptionTeam());
-            return teamListDTO;
-        }
-
-        return Optional.empty();
->>>>>>> develop
     }
 
     private void setTeamLeader(Team teamToCreate,TeamDTO teamDTO){
