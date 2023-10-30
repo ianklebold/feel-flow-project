@@ -9,12 +9,25 @@ const token = localStorage.getItem('Token');
 const partesToken = token.split('.');
 const payloadDecodificado = atob(partesToken[1]);
 const payloadObjeto = JSON.parse(payloadDecodificado);
+const autoridad = payloadObjeto.authorities;
+const autoridad_rol = JSON.parse(autoridad);
+const rol = autoridad_rol[0].authority;
 
-function MostrarUsuario(usuario, admin) {
+function MostrarUsuario(usuario) {
   let Nombre = `${usuario.name}` + ` ` + `${usuario.surname}`;
-  let Rol;
-  if (admin) {
-    Rol = `Administrador`;
+  var Rol;
+  switch (rol) {
+    case "ADMIN":
+      Rol = "Administrador";
+      break;
+    case "TEAM_LEADER":
+      Rol = "Team Leader";
+      break;
+    case "USER_REGULAR":
+      Rol = "Miembro del Equipo";
+      break;
+    default:
+      Rol = `${rol}`;
   }
 
   // <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Editar Perfil</li>
