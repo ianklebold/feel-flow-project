@@ -46,6 +46,8 @@ public class FeelFlowSingUpPageTest implements IAbstractTest {
         feelFlowSingUpPage.open();
 
         CheckDefaultElements();
+        
+        
 
         feelFlowSingUpPage.enterParameters(username, lastName, email, password, company);
         feelFlowSingUpPage.clickSignUp();

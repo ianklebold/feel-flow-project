@@ -1,6 +1,7 @@
 package com.equipo5.feelflowapp.dto.users;
 
 import com.equipo5.feelflowapp.dto.enterprise.EnterpriseInfoHomeDTO;
+import com.equipo5.feelflowapp.dto.team.TeamDTO;
 import lombok.*;
 
 import java.util.UUID;

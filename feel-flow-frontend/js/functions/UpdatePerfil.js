@@ -1,29 +1,23 @@
-export async function UpdateUser(id, token, name, surname, username) {
+export function UpdateUser(id, token, name, surname, username) {
     let url = `http://localhost:8080/api/v1/user/${id}`;
     const changes = {
         name,
         surname,
         username
     }
-    try {
-        const response = await fetch(url, {
-            method: 'PUT',
-            headers: {
-                'Authorization': `Bearer ${token}`,
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(changes)
-        });
-
+    fetch(url, {
+        method: 'PUT',
+        headers: {
+            'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify(changes)
+    })
+    .then (response => {
         if (response.status === 204) {
-            return true; // Devuelve true si la actualización fue exitosa
-        } else if (response.status === 403) {
-            window.location.href = '../pages/sign_in.html';
+            console.log("exito")
         } else {
-            return false; // Devuelve false en caso de otro código de estado
+            throw new Error('Error al recuperar los datos');
         }
-    } catch (error) {
-        console.error('Error en la actualización:', error);
-        return false; // Devuelve false en caso de error
-    }    
+    });
+    
 }
