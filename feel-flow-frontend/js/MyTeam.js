@@ -116,10 +116,32 @@ function MostrarDatos(info, admin) {
         eliminarEquipoLink.appendChild(eliminarEquipoIcon);
         eliminarEquipoLink.appendChild(eliminarEquipoText);
 
+        // Invitar a un miembro
+        const InvitarAlEquipo = document.createElement('button');
+        InvitarAlEquipo.type = 'button';
+        InvitarAlEquipo.classList.add('btn', 'btn-primary');
+        InvitarAlEquipo.setAttribute('daba-bs-toggle', 'modal');
+        InvitarAlEquipo.setAttribute('data-bs-target', '#exampleModal');
+        InvitarAlEquipo.setAttribute('data-bs-whatever', '@fat');
+        InvitarAlEquipo.id = 'InvitarButton';
+
+        const InvitarAlEquipoIcon = document.createElement('i');
+        InvitarAlEquipoIcon.classList.add('fa', 'fa-pencil-square', 'text-secondary');
+        InvitarAlEquipoIcon.setAttribute('aria-hidden', 'true');
+
+        const InvitarAlEquipoText = document.createElement('span');
+        InvitarAlEquipoText.classList.add('ms-1');
+        InvitarAlEquipoText.textContent = 'Generar Invitación';
+
+        InvitarAlEquipo.appendChild(InvitarAlEquipoIcon);
+        InvitarAlEquipo.appendChild(InvitarAlEquipoText);
+
         // Insertar los elementos en tu documento HTML
         const container = document.getElementById('03-02-Botones'); 
-        container.insertAdjacentElement('beforeend', editarEquipoLink);
-        container.insertAdjacentElement('beforeend', eliminarEquipoLink);
+        container.insertAdjacentElement('afterbegin', InvitarAlEquipo);
+        container.insertAdjacentElement('afterbegin', eliminarEquipoLink);
+        container.insertAdjacentElement('afterbegin', editarEquipoLink);
+
     }
 
 
@@ -151,4 +173,3 @@ function MostrarDatos(info, admin) {
     var MiembrosEquipo = document.getElementById('04-02-Miembros-equipo');
     MiembrosEquipo.insertAdjacentElement("beforeend", elementoMiembros);
 }
-
