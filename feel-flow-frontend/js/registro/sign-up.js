@@ -87,7 +87,7 @@ document.addEventListener('DOMContentLoaded', function () {
       enterpriseDTO
 
     };
-
+    
     if (!document.getElementById('flexCheckDefault').checked) {
       document.getElementById('flexCheckDefault').classList.add('alert-danger');
       document.getElementById('label-check').classList.add('text-danger');
@@ -176,96 +176,6 @@ document.addEventListener('DOMContentLoaded', function () {
             }
           }
         })
-/*
-      Registrar(name, surname, username, password, enterpriseDTO)
-        .then(responseData => {
-          // La solicitud se completó con éxito, responseData contiene la respuesta
-          console.log('Registro exitoso:', responseData);
-          document.getElementById('flexCheckDefault')
-          // Controlar checkbox
-
-        })
-        .catch(error => {
-          if (error.errorData) {
-            console.log(pas + ' ' + ctl_pas);
-            console.log(usr + ' ' + ctl_usr);
-
-            var datosErroneos = error.errorData.length;
-
-            // El servidor respondió con un error 400, error contiene la respuesta
-
-            console.log(error.errorData.length)
-            error.errorData.forEach(error => {
-              console.log(error)
-              for (const campo in error) {
-                var idinput = "in-" + campo;
-                var ctlinput = "clt-" + campo;
-                const mensaje = error[campo];
-                console.log(campo)
-
-                if (datosErroneos < 2) {
-                  if (pas && ctl_pas) {
-                    document.getElementById('clt-password').remove();
-                    document.getElementById('in-password').classList.remove('incorrecto');
-                    ctl_pas = false;
-                    pas = false;
-                    console.log("remove pass")
-                  }
-                  if (usr && ctl_usr) {
-                    document.getElementById('clt-username').remove();
-                    document.getElementById('in-username').classList.remove('incorrecto');
-                    ctl_usr = false;
-                    usr = false;
-                    console.log("remove user")
-                  }
-                }
-
-                if (campo === "password") {
-                  pas = true;
-                  console.log(pas)
-                } else {
-                  usr = true;
-                  console.log(usr)
-                }
-                // Insertar el mensaje de error en el HTML, por ejemplo, en un elemento div con el id 'errores':
-                const divError = document.createElement('div');
-                divError.classList.add('invalid-tooltip', 'text-center');
-                divError.id = ctlinput;
-                divError.textContent = `${mensaje}`;
-
-                if (campo === "password") {
-                  if (!ctl_pas) {
-                    document.getElementById(`${campo}`).appendChild(divError);
-                    document.getElementById(`${idinput}`).classList.add('incorrecto');
-                    ctl_pas = true;
-                  }
-                }
-
-                if (campo === "username") {
-                  if (!ctl_usr) {
-                    document.getElementById(`${campo}`).appendChild(divError);
-                    document.getElementById(`${idinput}`).classList.add('incorrecto');
-                    ctl_usr = true;
-                  }
-                }
-
-                // Controlar checkbox
-                if (!document.getElementById('flexCheckDefault').checked) {
-                  document.getElementById('flexCheckDefault').classList.add('alert-danger');
-                  document.getElementById('label-check').classList.add('text-danger');
-                } else {
-                  document.getElementById('flexCheckDefault').classList.remove('alert-danger');
-                  document.getElementById('label-check').classList.remove('text-danger');
-                }
-
-              }
-            });
-
-          } else {
-            // Otro tipo de error, como error de red
-            console.error('Error de red u otro error:', error);
-          }
-        });*/
     }
   });
 

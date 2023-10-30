@@ -2,6 +2,7 @@ package com.equipo5.feelflowapp.controller;
 
 import com.equipo5.feelflowapp.dto.team.TeamDTO;
 import com.equipo5.feelflowapp.dto.team.TeamListDTO;
+import com.equipo5.feelflowapp.dto.team.TeamUpdateDTO;
 import com.equipo5.feelflowapp.dto.users.teamleader.TeamLeaderDTO;
 import com.equipo5.feelflowapp.exception.notfound.NotFoundException;
 import com.equipo5.feelflowapp.service.team.TeamService;
@@ -71,6 +72,22 @@ public class TeamController {
             return new ResponseEntity(HttpStatus.NOT_FOUND);
         }catch (NotFoundException notFoundException){
             return new ResponseEntity(notFoundException.getMessage(),HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @PutMapping(PATH_ID)
+    public ResponseEntity updateTeam(@PathVariable(value = "idTeam") UUID idTeam,@Validated @RequestBody TeamUpdateDTO teamDTO){
+        try {
+            Optional<TeamListDTO> teamListDTO = teamService.updateTeam(idTeam,teamDTO);
+
+            if (teamListDTO.isPresent()){
+                return new ResponseEntity(teamListDTO.get(),HttpStatus.OK);
+            }else {
+                return new ResponseEntity("Usuario no integra el equipo o no existe equipo",HttpStatus.FORBIDDEN);
+            }
+
+        } catch (NotFoundException e) {
+            throw new RuntimeException("No existe equipo");
         }
     }
 

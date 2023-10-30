@@ -6,11 +6,11 @@ import org.openqa.selenium.support.FindBy;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.gui.AbstractPage;
 
-public class FeelFlowSingUpPage extends AbstractPage {
+public class FeelFlowSingUpInvitePage extends AbstractPage {
     
-    public FeelFlowSingUpPage(WebDriver driver) {
+    public FeelFlowSingUpInvitePage(WebDriver driver) {
         super(driver);
-        setPageAbsoluteURL("http://127.0.0.1:8000/pages/sign_up.html");
+        setPageAbsoluteURL("http://127.0.0.1:8000/pages/sign_up_invite.html");
     }
     
     @FindBy(xpath = "//*[@id=\"FF-Background\"]/div[1]/div/img")

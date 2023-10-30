@@ -1,4 +1,9 @@
-<!DOCTYPE html>
+package com.equipo5.carina.demo;
+
+import org.testng.annotations.DataProvider;
+
+/*
+ * <!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -51,7 +56,7 @@
                 aria-expanded="false">
                 <i class="fa fa-bell cursor-pointer"></i>
               </a>
-              <ul class="dropdown-menu dropdown-menu-end px-2 py-3 me-sm-n1" aria-labelledby="dropdownMenuButton">
+              <ul class="dropdown-menu  dropdown-menu-end  px-2 py-3 me-sm-n4" aria-labelledby="dropdownMenuButton">
                 <li class="mb-2">
                   <a class="dropdown-item border-radius-md" href="javascript:;">
                     <div class="d-flex py-1">
@@ -62,7 +67,10 @@
                         <h6 class="text-sm font-weight-normal mb-1">
                           <span class="font-weight-bold">New message</span> from Laur
                         </h6>
-                        <p class="text-xs text-secondary mb-0"><i class="fa fa-clock me-1"></i>13 minutes ago</p>
+                        <p class="text-xs text-secondary mb-0">
+                          <i class="fa fa-clock me-1"></i>
+                          13 minutes ago
+                        </p>
                       </div>
                     </div>
                   </a>
@@ -127,7 +135,7 @@
                 aria-expanded="false">
                 <i class="fa fa-cog fixed-plugin-button-nav cursor-pointer"></i>
               </a>
-              <ul class="dropdown-menu dropdown-menu-end px-3 py-3 me-sm-n1" aria-labelledby="dropdownMenuButton">
+              <ul class="dropdown-menu dropdown-menu-end px-2 py-3 me-sm-n4" aria-labelledby="dropdownMenuButton">
                 <li class="mb-2">
                   <a class="dropdown-item border-radius-md" href="javascript:;">Personalizar</a>
                 </li>
@@ -144,7 +152,7 @@
                 data-bs-toggle="dropdown" aria-expanded="false">
                 <i class="fa fa-user me-sm-1"></i>
               </a>
-              <ul class="dropdown-menu  dropdown-menu-end  px-4 py-3 me-sm-n0" aria-labelledby="dropdownMenuButton">
+              <ul class="dropdown-menu  dropdown-menu-end  px-2 py-3 me-sm-n4" aria-labelledby="dropdownMenuButton">
                 <li class="mb-2">
                   <a class="dropdown-item border-radius-md" href="../pages/profile.html">Mi Perfil</a>
                 </li>
@@ -206,3 +214,245 @@
 </body>
 
 </html>
+ */
+
+import org.testng.annotations.Test;
+import org.testng.asserts.SoftAssert;
+import org.testng.Assert;
+
+import com.equipo5.carina.demo.gui.pages.desktop.FeelFlowLoginPage;
+import com.equipo5.carina.demo.gui.pages.desktop.FeelFlowHomePage;
+import com.zebrunner.agent.core.annotation.TestLabel;
+import com.zebrunner.carina.core.AbstractTest;
+
+/*
+ * public class FeelFlowHomePage extends AbstractPage {
+    
+    public FeelFlowHomePage(WebDriver driver) {
+        super(driver);
+        setPageAbsoluteURL("http://127.0.0.1:8000/pages/home.html");
+    }
+    
+    @FindBy(xpath = "//a[@class='navbar-brand m-2']")
+    private ExtendedWebElement logoLink;
+
+    @FindBy(xpath = "//ul[@class='navbar-nav']")
+    private ExtendedWebElement navbarList;
+
+    @FindBy(xpath = "//li[@class='nav-item']")
+    private ExtendedWebElement separatorItem;
+
+    @FindBy(xpath = "//button[@class='btn btn-icon btn-transparent-dark d-flex align-items-center ms-2 me-4']")
+    private ExtendedWebElement notificationButton;
+
+    @FindBy(xpath = "//div[@class='dropdown-menu dropdown-menu-right dropdown-menu-card pt-0 pb-0']")
+    private ExtendedWebElement notificationDropdown;
+
+    @FindBy(xpath = "//button[@class='btn btn-icon btn-transparent-dark d-flex align-items-center ms-2']")
+    private ExtendedWebElement searchButton;
+
+    @FindBy(xpath = "//input[@class='form-control form-control-sm']")
+    private ExtendedWebElement searchInput;
+
+    @FindBy(xpath = "//button[@class='btn btn-icon btn-transparent-dark']")
+    private ExtendedWebElement settingsButton;
+
+    @FindBy(xpath = "//div[@class='dropdown-menu dropdown-menu-right dropdown-menu-card']")
+    private ExtendedWebElement settingsDropdown;
+
+    @FindBy(xpath = "//button[@class='btn btn-icon btn-transparent-dark d-flex align-items-center ms-auto']")
+    private ExtendedWebElement profileButton;
+
+    @FindBy(xpath = "//div[@class='dropdown-menu dropdown-menu-right dropdown-menu-card']")
+    private ExtendedWebElement profileDropdown;
+
+    @FindBy(xpath = "//div[@class='container-fluid']")
+    private ExtendedWebElement containerFluid;
+
+    // Agrega aquí más elementos identificados según la estructura de la página Home
+
+    public void open() {
+        this.openURL(this.pageURL);
+    }
+
+    public void clickLogo() {
+        logoLink.click();
+    }
+
+    public void clickNotificationButton() {
+        notificationButton.click();
+    }
+
+    public boolean isNotificationDropdownDisplayed() {
+        return notificationDropdown.isElementPresent();
+    }
+
+    public void clickSearchButton() {
+        searchButton.click();
+    }
+
+    public void enterSearchText(String text) {
+        searchInput.type(text);
+    }
+
+    public void clickSettingsButton() {
+        settingsButton.click();
+    }
+
+    public boolean isSettingsDropdownDisplayed() {
+        return settingsDropdown.isElementPresent();
+    }
+
+    public void clickProfileButton() {
+        profileButton.click();
+    }
+
+    public boolean isProfileDropdownDisplayed() {
+        return profileDropdown.isElementPresent();
+    }
+
+    public Object getNavbarList() {
+        return navbarList;
+    }
+
+    public boolean isElementPresent(Object navbarList2) {
+        return ((ExtendedWebElement) navbarList2).isElementPresent();
+    }
+
+    public Object getNotificationButton() {
+        return notificationButton;
+    }
+
+    public boolean isSearchButtonPresent() {
+        return searchButton.isElementPresent();
+    }
+
+    public boolean isSearchInputVisible() {
+        return searchInput.isElementPresent();
+    }
+
+    public boolean isSettingsButtonPresent() {
+        return settingsButton.isElementPresent();
+    }
+
+    public boolean isProfileButtonPresent() {
+        return profileButton.isElementPresent();
+    }
+
+    public boolean isContainerFluidPresent() {
+        return containerFluid.isElementPresent();
+    }
+
+    public boolean isLogoLinkPresent() {
+        return logoLink.isElementPresent();
+    }
+
+    public boolean isSeparatorItemPresent() {
+        return separatorItem.isElementPresent();
+    }
+}
+ */
+
+public class FeelFlowHomePageTest extends AbstractTest {
+
+    @DataProvider(name = "validUserCredentials")
+    public Object[][] validUserCredentials() {
+        return new Object[][] {
+            {"cristina.torres@accenture.com", "A12346789l@"},
+            {"j.smith@amazon.com", "Bc71!8293"},
+            {"carolina.mariela.ramirez@outlook.com", "m123*4567T"}
+        };
+    }
+
+    // Crear un test que verifique los elementos del home page utilizando los sioguientes metodos:
+    /*
+     *     public void clickLogo() {
+        logoLink.click();
+    }
+
+    public void clickNotificationButton() {
+        notificationButton.click();
+    }
+
+    public boolean isNotificationDropdownDisplayed() {
+        return notificationDropdown.isElementPresent();
+    }
+
+    public void clickSettingsButton() {
+        settingsButton.click();
+    }
+
+    public boolean isSettingsDropdownDisplayed() {
+        return settingsDropdown.isElementPresent();
+    }
+
+    public void clickProfileButton() {
+        profileButton.click();
+    }
+
+    public boolean isProfileDropdownDisplayed() {
+        return profileDropdown.isElementPresent();
+    }
+
+    public Object getNavbarList() {
+        return navbarList;
+    }
+
+    public boolean isSettingsButtonPresent() {
+        return settingsButton.isElementPresent();
+    }
+
+    public boolean isProfileButtonPresent() {
+        return profileButton.isElementPresent();
+    }
+
+    public boolean isLogoLinkPresent() {
+        return logoLink.isElementPresent();
+    }
+
+    public boolean isLastNewsPresent() {
+        return lastNews.isElementPresent();
+    }
+
+    public boolean isNewsContainerPresent() {
+        return newsContainer.isElementPresent();
+    }
+     * 
+     */
+
+    @Test(description = "Verificar que muestran correctamente los elementos del home page",
+        dataProvider = "validUserCredentials")
+    @TestLabel(name = "feature", value = "Home")
+    @TestLabel(name = "priority", value = "P4")
+    public void verifySettingsButton(String email, String password) {
+        SoftAssert softAssert = new SoftAssert();
+        FeelFlowLoginPage loginPage = new FeelFlowLoginPage(getDriver());
+        loginPage.open();
+        loginPage.enterParameters(email, password);
+        loginPage.submitLoggin();
+
+        FeelFlowHomePage homePage = new FeelFlowHomePage(getDriver());
+        homePage.open();
+
+        softAssert.assertTrue(homePage.isLogoLinkPresent(), "El logo no se muestra");
+        softAssert.assertTrue(homePage.isSettingsButtonPresent(), "El botón de configuración no se muestra");
+        softAssert.assertTrue(homePage.isProfileButtonPresent(), "El botón de perfil no se muestra");
+        softAssert.assertTrue(homePage.isNewsContainerPresent(), "El contenedor de noticias no se muestra");
+        softAssert.assertTrue(homePage.isLastNewsPresent(), "La última noticia no se muestra");
+
+        homePage.clickSettingsButton();
+        softAssert.assertTrue(homePage.isSettingsDropdownDisplayed(), "El menú desplegable de configuración no se muestra");
+        homePage.clickSettingsButton();
+
+        homePage.clickProfileButton();
+        softAssert.assertTrue(homePage.isProfileDropdownDisplayed(), "El menú desplegable de perfil no se muestra");
+        homePage.clickProfileButton();
+
+        homePage.clickNotificationButton();
+        softAssert.assertTrue(homePage.isNotificationDropdownDisplayed(), "El menú desplegable de notificaciones no se muestra");
+        homePage.clickNotificationButton();
+
+        softAssert.assertAll();       
+        
+    }
+}

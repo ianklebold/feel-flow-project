@@ -1,4 +1,7 @@
-<!DOCTYPE html>
+package com.equipo5.carina.demo.gui.pages.desktop;
+
+/*
+ * <!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -51,7 +54,7 @@
                 aria-expanded="false">
                 <i class="fa fa-bell cursor-pointer"></i>
               </a>
-              <ul class="dropdown-menu dropdown-menu-end px-2 py-3 me-sm-n1" aria-labelledby="dropdownMenuButton">
+              <ul class="dropdown-menu  dropdown-menu-end  px-2 py-3 me-sm-n4" aria-labelledby="dropdownMenuButton">
                 <li class="mb-2">
                   <a class="dropdown-item border-radius-md" href="javascript:;">
                     <div class="d-flex py-1">
@@ -62,7 +65,10 @@
                         <h6 class="text-sm font-weight-normal mb-1">
                           <span class="font-weight-bold">New message</span> from Laur
                         </h6>
-                        <p class="text-xs text-secondary mb-0"><i class="fa fa-clock me-1"></i>13 minutes ago</p>
+                        <p class="text-xs text-secondary mb-0">
+                          <i class="fa fa-clock me-1"></i>
+                          13 minutes ago
+                        </p>
                       </div>
                     </div>
                   </a>
@@ -127,7 +133,7 @@
                 aria-expanded="false">
                 <i class="fa fa-cog fixed-plugin-button-nav cursor-pointer"></i>
               </a>
-              <ul class="dropdown-menu dropdown-menu-end px-3 py-3 me-sm-n1" aria-labelledby="dropdownMenuButton">
+              <ul class="dropdown-menu dropdown-menu-end px-2 py-3 me-sm-n4" aria-labelledby="dropdownMenuButton">
                 <li class="mb-2">
                   <a class="dropdown-item border-radius-md" href="javascript:;">Personalizar</a>
                 </li>
@@ -144,7 +150,7 @@
                 data-bs-toggle="dropdown" aria-expanded="false">
                 <i class="fa fa-user me-sm-1"></i>
               </a>
-              <ul class="dropdown-menu  dropdown-menu-end  px-4 py-3 me-sm-n0" aria-labelledby="dropdownMenuButton">
+              <ul class="dropdown-menu  dropdown-menu-end  px-2 py-3 me-sm-n4" aria-labelledby="dropdownMenuButton">
                 <li class="mb-2">
                   <a class="dropdown-item border-radius-md" href="../pages/profile.html">Mi Perfil</a>
                 </li>
@@ -206,3 +212,130 @@
 </body>
 
 </html>
+ */
+
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.FindBy;
+
+import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
+import com.zebrunner.carina.webdriver.gui.AbstractPage;
+
+public class FeelFlowHomePage extends AbstractPage {
+
+    long DEFAULT_TIMEOUT = 5;
+    
+    public FeelFlowHomePage(WebDriver driver) {
+        super(driver);
+        setPageAbsoluteURL("http://127.0.0.1:8000/pages/home.html");
+    }
+    
+    @FindBy(xpath = "//*[@id=\"sidenav-main\"]/div[1]/a/img")
+    private ExtendedWebElement logoLink;
+
+    @FindBy(xpath = "//*[@id=\"navbar\"]")
+    private ExtendedWebElement navbarList;
+
+    @FindBy(xpath = "/html/body/main/nav/div/div/ul/li[1]/a/i")
+    private ExtendedWebElement notificationButton;
+
+    @FindBy(xpath = "//*[@id=\"navbar\"]/ul/li[1]/ul")
+    private ExtendedWebElement notificationDropdown;
+
+    @FindBy(xpath = "/html/body/main/nav/div/div/ul/li[2]/a/i")
+    private ExtendedWebElement settingsButton;
+
+    @FindBy(xpath = "//*[@id=\"navbar\"]/ul/li[2]/ul")
+    private ExtendedWebElement settingsDropdown;
+
+    @FindBy(xpath = "/html/body/main/nav/div/div/ul/li[3]/a/i")
+    private ExtendedWebElement profileButton;
+
+    @FindBy(xpath = "//*[@id=\"navbar\"]/ul/li[3]/ul")
+    private ExtendedWebElement profileDropdown;
+
+    @FindBy(xpath = "/html/body/main/div/h2")
+    private ExtendedWebElement lastNews;
+
+    @FindBy(xpath = "/html/body/main/div/div/div/div")
+    private ExtendedWebElement newsContainer;
+
+    @FindBy(xpath = "/html/body/main/nav/div/div/ul/li[3]/ul/li[2]/a")
+    private ExtendedWebElement logOutButton;
+
+    @FindBy(xpath = "/html/body/div/div")
+    private ExtendedWebElement warningLabel;
+
+    @FindBy(xpath = "/html/body/div/div/div[6]/button[1]/span")
+    private ExtendedWebElement warningLabelYesButton;
+
+    // Agrega aquí más elementos identificados según la estructura de la página Home
+
+    public void open() {
+        this.openURL(this.pageURL);
+    }
+
+    public void clickLogo() {
+        logoLink.click();
+    }
+
+    public void clickNotificationButton() {
+        notificationButton.click();
+    }
+
+    public boolean isNotificationDropdownDisplayed() {
+        return notificationDropdown.isElementPresent(DEFAULT_TIMEOUT);
+    }
+
+    public void clickSettingsButton() {
+        settingsButton.click();
+    }
+
+    public boolean isSettingsDropdownDisplayed() {
+        return settingsDropdown.isElementPresent(DEFAULT_TIMEOUT);
+    }
+
+    public void clickProfileButton() {
+        profileButton.click(DEFAULT_TIMEOUT);
+    }
+
+    public boolean isProfileDropdownDisplayed() {
+        return profileDropdown.isElementPresent(DEFAULT_TIMEOUT);
+    }
+
+    public Object getNavbarList() {
+        return navbarList;
+    }
+
+    public boolean isSettingsButtonPresent() {
+        return settingsButton.isElementPresent(DEFAULT_TIMEOUT);
+    }
+
+    public boolean isProfileButtonPresent() {
+        return profileButton.isElementPresent(DEFAULT_TIMEOUT);
+    }
+
+    public boolean isLogoLinkPresent() {
+        return logoLink.isElementPresent();
+    }
+
+    public boolean isLastNewsPresent() {
+        return lastNews.isElementPresent();
+    }
+
+    public boolean isNewsContainerPresent() {
+        return newsContainer.isElementPresent(DEFAULT_TIMEOUT);
+    }
+
+    public void clickLogOutButton() {
+        logOutButton.click(DEFAULT_TIMEOUT);        
+    }
+
+    public boolean isWarningLabelDisplayed() {
+      return warningLabel.isElementPresent(DEFAULT_TIMEOUT);
+    }
+
+    public void clickConfirmButton() {
+      warningLabelYesButton.click(DEFAULT_TIMEOUT);
+    }
+    
+}

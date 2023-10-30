@@ -1,9 +1,8 @@
-export async function UpdateUser(id, token, name, surname, username) {
-    let url = `http://localhost:8080/api/v1/user/${id}`;
+export async function UpdateEquipo(id, token, nameTeam, descriptionTeam) {
+    let url = `http://localhost:8080/api/v1/team/${id}`;
     const changes = {
-        name,
-        surname,
-        username
+        nameTeam,
+        descriptionTeam
     }
     try {
         const response = await fetch(url, {
@@ -15,7 +14,7 @@ export async function UpdateUser(id, token, name, surname, username) {
             body: JSON.stringify(changes)
         });
 
-        if (response.status === 204) {
+        if (response.status === 200) {
             return true; // Devuelve true si la actualización fue exitosa
         } else if (response.status === 403) {
             window.location.href = '../pages/sign_in.html';
@@ -25,5 +24,5 @@ export async function UpdateUser(id, token, name, surname, username) {
     } catch (error) {
         console.error('Error en la actualización:', error);
         return false; // Devuelve false en caso de error
-    }    
+    }
 }

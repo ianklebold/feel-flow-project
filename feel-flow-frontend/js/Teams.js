@@ -3,7 +3,6 @@ import { GetEquipos } from "./functions/GetEquipos.js";
 
 const idLocation = localStorage.getItem('idLocation');
 const token = localStorage.getItem('Token');
-
 const buscarBtn = document.getElementById('03-03-03-buscar');
 const tabla = document.getElementById('03-04-Tabla-Equipos');
 
