@@ -1,3 +1,48 @@
+import { InvitarAlEquipo } from "./functions/post/invite_to_team.js";
+import { GetEquipo } from "./functions/GetEquipos.js";
+import { GetUser } from "../js/functions/GetPerfil.js";
+
+const idLocation = localStorage.getItem('idLocation');
+const token = localStorage.getItem('Token');
+const partesToken = token.split('.');
+const payloadDecodificado = atob(partesToken[1]);
+const payloadObjeto = JSON.parse(payloadDecodificado);
+const autoridad = payloadObjeto.authorities;
+const autoridad_rol = JSON.parse(autoridad);
+const rol = autoridad_rol[0].authority;
+
+var Id_Equipo;
+
+
+async function obtenerIdEquipo() {
+  try {
+    if (rol !== "ADMIN") {
+      const data = await GetEquipo(token);
+      localStorage.setItem('IdEquipo', data[0].uuid);
+    }
+  } catch (error) {
+    //window.location.href = "../pages/sign_in.html"; // Usuario no logueado
+    console.error(error);
+  }
+}
+
+obtenerIdEquipo();
+Id_Equipo = localStorage.getItem('IdEquipo');
+
+console.log(Id_Equipo);
+console.log(token)
+document.getElementById('inviteMembersButton').addEventListener('click', function() {
+  InvitarAlEquipo(token, Id_Equipo)
+    .then (data => {
+      console.log(data)
+    }); 
+})
+
+/*
+
+
+
+
 // Agrega un evento de clic al botón "Invitar miembros"
 document.getElementById('inviteMembersButton').addEventListener('click', function () {
   // Generar el enlace con el uuid obtenido
@@ -140,3 +185,4 @@ function generar_link_uuid(idTeam) {
       });
 }
 
+*/
