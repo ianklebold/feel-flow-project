@@ -1,38 +1,3 @@
-async function Registrar(name, surname, username, password, enterpriseDTO) {
-  const datos = {
-    name,
-    surname,
-    username,
-    password,
-    enterpriseDTO
-
-  };
-
-  await fetch('http://localhost:8080/api/v1/admin', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(datos)
-  })
-    .then(response => {
-      if (response.status === 201) {
-        return response.json()
-      } else if (response.status === 400) {
-        return response.json().then(errorData => {
-          throw { errorData };
-        });
-      }
-    })
-  // .catch(error => {
-  //   if (error.errorData) {
-
-  //   } else {
-  //     console.error('Error de red:', error);
-  //   }
-  // });
-}
-
 var ctl_pas = false;
 var ctl_usr = false;
 
@@ -87,7 +52,7 @@ document.addEventListener('DOMContentLoaded', function () {
       enterpriseDTO
 
     };
-    
+
     if (!document.getElementById('flexCheckDefault').checked) {
       document.getElementById('flexCheckDefault').classList.add('alert-danger');
       document.getElementById('label-check').classList.add('text-danger');
@@ -106,11 +71,14 @@ document.addEventListener('DOMContentLoaded', function () {
           if (response.status === 201) {
             window.location.href = '../pages/sign_in.html'
           } else if (response.status === 400) {
-            if (error.errorData) {
-              var datosErroneos = error.errorData.length;
 
-              // El servidor respondió con un error 400, error contiene la respuesta
-              error.errorData.forEach(error => {
+            response.text().then(errorText => {
+              // `errorText` contiene el cuerpo del error
+              var errorResponse = JSON.parse(errorText);
+
+              var datosErroneos = errorResponse.length;
+
+              errorResponse.forEach(error => {
                 for (const campo in error) {
                   var idinput = "in-" + campo;
                   var ctlinput = "clt-" + campo;
@@ -169,11 +137,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
                 }
               });
+            });
 
-            } else {
-              // Otro tipo de error, como error de red
-              console.error('Error de red u otro error:', error);
-            }
           }
         })
     }
