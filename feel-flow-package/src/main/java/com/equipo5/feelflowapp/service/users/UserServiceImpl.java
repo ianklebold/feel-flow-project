@@ -73,7 +73,7 @@ public class UserServiceImpl implements UserService{
                     return Optional.of(userDTO);
                 }
 
-            }else if (TeamRoles.USER_REGULAR.name().equals(role.get().getAuthority())){
+            }else if (TeamRoles.TEAM_LEADER.name().equals(role.get().getAuthority())){
                 Optional<TeamLeader> teamLeader = teamLeaderRepository.findById(uuid);
 
                 if (teamLeader.isPresent()){
@@ -97,12 +97,18 @@ public class UserServiceImpl implements UserService{
         return Optional.empty();
     }
 
-    private Optional<? extends GrantedAuthority> getRoleByCurrentUser(){
+    @Override
+    public Optional<? extends GrantedAuthority> getRoleByCurrentUser(){
         return SecurityContextHolder.getContext()
                 .getAuthentication()
                 .getAuthorities()
                 .stream()
                 .findFirst();
+    }
+
+    @Override
+    public String getUsernameByCurrentUser() {
+         return SecurityContextHolder.getContext().getAuthentication().getName();
     }
 
     private void populateEnterprise(Admin admin, UserDTO userTarget){

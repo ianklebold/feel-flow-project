@@ -10,7 +10,7 @@ public class FeelFlowLoginPage extends AbstractPage {
     
     public FeelFlowLoginPage(WebDriver driver) {
         super(driver);
-        setPageAbsoluteURL("http://127.0.0.1:5500/feel-flow-frontend/pages/sign_in.html");
+        setPageAbsoluteURL("http://127.0.0.1:8000/pages/sign_in.html");
     }
     
     @FindBy(xpath = "//*[@id=\"login-form\"]/div[3]/button")
@@ -25,9 +25,10 @@ public class FeelFlowLoginPage extends AbstractPage {
     @FindBy(xpath = "//*[@id=\"login-form\"]/div[3]/button")
     private ExtendedWebElement submitLogginButton;
 
-    @FindBy(xpath = "//*[@id=\"message-container\"]")
+    @FindBy(xpath = "//*[@id=\"FF-Background\"]/div/div[2]/div[2]/div/div/div")
     private ExtendedWebElement errorMessage;
 
+    long DEFAULT_TIMEOUT = 5;
 
     public void open() {
         this.openURL(this.pageURL);
@@ -39,7 +40,9 @@ public class FeelFlowLoginPage extends AbstractPage {
     }
 
     public void enterParameters(String email, String password) {
+        emailInput.click();
         emailInput.type(email);
+        passwordInput.click();
         passwordInput.type(password);
     }
 
@@ -48,7 +51,11 @@ public class FeelFlowLoginPage extends AbstractPage {
     }
 
     public boolean isErrorMessageDisplayed() {
-        return errorMessage.isElementPresent();
+        return errorMessage.isElementPresent(DEFAULT_TIMEOUT);
+    }
+
+    public boolean isOpened() {
+        return signInButton.isElementPresent(DEFAULT_TIMEOUT);
     }
 
 }
