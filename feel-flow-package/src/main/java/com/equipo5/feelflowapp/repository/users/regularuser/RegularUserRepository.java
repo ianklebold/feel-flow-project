@@ -10,7 +10,7 @@ import java.util.UUID;
 public interface RegularUserRepository extends JpaRepository<RegularUser, UUID> {
     @Query(value = """
             SELECT t.uuid
-            FROM team as t JOIN regular_user as ru ON t.uuid = ru.team_uuid JOIN user_model as um
+            FROM regular_user ru2 JOIN user_model um ON ru2.regularuser_persona = um.uuid JOIN team t ON t.uuid = ru2.team_uuid
             WHERE um.username = :username
             """,
             nativeQuery = true)
