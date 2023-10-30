@@ -93,16 +93,10 @@ function MostrarPantalla(usuario) {
             .catch(error => {
                 console.error('Error al cargar los módulos disponibles:', error);
             });
-    // if (payloadObjeto.isAdmin) {
-        
-    // } else {
-    //     window.location.href = "../pages/Home.html";
-    // }
-}
+
 
 
 window.addEventListener("load", function () {
-    console.log(token)
     GetUser(idLocation, token)
         .then(data => {
             MostrarPantalla(data)
