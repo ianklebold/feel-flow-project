@@ -8,6 +8,8 @@ import com.zebrunner.carina.webdriver.gui.AbstractPage;
 
 public class FeelFlowSingUpPage extends AbstractPage {
     
+    private static final long DEFAULT_TIMEOUT = 5;
+
     public FeelFlowSingUpPage(WebDriver driver) {
         super(driver);
         setPageAbsoluteURL("http://127.0.0.1:8000/pages/sign_up.html");
@@ -66,24 +68,24 @@ public class FeelFlowSingUpPage extends AbstractPage {
     }
 
     public boolean isErrorMessageDisplayed() {
-        return errorMessage.isElementPresent();
+        return errorMessage.isElementPresent(DEFAULT_TIMEOUT);
     }
 
     // todos los boolean if isElementPresent
     public boolean isLogoDisplayed() {
-        return logoElement.isElementPresent();
+        return logoElement.isElementPresent(DEFAULT_TIMEOUT);
     }
 
     public boolean isTitleDisplayed() {
-        return titleElement.isElementPresent();
+        return titleElement.isElementPresent(DEFAULT_TIMEOUT);
     }
 
     public boolean isNameInputDisplayed() {
-        return nameInput.isElementPresent();
+        return nameInput.isElementPresent(DEFAULT_TIMEOUT);
     }
 
     public boolean isLastNameInputDisplayed() {
-        return lastNameInput.isElementPresent();
+        return lastNameInput.isElementPresent(DEFAULT_TIMEOUT);
     }
 
     public boolean isEmailInputDisplayed() {
@@ -99,11 +101,11 @@ public class FeelFlowSingUpPage extends AbstractPage {
     }
 
     public boolean isSignUpButtonDisplayed() {
-        return signUpButton.isElementPresent();
+        return signUpButton.isElementPresent(DEFAULT_TIMEOUT);
     }
 
     public boolean isTermsAndConditionsCheckboxDisplayed() {
-        return termsAndConditionsCheckbox.isElementPresent();
+        return termsAndConditionsCheckbox.isElementPresent(DEFAULT_TIMEOUT);
     }
 
     public void clickTermsAndConditionsCheckbox() {
