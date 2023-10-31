@@ -28,8 +28,6 @@ async function obtenerIdEquipo() {
 obtenerIdEquipo();
 Id_Equipo = localStorage.getItem('IdEquipo');
 
-console.log(Id_Equipo);
-console.log(token)
 var link_registro;
 
 document.getElementById('inviteMembersButton').addEventListener('click', function () {
