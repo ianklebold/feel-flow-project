@@ -17,7 +17,8 @@ public class FeelFlowLoginPageTest implements IAbstractTest {
         return new Object[][] {
             {"Cristina", "Torres", "10/05/1999", "Avenida Italia 350", "Resistencia", "Argentina", "Accenture", "cristina.torres@accenture.com", "A12346789l@"},
             {"Jhon", "Smith", "25/08/1985", "32th Street 453", "Londres", "Inglaterra", "Amazon", "j.smith@amazon.com", "Bc71!8293"},
-            {"Carolina Mariela", "Ramirez", "30/10/1978", "Avenida Bolivar 1097", "Medellín", "Colombia", "Microsoft", "carolina.mariela.ramirez@outlook.com", "m123*4567T"}
+            {"Carolina Mariela", "Ramirez", "30/10/1978", "Avenida Bolivar 1097", "Medellín", "Colombia", "Microsoft", "carolina.mariela.ramirez@outlook.com", "m123*4567T"},
+            {"Admin", "Admin", "01/01/2000", "Avenida Bolivar 1097", "Medellín", "Colombia", "EmpresaAdmin1", "admin1@gmail.com", "RiverPlatecapo@123"}
         };
     }
 

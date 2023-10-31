@@ -25,10 +25,10 @@ public class FeelFlowSingUpPage extends AbstractPage {
     @FindBy(xpath = "//*[@id=\"Apellido\"]")
     private ExtendedWebElement lastNameInput;
 
-    @FindBy(xpath = "//*[@id=\"email\"]")
+    @FindBy(xpath = "//*[@id=\"in-username\"]")
     private ExtendedWebElement emailInput;
 
-    @FindBy(xpath = "//*[@id=\"floatingInputGroup1\"]")
+    @FindBy(xpath = "//*[@id=\"in-password\"]")
     private ExtendedWebElement passwordInput;
 
     @FindBy(xpath = "//*[@id=\"Empresa\"]")
@@ -104,6 +104,10 @@ public class FeelFlowSingUpPage extends AbstractPage {
 
     public boolean isTermsAndConditionsCheckboxDisplayed() {
         return termsAndConditionsCheckbox.isElementPresent();
+    }
+
+    public void clickTermsAndConditionsCheckbox() {
+        termsAndConditionsCheckbox.click();
     }
 
 }
