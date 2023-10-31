@@ -80,7 +80,7 @@ function MostrarDatos(info, admin) {
     // </a>
 
     // Crear el primer elemento "Editar Equipo"
-    if (admin) {
+    if (rol === "ADMIN" || rol === "TEAM_LEADER") {
         const editarEquipoLink = document.createElement('a');
         editarEquipoLink.classList.add('nav-link', 'mb-0', 'px-0', 'py-1');
         editarEquipoLink.href = '../pages/Edit_Team.html';
