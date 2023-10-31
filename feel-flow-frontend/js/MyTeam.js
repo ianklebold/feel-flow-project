@@ -121,6 +121,25 @@ function MostrarDatos(info, admin) {
         container.insertAdjacentElement('afterbegin', eliminarEquipoLink);
         container.insertAdjacentElement('afterbegin', editarEquipoLink);
 
+        //Invitar miembos
+        // <button type="button" id="inviteMembersButton" class="btn bg-gradient-dark">
+        // <i class="fa fa-plus me-2 text-secondary" aria-hidden="true"></i>Invitar miembros</button>
+
+        var button = document.createElement('button');
+        button.classList.add('btn', 'bg-gradient-dark');
+        button.type = 'button';
+        button.id = 'inviteMembersButton';
+
+        var icon = document.createElement('i');
+        icon.classList.add('fa', 'fa-plus', 'me-2', 'text-secondary');
+        icon.setAttribute('aria-hidden','true');
+
+        button.appendChild(icon);
+        button.textContent = "Invitar miembros";
+
+        // const modal = document.getElementById('InvitarMiembros');
+        // modal.insertAdjacentElement('afterbegin', button);
+
     }
 
 
@@ -152,3 +171,7 @@ function MostrarDatos(info, admin) {
     var MiembrosEquipo = document.getElementById('04-02-Miembros-equipo');
     MiembrosEquipo.insertAdjacentElement("beforeend", elementoMiembros);
 }
+
+boton.addEventListener('click', function() {
+    $('#exampleModalMessage').modal('show');
+})
