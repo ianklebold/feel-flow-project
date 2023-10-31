@@ -53,7 +53,7 @@
                                         <label for="floatingInputGroup1">Nombre Team</label>
                                     </div>
                                     <div class="mb-3 form-floating shadow-lg">
-                                        <input type="email" class="form-control" id="Descripcion"
+                                        <input type="text" class="form-control" id="Descripcion"
                                             placeholder="Descripcion" required>
                                         <label for="floatingInputGroup1">Descripcion</label>
                                     </div>
@@ -101,25 +101,24 @@
                                     <div class="modal-dialog modal-dialog-centered">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <h5 class="modal-title" id="copiedPopupLabel">Invita al Team Lead</h5>
+                                                <h5 class="modal-title text-center" id="copiedPopupLabel">Compartile las credenciales al Team Lead</h5>
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                     aria-label="Close"></button>
                                             </div>
-                                            <div class="modal-body">
-                                                <div class="form-group input-group justify-content-around">
-                                                    <input type="text" class="form-control" id="copiedText"
-                                                        value="Email: hola@gmail.com " readonly>
+                                            <div class="modal-body mb-0" >
+                                                <div class="form-group input-group justify-content-around" id="00-datos">
+                                                    <!-- <input type="text" class="form-control" id="copiedText"
+                                                        value="Email: hola@gmail.com " readonly>  -->
                                                     <span class="input-group-append">
-                                                        <button type="button" id="copyButton"
-                                                            class="btn bg-gradient-dark my-2 mt-2">
-                                                            <i class="fa fa-clipboard" aria-hidden="true"
-                                                                style="color: #f8f9fa;"></i>
+                                                        <button type="button" id="copyButton" class="btn bg-gradient-dark my-2 mt-2">
+                                                            <i class="fa fa-clipboard" aria-hidden="true" style="color: #f8f9fa;"></i>
+                                                            <span class="text-sm ms-3">Copiar</span>
                                                         </button>
-                                                    </span>
+                                                    </span> 
                                                 </div>
                                             </div>
 
-                                            <div class="modal-footer justify-content-center">
+                                            <div class="modal-footer justify-content-center mt-0">
                                                 <button type="button" class="btn bg-gradient-danger my-1 mt-2" id="closePopUp"
                                                     data-bs-dismiss="modal">Cerrar</button>
                                             </div>
@@ -147,6 +146,7 @@
         </footer>
         <!-- -------- END FOOTER 3 w/ COMPANY DESCRIPTION WITH LINKS & SOCIAL ICONS & COPYRIGHT ------- -->
         <!--   Core JS Files   -->
+        <script type="module" src="../../js/functions/GetPerfil.js"></script> 
         <script src="../../js/core/popper.min.js"></script>
         <script src="../../js/core/bootstrap.min.js"></script>
         <script src="../../js/plugins/perfect-scrollbar.min.js"></script>
