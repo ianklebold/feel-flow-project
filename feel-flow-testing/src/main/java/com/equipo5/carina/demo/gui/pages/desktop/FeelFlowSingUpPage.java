@@ -10,7 +10,7 @@ public class FeelFlowSingUpPage extends AbstractPage {
     
     public FeelFlowSingUpPage(WebDriver driver) {
         super(driver);
-        setPageAbsoluteURL("http://127.0.0.1:8000/pages/sign_up.html");
+        setPageAbsoluteURL("http://localhost:8000/pages/sign_up.html");
     }
     
     @FindBy(xpath = "//*[@id=\"FF-Background\"]/div[1]/div/img")
