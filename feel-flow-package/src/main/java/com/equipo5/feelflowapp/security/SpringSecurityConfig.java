@@ -49,7 +49,7 @@ public class SpringSecurityConfig {
     SecurityFilterChain configure(HttpSecurity httpSecurity) throws Exception{
         httpSecurity.authorizeHttpRequests(
                         auth -> auth
-                                .requestMatchers("/api/v1/user/**").hasAnyAuthority("TEAM_LEADER","ADMIN")
+                                .requestMatchers("/api/v1/user/**").hasAnyAuthority("TEAM_LEADER","ADMIN","REGULAR_USER")
                                 .requestMatchers(HttpMethod.POST,"/api/v1/admin/**").permitAll()
                                 .requestMatchers("/api/v1/admin/**").hasAnyAuthority("TEAM_LEADER","ADMIN")
                                 .requestMatchers(HttpMethod.PUT,"/api/v1/team/{idTeam}").hasAnyAuthority("TEAM_LEADER","ADMIN")
