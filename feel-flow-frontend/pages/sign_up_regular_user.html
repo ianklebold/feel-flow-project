@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="icon" type="image/png" href="../img/logos/FeelFlow.png">
+  <title>
+    FeelFlow Sign Up
+  </title>
+  <!--     Fonts and icons     -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
+  <!-- Nucleo Icons -->
+  <link href="../css/nucleo-icons.css" rel="stylesheet" />
+  <link href="../css/nucleo-svg.css" rel="stylesheet" />
+  <!-- Font Awesome Icons -->
+  <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
+  <!-- <link href="../css/nucleo-svg.css" rel="stylesheet" />-->
+  <!-- CSS Files 
+  <link id="pagestyle" href="../css/soft-ui-dashboard.css?v=1.0.3" rel="stylesheet" />-->
+  <link rel="stylesheet" href="../css/styles.css">
+  <!--
+  <link rel="stylesheet" href="../css/boostrap.css">
+  <link rel="stylesheet" href="../css/feel-flow.css">
+  -->
+  <link rel="stylesheet" href="../css/Estilos-Feel-Flow.css">
+</head>
+
+<body class="">
+  <section class="h-100">
+    <div class="container py-5 h-100">
+      <div class="d-flex align-items-center justify-content-around" id="FF-Background">
+        <div class="row justify-content-around">
+          <div class="col-md">
+            <h1 class="text-dark font-weight-bolder text-gradient text-center mt-3">Feel Flow</h1>
+            <img src="../img/logos/FeelFlow.png" class="img-fluid mx-auto d-block" alt="Logo FeelFlow">
+          </div>
+        </div>
+        <div class="row justify-content-center" id="formulario-reg">
+          <div class="col-sm-12">
+            <div class="card-title">
+              <h3 class="text-dark font-weight-bolder text-gradient text-center">Registro</h3>
+            </div>
+            <div class="row justify-content-around">
+              <hr class="custom-hr mt-2">
+              <form id="registro-formulario" class="needs-validation" role="form" novalidate>
+                <div class="mb-3 form-floating shadow-lg">
+                  <input type="text" class="form-control" id="Nombre" placeholder="Nombre">
+                  <label for="Nombre">Nombre</label>
+                </div>
+                <div class="mb-3 form-floating shadow-lg">
+                  <input type="text" class="form-control" id="Apellido" placeholder="Apellido">
+                  <label for="Apellido">Apellido</label>
+                </div>
+                <div class="mb-3 form-floating shadow-lg" id="username">
+                  <input type="email" class="form-control" id="in-username" placeholder="Email">
+                  <label for="in-username">Email</label>
+                </div>
+                <div class="mb-3 form-floating shadow-lg" id="password">
+                  <input type="password" class="form-control" id="in-password" placeholder="Password">
+                  <label for="in-password">Contraseña</label>
+                </div>
+                <hr class="custom-hr mt-2">
+                <div class="form-check form-check-info text-left">
+                  <input class="form-check-input" type="checkbox" id="flexCheckDefault" style="border-inline-color: rgb(30, 77, 127);;" required>
+                  <label class="form-check-label" for="flexCheckDefault" id="label-check">
+                    Acepto los <a href="javascript:;" class="text-dark text-center font-weight-bolder">términos y
+                      condiciones</a>
+                  </label>
+                </div>
+                <div class="text-center">
+                  <button type="submit" class="btn bg-gradient-dark _ini_ses w-100 my-4 mt-4">Registrar</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- -------- START FOOTER 3 w/ COMPANY DESCRIPTION WITH LINKS & SOCIAL ICONS & COPYRIGHT ------- -->
+  <footer class="footer">
+    <div class="container">
+      <div class="row text-center">
+        <p class="mb-0 text-secondary">
+          Copyright ©
+          <script>
+            document.write(new Date().getFullYear())
+          </script> Feel Flow UTN FRRe.
+        </p>
+      </div>
+    </div>
+  </footer>
+  <!-- -------- END FOOTER 3 w/ COMPANY DESCRIPTION WITH LINKS & SOCIAL ICONS & COPYRIGHT ------- -->
+  <!--   Core JS Files   -->
+  <script src="../js/core/popper.min.js"></script>
+  <script src="../js/core/bootstrap.min.js"></script>
+  <script src="../js/plugins/perfect-scrollbar.min.js"></script>
+  <script src="../js/plugins/smooth-scrollbar.min.js"></script>
+  <script type="module" src="../js/registro/sign_up_regular_user.js"></script>
+  <script>
+    var win = navigator.platform.indexOf('Win') > -1;
+    if (win && document.querySelector('#sidenav-scrollbar')) {
+      var options = {
+        damping: '0.5'
+      }
+      Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
+    }
+  </script>
+  <!-- Github buttons -->
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+  <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
+  <!-- <script>
+    (() => {
+      'use strict'
+
+      // Fetch all the forms we want to apply custom Bootstrap validation styles to
+      const forms = document.querySelectorAll('.needs-validation')
+
+      // Loop over them and prevent submission
+      Array.from(forms).forEach(form => {
+        form.addEventListener('submit', event => {
+          if (!form.checkValidity()) {
+            event.preventDefault()
+            event.stopPropagation()
+          }
+
+          form.classList.add('was-validated')
+        }, false)
+      })
+    })()
+  </script> -->
+</body>
+
+</html>
