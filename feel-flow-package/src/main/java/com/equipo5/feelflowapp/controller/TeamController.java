@@ -55,7 +55,7 @@ public class TeamController {
     @PostMapping(PATH_ID+"/invite")
     public ResponseEntity inviteToTeam(@PathVariable(value = "idTeam") UUID idTeam){
         try {
-
+            //Invitacion
             InvitationTeamDTO invitationTeamDTO = invitationService.createInvitation(idTeam);
             return new ResponseEntity(invitationTeamDTO,HttpStatus.OK);
 
