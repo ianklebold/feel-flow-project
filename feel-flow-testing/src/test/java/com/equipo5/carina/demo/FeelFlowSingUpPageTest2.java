@@ -32,9 +32,11 @@ public class FeelFlowSingUpPageTest2 implements IAbstractTest {
         softAssert.assertTrue(feelFlowSingUpPage.isPasswordInputDisplayed(), "Password input is not displayed");
         softAssert.assertTrue(feelFlowSingUpPage.isCompanyInputDisplayed(), "Company input is not displayed");
         softAssert.assertTrue(feelFlowSingUpPage.isSignUpButtonDisplayed(), "Sign up button is not displayed");
+        softAssert.assertTrue(feelFlowSingUpPage.isTermsAndConditionsCheckboxDisplayed(), "Terms and conditions are not displayed");
         softAssert.assertAll();
 
         feelFlowSingUpPage.enterParameters(name, lastName, email, password, company);
+        feelFlowSingUpPage.clickTermsAndConditionsCheckbox();
         feelFlowSingUpPage.clickSignUp();
         
         // Add assertions for successful registration
