@@ -2,6 +2,7 @@ import { GetUser } from "../functions/GetPerfil.js";
 
 const idLocation = localStorage.getItem('idLocation');
 const token = localStorage.getItem('Token');
+console.log(token)
 
 const titulo_pagina = document.querySelector('title');
 const pagina = titulo_pagina.textContent;
