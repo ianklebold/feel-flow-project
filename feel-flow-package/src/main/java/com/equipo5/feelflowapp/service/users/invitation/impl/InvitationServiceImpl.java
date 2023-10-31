@@ -63,6 +63,7 @@ public class InvitationServiceImpl implements InvitationService {
             invitationTeam.get().setDateOfApproval(LocalDateTime.now());
 
             regularUser.setTeam(invitationTeam.get().getTeam());
+            invitationTeam.get().getTeam().getRegularUsers().add(regularUser);
             regularUserRepository.save(regularUser);
 
             InvitationTeamDTO invitationTeamDTO = invitationTeamMapper.invitationTeamToInvitationTeamDTO( invitationTeamRepository.save(invitationTeam.get()) );

@@ -41,7 +41,7 @@ public class RegularUserServiceImpl implements RegularUserService{
         regularUser.setPassword(passwordEncoder.encode(regularUserDTO.getPassword()));
         regularUser.setAuthorities(List.of(authorityRepository.findAuthorityByTeamRoles(TeamRoles.USER_REGULAR).get()));
         //Actualizar la invitacion con servicio de invitacion  RegularUser regularUser, UUID uuidInvitation
-        InvitationTeamDTO invitationTeamDTO = invitationService.approveInvitation(regularUserRepository.save(regularUser),uuidInvitation);
+        InvitationTeamDTO invitationTeamDTO = invitationService.approveInvitation(regularUser,uuidInvitation);
         invitationTeamDTO.getRegularUserDTO().setTeamDTO(teamMapper.teamToTeamDto(regularUser.getTeam()));
 
         return invitationTeamDTO.getRegularUserDTO();
