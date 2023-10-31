@@ -53,6 +53,7 @@ public class SpringSecurityConfig {
                                 .requestMatchers("/api/v1/admin/**").permitAll()
                                 .requestMatchers(HttpMethod.PUT,"/api/v1/team/{idTeam}").hasAnyAuthority("TEAM_LEADER","ADMIN")
                                 .requestMatchers("/api/v1/team/**").permitAll()
+                                .requestMatchers("/api/v1/regular_user/**").permitAll()
                                 .anyRequest()
                                 .authenticated()
                 ).csrf(AbstractHttpConfigurer::disable)
