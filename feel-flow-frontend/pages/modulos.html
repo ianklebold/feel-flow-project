@@ -5,22 +5,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Modulos</title>
-    <link rel="icon" type="image/png" href="../../img/logos/FeelFlow.png">
+    <link rel="icon" type="image/png" href="../img/logos/FeelFlow.png">
     <!--Iconos-->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <!--El segundo link utuliza en la barra de arriba-->
     <!--Estilos-->
-    <link rel="stylesheet" href="../../css/styles.css">
-    <link rel="stylesheet" href="../../css/Estilos-Feel-Flow.css">
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/Estilos-Feel-Flow.css">
 </head>
 
 <body class="g-sidenav-show  bg-gray-100">
     <aside class="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3 "
         id="sidenav-main">
         <div class="sidenav-header">
-            <a class="navbar-brand m-2" href="../../pages/home.html">
-                <img src="../../img/logos/FeelFlow.png" class="navbar-brand-img" alt="main_logo">
+            <a class="navbar-brand m-2" href="../pages/home.html">
+                <img src="../img/logos/FeelFlow.png" class="navbar-brand-img" alt="main_logo">
                 <span class="ms-1 font-weight-bold">Feel Flow</span>
             </a>
         </div>
@@ -40,7 +40,7 @@
             <div class="container-fluid py-1 px-3">
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
-                        <li class="breadcrumb-item text-sm"><a class="opacity-5" href="../../pages/Home.html">Feel
+                        <li class="breadcrumb-item text-sm"><a class="opacity-5" href="../pages/Home.html">Feel
                                 Flow</a></li>
                         <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Modulos</li>
                     </ol>
@@ -58,7 +58,7 @@
                                     <a class="dropdown-item border-radius-md" href="javascript:;">
                                         <div class="d-flex py-1">
                                             <div class="my-auto">
-                                                <img src="../../img/team-2.jpg" class="avatar avatar-sm  me-3 ">
+                                                <img src="../img/team-2.jpg" class="avatar avatar-sm  me-3 ">
                                             </div>
                                             <div class="d-flex flex-column justify-content-center">
                                                 <h6 class="text-sm font-weight-normal mb-1">
@@ -74,7 +74,7 @@
                                     <a class="dropdown-item border-radius-md" href="javascript:;">
                                         <div class="d-flex py-1">
                                             <div class="my-auto">
-                                                <img src="../../img/small-logos/logo-spotify.svg"
+                                                <img src="../img/small-logos/logo-spotify.svg"
                                                     class="avatar avatar-sm bg-gradient-dark  me-3 ">
                                             </div>
                                             <div class="d-flex flex-column justify-content-center">
@@ -154,7 +154,7 @@
                             <ul class="dropdown-menu  dropdown-menu-end  px-4 py-3 me-sm-n0"
                                 aria-labelledby="dropdownMenuButton">
                                 <li class="mb-2">
-                                    <a class="dropdown-item border-radius-md" href="../../pages/profile.html">Mi
+                                    <a class="dropdown-item border-radius-md" href="../pages/profile.html">Mi
                                         Perfil</a>
                                 </li>
                                 <li class="mb-2">
@@ -170,33 +170,52 @@
         <!-- End Navbar -->
         <!--      Hasta aca lo que va si o si   -->
         <div class="container mt-4 align-items-center">
+            <!-- Doce pasos de la felicidad -->
             <a class="btn btn-primary TwelveSteps align-middle" data-bs-toggle="collapse" href="#collapseExample" role="button"
                 aria-expanded="false" aria-controls="collapseExample">
                 12 pasos de la felicidad
             </a>
-            <!-- <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample"
-                aria-expanded="false" aria-controls="collapseExample">
-                12 pasos de la felicidad
-            </button> -->
             <div class="collapse" id="collapseExample">
                 <div class="card card-body">
                     <p>Los 12 pasos para la felicidad son una serie de prácticas y actitudes que se pueden adoptar para mejorar el bienestar emocional y aumentar la felicidad en la vida. Estos pasos incluyen la aceptación de uno mismo, la gratitud, el optimismo, el autocuidado, las relaciones saludables, encontrar un propósito en la vida, vivir el presente, desarrollar la resiliencia, practicar la generosidad, aprender a perdonar, cultivar la empatía y la compasión, y buscar el equilibrio en la vida. Al integrar estos pasos en nuestra vida cotidiana, podemos mejorar nuestro bienestar emocional y aumentar nuestra felicidad a largo plazo.</p>
-                    <hr class="custom-hr">
-                    <button type="submit" class="btn bg-gradient-dark">Comenzar</button>
+                    <hr class="barra">
+                    <div class="text-end">
+                        <button type="submit" class="btn bg-gradient-dark">Comenzar</button>
+                        <button type="submit" class="btn bg-gradient-warning">Finalizar</button>
+                    </div>
+                    
+                </div>
+            </div>
+            <!-- Niko Niko -->
+            <a class="btn btn-primary NikoNiko align-middle" data-bs-toggle="collapse" href="#collapseNikoNiko" role="button"
+                aria-expanded="false" aria-controls="collapseNikoNiko">
+                Niko-Niko
+            </a>
+            <div class="collapse" id="collapseNikoNiko">
+                <div class="card card-body">
+                    <p>La técnica Niko-Niko es una herramienta utilizada en metodologías ágiles como Scrum para medir el estado de ánimo de un equipo.</p>
+                    <p>Esta técnica consiste en que cada miembro del equipo marque una carita en un calendario cada día al finalizar su jornada laboral, reflejando su estado de ánimo durante ese día. De esta forma, se puede identificar fácilmente si hay algún miembro del equipo que no está en su mejor momento y tomar medidas para ayudarlo.</p>
+                    <p>Además, la técnica Niko-Niko también puede ser utilizada para medir el progreso del equipo y evaluar cómo están avanzando en sus objetivos.</p>
+                    <hr class="barra">
+                    <div class="text-end">
+                        <button type="submit" class="btn bg-gradient-dark">Comenzar</button>
+                        <button type="submit" class="btn bg-gradient-warning">Finalizar</button>
+                    </div>
+                    
                 </div>
             </div>
         </div>
 
     </main>
     <!--   Core JS Files   -->
-    <script src="../../js/core/bootstrap.min.js"></script> <!--Sin este no anda el dropdown-->
-    <script type="module" src="../../js/functions/GetPerfil.js"></script>
-    <script type="module" src="../../js/controller/aside.js"></script>
+    <script src="../js/core/bootstrap.min.js"></script> <!--Sin este no anda el dropdown-->
+    <script type="module" src="../js/functions/GetPerfil.js"></script>
+    <script type="module" src="../js/controller/aside.js"></script>
 
     <!-- Github buttons -->
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.js"></script>
-    <script src="../../js/cerrar_sesion.js"></script>
+    <script src="../js/cerrar_sesion.js"></script>
 </body>
 
 </html>

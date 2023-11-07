@@ -344,8 +344,7 @@ img#logo {
   text-align: center;
   color: #fff;
   background-image: -webkit-image-set("../img/curved-images/curved0.jpg");
-  /*background-image: image("../img/curved-images/curved0.jpg");*/
-  
+  font-size: large;
 }
 
 .btn.TwelveSteps:hover {
@@ -355,7 +354,37 @@ img#logo {
 #collapseExample .card {
   font-family: Arial, Helvetica, sans-serif;
   background-color: transparent;
-  color: #fff;
+  color: rgb(255, 255, 255);
   background-image: -webkit-image-set("../img/curved-images/curved0.jpg");
+}
 
+.barra {
+  border-top: 1rem solid rgb(30, 77, 127);
+  border-radius: 0.5rem;
+  width: 100%;
+  margin: 1rem;
+  opacity: 80%;
+}
+
+/* -------------------------------------------------------------------------------------*/
+/* -------------------------------------------------------------------------------------*/
+
+.btn.NikoNiko {
+  width: 100%;
+  padding: 2rem;
+  text-align: center;
+  color: black;
+  background-image: -webkit-image-set("../img/curved-images/curved1.jpg");
+  font-size: large;
+}
+
+.btn.NikoNiko:hover {
+  color: #fff;
+}
+
+#collapseNikoNiko .card {
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: transparent;
+  color: black;
+  background-image: -webkit-image-set("../img/curved-images/curved1.jpg");
 }
