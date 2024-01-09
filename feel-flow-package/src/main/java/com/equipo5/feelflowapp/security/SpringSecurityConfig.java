@@ -1,6 +1,5 @@
 package com.equipo5.feelflowapp.security;
 
-import com.equipo5.feelflowapp.domain.enumerations.teamRoles.TeamRoles;
 import com.equipo5.feelflowapp.repository.users.UserRepository;
 import com.equipo5.feelflowapp.security.filters.JwtAutheticationFilter;
 import com.equipo5.feelflowapp.security.filters.JwtValidationFilter;
