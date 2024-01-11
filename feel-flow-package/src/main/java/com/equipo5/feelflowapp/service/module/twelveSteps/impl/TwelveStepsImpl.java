@@ -3,7 +3,8 @@ package com.equipo5.feelflowapp.service.module.twelveSteps.impl;
 import com.equipo5.feelflowapp.domain.Team;
 import com.equipo5.feelflowapp.domain.enumerations.modules.ModuleState;
 import com.equipo5.feelflowapp.domain.modules.twelvesteps.TwelveStepsModule;
-import com.equipo5.feelflowapp.exception.module.ModuleAlreadyActiveException;
+import com.equipo5.feelflowapp.exception.badrequest.module.ModuleAlreadyActiveException;
+import com.equipo5.feelflowapp.exception.notfound.NotFoundTeamException;
 import com.equipo5.feelflowapp.repository.module.ModuleTwelveStepsRepository;
 import com.equipo5.feelflowapp.repository.team.TeamRepository;
 import com.equipo5.feelflowapp.service.module.ModuleService;
@@ -40,7 +41,7 @@ public class TwelveStepsImpl implements TwelveStepsService {
 
     @Override
     @Transactional
-    public void publishingModule(final UUID uuidTeam) {
+    public void publishingModule(final UUID uuidTeam){
         //Verificar si existe encuesta activa para modulo
         Optional<Team> team = teamRepository.findById(uuidTeam);
 
@@ -65,6 +66,8 @@ public class TwelveStepsImpl implements TwelveStepsService {
             surveyService.createSurveis(currentTeam.getRegularUsers(),twelveStepsModule);
 
             moduleTwelveStepsRepository.save(twelveStepsModule);
+        }else {
+            throw new NotFoundTeamException("Equipo no encontrado");
         }
 
     }

@@ -1,4 +1,4 @@
-package com.equipo5.feelflowapp.exception.expiration;
+package com.equipo5.feelflowapp.exception.badrequest.invitation;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
