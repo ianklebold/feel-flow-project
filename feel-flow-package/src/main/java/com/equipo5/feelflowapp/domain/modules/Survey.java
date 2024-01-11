@@ -1,5 +1,6 @@
 package com.equipo5.feelflowapp.domain.modules;
 
+import com.equipo5.feelflowapp.domain.enumerations.modules.SurveyStateEnum;
 import com.equipo5.feelflowapp.domain.users.RegularUser;
 import jakarta.persistence.*;
 import lombok.*;
@@ -11,21 +12,27 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 @Entity
 public class Survey{
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Enumerated(EnumType.STRING)
     private SurveyStateEnum surveyStateEnum;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    private List<Activity> activities = new ArrayList<>();
+    @ManyToOne
+    private RegularUser regularUser;
 
     @ManyToOne
     private SurveyModule surveyModule;
 
-    @ManyToOne
-    private RegularUser regularUser;
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<Activity> activities = new ArrayList<>();
+
+    public void setRegularUser(RegularUser regularUser) {
+        this.regularUser = regularUser;
+        regularUser.getSurveys().add(this);
+    }
 }

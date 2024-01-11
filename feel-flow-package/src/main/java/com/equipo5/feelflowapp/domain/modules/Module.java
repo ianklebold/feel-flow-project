@@ -1,5 +1,7 @@
 package com.equipo5.feelflowapp.domain.modules;
 
+import com.equipo5.feelflowapp.domain.Team;
+import com.equipo5.feelflowapp.domain.enumerations.modules.ModuleState;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
@@ -15,11 +17,15 @@ import java.time.LocalDate;
 @AllArgsConstructor
 public class Module {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
-    @GenericGenerator(name = "native")
-    @Column(name = "customer_id")
-    private Long customerId;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     private String name;
     private LocalDate creationDate;
+
+    @Enumerated(EnumType.STRING)
+    private ModuleState moduleState;
+
+    @ManyToOne
+    private Team team;
 }

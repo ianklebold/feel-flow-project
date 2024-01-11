@@ -1,22 +1,23 @@
 package com.equipo5.feelflowapp.domain.modules;
 
+import com.equipo5.feelflowapp.domain.enumerations.modules.ActivityState;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 @Entity(name = "activity")
-@Inheritance(strategy = InheritanceType.JOINED)
 public class Activity {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Enumerated(EnumType.STRING)
     private ActivityState activityState;
+
+    private String question;
+    private String answer;
 }
