@@ -1,6 +1,5 @@
 package com.equipo5.feelflowapp.security;
 
-import com.equipo5.feelflowapp.domain.enumerations.teamRoles.TeamRoles;
 import com.equipo5.feelflowapp.repository.users.UserRepository;
 import com.equipo5.feelflowapp.security.filters.JwtAutheticationFilter;
 import com.equipo5.feelflowapp.security.filters.JwtValidationFilter;
@@ -49,6 +48,7 @@ public class SpringSecurityConfig {
     SecurityFilterChain configure(HttpSecurity httpSecurity) throws Exception{
         httpSecurity.authorizeHttpRequests(
                         auth -> auth
+                                .requestMatchers(HttpMethod.POST,"/api/v1/twelve_steps_modules/{idTeam}").hasAnyAuthority("TEAM_LEADER","ADMIN")
                                 .requestMatchers("/api/v1/user/**").hasAnyAuthority("TEAM_LEADER","ADMIN","USER_REGULAR")
                                 .requestMatchers(HttpMethod.POST,"/api/v1/admin/**").permitAll()
                                 .requestMatchers("/api/v1/admin/**").hasAnyAuthority("TEAM_LEADER","ADMIN")
@@ -59,6 +59,7 @@ public class SpringSecurityConfig {
                                 .requestMatchers(HttpMethod.GET,"/api/v1/team").hasAnyAuthority("TEAM_LEADER","ADMIN","USER_REGULAR")
                                 .requestMatchers(HttpMethod.POST,"/api/v1/team").hasAnyAuthority("TEAM_LEADER","ADMIN","USER_REGULAR")
                                 .requestMatchers("/api/v1/regular_user/**").permitAll()
+                                .requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
                                 .anyRequest()
                                 .authenticated()
                 ).csrf(AbstractHttpConfigurer::disable)
