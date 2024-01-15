@@ -1,0 +1,81 @@
+import '../css/Nav.css'
+import { CiUser } from "react-icons/ci";
+import { CiSettings } from "react-icons/ci";
+import { CiBellOn } from "react-icons/ci";
+import { Menu } from './Menu';
+
+import modulos from '../../assets/data/Modules.json'
+
+
+export default function DefaultLayout({ children }) {
+    return (
+        <>
+            <header>
+                <nav>
+                    <div className="ContainerPath">
+                        <ol className="path">
+                            <li className="path-item">
+                                <a href="/">Feel Flow</a>
+                            </li>
+                            <li className="path-item">
+                                Home
+                            </li>
+                        </ol>
+                    </div>
+                    <div className='ContainerDropdown'>
+                        <ul>
+                            <li className="dropdown">
+                                <a href="#" className="dropbtn"><CiBellOn /></a>
+                                <div className="dropdown-content">
+                                    <a href="#">Notificación 1</a>
+                                    <a href="#">Notificación 2</a>
+                                    <a href="#">Notificación 3</a>
+                                </div>
+                            </li>
+                            <li className="dropdown">
+                                <a href="#" className="dropbtn"><CiSettings /></a>
+                                <div className="dropdown-content">
+                                    <a href="#">Configuración 1</a>
+                                    <a href="#">Configuración 2</a>
+                                    <a href="#">Configuración 3</a>
+                                </div>
+                            </li>
+                            <li className="dropdown">
+                                <a href="#" className="dropbtn"><CiUser /></a>
+                                <div className="dropdown-content">
+                                    <a href="#">Mi perfil</a>
+                                    <a href="#">Cerrar Sesión</a>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
+            </header>
+
+            <main>
+                <nav className='sidenav'>
+                    <div className='sidenav-header'>
+                        <img src="../src/assets/image/icons/FeelFlow.png" alt="Feel Flow" />
+                        <span>Feel Flow</span>
+                    </div>
+                    <hr />
+                    <div className='sidenav-body'>
+                        <>
+                            {   
+                                modulos.map(mod => (
+                                    
+                                    <Menu key={mod.id} name={mod.nombre} icon={mod.logo} url={mod.link}/>
+                                    
+                                ))
+                            }
+                        </>
+                    </div>
+                </nav>
+                <div className='contenido'>
+                    {children}
+                </div>
+            </main>
+        </>
+
+    )
+}

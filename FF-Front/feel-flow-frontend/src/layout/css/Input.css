@@ -1,0 +1,69 @@
+.conteiner {
+    /* margin: 1rem; */
+    display: flex;
+    width: 60%;
+    position: relative;
+}
+
+.InputLogin {
+    padding-left: 0.5rem;
+    height: calc(3.5rem + 2px);
+    line-height: 1.25;
+    color: #344767;
+    background-color: whitesmoke;
+    border-color: transparent;
+    display: flex;
+    width: 100%;
+    font-size: 0.875rem;
+    font-weight: 400;
+    appearance: none;
+    border-radius: 0.5rem;
+    transition-duration: 0.15s, 0.15s;
+    transition-timing-function: ease, ease;
+    transition-delay: 0s, 0s;
+    transition-property: box-shadow, border-color;
+    justify-content: space-between;
+}   
+
+.LabelLogin {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    padding-top: 1rem;
+    padding-right: 0.75rem;
+    padding-bottom: 1rem;
+    padding-left: 0.75rem;
+    pointer-events: none;
+    border-width: 1px;
+    border-top-style: solid;
+    border-right-style: solid;
+    border-bottom-style: solid;
+    border-left-style: solid;
+    border-color: transparent;
+    border-image: initial;
+    transform-origin: 0 0;
+    transition-duration: 0.1s, 0.1s;
+    transition-timing-function: ease-in-out, ease-in-out;
+    transition-delay: 0s, 0s;
+    transition-property: opacity, transform;
+    font-size: 0.75rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    color: #344767;
+    margin-left: 0.25rem;
+    display: inline-block;
+    box-sizing: border-box;
+    -webkit-font-smoothing: antialiased;
+}
+
+.conteiner>.InputLogin:focus~label,
+.conteiner>.InputLogin:not(:placeholder-shown)~label {
+    opacity: 0.65;
+    transform: scale(0.85) translateY(-0.5rem) translateX(0.15rem);
+}
+
+.conteiner>.InputLogin:-webkit-autofill~label {
+    opacity: 0.65;
+    transform: scale(0.85) translateY(-0.5rem) translateX(0.15rem);
+}

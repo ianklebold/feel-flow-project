@@ -1,0 +1,95 @@
+[
+    {
+        "id": 1,
+        "nombre": "Home",
+        "perfiles": [
+            "ADMIN",
+            "TEAM_LEADER",
+            "USER_REGULAR"
+        ],
+        "logo": "IoMdHome",
+        "link": "../pages/Home.html"
+    },
+    {
+        "id": 2,
+        "nombre": "Dashboard",
+        "perfiles": [
+            "ADMIN",
+            "TEAM_LEADER",
+            "USER_REGULAR"
+        ],
+        "logo": "CiHome",
+        "link": "../pages/proximamente.html"
+    },
+    {
+        "id": 3,
+        "nombre": "Lideres",
+        "perfiles": [
+            "ADMIN"
+        ],
+        "logo": "CiHome",
+        "link": "../pages/proximamente.html"
+    },
+    {
+        "id": 4,
+        "nombre": "Equipos",
+        "perfiles": [
+            "ADMIN"
+        ],
+        "logo": "CiHome",
+        "link": "../pages/Teams.html"
+    },
+    {
+        "id": 5,
+        "nombre": "Equipos",
+        "perfiles": [
+            "TEAM_LEADER",
+            "USER_REGULAR"
+        ],
+        "logo": "CiHome",
+        "link": "../pages/MyTeam.html"
+    },
+    {
+        "id": 6,
+        "nombre": "Modulos",
+        "perfiles": [
+            "ADMIN",
+            "TEAM_LEADER",
+            "USER_REGULAR"
+        ],
+        "logo": "CiHome",
+        "link": "../pages/modulos.html"
+    },
+    {
+        "id": 7,
+        "nombre": "Usuarios",
+        "perfiles": [
+            "ADMIN",
+            "TEAM_LEADER"
+        ],
+        "logo": "CiHome",
+        "link": "../pages/proximamente.html"
+    },
+    {
+        "id": 8,
+        "nombre": "Perfil",
+        "perfiles": [
+            "ADMIN",
+            "TEAM_LEADER",
+            "USER_REGULAR"
+        ],
+        "logo": "CiHome",
+        "link": "../pages/profile.html"
+    },
+    {
+        "id": 9,
+        "nombre": "Configuración",
+        "perfiles": [
+            "ADMIN",
+            "TEAM_LEADER",
+            "USER_REGULAR"
+        ],
+        "logo": "CiHome",
+        "link": "../pages/proximamente.html"
+    }
+]
