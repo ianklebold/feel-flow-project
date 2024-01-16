@@ -103,7 +103,7 @@ public class TeamServiceImpl implements TeamService {
     }
 
     @Override
-    public Optional<TeamListDTO> getTeamById(UUID uuid) throws NotFoundException {
+    public Optional<TeamListDTO> getTeamById(UUID uuid){
         Optional<Team> team = teamRepository.findById(uuid);
         Optional<? extends GrantedAuthority> role = userService.getRoleByCurrentUser();
         if (team.isEmpty()){

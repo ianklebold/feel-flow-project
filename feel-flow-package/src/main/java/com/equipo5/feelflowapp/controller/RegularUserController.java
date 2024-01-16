@@ -2,7 +2,7 @@ package com.equipo5.feelflowapp.controller;
 
 import com.devskiller.friendly_id.FriendlyId;
 import com.equipo5.feelflowapp.dto.users.RegularUserDTO;
-import com.equipo5.feelflowapp.exception.expiration.InvitationException;
+import com.equipo5.feelflowapp.exception.badrequest.invitation.InvitationException;
 import com.equipo5.feelflowapp.exception.notfound.NotFoundException;
 import com.equipo5.feelflowapp.service.users.regularuser.RegularUserService;
 import lombok.RequiredArgsConstructor;

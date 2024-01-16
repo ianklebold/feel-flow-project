@@ -8,6 +8,7 @@ import com.equipo5.feelflowapp.dto.users.teamleader.TeamLeaderDTO;
 import com.equipo5.feelflowapp.exception.notfound.NotFoundException;
 import com.equipo5.feelflowapp.service.team.TeamService;
 import com.equipo5.feelflowapp.service.users.invitation.InvitationService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
@@ -43,6 +44,7 @@ public class TeamController {
     }
 
     @GetMapping()
+    @SecurityRequirement(name = "Bearer Authentication")
     public List<TeamListDTO> getAllTeams(){
 
         return teamService.getAllTeams();
