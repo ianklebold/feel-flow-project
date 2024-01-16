@@ -1,5 +1,5 @@
 import { children } from "react"
-
+import '../../assets/css/Login.css'
 
 export default function DefaultLogin ({ children, clase, nombre }) {
     return (
@@ -10,7 +10,7 @@ export default function DefaultLogin ({ children, clase, nombre }) {
             </div>
 
             <div className='Contenedor'>
-                <img className='Logo' src="../src/assets/image/logos/FeelFlow.png" alt="Logo FeelFlow" />
+                <img className='Logo' src="../src/assets/image/icons/FeelFlow.png" alt="Logo FeelFlow" />
                 {children}
             </div>
         </div>

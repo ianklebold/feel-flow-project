@@ -8,9 +8,15 @@ body {
 
 @media (prefers-color-scheme: dark) {
   body {
-      background-color: black;
-      color: white;
+    background-color: black;
+    color: white;
   }
+}
+
+div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 /*

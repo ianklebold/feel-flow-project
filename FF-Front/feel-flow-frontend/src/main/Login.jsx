@@ -66,7 +66,7 @@ export function Login() {
                         onChange={handleInputChange}
                     />
                     {data.errorMessage && <div className="error-message">{data.errorMessage}</div>}
-                    <Boton clase="login" tipo="submit" nombre="INICIAR SESION" />
+                    <Boton clase="btn login" tipo="submit" nombre="INICIAR SESION" />
                 </>
                 <hr />
             </form>
