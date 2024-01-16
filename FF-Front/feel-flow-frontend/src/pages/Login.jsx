@@ -1,8 +1,11 @@
 import { useState } from 'react'
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+
 import axios from 'axios'
 import '../assets/css/Login.css'
 import { Boton, InputText, } from '../layout/components/DefaultElements'
 import DefaultLogin from '../layout/components/DefaulLogin';
+import { Home } from './Home';
 
 export function Login() {
     const [data, setData] = useState({
@@ -33,6 +36,9 @@ export function Login() {
         try {
             const response = await axios.post('http://localhost:8080/login', datos);
             console.log(response.data);
+            if (response.status === 200) {
+                return <Navigate to="/Home" />;
+            }
         } catch (error) {
             console.error(error);
             setData({

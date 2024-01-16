@@ -21,6 +21,10 @@ nav {
     justify-content: space-between
 }
 
+div {
+    display: block;
+}
+
 .ContainerPath {
     align-items: start;
     left: 0;
