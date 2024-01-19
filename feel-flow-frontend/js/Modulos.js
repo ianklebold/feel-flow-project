@@ -35,7 +35,7 @@ function MostrarPantalla() {
     GetIdEquipo(token)
         .then(uuid => {
             if (uuid !== null) {
-                console.log('UUID del primer equipo:', uuid);
+                console.log('UUID del equipo:', uuid);
                 idTeam = uuid;
             } else {
                 console.log('No se pudo obtener el UUID del equipo.');
@@ -55,7 +55,7 @@ document.getElementById("crearModuloButton").addEventListener("click", function 
     if (rol == "TEAM_LEADER") {
         crearModulo(token, idTeam)
             .then(result => {
-                if (result === 'Request processed successfully') {
+                if (result === 'Module created successfully') {
                     mensaje = "Se creo el modulo exitosamente";
                 } else {
                     mensaje = "Error: " + result;

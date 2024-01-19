@@ -10,7 +10,11 @@ export async function crearModulo(token, idTeam) {
         });
 
         if (response.ok) {
-            return response.statusMsg;
+            console.log (response.statusMsg);
+            console.log (response);
+            const data = await response.json();
+            console.log (data);
+            return data.statusMsg;
         } else {
             const errorData = await response.json();
             console.error(errorData.errorMessage);
