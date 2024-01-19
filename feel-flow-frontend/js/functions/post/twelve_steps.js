@@ -1,27 +1,23 @@
-export async function crearModulo(token, modulo) {
-    const endpoint = `http://localhost:8080/api/v1/module/${modulo}`;
+export async function crearModulo(token, idTeam) {
+    const endpoint = `http://localhost:8080/api/v1/twelve_steps_modules/${idTeam}`;
 
-    return fetch(endpoint, {
-        method: 'POST',
-        headers: {
-            'Authorization': `Bearer ${token}`
-        }
-    })
-        .then(response => {
-            if (response.status === 200) {
-                return true;
-            } else {
-                if (response.status === 404) {
-                    console.error("No se encontró el módulo")
-                }
-                if (response.status === 400) {
-                    console.error("Error, el modulo ya está creado")
-                }
-                return false;
+    try {
+        const response = await fetch(endpoint, {
+            method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${token}`
             }
-        })
-        .catch(error => {
-            console.error(error);
-            return false;
         });
+
+        if (response.ok) {
+            return response.statusMsg;
+        } else {
+            const errorData = await response.json();
+            console.error(errorData.errorMessage);
+            return errorData.errorMessage;
+        }
+    } catch (error) {
+        console.error('Error al realizar la solicitud:', error);
+        return 'Error al realizar la solicitud';
+    }
 }

@@ -1,4 +1,5 @@
 import { GetUser } from "../js/functions/GetPerfil.js";
+import { GetIdEquipo } from "./functions/GetEquipos.js";
 import { Logueado } from "./functions/User.js";
 import { crearModulo } from "./functions/post/twelve_steps.js";
 /*import { crearModulo } from "./functions/post/twelve_steps";*/
@@ -14,10 +15,35 @@ const autoridad = payloadObjeto.authorities;
 const autoridad_rol = JSON.parse(autoridad);
 const rol = autoridad_rol[0].authority;
 
+var idTeam = null
+var mensaje = ""
+
+function openPopup() {
+    document.getElementById('overlay').style.display = 'flex';
+}
+
+function closePopup() {
+    document.getElementById('overlay').style.display = 'none';
+}
 
 function MostrarPantalla() {
     console.log(rol)
-    
+    if (rol !== "TEAM_LEADER") {
+        document.getElementById("crearModuloButton").disabled = true;
+    }
+
+    GetIdEquipo(token)
+        .then(uuid => {
+            if (uuid !== null) {
+                console.log('UUID del primer equipo:', uuid);
+                idTeam = uuid;
+            } else {
+                console.log('No se pudo obtener el UUID del equipo.');
+            }
+        })
+        .catch(error => {
+            console.error('Error al obtener el UUID del equipo:', error);
+        });
 
 }
 
@@ -25,6 +51,24 @@ function MostrarPantalla() {
 Logueado(idLocation, token) ? MostrarPantalla() : window.location.href = "../pages/sign_in.html"
 
 
-document.getElementById("crearModuloButton").addEventListener("click", function() {
-    rol == "TEAM_LEADER" || rol == "ADMIN" ?  crearModulo(token, "TWELVE_STEPS") : console.error("Permisos insuficientes")
+document.getElementById("crearModuloButton").addEventListener("click", function () {
+    if (rol == "TEAM_LEADER") {
+        crearModulo(token, idTeam)
+            .then(result => {
+                if (result === 'Request processed successfully') {
+                    mensaje = "Se creo el modulo exitosamente";
+                } else {
+                    mensaje = "Error: " + result;
+                    document.getElementById("MensajeRequest").classList.add("error")
+                }
+                
+                document.getElementById("MensajeRequest").textContent = mensaje
+                openPopup()
+            })
+            .catch(error => {
+                console.error('Error al llamar a crearModulo:', error);
+            });
+    }
 });
+
+document.getElementById("closePopup").addEventListener("click", closePopup);
