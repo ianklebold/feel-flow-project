@@ -4,6 +4,7 @@ import com.equipo5.feelflowapp.domain.enumerations.modules.SurveyStateEnum;
 import com.equipo5.feelflowapp.domain.modules.Survey;
 import com.equipo5.feelflowapp.domain.modules.SurveyModule;
 import com.equipo5.feelflowapp.domain.users.RegularUser;
+import com.equipo5.feelflowapp.dto.modules.SurveyDto;
 
 import java.util.List;
 
@@ -23,4 +24,5 @@ public interface SurveyService{
         users.forEach(user -> createSurvey(module,user));
     }
 
+    List<SurveyDto> getSurveys();
 }

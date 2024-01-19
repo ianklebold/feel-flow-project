@@ -1,5 +1,6 @@
 package com.equipo5.feelflowapp.security;
 
+import com.equipo5.feelflowapp.controller.SurveyModuleController;
 import com.equipo5.feelflowapp.repository.users.UserRepository;
 import com.equipo5.feelflowapp.security.filters.JwtAutheticationFilter;
 import com.equipo5.feelflowapp.security.filters.JwtValidationFilter;
@@ -58,6 +59,7 @@ public class SpringSecurityConfig {
                                 .requestMatchers(HttpMethod.GET,"/api/v1/team/{idTeam}").hasAnyAuthority("TEAM_LEADER","ADMIN","USER_REGULAR")
                                 .requestMatchers(HttpMethod.GET,"/api/v1/team").hasAnyAuthority("TEAM_LEADER","ADMIN","USER_REGULAR")
                                 .requestMatchers(HttpMethod.POST,"/api/v1/team").hasAnyAuthority("TEAM_LEADER","ADMIN","USER_REGULAR")
+                                .requestMatchers(SurveyModuleController.SURVEY_PATH).hasAnyAuthority("USER_REGULAR","TEAM_LEADER")
                                 .requestMatchers("/api/v1/regular_user/**").permitAll()
                                 .requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
                                 .anyRequest()
