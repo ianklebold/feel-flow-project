@@ -1,10 +1,12 @@
 package com.equipo5.feelflowapp.service.survey.impl;
 
 
+import com.equipo5.feelflowapp.domain.enumerations.modules.ModuleNames;
 import com.equipo5.feelflowapp.domain.enumerations.modules.SurveyStateEnum;
 import com.equipo5.feelflowapp.domain.modules.Survey;
 import com.equipo5.feelflowapp.domain.users.RegularUser;
 import com.equipo5.feelflowapp.dto.modules.SurveyDto;
+import com.equipo5.feelflowapp.exception.notfound.NotFoundException;
 import com.equipo5.feelflowapp.mappers.modules.SurveyMapper;
 import com.equipo5.feelflowapp.repository.survey.SurveyRepository;
 import com.equipo5.feelflowapp.repository.users.UserRepository;
@@ -17,6 +19,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 
 @Service("SurveyService")
@@ -47,5 +50,21 @@ public class SurveyServiceImpl implements SurveyService{
 
         }
         return Collections.emptyList();
+    }
+
+    @Override
+    public Optional<SurveyDto> getSurveyActiveByModuleName(ModuleNames moduleNames) {
+            return getSurveys().stream()
+                    .filter(survey -> survey.module().filterTwelveStepsModules(moduleNames))
+                    .findFirst();
+    }
+
+    @Override
+    public Survey getSurveyById(Long id) {
+        Optional<Survey> survey = surveyRepository.findById(id);
+        if (survey.isEmpty()){
+            throw new NotFoundException("No se encontro la encuesta disponible para el modulo");
+        }
+        return survey.get();
     }
 }

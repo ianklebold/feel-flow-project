@@ -8,6 +8,7 @@ import org.mapstruct.Mapping;
 @Mapper(uses = {ActivityMapper.class, ModuleMapper.class})
 public interface SurveyMapper {
 
+    @Mapping(source = "id",target = "idSurvey")
     @Mapping(source = "surveyStateEnum",target = "surveyState")
     @Mapping(source = "regularUser",target = "regularUser")
     @Mapping(source = "activities",target = "activityList")

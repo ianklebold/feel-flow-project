@@ -11,6 +11,7 @@ import java.util.List;
         description = "Schema to hold survey information"
 )
 public record SurveyDto(
+        @Schema(description = "Id of the Survey") Long idSurvey,
         @Schema(description = "State of the Survey", examples = {"ACTIVE","FINISHED","CLOSED"})  SurveyStateEnum surveyState,
         RegularUserDTO regularUser,
         List<ActivityDto> activityList,

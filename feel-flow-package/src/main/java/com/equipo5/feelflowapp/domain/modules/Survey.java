@@ -5,6 +5,7 @@ import com.equipo5.feelflowapp.domain.users.RegularUser;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,6 +28,8 @@ public class Survey{
 
     @ManyToOne
     private SurveyModule surveyModule;
+
+    private LocalDate closeDate;
 
     @OneToMany(cascade = CascadeType.ALL)
     private List<Activity> activities = new ArrayList<>();
