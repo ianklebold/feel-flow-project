@@ -28,13 +28,10 @@ public class ReportServiceImpl implements ReportService {
 
         int[] values = {0,0,0,0,0};
 
-        survey.getActivities()
-                .forEach(activity -> sumValue(activity.getAnswer(),values));
+        survey.getActivities().forEach(activity -> sumValue(activity.getAnswer(),values));
 
-        double total = (double) (values[0] + values[1] + values[2] + values[3] + values[4])/12;
-        
         Report report = new Report();
-        report.setTotalSurvey(total);
+        report.setTotalSurvey(values);
 
         return reportRepository.save(report);
     }
