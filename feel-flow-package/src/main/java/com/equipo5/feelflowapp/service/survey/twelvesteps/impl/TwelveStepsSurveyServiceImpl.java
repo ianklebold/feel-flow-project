@@ -5,7 +5,7 @@ import com.equipo5.feelflowapp.domain.enumerations.modules.SurveyStateEnum;
 import com.equipo5.feelflowapp.domain.modules.Survey;
 import com.equipo5.feelflowapp.domain.modules.SurveyModule;
 import com.equipo5.feelflowapp.domain.users.RegularUser;
-import com.equipo5.feelflowapp.dto.modules.SurveyResponseDto;
+import com.equipo5.feelflowapp.dto.modules.SurveyTwelveStepsResponseDto;
 import com.equipo5.feelflowapp.mappers.modules.ActivityMapper;
 import com.equipo5.feelflowapp.mappers.modules.SurveyMapper;
 import com.equipo5.feelflowapp.repository.survey.SurveyRepository;
@@ -53,7 +53,7 @@ public class TwelveStepsSurveyServiceImpl extends SurveyServiceImpl implements T
 
 
     @Override
-    public void completeSurvey(SurveyResponseDto surveyResponse) {
+    public void completeSurvey(SurveyTwelveStepsResponseDto surveyResponse) {
         var twelveSteps = super.getSurveyActiveByModuleName(ModuleNames.TWELVE_STEPS);
 
         if (twelveSteps.isEmpty()){

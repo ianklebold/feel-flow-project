@@ -48,7 +48,7 @@ public class ActivityServiceImpl implements ActivityService {
         activitiesCompleted.forEach(Activity::openActivity);
         activitiesCompleted.forEach(Activity::closeActivity);
 
-        return activityRepository.saveAll(survey.getActivities());
+        return activityRepository.saveAll(activitiesCompleted);
     }
 
 

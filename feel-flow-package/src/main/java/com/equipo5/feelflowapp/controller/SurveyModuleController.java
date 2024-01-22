@@ -2,7 +2,7 @@ package com.equipo5.feelflowapp.controller;
 
 import com.equipo5.feelflowapp.constants.response.HttpResponses;
 import com.equipo5.feelflowapp.dto.modules.SurveyDto;
-import com.equipo5.feelflowapp.dto.modules.SurveyResponseDto;
+import com.equipo5.feelflowapp.dto.modules.SurveyTwelveStepsResponseDto;
 import com.equipo5.feelflowapp.dto.response.ResponseDto;
 import com.equipo5.feelflowapp.service.survey.SurveyService;
 import com.equipo5.feelflowapp.service.survey.twelvesteps.TwelveStepsSurveyService;
@@ -52,7 +52,7 @@ public class SurveyModuleController {
     //TODO Agregar @VALID!!!!!!!!!!!!!!!
     @PostMapping("/twelve_steps_module")
     @SecurityRequirement(name = "Bearer Authentication")
-    public ResponseEntity<ResponseDto> completeSurvey(@Valid @RequestBody SurveyResponseDto surveyResponse){
+    public ResponseEntity<ResponseDto> completeSurvey(@Valid @RequestBody SurveyTwelveStepsResponseDto surveyResponse){
             twelveStepsSurveyService.completeSurvey(surveyResponse);
 
         return ResponseEntity

@@ -1,8 +1,8 @@
 package com.equipo5.feelflowapp.service.survey.twelvesteps;
 
-import com.equipo5.feelflowapp.dto.modules.SurveyResponseDto;
+import com.equipo5.feelflowapp.dto.modules.SurveyTwelveStepsResponseDto;
 
 
 public interface TwelveStepsSurveyService {
-    void completeSurvey(SurveyResponseDto surveyResponse);
+    void completeSurvey(SurveyTwelveStepsResponseDto surveyResponse);
 }
