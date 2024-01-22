@@ -6,13 +6,12 @@ import com.equipo5.feelflowapp.domain.modules.Survey;
 import com.equipo5.feelflowapp.domain.modules.SurveyModule;
 import com.equipo5.feelflowapp.domain.users.RegularUser;
 import com.equipo5.feelflowapp.dto.modules.SurveyResponseDto;
-import com.equipo5.feelflowapp.exception.notfound.NotFoundException;
 import com.equipo5.feelflowapp.mappers.modules.ActivityMapper;
 import com.equipo5.feelflowapp.mappers.modules.SurveyMapper;
-import com.equipo5.feelflowapp.repository.activity.ActivityRepository;
 import com.equipo5.feelflowapp.repository.survey.SurveyRepository;
 import com.equipo5.feelflowapp.repository.users.UserRepository;
 import com.equipo5.feelflowapp.service.activity.ActivityService;
+import com.equipo5.feelflowapp.service.report.ReportService;
 import com.equipo5.feelflowapp.service.survey.impl.SurveyServiceImpl;
 import com.equipo5.feelflowapp.service.survey.twelvesteps.TwelveStepsSurveyService;
 import com.equipo5.feelflowapp.service.users.UserService;
@@ -22,7 +21,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
 
 @Service("TwelveStepsSurveyService")
 public class TwelveStepsSurveyServiceImpl extends SurveyServiceImpl implements TwelveStepsSurveyService {
@@ -31,12 +29,15 @@ public class TwelveStepsSurveyServiceImpl extends SurveyServiceImpl implements T
 
     private final ActivityMapper activityMapper;
 
+    private final ReportService reportService;
+
 
     @Autowired
-    public TwelveStepsSurveyServiceImpl(SurveyRepository surveyRepository, UserRepository userRepository, UserService userService, SurveyMapper surveyMapper, ActivityService activityService, ActivityMapper activityMapper) {
+    public TwelveStepsSurveyServiceImpl(SurveyRepository surveyRepository, UserRepository userRepository, UserService userService, SurveyMapper surveyMapper, ActivityService activityService, ActivityMapper activityMapper, ReportService reportService) {
         super(surveyRepository, userRepository, userService, surveyMapper);
         this.activityService = activityService;
         this.activityMapper = activityMapper;
+        this.reportService = reportService;
     }
 
     @Override
@@ -73,6 +74,8 @@ public class TwelveStepsSurveyServiceImpl extends SurveyServiceImpl implements T
             survey.setSurveyStateEnum(SurveyStateEnum.FINISHED);
             survey.setCloseDate(LocalDate.now());
             //Calcular usando algun metodo
+            var report = reportService.createReportToTwelveSteps(survey);
+            survey.setReport(report);
         }else {
             throw new IllegalStateException("La encuesta se encuentra cerrada");
         }

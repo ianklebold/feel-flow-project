@@ -8,12 +8,14 @@ import com.equipo5.feelflowapp.service.survey.SurveyService;
 import com.equipo5.feelflowapp.service.survey.twelvesteps.TwelveStepsSurveyService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -25,6 +27,7 @@ import java.util.List;
 @Slf4j
 @RestController
 @RequestMapping(path = SurveyModuleController.SURVEY_PATH,produces = {MediaType.APPLICATION_JSON_VALUE})
+@Validated
 public class SurveyModuleController {
     public  static final String SURVEY_PATH = "/api/v1/surveys";
 
@@ -46,9 +49,10 @@ public class SurveyModuleController {
     }
 
     //Endpoint que permita contestar la encuesta activa de 12 pasos hacia la felicidad
+    //TODO Agregar @VALID!!!!!!!!!!!!!!!
     @PostMapping("/twelve_steps_module")
     @SecurityRequirement(name = "Bearer Authentication")
-    public ResponseEntity<ResponseDto> completeSurvey(@RequestBody SurveyResponseDto surveyResponse){
+    public ResponseEntity<ResponseDto> completeSurvey(@Valid @RequestBody SurveyResponseDto surveyResponse){
             twelveStepsSurveyService.completeSurvey(surveyResponse);
 
         return ResponseEntity
