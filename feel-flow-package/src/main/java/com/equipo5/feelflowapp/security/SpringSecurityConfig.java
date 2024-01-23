@@ -8,6 +8,7 @@ import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -45,15 +46,20 @@ public class SpringSecurityConfig {
 
     @Bean //El objeto que se devuelve, se lo guarda en el contexto de spring para que otros componentes lo puedan usar
     SecurityFilterChain configure(HttpSecurity httpSecurity) throws Exception{
-
-        //Filtro de autenticacion --> Busqueda con JPA
-        //httpSecurity.addFilter(new JwtAutheticationFilter(this.authenticationConfiguration.getAuthenticationManager()));
-
-        //Filtro de validacion de token
-        //httpSecurity.addFilterAfter(new JwtValidationFilter(this.authenticationConfiguration.getAuthenticationManager()),JwtAutheticationFilter.class);
-
         httpSecurity.authorizeHttpRequests(
-                        auth -> auth.requestMatchers("/api/v1/**").permitAll()
+                        auth -> auth
+                                .requestMatchers(HttpMethod.POST,"/api/v1/twelve_steps_modules/{idTeam}").hasAnyAuthority("TEAM_LEADER","ADMIN")
+                                .requestMatchers("/api/v1/user/**").hasAnyAuthority("TEAM_LEADER","ADMIN","USER_REGULAR")
+                                .requestMatchers(HttpMethod.POST,"/api/v1/admin/**").permitAll()
+                                .requestMatchers("/api/v1/admin/**").hasAnyAuthority("TEAM_LEADER","ADMIN")
+                                .requestMatchers(HttpMethod.PUT,"/api/v1/team/{idTeam}").hasAnyAuthority("TEAM_LEADER","ADMIN")
+                                .requestMatchers(HttpMethod.POST,"/api/v1/team/{idTeam}/invite").hasAnyAuthority("TEAM_LEADER","ADMIN")
+                                .requestMatchers(HttpMethod.GET,"/api/v1/team/{idTeam}/team-leader").hasAnyAuthority("TEAM_LEADER","ADMIN","USER_REGULAR")
+                                .requestMatchers(HttpMethod.GET,"/api/v1/team/{idTeam}").hasAnyAuthority("TEAM_LEADER","ADMIN","USER_REGULAR")
+                                .requestMatchers(HttpMethod.GET,"/api/v1/team").hasAnyAuthority("TEAM_LEADER","ADMIN","USER_REGULAR")
+                                .requestMatchers(HttpMethod.POST,"/api/v1/team").hasAnyAuthority("TEAM_LEADER","ADMIN","USER_REGULAR")
+                                .requestMatchers("/api/v1/regular_user/**").permitAll()
+                                .requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
                                 .anyRequest()
                                 .authenticated()
                 ).csrf(AbstractHttpConfigurer::disable)
@@ -66,7 +72,9 @@ public class SpringSecurityConfig {
     @Bean
     CorsConfigurationSource corsConfigurationSource(){
         CorsConfiguration config = new CorsConfiguration();
-        config.setAllowedOrigins(Arrays.asList("http://127.0.0.1:5500/"));
+        config.setAllowedOrigins(
+                Arrays.asList("http://127.0.0.1:8000", "http://127.0.0.1:5500", "http://127.0.0.1:3000","http://127.0.0.1:5173")
+        );
         config.setAllowedMethods(Arrays.asList("GET","POST","PUT","DELETE"));
         config.setAllowedHeaders(Arrays.asList("Authorization", "Cache-Control", "Content-Type"));
         config.setAllowCredentials(true);

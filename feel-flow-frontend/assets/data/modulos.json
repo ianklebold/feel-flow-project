@@ -1,0 +1,86 @@
+{
+    "Home": {
+        "nombre": "Home",
+        "perfiles": [
+            "ADMIN",
+            "TEAM_LEADER",
+            "USER_REGULAR"
+        ],
+        "logo": "fa-home",
+        "link": "../pages/Home.html"
+    },
+    "Dashboard": {
+        "nombre": "Dashboard",
+        "perfiles": [
+            "ADMIN",
+            "TEAM_LEADER",
+            "USER_REGULAR"
+        ],
+        "logo": "fa-pie-chart",
+        "link": "../pages/proximamente.html"
+    },
+    "Lideres": {
+        "nombre": "Lideres",
+        "perfiles": [
+            "ADMIN"
+        ],
+        "logo": "fa-user-circle",
+        "link": "../pages/proximamente.html"
+    },
+    "Equipos": {
+        "nombre": "Equipos",
+        "perfiles": [
+            "ADMIN"
+        ],
+        "logo": "fa-users",
+        "link": "../pages/Teams.html"
+    },
+    "Equipos2": {
+        "nombre": "Equipos",
+        "perfiles": [
+            "TEAM_LEADER",
+            "USER_REGULAR"
+        ],
+        "logo": "fa-users",
+        "link": "../pages/MyTeam.html"
+    },
+    "Modulos": {
+        "nombre": "Modulos",
+        "perfiles": [
+            "ADMIN",
+            "TEAM_LEADER",
+            "USER_REGULAR"
+        ],
+        "logo": "fa-puzzle-piece",
+        "link": "../pages/Modulos.html"
+    },
+    "Usuarios": {
+        "nombre": "Usuarios",
+        "perfiles": [
+            "ADMIN",
+            "TEAM_LEADER"
+        ],
+        "logo": "fa-user-circle",
+        "link": "../pages/proximamente.html"
+    },
+    "Perfil": {
+        "nombre": "Perfil",
+        "perfiles": [
+            "ADMIN",
+            "TEAM_LEADER",
+            "USER_REGULAR"
+        ],
+        "logo": "fa-id-card",
+        "link": "../pages/profile.html"
+    },
+    "Configuración": {
+        "nombre": "Configuración",
+        "perfiles": [
+            "ADMIN",
+            "TEAM_LEADER",
+            "USER_REGULAR"
+        ],
+        "logo": "fa-cog",
+        "link": "../pages/proximamente.html"
+    }
+}

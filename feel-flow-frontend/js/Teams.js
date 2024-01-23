@@ -3,7 +3,6 @@ import { GetEquipos } from "./functions/GetEquipos.js";
 
 const idLocation = localStorage.getItem('idLocation');
 const token = localStorage.getItem('Token');
-
 const buscarBtn = document.getElementById('03-03-03-buscar');
 const tabla = document.getElementById('03-04-Tabla-Equipos');
 
@@ -18,17 +17,19 @@ const autoridad = payloadObjeto.authorities;
 const autoridad_rol = JSON.parse(autoridad);
 const rol = autoridad_rol[0].authority;
 
-window.addEventListener("load", function () {
+// window.addEventListener("load", function () {
 
-    GetUser(idLocation, token)
-        .then(data => {
-            MostrarPantalla(data)
-        })
-        .catch(error => {
-            window.location.href = "../pages/sign_in.html"; // Usuario no logueado
-            console.error(error); 
-        });
-})
+
+// })
+
+GetUser(idLocation, token)
+    .then(data => {
+        MostrarPantalla(data)
+    })
+    .catch(error => {
+        window.location.href = "../pages/sign_in.html"; // Usuario no logueado
+        console.error(error);
+    });
 
 function crearFila(logo, equipo, lider, id_equipo) {
     var fila = document.createElement('tr');
@@ -96,20 +97,20 @@ function Buscar() {
 const tablaEquipos = document.getElementById("03-04-Tabla-Equipos");
 
 tablaEquipos.addEventListener("click", function (event) {
-  const fila = event.target.closest("tr"); // Obtiene la fila clicada
-  if (fila) {
-    const equipoId = fila.getAttribute("data-equipo-id"); // Obtiene el ID del equipo
-    if (equipoId) {
-        localStorage.setItem('IdEquipo', equipoId);
-        window.location.href = '../pages/MyTeam.html'; //Reemplazar por página de visualizar equipo
+    const fila = event.target.closest("tr"); // Obtiene la fila clicada
+    if (fila) {
+        const equipoId = fila.getAttribute("data-equipo-id"); // Obtiene el ID del equipo
+        if (equipoId) {
+            localStorage.setItem('IdEquipo', equipoId);
+            window.location.href = '../pages/MyTeam.html'; //Reemplazar por página de visualizar equipo
+        }
     }
-  }
 });
 
 
 function MostrarPantalla() {
-        
-    if (rol == 'ADMIN') {
+
+    if (rol === 'ADMIN') {
         GetEquipos(token)
             .then(data => {
                 for (let team in data) {
@@ -122,10 +123,10 @@ function MostrarPantalla() {
             })
             .catch(error => {
                 window.location.href = "../pages/sign_in.html"; // Usuario no logueado
-                console.error(error); 
+                console.error(error);
             });
     } else {
         window.location.href = "../pages/MyTeam.html"; //Aca deberia ir a la pagina de visualizacion de equipos
-    }   
-     
+    }
+
 }
