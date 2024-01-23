@@ -3,9 +3,16 @@ package com.equipo5.feelflowapp.controller;
 import com.equipo5.feelflowapp.constants.response.HttpResponses;
 import com.equipo5.feelflowapp.dto.modules.SurveyDto;
 import com.equipo5.feelflowapp.dto.modules.SurveyTwelveStepsResponseDto;
+import com.equipo5.feelflowapp.dto.response.ErrorResponseDto;
 import com.equipo5.feelflowapp.dto.response.ResponseDto;
 import com.equipo5.feelflowapp.service.survey.SurveyService;
 import com.equipo5.feelflowapp.service.survey.twelvesteps.TwelveStepsSurveyService;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
@@ -41,18 +48,42 @@ public class SurveyModuleController {
         this.twelveStepsSurveyService = twelveStepsSurveyService;
     }
 
-    //Endpoint para listar todas las encuestas de current user.
+    @Operation(
+            summary = "Get Surveys active REST API",
+            description = "REST API to get surveys active"
+    )
+    @ApiResponses({
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "HTTP Request Success"
+            )
+    })
     @GetMapping
     @SecurityRequirement(name = "Bearer Authentication")
     public List<SurveyDto> getSurveys(){
         return surveyService.getSurveys();
     }
 
-    //Endpoint que permita contestar la encuesta activa de 12 pasos hacia la felicidad
-    //TODO Agregar @VALID!!!!!!!!!!!!!!!
+    @Operation(
+            summary = "Complete Surveys for Twelve Steps Module REST API",
+            description = "REST API to complete survey"
+    )
+    @ApiResponses({
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "HTTP Request Success"
+            ),
+            @ApiResponse(
+                    responseCode = "400",
+                    description = "HTTP Status BAD REQUEST",
+                    content = @Content(
+                            schema = @Schema(implementation = ErrorResponseDto.class)
+                    )
+            )
+    })
     @PostMapping("/twelve_steps_module")
     @SecurityRequirement(name = "Bearer Authentication")
-    public ResponseEntity<ResponseDto> completeSurvey(@Valid @RequestBody SurveyTwelveStepsResponseDto surveyResponse){
+    public ResponseEntity<ResponseDto> completeSurvey(@Valid @RequestBody SurveyTwelveStepsResponseDto surveyResponse) throws JsonProcessingException {
             twelveStepsSurveyService.completeSurvey(surveyResponse);
 
         return ResponseEntity

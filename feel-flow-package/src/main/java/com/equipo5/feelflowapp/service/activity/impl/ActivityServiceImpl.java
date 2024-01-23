@@ -1,5 +1,6 @@
 package com.equipo5.feelflowapp.service.activity.impl;
 
+import com.equipo5.feelflowapp.constants.module.twelvesteps.QuestionsConstants;
 import com.equipo5.feelflowapp.domain.enumerations.modules.ActivityState;
 import com.equipo5.feelflowapp.domain.modules.Activity;
 import com.equipo5.feelflowapp.domain.modules.Survey;
@@ -9,11 +10,8 @@ import com.equipo5.feelflowapp.service.activity.ActivityService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -29,11 +27,11 @@ public class ActivityServiceImpl implements ActivityService {
 
         var activities = new ArrayList<Activity>();
 
-        for (int i = 0; i < 13; i++) {
+        for (int i = 0; i < 12; i++) {
             activities.add(
                     Activity
                             .builder()
-                            .question("Question" + UUID.randomUUID())
+                            .question(QuestionsConstants.QUESTIONS_POOL_CLASSIC_TWELVE_STEPS.get(i))
                             .activityState(ActivityState.ACTIVE)
                             .build()
             );

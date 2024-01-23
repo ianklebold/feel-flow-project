@@ -6,6 +6,7 @@ import com.equipo5.feelflowapp.domain.modules.Survey;
 import com.equipo5.feelflowapp.domain.modules.SurveyModule;
 import com.equipo5.feelflowapp.domain.users.RegularUser;
 import com.equipo5.feelflowapp.dto.modules.SurveyTwelveStepsResponseDto;
+import com.equipo5.feelflowapp.exception.badrequest.survey.SurveyException;
 import com.equipo5.feelflowapp.mappers.modules.ActivityMapper;
 import com.equipo5.feelflowapp.mappers.modules.SurveyMapper;
 import com.equipo5.feelflowapp.repository.survey.SurveyRepository;
@@ -15,6 +16,7 @@ import com.equipo5.feelflowapp.service.report.ReportService;
 import com.equipo5.feelflowapp.service.survey.impl.SurveyServiceImpl;
 import com.equipo5.feelflowapp.service.survey.twelvesteps.TwelveStepsSurveyService;
 import com.equipo5.feelflowapp.service.users.UserService;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -53,11 +55,11 @@ public class TwelveStepsSurveyServiceImpl extends SurveyServiceImpl implements T
 
 
     @Override
-    public void completeSurvey(SurveyTwelveStepsResponseDto surveyResponse) {
+    public void completeSurvey(SurveyTwelveStepsResponseDto surveyResponse) throws JsonProcessingException {
         var twelveSteps = super.getSurveyActiveByModuleName(ModuleNames.TWELVE_STEPS);
 
         if (twelveSteps.isEmpty()){
-            throw new IllegalStateException("No se tienes encuestas activas para el modulo 12 pasos hacia la felicidad");
+            throw new SurveyException("No se tienes encuestas activas para el modulo 12 pasos hacia la felicidad");
         }
 
         Survey survey = super.getSurveyById(twelveSteps.get().idSurvey());
@@ -77,7 +79,7 @@ public class TwelveStepsSurveyServiceImpl extends SurveyServiceImpl implements T
             var report = reportService.createReportToTwelveSteps(survey);
             survey.setReport(report);
         }else {
-            throw new IllegalStateException("La encuesta se encuentra cerrada");
+            throw new SurveyException("La encuesta se encuentra cerrada");
         }
         surveyRepository.save(survey);
     }

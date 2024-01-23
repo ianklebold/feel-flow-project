@@ -71,8 +71,4 @@ public class TwelveStepsModuleController {
                 .body(new ResponseDto(HttpResponses.STATUS_201,String.format(HttpResponses.MESSAGE_201,MODULE)));
     }
 
-
-    //Endpoint para completar encuesta si es que esta esta no se completo.
-
-
 }
