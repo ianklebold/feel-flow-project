@@ -62,6 +62,10 @@
     margin: 1rem;
 }
 
+.btn-crear.hidden {
+    display: none;
+}
+
 .mensaje {
     margin: 1rem;
     text-align: center;

@@ -27,12 +27,10 @@ function closePopup() {
 }
 
 function MostrarPantalla() {
-    /*
-    console.log(rol)
-    if (rol !== "TEAM_LEADER") {
-        document.getElementById("crearModuloButton").disabled = true;
+    
+    if (rol == "USER_REGULAR") {
+        document.getElementById("crearModuloButton").classList.add("hidden");
     }
-    */
 
     GetIdEquipo(token)
         .then(uuid => {
