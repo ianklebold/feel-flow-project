@@ -52,7 +52,7 @@
             "USER_REGULAR"
         ],
         "logo": "fa-puzzle-piece",
-        "link": "../pages/proximamente.html"
+        "link": "../pages/Modulos.html"
     },
     "Usuarios": {
         "nombre": "Usuarios",
