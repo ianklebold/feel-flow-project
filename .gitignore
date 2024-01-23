@@ -32,3 +32,6 @@ reports/*
 /target/
 *new_custom_messages_*.properties
 /bin/
+
+#Frontend files
+/FF-Front/
