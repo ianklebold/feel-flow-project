@@ -27,10 +27,12 @@ function closePopup() {
 }
 
 function MostrarPantalla() {
+    /*
     console.log(rol)
     if (rol !== "TEAM_LEADER") {
         document.getElementById("crearModuloButton").disabled = true;
     }
+    */
 
     GetIdEquipo(token)
         .then(uuid => {
@@ -61,13 +63,18 @@ document.getElementById("crearModuloButton").addEventListener("click", function 
                     mensaje = "Error: " + result;
                     document.getElementById("MensajeRequest").classList.add("error")
                 }
-                
+
                 document.getElementById("MensajeRequest").textContent = mensaje
                 openPopup()
             })
             .catch(error => {
                 console.error('Error al llamar a crearModulo:', error);
             });
+    } else {
+        mensaje = "Solo el Team Leader del equipo puede abrir el modulo"
+        document.getElementById("MensajeRequest").classList.add("alerta")
+        document.getElementById("MensajeRequest").textContent = mensaje
+        openPopup()
     }
 });
 

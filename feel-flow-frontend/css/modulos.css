@@ -1,7 +1,6 @@
 .modulo {
     width: 100%;
     color: white;
-    background-image: url("../img/curved-images/curved0.jpg");
     opacity: 3;
     border-radius: 1rem;
     border-width: 5px;
@@ -9,24 +8,38 @@
     padding: 1rem;
     position: relative;
     display: inline-block;
+    background-image: url("../img/curved-images/twelve_steps_header.png");
+
 }
 
-.modulo:hover .cuerpo {
+.modulo:hover .contenido {
     display: block;
 }
 
-.cuerpo {
-    color: white;
+.encabezado {
+    background-image: url("../img/curved-images/twelve_steps_header.png");
+    
+}
+
+.contenido {
     display: none;
     position: absolute;
-    background-image: url("../img/curved-images/curved0.jpg");
-    width: 96%;
     box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-    padding: 12px 16px;
+    width: 96%;
     z-index: 1;
     border-bottom-left-radius: 1rem;
     border-bottom-right-radius: 1rem;
     margin-top: 1rem;
+    background-color: #df888f;
+}
+
+.cuerpo {
+    color: white;
+    padding-top: 12px;
+    background-image: url("../img/curved-images/twelve_steps_body.png");
+    background-color: #df888f;
+    padding-bottom: 1rem;
+    
 }
 
 .cuerpo hr {
@@ -36,13 +49,17 @@
 
 .pie {
     display: flex;
-    align-items: end;
-    justify-content: end;
+    align-items: center;
+    justify-content: center;
+    background-image: url("../img/curved-images/twelve_steps_footer.png");
+    border-bottom-left-radius: 1rem;
+    border-bottom-right-radius: 1rem;
+    margin-top: -1rem;
 }
 
 .btn-crear {
-    background-image: linear-gradient(310deg, #141727 0%, #3A416F 100%);
-    color: white;
+    background-color: #DF888F;
+    margin: 1rem;
 }
 
 .mensaje {
@@ -50,11 +67,15 @@
     text-align: center;
     justify-content: center;
     font-weight: bold;
-    color: green;
+    color: rgb(0, 255, 0);
 }
 
 .mensaje.error {
-    color: red;
+    color: rgb(200, 0, 0);
+}
+
+.mensaje.alerta {
+    color: rgb(255, 255, 0);
 }
 
 .overlay {
@@ -76,7 +97,7 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background-color: #608ea3;
+    background-color: #df888fc1;
     padding: 20px;
     z-index: 1001;
     /* Ajusta según sea necesario para superponer otros elementos */
