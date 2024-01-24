@@ -1,7 +1,7 @@
 import { GetUser } from "../js/functions/GetPerfil.js";
 import { GetIdEquipo } from "./functions/GetEquipos.js";
 import { Logueado } from "./functions/User.js";
-import { crearModulo } from "./functions/post/twelve_steps.js";
+import { ObtenerEncuestas, crearModulo } from "./functions/post/twelve_steps.js";
 /*import { crearModulo } from "./functions/post/twelve_steps";*/
 
 const idLocation = localStorage.getItem('idLocation');
@@ -26,11 +26,33 @@ function closePopup() {
     document.getElementById('overlay').style.display = 'none';
 }
 
+function tieneEncuestas() {
+    console.log("hola")
+    ObtenerEncuestas(token)
+        .then(data => {
+            
+            console.log(data.length)
+            return data.length
+        })
+        .catch(error => {
+            console.error("Error al obtener las encuestas activas")
+            return 0
+        })
+}
+
 function MostrarPantalla() {
     
     if (rol == "USER_REGULAR") {
         document.getElementById("crearModuloButton").classList.add("hidden");
+        
+        if (tieneEncuestas() == 0) {
+            document.getElementById("modulos").classList.add("hidden");
+        } else {
+            document.getElementById("sinModulos").classList.add("hidden");
+        }
     }
+
+
 
     GetIdEquipo(token)
         .then(uuid => {
@@ -47,9 +69,17 @@ function MostrarPantalla() {
 
 }
 
+function tknValido() {
+    Logueado(idLocation, token)
+        .then(data => {
+            data ? MostrarPantalla() : window.location.href = "../pages/sign_in.html";
+        })
+        .catch(error => {
+            console.error(error)
+        })
+}
 
-Logueado(idLocation, token) ? MostrarPantalla() : window.location.href = "../pages/sign_in.html"
-
+tknValido()
 
 document.getElementById("crearModuloButton").addEventListener("click", function () {
     if (rol == "TEAM_LEADER") {
@@ -76,4 +106,9 @@ document.getElementById("crearModuloButton").addEventListener("click", function 
     }
 });
 
+document.getElementById("contestarModuloButton").addEventListener("click", function () {
+    window.location.href = "../pages/Encuesta_TSM.html"
+});
+
 document.getElementById("closePopup").addEventListener("click", closePopup);
+
