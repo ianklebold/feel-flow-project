@@ -1,7 +1,7 @@
 import { GetUser } from "../js/functions/GetPerfil.js";
 import { GetIdEquipo } from "./functions/GetEquipos.js";
 import { Logueado } from "./functions/User.js";
-import { ObtenerEncuestas, crearModulo } from "./functions/post/twelve_steps.js";
+import { ObtenerEncuestas, ObtenerRespuestas, ObtenerPreguntas, crearModulo } from "./functions/post/twelve_steps.js";
 /*import { crearModulo } from "./functions/post/twelve_steps";*/
 
 const idLocation = localStorage.getItem('idLocation');
@@ -42,6 +42,7 @@ function tieneEncuestas() {
 
 function MostrarPantalla() {
     
+    document.getElementById("sinModulos").classList.add("hidden");
     if (rol == "USER_REGULAR") {
         document.getElementById("crearModuloButton").classList.add("hidden");
         
@@ -51,8 +52,6 @@ function MostrarPantalla() {
             document.getElementById("sinModulos").classList.add("hidden");
         }
     }
-
-
 
     GetIdEquipo(token)
         .then(uuid => {

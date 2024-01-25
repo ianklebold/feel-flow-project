@@ -1,0 +1,35 @@
+/* Estilos para el formulario de preguntas */
+#preguntasForm {
+    max-width: 600px;
+    margin: auto;
+  }
+  
+  /* Estilos para cada contenedor de pregunta */
+  .pregunta-container {
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-bottom: 10px;
+  }
+  
+  /* Estilos para las respuestas */
+  label {
+    display: block;
+    margin-bottom: 8px;
+  }
+  
+  /* Estilos para los radio buttons */
+  input[type="radio"] {
+    margin-right: 5px;
+  }
+  
+  /* Otros estilos opcionales */
+  body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f4f4;
+    color: #333;
+  }
+  
+  h1 {
+    text-align: center;
+    color: #008080;
+  }
