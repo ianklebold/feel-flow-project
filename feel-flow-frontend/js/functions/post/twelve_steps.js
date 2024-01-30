@@ -39,15 +39,12 @@ export async function ObtenerEncuestas(token) {
 
         if (response.ok) {
             const data = await response.json();
-            console.log (data);
             return data;
         } else {
             const errorData = await response.json();
-            console.error(errorData);
             return errorData;
         }
     } catch (error) {
-        console.error('Error al realizar la solicitud:', error);
         return 'Error al realizar la solicitud';
     }
 }
@@ -65,7 +62,6 @@ export async function ObtenerPreguntas(token, name_module) {
 
         if (response.ok) {
             const data = await response.json();
-            console.log (data);
             return data;
         } else {
             const errorData = await response.json();
@@ -91,15 +87,12 @@ export async function ObtenerRespuestas(token, name_module) {
 
         if (response.ok) {
             const data = await response.json();
-            console.log (data);
             return data;
         } else {
             const errorData = await response.json();
-            console.error(errorData);
             return errorData;
         }
     } catch (error) {
-        console.error('Error al realizar la solicitud:', error);
         return 'Error al realizar la solicitud';
     }
 }
