@@ -30,7 +30,7 @@ function Preguntas() {
                 preguntaDiv.setAttribute('class', 'pregunta-container'); // Clase para estilizar si es necesario
 
                 var pregunta = document.createElement('p');
-                pregunta.classList.add('ps-4', 'ms-2', 'my-4', 'text-uppercase', 'text-xs', 'font-weight-bolder', 'opacity-6');
+                pregunta.classList.add('ps-4', 'ms-2', 'my-4', 'text-s', 'font-weight-bolder', 'opacity-6');
                 pregunta.textContent = data[i];
                 pregunta.setAttribute("id", 'pregunta-' + i);
 
@@ -42,7 +42,18 @@ function Preguntas() {
                 divisor.insertAdjacentElement("beforeend", form);
 
                 // console.log(data[i]);
+                
             }
+            var enviarButton = document.createElement('button');
+            enviarButton.setAttribute('id', 'enviarButton');
+            enviarButton.setAttribute('type', 'submit');
+            enviarButton.classList.add('btn', 'mt-3');
+            enviarButton.textContent = 'Enviar Encuesta';
+
+            form.appendChild(enviarButton);
+
+            var divisor = document.getElementById("preguntas");
+            divisor.insertAdjacentElement("beforeend", form);
 
             return data.length;
         })
@@ -67,7 +78,7 @@ function Respuestas() {
                 for (var j = 0; j < data[i].length; j++) { // Recorre cada respuesta de cada pregunta | de 1 a 5
                     var respuesta = document.createElement('label');
 
-                    respuesta.classList.add('ps-4', 'ms-2', 'my-4', 'text-uppercase', 'text-xs', 'font-weight-bolder', 'opacity-6');
+                    respuesta.classList.add('ps-4', 'ms-2', 'my-4', 'text-s', 'font-weight-bolder', 'opacity-6');
 
                     var checkbox = document.createElement('input');
                     checkbox.setAttribute('type', 'radio');
