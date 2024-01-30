@@ -1,35 +1,76 @@
 /* Estilos para el formulario de preguntas */
 #preguntasForm {
-    max-width: 600px;
-    margin: auto;
-  }
-  
-  /* Estilos para cada contenedor de pregunta */
-  .pregunta-container {
-    border: 1px solid #ccc;
-    padding: 10px;
-    margin-bottom: 10px;
-  }
-  
-  /* Estilos para las respuestas */
-  label {
-    display: block;
-    margin-bottom: 8px;
-  }
-  
-  /* Estilos para los radio buttons */
-  input[type="radio"] {
-    margin-right: 5px;
-  }
-  
-  /* Otros estilos opcionales */
-  body {
-    font-family: 'Arial', sans-serif;
-    background-color: #f4f4f4;
-    color: #333;
-  }
-  
-  h1 {
-    text-align: center;
-    color: #008080;
-  }
+  max-width: 800px;
+  width: 90%; 
+  margin: auto;
+  background-color: rgba(69, 130, 158, 0.323);
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  font-family: system-ui, sans-serif;
+  color: #000000; /* Color de texto más oscuro */
+}
+
+/* Estilos para cada contenedor de pregunta */
+.pregunta-container {
+  max-width: 100%; 
+  border: 2px solid #000000;
+  padding: 15px;
+  margin-bottom: 20px;
+  border-radius: 8px;
+  background-color: #ffffffad;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+  color: #000000; /* Color de texto más oscuro */
+}
+
+
+/* Estilos para las respuestas */
+label {
+  display: block;
+  margin-bottom: 10px;
+  font-size: 16px;
+  font-family: system-ui, sans-serif;
+  color: #000000;
+}
+
+/* Estilos para los radio buttons */
+input[type="radio"] {
+  margin-right: 8px;
+}
+
+/* Otros estilos opcionales */
+body {
+  font-family: system-ui, sans-serif;
+  background-color: #f4f4f4;
+  color: #333;
+  margin: 0;
+  padding: 0;
+}
+
+h1 {
+  text-align: center;
+  color: #008080;
+  margin-bottom: 20px;
+  font-family: system-ui, sans-serif;
+}
+
+input[type="radio"] {
+  margin-right: 8px;
+}
+
+/* Estilos para el botón de enviar */
+#enviarButton {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  background-color: #008080;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+#enviarButton:hover {
+  background-color: #005656;
+}
