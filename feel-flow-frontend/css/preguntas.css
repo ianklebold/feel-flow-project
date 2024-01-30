@@ -58,9 +58,15 @@ input[type="radio"] {
   margin-right: 8px;
 }
 
+.container-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 /* Estilos para el botón de enviar */
 #enviarButton {
-  display:grid;
+  /* display:grid; */
   width: 40%;
   padding: 10px;
   background-color: #ffffffcc;
@@ -72,5 +78,6 @@ input[type="radio"] {
 }
 
 #enviarButton:hover {
-  background-color: #f9a1f382;
+  /* background-color: #f9a1f382; */
+  background-color: #e1aeb1;
 }

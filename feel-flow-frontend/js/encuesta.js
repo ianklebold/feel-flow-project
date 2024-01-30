@@ -21,36 +21,37 @@ const respuestas = {
 function Preguntas() {
     ObtenerPreguntas(token)
         .then(data => {
-            var form = document.createElement('form');
-            form.setAttribute('id', 'preguntasForm');
-
-            for (var i = 0; i < data.length; i++) {
+            // var form = document.createElement('form');
+            // form.setAttribute('id', 'preguntasForm');
+            for (var i = data.length - 1; i >= 0; i--) {
                 CargarPregunta(data[i])
                 var preguntaDiv = document.createElement('div'); // Nuevo div para la pregunta y sus respuestas
                 preguntaDiv.setAttribute('class', 'pregunta-container'); // Clase para estilizar si es necesario
 
                 var pregunta = document.createElement('p');
-                pregunta.classList.add('ps-4', 'ms-2', 'my-4', 'text-s', 'font-weight-bolder', 'opacity-6');
+                pregunta.classList.add('ps-4', 'ms-2', 'my-4', 'text-s', 'font-weight-bolder');
                 pregunta.textContent = data[i];
                 pregunta.setAttribute("id", 'pregunta-' + i);
 
 
                 preguntaDiv.appendChild(pregunta);
-                form.appendChild(preguntaDiv);
+                // form.appendChild(preguntaDiv);
 
-                var divisor = document.getElementById("preguntas");
-                divisor.insertAdjacentElement("beforeend", form);
+                // var divisor = document.getElementById("preguntas");
+                var divisor = document.getElementById("preguntasForm");
+                // divisor.insertAdjacentElement("beforeend", form);
+                divisor.insertAdjacentElement("afterbegin", preguntaDiv);
 
                 // console.log(data[i]);
                 
             }
-            var enviarButton = document.createElement('button');
-            enviarButton.setAttribute('id', 'enviarButton');
-            enviarButton.setAttribute('type', 'submit');
-            enviarButton.classList.add('btn', 'mt-3');
-            enviarButton.textContent = 'Enviar Encuesta';
+            // var enviarButton = document.createElement('button');
+            // enviarButton.setAttribute('id', 'enviarButton');
+            // enviarButton.setAttribute('type', 'submit');
+            // enviarButton.classList.add('btn', 'mt-3');
+            // enviarButton.textContent = 'Enviar Encuesta';
 
-            form.appendChild(enviarButton);
+            // form.appendChild(enviarButton);
 
             var divisor = document.getElementById("preguntas");
             divisor.insertAdjacentElement("beforeend", form);
@@ -75,10 +76,10 @@ function Respuestas() {
     ObtenerRespuestas(token)
         .then(data => {
             for (var i = 0; i < data.length; i++) { // Recorre el grupo de respuestas que corresponde a la pregunta | de 1 a 12
-                for (var j = 0; j < data[i].length; j++) { // Recorre cada respuesta de cada pregunta | de 1 a 5
+                for (var j = data[i].length - 1; j >= 0; j--) { // Recorre cada respuesta de cada pregunta | de 1 a 5
                     var respuesta = document.createElement('label');
 
-                    respuesta.classList.add('ps-4', 'ms-2', 'my-4', 'text-s', 'font-weight-bolder', 'opacity-6');
+                    respuesta.classList.add('ps-4', 'ms-2', 'my-4', 'text-s');
 
                     var checkbox = document.createElement('input');
                     checkbox.setAttribute('type', 'radio');
@@ -94,7 +95,8 @@ function Respuestas() {
                     respuesta.appendChild(document.createTextNode(data[i][j]));
 
                     var divisor = document.getElementById("pregunta-" + i.toString());
-                    divisor.insertAdjacentElement("beforeend", respuesta);
+                    // divisor.insertAdjacentElement("beforeend", respuesta);
+                    divisor.insertAdjacentElement("afterend", respuesta);
 
                     // console.log(data[i][j]);
                 }
