@@ -60,17 +60,17 @@ input[type="radio"] {
 
 /* Estilos para el botón de enviar */
 #enviarButton {
-  display: block;
-  width: 100%;
+  display:grid;
+  width: 40%;
   padding: 10px;
-  background-color: #008080;
-  color: #fff;
-  border: none;
+  background-color: #ffffffcc;
+  color: #000000;
+  border: 1px solid #000000;
   border-radius: 5px;
   cursor: pointer;
   font-size: 16px;
 }
 
 #enviarButton:hover {
-  background-color: #005656;
+  background-color: #f9a1f382;
 }
