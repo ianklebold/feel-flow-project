@@ -11,7 +11,12 @@ const autoridad = payloadObjeto.authorities;
 const autoridad_rol = JSON.parse(autoridad);
 const rol = autoridad_rol[0].authority;
 
-const encuesta = []
+const answer_saved = []
+const encuestas = []
+const respuestas = {
+    activities: [],
+    surveyState: ""
+}
 
 function Preguntas() {
     ObtenerPreguntas(token)
@@ -20,6 +25,7 @@ function Preguntas() {
             form.setAttribute('id', 'preguntasForm');
 
             for (var i = 0; i < data.length; i++) {
+                CargarPregunta(data[i])
                 var preguntaDiv = document.createElement('div'); // Nuevo div para la pregunta y sus respuestas
                 preguntaDiv.setAttribute('class', 'pregunta-container'); // Clase para estilizar si es necesario
 
@@ -46,6 +52,13 @@ function Preguntas() {
         });
 }
 
+function CargarPregunta(question) {
+    let pregunta = {
+        question: question,
+        answer: "I am Ian"
+    }
+    encuestas.push(pregunta)
+}
 
 function Respuestas() {
     ObtenerRespuestas(token)
@@ -60,7 +73,8 @@ function Respuestas() {
                     checkbox.setAttribute('type', 'radio');
                     checkbox.setAttribute('name', 'respuestaRadio-' + i);
                     checkbox.setAttribute('value', data[i][j]);
-                    if (encuesta[i] == j) {
+                    checkbox.id = "Respuesta " + i + j
+                    if (answer_saved[i] == j) {
                         console.log(data[i][j])
                         checkbox.setAttribute('checked', true)
                     }
@@ -106,12 +120,37 @@ function toNumber(number) {
     return nro
 }
 
+function toString(number) {
+    let str
+    switch (number) {
+        case 'I am Ian':
+            str = "I am Ian";
+            break;
+        case 1:
+            str = "UNO";
+            break;
+        case 2:
+            str = "DOS";
+            break;
+        case 3:
+            str = "TRES";
+            break;
+        case 4:
+            str = "CUATRO";
+            break;
+        case 5:
+            str = "CINCO";
+            break;
+    }
+    return str
+}
+
 function EstadoEncuesta() {
     return ObtenerEncuestas(token)
         .then(data => {
             let activity = data[0].activityList;
             for (let i = 0; i < activity.length; i++) {
-                encuesta.push(toNumber(data[0].activityList[i].answer));
+                answer_saved.push(toNumber(data[0].activityList[i].answer));
             }
         })
         .catch(error => {
@@ -126,6 +165,13 @@ function MostrarRespuestas(respuestas) {
 
 function MostrarPantalla() {
     EstadoEncuesta()
+    for (var i = 0; i < data.length; i++) { // Recorre el grupo de respuestas que corresponde a la pregunta | de 1 a 12
+        for (var j = 0; j < data[i].length; j++) { // Recorre cada respuesta de cada pregunta | de 1 a 5
+            id = "Respuesta " + i + j;
+            check = document.getElementById(id).checked;
+            console.log(check)
+        }
+    }
 }
 
 // function Preguntas() {
@@ -179,5 +225,6 @@ function MostrarPantalla() {
 // }
 
 Preguntas(token);
+console.log(encuestas)
 Respuestas(token);
 MostrarPantalla();
