@@ -26,28 +26,38 @@ function closePopup() {
     document.getElementById('overlay').style.display = 'none';
 }
 
-function tieneEncuestas() {
-    ObtenerEncuestas(token)
+async function tieneEncuestas() {
+    return ObtenerEncuestas(token)
         .then(data => {
-            console.log(typeof (data.length))
-            return data.length
+            let tiene_encuesta
+            data.length > 0 ? tiene_encuesta = true : tiene_encuesta = false
+            return data.length;
         })
         .catch(error => {
-            console.error("Error al obtener las encuestas activas: " + error)
-            return 0
+            console.error("Error al obtener las encuestas activas: " + error);
+            return false;
         })
 }
 
-function MostrarPantalla() {
+async function MostrarPantalla() {
 
     document.getElementById("sinModulos").classList.add("hidden");
     if (rol == "USER_REGULAR") {
         document.getElementById("crearModuloButton").classList.add("hidden");
-        if (tieneEncuestas() == 0) {
-            document.getElementById("modulos").classList.add("hidden");
-        } else {
-            document.getElementById("sinModulos").classList.add("hidden");
-        }
+        tieneEncuestas()
+            .then(activo => {
+                if (activo === 0) {
+                    document.getElementById("sinModulos").classList.remove("hidden");
+                    
+                } else {
+                    document.getElementById("twelveSteps").classList.remove("hidden");
+
+
+                }
+            })
+            .catch(error => {
+                console.error("Error al obtener las encuestas activas:", error);
+            });
     }
 
     GetIdEquipo(token)

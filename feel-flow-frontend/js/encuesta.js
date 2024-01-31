@@ -36,7 +36,7 @@ function Preguntas() {
                 var divisor = document.getElementById("preguntasForm");
                 divisor.insertAdjacentElement("afterbegin", preguntaDiv);
 
-                
+
             }
             // var divisor = document.getElementById("preguntas");
             // divisor.insertAdjacentElement("beforeend", form);
@@ -160,24 +160,19 @@ function EstadoEncuesta() { // Obtengo un array con las preguntas que ya están 
 function ObtenerDatos() {
     ObtenerPreguntas(token)
         .then(data => {
-            for (var i = data.length - 1; i >= 0; i--) {
-                for (var i = 0; i < 12; i++) { // Recorre el grupo de respuestas que corresponde a la pregunta | de 1 a 12
-                    let nro_rta = 5;
-                    let rta = toString(nro_rta);
-                    for (var j = 0; j < 4; j++) { // Recorre cada respuesta de cada pregunta | de 1 a 5
-                        let id = "Respuesta " + i + j;
-                        let check = document.getElementById(id).checked;
-                        console.log(check);
-                        if (check) {
-                            // nro_rta = j;
-                            rta = toString(j);
-                            break;
-                        }
+            for (var i = 0; i < 12; i++) { // Recorre el grupo de respuestas que corresponde a la pregunta | de 1 a 12
+                let nro_rta = 5;
+                let rta = toString(nro_rta);
+                for (var j = 0; j < 4; j++) { // Recorre cada respuesta de cada pregunta | de 1 a 5
+                    let id = "Respuesta " + i + j;
+                    let check = document.getElementById(id).checked;
+                    if (check) {
+                        // nro_rta = j;
+                        rta = toString(j);
+                        break;
                     }
-                    CargarDatos(data[i], rta);
                 }
-
-                
+                CargarDatos(data[i], rta);
             }
         })
         .catch(error => {
@@ -185,16 +180,31 @@ function ObtenerDatos() {
         });
 }
 
-function MostrarPantalla() {
-    EstadoEncuesta()
-    
+function buscarRespuestaSinResponder(preguntas) {
+    console.log(preguntas.find(pregunta => pregunta.answer === "I am Ian"));
+    return preguntas.find(pregunta => pregunta.answer === "I am Ian");
 }
 
-document.getElementById("enviarButton").addEventListener("click", function(event) {
+function MostrarPantalla() {
+    EstadoEncuesta()
+
+}
+
+document.getElementById("enviarButton").addEventListener("click", function (event) {
     event.preventDefault();
     ObtenerDatos();
     console.log(encuestas);
-    
+    console.log(typeof(encuestas))
+    console.log(encuestas.values);
+    const array = Object.entries(encuestas).map(([clave, valor]) => ({ clave, valor }));
+    console.log(array)
+    const respuestaIamIan = buscarRespuestaSinResponder(encuestas);
+    if (encuestas.find(encuesta => encuesta.answer === 'I am Ian')) {
+        console.log('Se encontró una respuesta igual a "I am Ian":', respuestaIamIan);
+    } else {
+        console.log('No se encontró ninguna respuesta igual a "I am Ian".');
+    }
+
 })
 
 Preguntas(token);
