@@ -15,16 +15,13 @@ const answer_saved = []
 const encuestas = []
 const respuestas = {
     activities: [],
-    surveyState: ""
+    surveyState: "ACTIVE"
 }
 
 function Preguntas() {
     ObtenerPreguntas(token)
         .then(data => {
-            // var form = document.createElement('form');
-            // form.setAttribute('id', 'preguntasForm');
             for (var i = data.length - 1; i >= 0; i--) {
-                CargarPregunta(data[i])
                 var preguntaDiv = document.createElement('div'); // Nuevo div para la pregunta y sus respuestas
                 preguntaDiv.setAttribute('class', 'pregunta-container'); // Clase para estilizar si es necesario
 
@@ -35,26 +32,14 @@ function Preguntas() {
 
 
                 preguntaDiv.appendChild(pregunta);
-                // form.appendChild(preguntaDiv);
 
-                // var divisor = document.getElementById("preguntas");
                 var divisor = document.getElementById("preguntasForm");
-                // divisor.insertAdjacentElement("beforeend", form);
                 divisor.insertAdjacentElement("afterbegin", preguntaDiv);
 
-                // console.log(data[i]);
                 
             }
-            // var enviarButton = document.createElement('button');
-            // enviarButton.setAttribute('id', 'enviarButton');
-            // enviarButton.setAttribute('type', 'submit');
-            // enviarButton.classList.add('btn', 'mt-3');
-            // enviarButton.textContent = 'Enviar Encuesta';
-
-            // form.appendChild(enviarButton);
-
-            var divisor = document.getElementById("preguntas");
-            divisor.insertAdjacentElement("beforeend", form);
+            // var divisor = document.getElementById("preguntas");
+            // divisor.insertAdjacentElement("beforeend", form);
 
             return data.length;
         })
@@ -64,10 +49,10 @@ function Preguntas() {
         });
 }
 
-function CargarPregunta(question) {
+function CargarDatos(question, answer) {
     let pregunta = {
         question: question,
-        answer: "I am Ian"
+        answer: answer
     }
     encuestas.push(pregunta)
 }
@@ -136,29 +121,29 @@ function toNumber(number) {
 function toString(number) {
     let str
     switch (number) {
-        case 'I am Ian':
+        case 5:
             str = "I am Ian";
             break;
-        case 1:
+        case 0:
             str = "UNO";
             break;
-        case 2:
+        case 1:
             str = "DOS";
             break;
-        case 3:
+        case 2:
             str = "TRES";
             break;
-        case 4:
+        case 3:
             str = "CUATRO";
             break;
-        case 5:
+        case 4:
             str = "CINCO";
             break;
     }
     return str
 }
 
-function EstadoEncuesta() {
+function EstadoEncuesta() { // Obtengo un array con las preguntas que ya están contestadas
     return ObtenerEncuestas(token)
         .then(data => {
             let activity = data[0].activityList;
@@ -172,72 +157,46 @@ function EstadoEncuesta() {
         });
 }
 
-function MostrarRespuestas(respuestas) {
+function ObtenerDatos() {
+    ObtenerPreguntas(token)
+        .then(data => {
+            for (var i = data.length - 1; i >= 0; i--) {
+                for (var i = 0; i < 12; i++) { // Recorre el grupo de respuestas que corresponde a la pregunta | de 1 a 12
+                    let nro_rta = 5;
+                    let rta = toString(nro_rta);
+                    for (var j = 0; j < 4; j++) { // Recorre cada respuesta de cada pregunta | de 1 a 5
+                        let id = "Respuesta " + i + j;
+                        let check = document.getElementById(id).checked;
+                        console.log(check);
+                        if (check) {
+                            // nro_rta = j;
+                            rta = toString(j);
+                            break;
+                        }
+                    }
+                    CargarDatos(data[i], rta);
+                }
 
+                
+            }
+        })
+        .catch(error => {
+            console.error("Error al obtener las preguntas: " + error);
+        });
 }
 
 function MostrarPantalla() {
     EstadoEncuesta()
-    for (var i = 0; i < data.length; i++) { // Recorre el grupo de respuestas que corresponde a la pregunta | de 1 a 12
-        for (var j = 0; j < data[i].length; j++) { // Recorre cada respuesta de cada pregunta | de 1 a 5
-            id = "Respuesta " + i + j;
-            check = document.getElementById(id).checked;
-            console.log(check)
-        }
-    }
+    
 }
 
-// function Preguntas() {
-//     console.log("hola")
-//     ObtenerPreguntas(token)
-//         .then(data => {
-//             //document.getElementById("preguntas").textContent = data
-//             for (var i = 0; i < data.length; i++) {
-
-//                 var pregunta = document.createElement('p');
-//                 pregunta.classList.add('ps-4', 'ms-2', 'my-4', 'text-uppercase', 'text-xs', 'font-weight-bolder', 'opacity-6');
-//                 pregunta.textContent = data[i];
-//                 pregunta.setAttribute("id", i);
-
-//                 var divisor = document.getElementById("preguntas");
-//                 divisor.insertAdjacentElement("beforeend", pregunta);
-
-//                 console.log(data[i])
-//             }    
-//             //console.log(data)
-//             return data.length
-//         })
-//         .catch(error => {
-//             console.error("Error al obtener las preguntas")
-//             return 0
-//         })
-// }
-
-// function Respuestas() {
-//     console.log("hola")
-//     ObtenerRespuestas(token)
-//         .then(data => {
-
-//             for (var i = 0; i < data.length; i++) {
-//                 for (var j = 0; j < data[i].length; j++) {
-//                     var respuesta = document.createElement('p');
-//                     respuesta.classList.add('ps-4', 'ms-2', 'my-4', 'text-uppercase', 'text-xs', 'font-weight-bolder', 'opacity-6');
-//                     respuesta.textContent = data[i][j];
-
-//                     var divisor = document.getElementById(i.toString());
-//                     divisor.insertAdjacentElement("beforeend", respuesta);
-
-//                     console.log(data[i][j])
-//                 }
-//             }    
-//         })
-//         .catch(error => {
-//             console.error("Error al obtener las respuestas")
-//             return 0
-//         })
-// }
+document.getElementById("enviarButton").addEventListener("click", function(event) {
+    event.preventDefault();
+    ObtenerDatos();
+    console.log(encuestas);
+    
+})
 
 Preguntas(token);
-console.log(encuestas)
 Respuestas(token);
 MostrarPantalla();

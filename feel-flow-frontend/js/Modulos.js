@@ -27,25 +27,22 @@ function closePopup() {
 }
 
 function tieneEncuestas() {
-    console.log("hola")
     ObtenerEncuestas(token)
         .then(data => {
-            
-            console.log(data.length)
+            console.log(typeof (data.length))
             return data.length
         })
         .catch(error => {
-            console.error("Error al obtener las encuestas activas")
+            console.error("Error al obtener las encuestas activas: " + error)
             return 0
         })
 }
 
 function MostrarPantalla() {
-    
+
     document.getElementById("sinModulos").classList.add("hidden");
     if (rol == "USER_REGULAR") {
         document.getElementById("crearModuloButton").classList.add("hidden");
-        
         if (tieneEncuestas() == 0) {
             document.getElementById("modulos").classList.add("hidden");
         } else {
