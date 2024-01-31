@@ -40,8 +40,7 @@ async function tieneEncuestas() {
 }
 
 async function MostrarPantalla() {
-
-    document.getElementById("sinModulos").classList.add("hidden");
+    
     if (rol == "USER_REGULAR") {
         document.getElementById("crearModuloButton").classList.add("hidden");
         tieneEncuestas()
@@ -58,6 +57,8 @@ async function MostrarPantalla() {
             .catch(error => {
                 console.error("Error al obtener las encuestas activas:", error);
             });
+    } else {
+        document.getElementById("twelveSteps").classList.remove("hidden");
     }
 
     GetIdEquipo(token)
