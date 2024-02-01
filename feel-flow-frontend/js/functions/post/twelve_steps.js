@@ -10,10 +10,10 @@ export async function crearModulo(token, idTeam) {
         });
 
         if (response.ok) {
-            console.log (response.statusMsg);
-            console.log (response);
+            console.log(response.statusMsg);
+            console.log(response);
             const data = await response.json();
-            console.log (data);
+            console.log(data);
             return data.statusMsg;
         } else {
             const errorData = await response.json();
@@ -100,18 +100,20 @@ export async function ObtenerRespuestas(token, name_module) {
 export async function EnviarEncuestaTSM(token, datos) {
     const endpoint = `http://localhost:8080/api/v1/surveys/twelve_steps_module`
     const data = datos
+
     try {
         const response = await fetch(endpoint, {
             method: 'POST',
             headers: {
-                'Authorization': `Bearer ${token}`
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json'
             },
             body: JSON.stringify(data)
         });
 
         if (response.ok) {
             const data = await response.json();
-            console.log (data);
+            console.log(data);
             return data;
         } else {
             const errorData = await response.json();

@@ -1,19 +1,9 @@
-import { ObtenerEncuestas, ObtenerRespuestas, ObtenerPreguntas, crearModulo } from "./functions/post/twelve_steps.js";
+import { ObtenerEncuestas, ObtenerRespuestas, ObtenerPreguntas, EnviarEncuestaTSM } from "./functions/post/twelve_steps.js";
 
-const idLocation = localStorage.getItem('idLocation');
 const token = localStorage.getItem('Token');
-
-const partesToken = token.split('.');
-const payloadDecodificado = atob(partesToken[1]);
-const payloadObjeto = JSON.parse(payloadDecodificado);
-
-const autoridad = payloadObjeto.authorities;
-const autoridad_rol = JSON.parse(autoridad);
-const rol = autoridad_rol[0].authority;
-
-const answer_saved = []
-const encuestas = []
-const respuestas = {
+var answer_saved = []
+var encuestas = []
+var respuestas_a_enviar = {
     activities: [],
     surveyState: "ACTIVE"
 }
@@ -38,9 +28,6 @@ function Preguntas() {
 
 
             }
-            // var divisor = document.getElementById("preguntas");
-            // divisor.insertAdjacentElement("beforeend", form);
-
             return data.length;
         })
         .catch(error => {
@@ -72,7 +59,6 @@ function Respuestas() {
                     checkbox.setAttribute('value', data[i][j]);
                     checkbox.id = "Respuesta " + i + j
                     if (answer_saved[i] == j) {
-                        console.log(data[i][j])
                         checkbox.setAttribute('checked', true)
                     }
 
@@ -83,7 +69,6 @@ function Respuestas() {
                     // divisor.insertAdjacentElement("beforeend", respuesta);
                     divisor.insertAdjacentElement("afterend", respuesta);
 
-                    // console.log(data[i][j]);
                 }
             }
         })
@@ -122,7 +107,7 @@ function toString(number) {
     let str
     switch (number) {
         case 5:
-            str = "I am Ian";
+            str = null;
             break;
         case 0:
             str = "UNO";
@@ -150,6 +135,7 @@ function EstadoEncuesta() { // Obtengo un array con las preguntas que ya están 
             for (let i = 0; i < activity.length; i++) {
                 answer_saved.push(toNumber(data[0].activityList[i].answer));
             }
+            console.info("Se cargaron las respuestas guardadas exitosamente");
         })
         .catch(error => {
             console.error("Error al obtener las encuestas: " + error);
@@ -173,6 +159,7 @@ function ObtenerDatos() {
                     }
                 }
                 CargarDatos(data[i], rta);
+                console.info("Se cargaron las respuestas a la encuesta exitosamente")
             }
         })
         .catch(error => {
@@ -180,33 +167,59 @@ function ObtenerDatos() {
         });
 }
 
-function buscarRespuestaSinResponder(preguntas) {
-    console.log(preguntas.find(pregunta => pregunta.answer === "I am Ian"));
-    return preguntas.find(pregunta => pregunta.answer === "I am Ian");
+function EstablecerEstado() {
+    var status = false;
+    if (encuestas.length === 12) {
+
+        if (encuestas.some(encuesta => encuesta.answer === null)) {
+            status = true;
+        } else {
+            status = false;
+        }
+    }
+    var estado_encuesta;
+    status ? estado_encuesta = 'ACTIVE' : estado_encuesta = 'FINISHED';
+
+    respuestas_a_enviar.activities = encuestas;
+    respuestas_a_enviar.surveyState = estado_encuesta;
+
+    EnviarEncuestaTSM(token, respuestas_a_enviar)
+        .then(response => {
+            if (response.statusCode == 200) {
+                console.info("El formulario se envio correctamente con un codigo " + response.statusCode);
+                let mensaje = "Se guardo la encuesta con exito"
+                document.getElementById("MensajeRequest").textContent = mensaje
+                openPopup()
+            } else {
+                console.error("Fallo el envio del formulario, se retorno un codigo " + response.statusCode)
+            }
+        })
 }
 
-function MostrarPantalla() {
-    EstadoEncuesta()
-
+function openPopup() {
+    document.getElementById('overlay').style.display = 'flex';
 }
+
+function closePopup() {
+    document.getElementById('overlay').style.display = 'none';
+    window.location.href = '../pages/Modulos.html'
+}
+
 
 document.getElementById("enviarButton").addEventListener("click", function (event) {
     event.preventDefault();
-    ObtenerDatos();
-    console.log(encuestas);
-    console.log(typeof(encuestas))
-    console.log(encuestas.values);
-    const array = Object.entries(encuestas).map(([clave, valor]) => ({ clave, valor }));
-    console.log(array)
-    const respuestaIamIan = buscarRespuestaSinResponder(encuestas);
-    if (encuestas.find(encuesta => encuesta.answer === 'I am Ian')) {
-        console.log('Se encontró una respuesta igual a "I am Ian":', respuestaIamIan);
-    } else {
-        console.log('No se encontró ninguna respuesta igual a "I am Ian".');
-    }
+    ObtenerDatos(); // Carga los datos a enviar en el POST
+    setTimeout(EstablecerEstado, 4000) // Envia el POST
 
 })
 
-Preguntas(token);
-Respuestas(token);
+document.getElementById("closePopup").addEventListener("click", closePopup);
+
+
+function MostrarPantalla() {
+    EstadoEncuesta() // Busca las preguntas guardadas
+    Preguntas(); // Renderiza las preguntas
+    setTimeout(Respuestas, 3000); // Renderiza las respuestas
+}
+
 MostrarPantalla();

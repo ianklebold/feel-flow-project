@@ -81,3 +81,54 @@ input[type="radio"] {
   /* background-color: #f9a1f382; */
   background-color: #e1aeb1;
 }
+
+.overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  z-index: 1000;
+  /* Ajusta según sea necesario para superponer otros elementos */
+}
+
+.popup {
+  position: fixed;
+  align-items: center;
+  justify-content: space-between;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #df888fc1;
+  padding: 20px;
+  z-index: 1001;
+  /* Ajusta según sea necesario para superponer otros elementos */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  border-radius: 1rem;
+}
+
+.containerPopup {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.mensaje {
+  margin: 1rem;
+  text-align: center;
+  justify-content: center;
+  font-weight: bold;
+  color: rgb(0, 200, 0);
+}
+
+.btn-crear {
+  background-color: #DF888F;
+  margin: 1rem;
+}
+
+.btn-crear.hidden {
+  display: none;
+}
