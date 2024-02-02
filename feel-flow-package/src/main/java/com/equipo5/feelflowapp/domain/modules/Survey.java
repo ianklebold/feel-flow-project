@@ -1,10 +1,12 @@
 package com.equipo5.feelflowapp.domain.modules;
 
 import com.equipo5.feelflowapp.domain.enumerations.modules.SurveyStateEnum;
+import com.equipo5.feelflowapp.domain.modules.report.Report;
 import com.equipo5.feelflowapp.domain.users.RegularUser;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,6 +29,11 @@ public class Survey{
 
     @ManyToOne
     private SurveyModule surveyModule;
+
+    private LocalDate closeDate;
+
+    @OneToOne
+    private Report report;
 
     @OneToMany(cascade = CascadeType.ALL)
     private List<Activity> activities = new ArrayList<>();

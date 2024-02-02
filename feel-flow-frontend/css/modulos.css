@@ -16,11 +16,15 @@
     display: block;
 }
 
-.encabezado {
-    background-image: url("../img/curved-images/twelve_steps_header.png");
-    
+.modulo.hidden {
+    display: none;
 }
 
+/*
+.encabezado {
+    background-image: url("../img/curved-images/twelve_steps_header.png");
+}
+*/
 .contenido {
     display: none;
     position: absolute;
@@ -60,6 +64,10 @@
 .btn-crear {
     background-color: #DF888F;
     margin: 1rem;
+}
+
+.btn-crear.hidden {
+    display: none;
 }
 
 .mensaje {
@@ -110,4 +118,20 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
+}
+
+.sinEncuestas {
+    font-size: 20px;
+    color: #000;
+    background-color: rgba(0, 128, 0, 0.619);
+    border-radius: 0.5rem;
+    height: 4rem;
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+}
+
+.sinEncuestas.hidden {
+    display: none;
 }
