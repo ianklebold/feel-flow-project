@@ -35,3 +35,4 @@ reports/*
 
 #Frontend files
 /FF-Front/
+.vscode

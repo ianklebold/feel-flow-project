@@ -10,3 +10,48 @@
     margin-right: 1rem;
     background-color: aqua;
 }
+
+.navbar-nav {
+    display: flex;
+    flex-direction: column;
+    padding-left: 0;
+    margin-bottom: 0;
+    list-style: none;
+    gap: 0.5rem;
+}
+
+.nav-item {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    
+}
+
+.nav-link {
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+.nav-link.active {
+    color: #344767;
+    background-color: rgba(69, 130, 158, 0.323);
+    border-radius: 0.5rem;
+    width: 100%;
+}
+
+.icon {
+    border-radius: 0.5rem;
+    border-width: 1px;
+    border-style: outset;
+    font-size: x-large;
+    background-color: rgba(245, 245, 245, 0.5);
+    margin-right: 1rem;
+    width: 32px;
+    height: 32px;
+    box-shadow: 0 0.25rem 0.375rem -0.0625rem rgba(20, 20, 20, 0.12), 0 0.125rem 0.25rem -0.0625rem rgba(20, 20, 20, 0.07);
+}
+
+.text {
+    font-size: medium;
+}

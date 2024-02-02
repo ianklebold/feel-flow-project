@@ -15,7 +15,7 @@ export default function DefaultLayout({ children }) {
                     <div className="ContainerPath">
                         <ol className="path">
                             <li className="path-item">
-                                <a href="/">Feel Flow</a>
+                                <a href="/home">Feel Flow</a>
                             </li>
                             <li className="path-item">
                                 Home
@@ -61,13 +61,16 @@ export default function DefaultLayout({ children }) {
                     <hr />
                     <div className='sidenav-body'>
                         <>
-                            {   
-                                modulos.map(mod => (
-                                    
-                                    <Menu key={mod.id} name={mod.nombre} icon={mod.logo} url={mod.link}/>
-                                    
-                                ))
-                            }
+                            <ul className="navbar-nav">
+                                {   
+                                    modulos.map(mod => (
+                                        
+                                        <Menu key={mod.id} name={mod.nombre} icon={mod.logo} url={mod.link}/>
+                                        
+                                    ))
+                                }
+                            </ul>
+                            
                         </>
                     </div>
                 </nav>

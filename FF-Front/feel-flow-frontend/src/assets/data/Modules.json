@@ -18,7 +18,7 @@
             "TEAM_LEADER",
             "USER_REGULAR"
         ],
-        "logo": "CiHome",
+        "logo": "<CiHome />",
         "link": "../pages/proximamente.html"
     },
     {
