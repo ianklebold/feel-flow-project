@@ -1,10 +1,13 @@
+div {
+    display: flex;
+}
+
 .Login {
     display: flex;
     align-items: center;
     justify-content: space-between;
     flex-wrap: wrap;
     margin: 1rem;
-    margin-top: 7%;
     background-color: rgba(69, 130, 158, 0.323);
     border-radius: 3rem;
     width: 60rem;

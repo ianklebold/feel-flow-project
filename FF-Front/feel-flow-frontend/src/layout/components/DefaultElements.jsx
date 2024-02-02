@@ -1,6 +1,6 @@
-import '../css/Input.css'
-import '../css/Button.css'
-import '../css/CheckBox.css'
+// import '../css/Input.css'
+// import '../css/Button.css'
+// import '../css/CheckBox.css'
 
 export function InputText({ claseInput, claseLabel, label, tipo, name, value, onChange }) {
     return (

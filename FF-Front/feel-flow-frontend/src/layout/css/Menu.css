@@ -1,7 +1,12 @@
 .modulo {
-    gap: 1rem;
+    align-items: center;
+    background-color: antiquewhite;
+    padding: 5px;
+    border-radius: 5px;
+    width: 100%;
 }
 
 .modulo i {
+    margin-right: 1rem;
     background-color: aqua;
 }

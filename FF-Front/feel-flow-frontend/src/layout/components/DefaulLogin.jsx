@@ -1,5 +1,5 @@
 import { children } from "react"
-import '../../assets/css/Login.css'
+// import '../../assets/css/Login.css'
 
 export default function DefaultLogin ({ children, clase, nombre }) {
     return (

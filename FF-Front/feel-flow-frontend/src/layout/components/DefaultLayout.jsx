@@ -1,4 +1,4 @@
-import '../css/Nav.css'
+// import '../css/Nav.css'
 import { CiUser } from "react-icons/ci";
 import { CiSettings } from "react-icons/ci";
 import { CiBellOn } from "react-icons/ci";
@@ -27,24 +27,24 @@ export default function DefaultLayout({ children }) {
                             <li className="dropdown">
                                 <a href="#" className="dropbtn"><CiBellOn /></a>
                                 <div className="dropdown-content">
-                                    <a href="#">Notificación 1</a>
-                                    <a href="#">Notificación 2</a>
-                                    <a href="#">Notificación 3</a>
+                                    <a href="#">Notification 1</a>
+                                    <a href="#">Notification 2</a>
+                                    <a href="#">Notification 3</a>
                                 </div>
                             </li>
                             <li className="dropdown">
                                 <a href="#" className="dropbtn"><CiSettings /></a>
                                 <div className="dropdown-content">
-                                    <a href="#">Configuración 1</a>
-                                    <a href="#">Configuración 2</a>
-                                    <a href="#">Configuración 3</a>
+                                    <a href="#">Setting 1</a>
+                                    <a href="#">Setting 2</a>
+                                    <a href="#">Setting 3</a>
                                 </div>
                             </li>
                             <li className="dropdown">
                                 <a href="#" className="dropbtn"><CiUser /></a>
                                 <div className="dropdown-content">
-                                    <a href="#">Mi perfil</a>
-                                    <a href="#">Cerrar Sesión</a>
+                                    <a href="#">My Profile</a>
+                                    <a href="#">Log Off</a>
                                 </div>
                             </li>
                         </ul>
