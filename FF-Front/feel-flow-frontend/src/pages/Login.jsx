@@ -1,13 +1,16 @@
+// Libraries
 import { useState } from 'react'
-import { BrowserRouter } from 'react-router-dom'
 import { NavLink } from 'react-router-dom';
-
 import axios from 'axios'
+
+// Components
+import { Boton, InputText } from '../layout/components/DefaultElements'
+import DefaultLogin from '../layout/components/DefaulLogin';
+
+// Styles
 import '../assets/css/Login.css'
 import '../layout/css/Button.css'
 import '../layout/css/Input.css'
-import { Boton, InputText } from '../layout/components/DefaultElements'
-import DefaultLogin from '../layout/components/DefaulLogin';
 
 export function Login() {
     const [data, setData] = useState({
