@@ -3,6 +3,7 @@ package com.equipo5.feelflowapp.security;
 import com.equipo5.feelflowapp.controller.ModuleController;
 import com.equipo5.feelflowapp.controller.QuestionsAnswersModuleController;
 import com.equipo5.feelflowapp.controller.SurveyModuleController;
+import com.equipo5.feelflowapp.controller.TwelveStepsModuleController;
 import com.equipo5.feelflowapp.repository.users.UserRepository;
 import com.equipo5.feelflowapp.security.filters.JwtAutheticationFilter;
 import com.equipo5.feelflowapp.security.filters.JwtValidationFilter;
@@ -66,6 +67,7 @@ public class SpringSecurityConfig {
                                 .requestMatchers(HttpMethod.GET, QuestionsAnswersModuleController.QUESTION_AND_ANSWERS_PATH+QuestionsAnswersModuleController.ANSWERS_MODULE).hasAnyAuthority("USER_REGULAR")
                                 .requestMatchers(HttpMethod.GET,QuestionsAnswersModuleController.QUESTION_AND_ANSWERS_PATH+QuestionsAnswersModuleController.QUESTIONS_MODULE).hasAnyAuthority("USER_REGULAR")
                                 .requestMatchers(HttpMethod.GET, ModuleController.MODULE_PATH).hasAnyAuthority("TEAM_LEADER")
+                                .requestMatchers(HttpMethod.POST, TwelveStepsModuleController.MODULE_PATH+"/close"+TwelveStepsModuleController.PATH_MODULE_ID).hasAnyAuthority("TEAM_LEADER")
                                 .requestMatchers("/api/v1/regular_user/**").permitAll()
                                 .requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
                                 .anyRequest()
