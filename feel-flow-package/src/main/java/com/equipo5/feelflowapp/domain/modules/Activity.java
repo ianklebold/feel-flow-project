@@ -39,6 +39,12 @@ public class Activity {
         }
     }
 
-
+    public void forceCloseActivity(){
+        if (StringUtils.isBlank(this.answer)){
+            this.setAnswer("No hay respuesta");
+            this.setCloseDate(LocalDate.now());
+            this.setActivityState(ActivityState.FINISHED);
+        }
+    }
 
 }

@@ -42,10 +42,16 @@ public class ActivityServiceImpl implements ActivityService {
     }
 
     @Override
-    public List<Activity> refreshActivities(Survey survey,List<Activity> activitiesCompleted) {
+    public List<Activity> refreshActivities(List<Activity> activitiesCompleted) {
         activitiesCompleted.forEach(Activity::openActivity);
         activitiesCompleted.forEach(Activity::closeActivity);
 
+        return activityRepository.saveAll(activitiesCompleted);
+    }
+
+    @Override
+    public List<Activity> forceTocloseActivities(List<Activity> activitiesCompleted) {
+        activitiesCompleted.forEach(Activity::forceCloseActivity);
         return activityRepository.saveAll(activitiesCompleted);
     }
 

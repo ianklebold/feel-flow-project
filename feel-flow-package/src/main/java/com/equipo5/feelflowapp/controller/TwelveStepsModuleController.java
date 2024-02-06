@@ -32,6 +32,7 @@ public class TwelveStepsModuleController {
 
     public  static final String MODULE_PATH = "/api/v1/twelve_steps_modules";
     public static final String PATH_TEAM_ID = "/{idTeam}";
+    public static final String PATH_MODULE_ID = "/{idModule}";
     private final String MODULE = "Module";
     private final TwelveStepsService twelveStepsService;
 
@@ -69,6 +70,33 @@ public class TwelveStepsModuleController {
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(new ResponseDto(HttpResponses.STATUS_201,String.format(HttpResponses.MESSAGE_201,MODULE)));
+    }
+
+    @Operation(
+            summary = "Close Module Twelve Steps REST API",
+            description = "REST API to close module and surveys belong to twelve steps"
+    )
+    @ApiResponses({
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "HTTP Status OK"
+            ),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "HTTP Status NOT FOUND",
+                    content = @Content(
+                            schema = @Schema(implementation = ErrorResponseDto.class)
+                    )
+            )
+    })
+    @SecurityRequirement(name = "Bearer Authentication")
+    @PostMapping("/close"+PATH_MODULE_ID)
+    public ResponseEntity<ResponseDto> closeModule(@PathVariable(value = "idModule") Long idModule){
+        twelveStepsService.closeModule(idModule);
+
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(new ResponseDto(HttpResponses.STATUS_200,String.format(HttpResponses.MESSAGE_200)));
     }
 
 }

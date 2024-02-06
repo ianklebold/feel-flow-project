@@ -1,5 +1,6 @@
 package com.equipo5.feelflowapp.security;
 
+import com.equipo5.feelflowapp.controller.ModuleController;
 import com.equipo5.feelflowapp.controller.QuestionsAnswersModuleController;
 import com.equipo5.feelflowapp.controller.SurveyModuleController;
 import com.equipo5.feelflowapp.repository.users.UserRepository;
@@ -64,6 +65,7 @@ public class SpringSecurityConfig {
                                 .requestMatchers(HttpMethod.POST,SurveyModuleController.SURVEY_PATH.concat("/twelve_steps_module")).hasAnyAuthority("USER_REGULAR")
                                 .requestMatchers(HttpMethod.GET, QuestionsAnswersModuleController.QUESTION_AND_ANSWERS_PATH+QuestionsAnswersModuleController.ANSWERS_MODULE).hasAnyAuthority("USER_REGULAR")
                                 .requestMatchers(HttpMethod.GET,QuestionsAnswersModuleController.QUESTION_AND_ANSWERS_PATH+QuestionsAnswersModuleController.QUESTIONS_MODULE).hasAnyAuthority("USER_REGULAR")
+                                .requestMatchers(HttpMethod.GET, ModuleController.MODULE_PATH).hasAnyAuthority("TEAM_LEADER")
                                 .requestMatchers("/api/v1/regular_user/**").permitAll()
                                 .requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
                                 .anyRequest()
