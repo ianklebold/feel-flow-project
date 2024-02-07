@@ -2,7 +2,6 @@ package com.equipo5.feelflowapp.exception.badrequest.module;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
-import com.equipo5.feelflowapp.exception.module.ModuleException;
 
 @ResponseStatus(value = HttpStatus.BAD_REQUEST, reason = "Already a module is active")
 public class ModuleAlreadyActiveException extends ModuleException {

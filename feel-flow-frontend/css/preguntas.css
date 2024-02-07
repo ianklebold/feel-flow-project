@@ -1,0 +1,134 @@
+/* Estilos para el formulario de preguntas */
+#preguntasForm {
+  max-width: 800px;
+  width: 90%; 
+  margin: auto;
+  background-color: rgba(69, 130, 158, 0.323);
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  font-family: system-ui, sans-serif;
+  color: #000000; /* Color de texto más oscuro */
+}
+
+/* Estilos para cada contenedor de pregunta */
+.pregunta-container {
+  max-width: 100%; 
+  border: 2px solid #000000;
+  padding: 15px;
+  margin-bottom: 20px;
+  border-radius: 8px;
+  background-color: #ffffffad;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+  color: #000000; /* Color de texto más oscuro */
+}
+
+
+/* Estilos para las respuestas */
+label {
+  display: block;
+  margin-bottom: 10px;
+  font-size: 16px;
+  font-family: system-ui, sans-serif;
+  color: #000000;
+}
+
+/* Estilos para los radio buttons */
+input[type="radio"] {
+  margin-right: 8px;
+}
+
+/* Otros estilos opcionales */
+body {
+  font-family: system-ui, sans-serif;
+  background-color: #f4f4f4;
+  color: #333;
+  margin: 0;
+  padding: 0;
+}
+
+h1 {
+  text-align: center;
+  color: #008080;
+  margin-bottom: 20px;
+  font-family: system-ui, sans-serif;
+}
+
+input[type="radio"] {
+  margin-right: 8px;
+}
+
+.container-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Estilos para el botón de enviar */
+#enviarButton {
+  /* display:grid; */
+  width: 40%;
+  padding: 10px;
+  background-color: #ffffffcc;
+  color: #000000;
+  border: 1px solid #000000;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+#enviarButton:hover {
+  /* background-color: #f9a1f382; */
+  background-color: #e1aeb1;
+}
+
+.overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  z-index: 1000;
+  /* Ajusta según sea necesario para superponer otros elementos */
+}
+
+.popup {
+  position: fixed;
+  align-items: center;
+  justify-content: space-between;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #df888fc1;
+  padding: 20px;
+  z-index: 1001;
+  /* Ajusta según sea necesario para superponer otros elementos */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  border-radius: 1rem;
+}
+
+.containerPopup {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.mensaje {
+  margin: 1rem;
+  text-align: center;
+  justify-content: center;
+  font-weight: bold;
+  color: rgb(0, 200, 0);
+}
+
+.btn-crear {
+  background-color: #DF888F;
+  margin: 1rem;
+}
+
+.btn-crear.hidden {
+  display: none;
+}
