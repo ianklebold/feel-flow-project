@@ -1,7 +1,7 @@
 import { GetUser } from "../js/functions/GetPerfil.js";
 import { GetIdEquipo } from "./functions/GetEquipos.js";
 import { Logueado } from "./functions/User.js";
-import { ObtenerEncuestas, ObtenerRespuestas, ObtenerPreguntas, crearModulo } from "./functions/post/twelve_steps.js";
+import { ObtenerEncuestas, crearModulo, CerrarModulo } from "./functions/post/twelve_steps.js";
 /*import { crearModulo } from "./functions/post/twelve_steps";*/
 
 const idLocation = localStorage.getItem('idLocation');
@@ -118,4 +118,29 @@ document.getElementById("contestarModuloButton").addEventListener("click", funct
 });
 
 document.getElementById("closePopup").addEventListener("click", closePopup);
+
+document.getElementById("cerrarModuloButton").addEventListener("click", function () {
+    if (rol == "TEAM_LEADER") {
+        crearModulo(token, idTeam)
+            .then(result => {
+                if (result === 'Request Processed successfully') {
+                    mensaje = "Se creo el modulo exitosamente";
+                } else {
+                    mensaje = "Error: " + result;
+                    document.getElementById("MensajeRequest").classList.add("error")
+                }
+
+                document.getElementById("MensajeRequest").textContent = mensaje
+                openPopup()
+            })
+            .catch(error => {
+                console.error('Error al llamar a crearModulo:', error);
+            });
+    } else {
+        mensaje = "Solo el Team Leader del equipo puede abrir el modulo"
+        document.getElementById("MensajeRequest").classList.add("alerta")
+        document.getElementById("MensajeRequest").textContent = mensaje
+        openPopup()
+    }
+});
 
