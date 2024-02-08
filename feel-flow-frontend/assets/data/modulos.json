@@ -57,11 +57,10 @@
         "nombre": "Encuestas",
         "perfiles": [
             "ADMIN",
-            "TEAM_LEADER",
-            "USER_REGULAR"
+            "TEAM_LEADER"
         ],
         "logo": "fa-puzzle-piece",
-        "link": "../pages/Modulos.html"
+        "link": "../pages/encuestas_activas_lead.html"
     },
     "Usuarios": {
         "nombre": "Usuarios",
