@@ -128,7 +128,10 @@ export async function EnviarEncuestaTSM(token, datos) {
 
 export async function CerrarModulo(token, idModulo) {
     const endpoint = `http://localhost:8080/api/v1/twelve_steps_modules/close/${idModulo}`;
-
+    console.log(idModulo)
+    if (!idModulo) {
+        return 'No se encontró el modulo'
+    }
     try {
         const response = await fetch(endpoint, {
             method: 'POST',
@@ -145,11 +148,63 @@ export async function CerrarModulo(token, idModulo) {
             return data.statusMsg;
         } else {
             const errorData = await response.json();
-            console.error(errorData.errorMessage);
+            console.error("Status: " + errorData.statusCode + "Menssage: " +errorData.errorMessage);
             return errorData.errorMessage;
         }
     } catch (error) {
         console.error('Error al realizar la solicitud:', error);
         return 'Error al realizar la solicitud';
+    }
+}
+
+export async function ObtenerIDModulo(token, name_module) {
+    let filtro_name = "name=" + name_module
+    let url = `http://localhost:8080/api/v1/modules?${filtro_name}`;
+    const response = await fetch(url, {
+        method: 'GET',
+        headers: {
+            'accept': 'application/json',
+            'Authorization': `Bearer ${token}`
+        }
+    });
+    if (response.ok) {
+        const data = await response.json();
+        console.log(data[0])
+        if (data.length > 0) {
+            console.info("The module id was obtained successfully")
+            return data[0].id;
+        } else {
+            console.error('Error when obtaining the module id');
+            return null;
+        }
+    } else {
+        console.error('Error sending request: ', response.status);
+        return null;
+    }
+}
+
+export async function enableToClose(token, name_module) {
+    let filtro_name = "name=" + name_module
+    let url = `http://localhost:8080/api/v1/modules?${filtro_name}`;
+    const response = await fetch(url, {
+        method: 'GET',
+        headers: {
+            'accept': 'application/json',
+            'Authorization': `Bearer ${token}`
+        }
+    });
+    if (response.ok) {
+        const data = await response.json();
+        console.log(data[0])
+        if (data.length > 0) {
+            console.info("The module id was obtained successfully")
+            return data[0].enableToClose;
+        } else {
+            console.error('Error when obtaining the module id');
+            return false;
+        }
+    } else {
+        console.error('Error sending request: ', response.status);
+        return false;
     }
 }
