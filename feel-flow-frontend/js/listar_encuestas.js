@@ -30,21 +30,23 @@ const orderMapping = {
     'Por fecha descendente': false
 };
 
+// Mapeo inverso de los nombres para mostrar los valores seleccionados en el HTML
+const reverseModuleMapping = {
+    'TWELVE_STEPS': '12 pasos de la Felicidad',
+    'NIKO_NIKO': 'Niko Niko'
+};
+ // Mapeo inverso de los status para mostrar los valores seleccionados en el HTML
+const reverseStateMapping = {
+    'ACTIVE': 'Activo',
+    'FINISHED': 'Terminado'
+};
+
 // Función para obtener los valores seleccionados de los select
 function obtenerValoresSeleccionados() {
     const selectModulo = document.getElementById('select-modulo');
     const selectEstado = document.getElementById('select-estado');
     const selectOrder = document.getElementById('select-order');
 
-   // Mostrar la etiqueta y el valor real seleccionados
-   console.log('Modulo - Label:', selectModulo.options[selectModulo.selectedIndex].text);
-   console.log('Modulo - Value:', selectModulo.value);
-   
-   console.log('Estado - Label:', selectEstado.options[selectEstado.selectedIndex].text);
-   console.log('Estado - Value:', selectEstado.value);
-   
-   console.log('Order - Label:', selectOrder.options[selectOrder.selectedIndex].text);
-   console.log('Order - Value:', selectOrder.value);
     // Obtener los valores seleccionados utilizando los mapeos
     name_module = moduleMapping[selectModulo.value];
     state = stateMapping[selectEstado.value];
@@ -74,10 +76,22 @@ async function llenarTabla() {
 
         // Crear celdas (td) con la información del módulo
         const nameCell = document.createElement('td');
-        nameCell.textContent = moduleData.name;  // Ajusta según tu estructura de datos
+        if (moduleData.name in reverseModuleMapping) {
+            nameCell.textContent = reverseModuleMapping[moduleData.name];
+        } else {
+            // Si no hay un mapeo inverso, simplemente usa el valor original
+            nameCell.textContent = moduleData.name;
+        }
+        nameCell.classList.add('text-center'); 
 
         const moduleStateCell = document.createElement('td');
-        moduleStateCell.textContent = moduleData.moduleState;  // Ajusta según tu estructura de datos
+        if (moduleData.moduleState in reverseStateMapping) {
+            moduleStateCell.textContent = reverseStateMapping[moduleData.moduleState];
+        } else {
+            // Si no hay un mapeo inverso, simplemente usa el valor original
+            moduleStateCell.textContent = moduleData.moduleState;
+        }  
+        moduleStateCell.classList.add('text-center');
 
         // Calcular la cantidad de "idSurvey" con "surveyState" igual a "FINISHED"
         const surveys = moduleData.surveyList;
@@ -86,15 +100,29 @@ async function llenarTabla() {
 
         const finishedSurveysCell = document.createElement('td');
         finishedSurveysCell.textContent = `${finishedSurveys.length} / ${surveys.length} (${ratioFinishedSurveys.toFixed(2)}%)`;
+        finishedSurveysCell.classList.add('text-center');
 
         const enableToCloseCell = document.createElement('td');
-        enableToCloseCell.textContent = moduleData.enableToClose;
+        if (moduleData.moduleState === 'FINISHED') {
+            enableToCloseCell.textContent = '-';
+        } else {
+            enableToCloseCell.textContent = moduleData.enableToClose ? 'Si' : 'No';
+        }
+        enableToCloseCell.classList.add('text-center');
+
+        const creationDateCell = document.createElement('td');
+        // Obtener la fecha y formatearla
+        const creationDate = new Date(moduleData.creationDate);
+        const formattedDate = `${String(creationDate.getDate()).padStart(2, '0')}-${String(creationDate.getMonth() + 1).padStart(2, '0')}-${creationDate.getFullYear()}`;
+        creationDateCell.textContent = formattedDate; 
+        creationDateCell.classList.add('text-center');
 
         // Agregar las celdas a la fila
         newRow.appendChild(nameCell);
         newRow.appendChild(moduleStateCell);
         newRow.appendChild(finishedSurveysCell);
         newRow.appendChild(enableToCloseCell);
+        newRow.appendChild(creationDateCell);
 
         // Agregar la fila al tbody de la tabla
         tableBody.appendChild(newRow);
