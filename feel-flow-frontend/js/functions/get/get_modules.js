@@ -14,12 +14,18 @@ export async function ObtenerModulos(token, name_module, state, includeCreationD
     if (includeCreationDateOrder) {
         params.append('creation_date_order', 'true');
     }
+    else {
+        params.append('creation_date_order', 'false');
+    }
+
+    console.log(params.toString());
 
     // Agregar los parámetros a la URL si hay alguno
     if (params.toString() !== '') {
         url += '?' + params.toString();
     }
-        
+    
+    console.log('URL:', url);
     const response = await fetch(url, {
         method: 'GET',
         headers: {

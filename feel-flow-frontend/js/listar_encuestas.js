@@ -36,6 +36,15 @@ function obtenerValoresSeleccionados() {
     const selectEstado = document.getElementById('select-estado');
     const selectOrder = document.getElementById('select-order');
 
+   // Mostrar la etiqueta y el valor real seleccionados
+   console.log('Modulo - Label:', selectModulo.options[selectModulo.selectedIndex].text);
+   console.log('Modulo - Value:', selectModulo.value);
+   
+   console.log('Estado - Label:', selectEstado.options[selectEstado.selectedIndex].text);
+   console.log('Estado - Value:', selectEstado.value);
+   
+   console.log('Order - Label:', selectOrder.options[selectOrder.selectedIndex].text);
+   console.log('Order - Value:', selectOrder.value);
     // Obtener los valores seleccionados utilizando los mapeos
     name_module = moduleMapping[selectModulo.value];
     state = stateMapping[selectEstado.value];
