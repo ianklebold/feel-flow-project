@@ -13,7 +13,8 @@ let order;
 
 const moduleMapping = {
     'Todos': null,
-    '12 pasos de la Felicidad': 'TWELVE_STEPS'
+    '12 pasos de la Felicidad': 'TWELVE_STEPS',
+    'Niko Niko': 'NIKO_NIKO',
 };
 
 // Mapeo de opciones de select-estado a valores específicos
@@ -93,4 +94,7 @@ async function llenarTabla() {
 
 // Agregar un evento de clic al botón
 const busquedaModuloBtn = document.getElementById('busqueda_modulo');
+// Llamar a la función realizarBusqueda cuando la página haya cargado
+document.addEventListener('DOMContentLoaded', llenarTabla);
+
 busquedaModuloBtn.addEventListener('click', llenarTabla);
