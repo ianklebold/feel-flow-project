@@ -8,9 +8,9 @@ import { Boton, InputText } from '../layout/components/DefaultElements'
 import DefaultLogin from '../layout/components/DefaulLogin';
 
 // Styles
-import '../assets/css/Login.css'
-import '../layout/css/Button.css'
-import '../layout/css/Input.css'
+import '../assets/css/styles.css'
+// import '../layout/css/Button.css'
+// import '../layout/css/Input.css'
 
 export function Login() {
     const [data, setData] = useState({
