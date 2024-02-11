@@ -158,8 +158,11 @@ export async function CerrarModulo(token, idModulo) {
 }
 
 export async function ObtenerIDModulo(token, name_module) {
-    let filtro_name = "name=" + name_module
-    let url = `http://localhost:8080/api/v1/modules?${filtro_name}`;
+    // let filtro_name = "name=" + name_module
+    // let url = `http://localhost:8080/api/v1/modules?${filtro_name}`;
+    let url = `http://localhost:8080/api/v1/modules?name=${name_module}&state=ACTIVE&creation_date_order=true`;
+
+
     const response = await fetch(url, {
         method: 'GET',
         headers: {
@@ -184,8 +187,10 @@ export async function ObtenerIDModulo(token, name_module) {
 }
 
 export async function enableToClose(token, name_module) {
-    let filtro_name = "name=" + name_module
-    let url = `http://localhost:8080/api/v1/modules?${filtro_name}`;
+    // let filtro_name = "name=" + name_module
+    // let url = `http://localhost:8080/api/v1/modules?${filtro_name}`;
+    let url = `http://localhost:8080/api/v1/modules?name=${name_module}&state=ACTIVE&creation_date_order=true`;
+
     const response = await fetch(url, {
         method: 'GET',
         headers: {
@@ -197,10 +202,11 @@ export async function enableToClose(token, name_module) {
         const data = await response.json();
         console.log(data[0])
         if (data.length > 0) {
-            console.info("The module id was obtained successfully")
+            console.info("The status module was obtained successfully (enable to close)")
+            console.log(data[0].enableToClose)
             return data[0].enableToClose;
         } else {
-            console.error('Error when obtaining the module id');
+            console.error('Error when obtaining the status module (enable to close)');
             return false;
         }
     } else {

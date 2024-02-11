@@ -45,6 +45,7 @@ async function MostrarPantalla() {
 
     if (rol == "USER_REGULAR") {
         document.getElementById("crearModuloButton").classList.add("hidden");
+        document.getElementById("cerrarModuloButton").classList.add("hidden");
         tieneEncuestas()
             .then(activo => {
                 if (activo === 0) {
@@ -61,6 +62,7 @@ async function MostrarPantalla() {
             });
     } else {
         document.getElementById("twelveSteps").classList.remove("hidden");
+        document.getElementById("contestarModuloButton").classList.add("hidden");
     }
 
     GetIdEquipo(token)
@@ -122,7 +124,6 @@ document.getElementById("crearModuloButton").addEventListener("click", function 
                     mensaje = "Se creo el modulo exitosamente";
                 } else {
                     mensaje = "Error: " + result;
-                    document.getElementById("MensajeRequest").classList.add("error")
                 }
 
                 document.getElementById("MensajeRequest").textContent = mensaje
@@ -133,7 +134,6 @@ document.getElementById("crearModuloButton").addEventListener("click", function 
             });
     } else {
         mensaje = "Solo el Team Leader del equipo puede abrir el modulo"
-        document.getElementById("MensajeRequest").classList.add("alerta")
         document.getElementById("MensajeRequest").textContent = mensaje
         openPopup('overlay')
     }
@@ -144,11 +144,11 @@ document.getElementById("contestarModuloButton").addEventListener("click", funct
     window.location.href = "../pages/Encuesta_TSM.html"
 });
 
-document.getElementById("closePopup").addEventListener("click", function() {
+document.getElementById("closePopup").addEventListener("click", function () {
     closePopup('overlay');
 });
 
-document.getElementById("CancelarAlertPopup").addEventListener("click", function() {
+document.getElementById("CancelarAlertPopup").addEventListener("click", function () {
     closePopup('CloseAlertPopUp');
 });
 
@@ -156,12 +156,27 @@ document.getElementById("cerrarModuloButton").addEventListener("click", function
 
 
     if (rol == "TEAM_LEADER") {
-        if (!habilitado_para_cerrar) {
+        if (habilitado_para_cerrar) {
+            CerrarModulo(token, idModulo)
+                .then(result => {
+                    if (result === 'Request Processed successfully') {
+                        mensaje = "Se cerro el modulo exitosamente";
+                    } else {
+                        mensaje = "Error: " + result;
+                    }
+
+                    document.getElementById("MensajeRequest").textContent = mensaje;
+                    openPopup('overlay');
+                })
+                .catch(error => {
+                    console.error('Error: ', error);
+                });
+        } else {
             openPopup('CloseAlertPopUp');
+            console.log(idModulo)
         }
     } else {
         mensaje = "Solo el Team Leader del equipo puede cerrar el modulo";
-        document.getElementById("MensajeRequest").classList.add("alerta");
         document.getElementById("MensajeRequest").textContent = mensaje;
         openPopup('overlay');
     }
@@ -169,13 +184,13 @@ document.getElementById("cerrarModuloButton").addEventListener("click", function
 
 document.getElementById("ContinuarAlertPopup").addEventListener("click", function () {
     closePopup('CloseAlertPopUp');
+    console.log(idModulo)
     CerrarModulo(token, idModulo)
         .then(result => {
             if (result === 'Request Processed successfully') {
                 mensaje = "Se cerro el modulo exitosamente";
             } else {
                 mensaje = "Error: " + result;
-                document.getElementById("MensajeRequest").classList.add("error")
             }
 
             document.getElementById("MensajeRequest").textContent = mensaje;

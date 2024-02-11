@@ -38,7 +38,7 @@ export async function ObtenerModulos(token, name_module, state, includeCreationD
         console.log(data)
         if (data.length > 0) {
             console.info("The module id was obtained successfully")
-            return data[0];
+            return data;
         } else {
             console.error('Error when obtaining the module id');
             return null;

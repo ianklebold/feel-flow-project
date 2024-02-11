@@ -61,6 +61,11 @@
     margin-top: -1rem;
 }
 
+.botones .bg-gradient-dark,
+.botones .bg-gradient-danger {
+    margin: 1rem;
+}
+
 .btn-crear {
     background-color: #DF888F;
     margin: 1rem;
@@ -75,15 +80,7 @@
     text-align: center;
     justify-content: center;
     font-weight: bold;
-    color: rgb(0, 255, 0);
-}
-
-.mensaje.error {
-    color: rgb(200, 0, 0);
-}
-
-.mensaje.alerta {
-    color: rgb(255, 255, 0);
+    color: black;
 }
 
 .overlay {
@@ -105,7 +102,8 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background-color: #df888fc1;
+    background-color: rgba(245, 245, 245, 0.4);
+    /* background-color: #df888fc1; */
     padding: 20px;
     z-index: 1001;
     /* Ajusta según sea necesario para superponer otros elementos */

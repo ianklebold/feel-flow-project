@@ -35,7 +35,7 @@ const reverseModuleMapping = {
     'TWELVE_STEPS': '12 pasos de la Felicidad',
     'NIKO_NIKO': 'Niko Niko'
 };
- // Mapeo inverso de los status para mostrar los valores seleccionados en el HTML
+// Mapeo inverso de los status para mostrar los valores seleccionados en el HTML
 const reverseStateMapping = {
     'ACTIVE': 'Activo',
     'FINISHED': 'Terminado'
@@ -54,18 +54,11 @@ function obtenerValoresSeleccionados() {
 }
 
 // Función para llenar la tabla con los módulos obtenidos
-async function llenarTabla() {
+async function llenarTabla(moduleData) {
 
-    // Llamar a la función para obtener los valores seleccionados
-    obtenerValoresSeleccionados();
-
-    // Llamar a la función para obtener los módulos
-    const moduleData = await ObtenerModulos(token, name_module, state);
-
-
-    const tableBody = document.getElementById('listado-modulos');
-    // Limpiar la tabla eliminando todas las filas existentes
-    tableBody.innerHTML = '';
+    // // Llamar a la función para obtener los valores seleccionados
+    // obtenerValoresSeleccionados();
+    // console.log("modulo: " + name_module + " | " + "estado: " + state + " | " + "orden: " + order + " | ");
     // Verificar si se obtuvo la información de algún módulo
     if (moduleData !== null) {
         // Obtener el tbody de la tabla en el HTML
@@ -82,7 +75,7 @@ async function llenarTabla() {
             // Si no hay un mapeo inverso, simplemente usa el valor original
             nameCell.textContent = moduleData.name;
         }
-        nameCell.classList.add('text-center'); 
+        nameCell.classList.add('text-center');
 
         const moduleStateCell = document.createElement('td');
         if (moduleData.moduleState in reverseStateMapping) {
@@ -90,7 +83,7 @@ async function llenarTabla() {
         } else {
             // Si no hay un mapeo inverso, simplemente usa el valor original
             moduleStateCell.textContent = moduleData.moduleState;
-        }  
+        }
         moduleStateCell.classList.add('text-center');
 
         // Calcular la cantidad de "idSurvey" con "surveyState" igual a "FINISHED"
@@ -113,8 +106,9 @@ async function llenarTabla() {
         const creationDateCell = document.createElement('td');
         // Obtener la fecha y formatearla
         const creationDate = new Date(moduleData.creationDate);
+        creationDate.setHours(creationDate.getHours() + 3);
         const formattedDate = `${String(creationDate.getDate()).padStart(2, '0')}-${String(creationDate.getMonth() + 1).padStart(2, '0')}-${creationDate.getFullYear()}`;
-        creationDateCell.textContent = formattedDate; 
+        creationDateCell.textContent = formattedDate;
         creationDateCell.classList.add('text-center');
 
         // Agregar las celdas a la fila
@@ -126,12 +120,58 @@ async function llenarTabla() {
 
         // Agregar la fila al tbody de la tabla
         tableBody.appendChild(newRow);
+        console.info("Se inserto un elemento")
     }
 }
 
 // Agregar un evento de clic al botón
 const busquedaModuloBtn = document.getElementById('busqueda_modulo');
 // Llamar a la función realizarBusqueda cuando la página haya cargado
-document.addEventListener('DOMContentLoaded', llenarTabla);
 
-busquedaModuloBtn.addEventListener('click', llenarTabla);
+// document.addEventListener('DOMContentLoaded', function () {
+//     const moduleData = ObtenerModulos(token, name_module, state);
+//     // moduleData.forEach(currentModule => {
+//     //     console.log(currentModule);
+//     //     llenarTabla(currentModule);
+//     // })
+//     for (let modulo in moduleData) {
+//         console.log(modulo)
+//         llenarTabla(modulo)
+//     }
+// });
+
+function Filtrar() {
+    ObtenerModulos(token, name_module, state, order)
+        .then((result) => {
+            console.log(result)
+            for (let i = 0; i < result.length; i++) {
+                console.log(result[i]);
+                llenarTabla(result[i]);
+            }
+        }).catch((err) => {
+            console.error(err);
+        });
+}
+
+busquedaModuloBtn.addEventListener('click', function(){
+    const tableBody = document.getElementById('listado-modulos');
+    // Limpiar la tabla eliminando todas las filas existentes
+    tableBody.innerHTML = '';
+
+    // Llamar a la función para obtener los valores seleccionados
+    obtenerValoresSeleccionados();
+    console.log("modulo: " + name_module + " | " + "estado: " + state + " | " + "orden: " + order + " | ");
+
+    Filtrar();
+});
+
+Filtrar();
+
+// const moduleData = ObtenerModulos(token, name_module, state);
+// console.log(moduleData)
+// for (let modulo in moduleData) {
+//     console.log(modulo)
+//     llenarTabla(modulo)
+// }
+
+
