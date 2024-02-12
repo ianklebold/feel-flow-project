@@ -1,0 +1,79 @@
+@import 'variables';
+@import 'mixins';
+
+div {
+    @include crear-flexbox();
+}
+
+.Login {
+    flex-wrap: wrap;
+    margin: 1rem;
+    border-radius: $border-radius;
+    width: 60rem;
+    gap: 1.5rem;
+    padding: 0.7rem;
+
+    @include crear-flexbox(center, space-between);
+    @include theme(dark) {
+        background-color: $dark-element-bg-color;
+        color: $dark-element-text-color;
+        border-color: $dark-element-border-color;
+    }
+
+    .Header {
+        position: relative;
+        flex-direction: row;
+        width: 100%;
+    
+        @include crear-flexbox(center);
+
+        .Titulo {
+            font-size: $title-font-size;
+            position: top;
+            text-align: center;
+            align-items: center;
+            width: 100%;
+        
+            @include theme(dark) {
+                background-color: transparent;
+                color: $dark-text-color;
+            }
+        }
+    
+    }
+
+    .Contenedor {
+        position: relative;
+        flex-direction: row;
+        width: 100%;
+    
+        @include crear-flexbox(center, space-around);
+
+        .Logo {
+            width: 50%;
+            height: auto;
+            margin-bottom: 0.5rem;
+            position: relative;
+        }
+        
+        .Formulario {
+            position: relative;
+            flex-direction: column;
+            gap: 1.5rem;
+            width: 100%;
+        
+            @include crear-flexbox(center, space-between);
+        
+            hr {
+                width: 75%;
+            }
+        
+            .error-message {
+                text-align: center;
+            
+                @include ErrorMessage();
+            }
+        }
+    }
+
+}

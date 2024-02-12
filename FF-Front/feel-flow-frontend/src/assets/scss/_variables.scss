@@ -1,0 +1,76 @@
+
+
+// Background
+$primary-background: white;
+$secondary-background: black;
+$login-background-color: rgba(69, 130, 158, 0.323);
+$bg-transparent: transparent;
+
+
+// Colors
+$primary-color: #007bff;
+$secondary-color: #6c757d;
+$success-color: #28a745;
+$danger-color: #dc3545;
+$warning-color: #ffc107;
+$info-color: #17a2b8;
+
+// Typography
+$default-font: Arial, sans-serif;
+$base-font-size: 16px;
+$base-line-height: 1.5;
+$title-font-size: 35px;
+
+// Spacing
+$small-spacing: 0.5rem;
+$medium-spacing: 1rem;
+$large-spacing: 1.5rem;
+
+// Borders and Shadows
+$border-radius: 1rem;
+$border-color: none;
+$box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+// Z-index
+$modal-z-index: 1000;
+$menu-z-index: 100;
+$tooltips-z-index: 200;
+
+// Breakpoints for Responsive Design
+$sm-breakpoint: 576px;
+$md-breakpoint: 768px;
+$lg-breakpoint: 992px;
+$xl-breakpoint: 1200px;
+
+// Light theme colors
+$light-bg-color: #ffffff;
+$light-text-color: #333333;
+$light-border-color: #dddddd;
+$light-element-bg-color:  rgba(69, 130, 158, 0.323); 
+$light-element-text-color: #333333;
+$light-element-border-color: #dddddd;
+
+// Dark theme colors
+$dark-bg-color: #333333;
+$dark-text-color: #ffffff;
+$dark-border-color: #555555;
+$dark-element-bg-color:  rgba(69, 130, 158, 0.323); 
+$dark-element-text-color: #344767;
+$dark-element-border-color: #dddddd;
+
+// Padding
+$padding-x-small: 0.25rem;
+$padding-small: 0.75rem;
+$padding-medium: 1rem;
+$padding-large: 1.5rem;
+$padding-x-large: 2rem;
+
+// Margin
+$margin-x-small: 0.25rem;
+$margin-small: 0.5rem;
+$margin-medium: 1rem;
+$margin-large: 1.5rem;
+$margin-x-large: 2rem;
+
+// Container
+$conteiner-width: 60%;

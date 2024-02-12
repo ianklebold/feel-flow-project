@@ -34,5 +34,5 @@ reports/*
 /bin/
 
 #Frontend files
-/FF-Front/
+# /FF-Front/
 .vscode

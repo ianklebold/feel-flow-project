@@ -1,0 +1,94 @@
+@use 'sass:math';
+
+@import 'variables';
+
+// Mixin
+@mixin theme($theme) {
+
+    // Me cambia los colores del body según el tema del navegador
+    @if $theme ==light {
+        // Light theme
+        background-color: $light-element-bg-color;
+        color: $light-element-text-color;
+        border-color: $light-element-border-color;
+    }
+
+    @else if $theme ==dark {
+        // Dark theme
+        background-color: $dark-element-bg-color;
+        color: $dark-element-text-color;
+        border-color: $dark-element-border-color;
+    }
+
+    @else {
+        @error "Tema desconocido: `#{$theme}`. Por favor, selecciona 'light' o 'dark'.";
+    }
+
+    @content;
+}
+
+@mixin elementTheme($bg-color, $color, $border-color) {
+    background-color: $bg-color;
+    color: $color;
+    border-color: $border-color;
+    @content;
+}
+
+@mixin ErrorMessage($bg-error-color: transparent) {
+    color: $danger-color;
+    font-size: 12px;
+    font-weight: bold;
+    background-color: $bg-error-color;
+}
+
+@mixin AlertMessage($bg-alert-color: transparent) {
+    color: $warning-color;
+    font-size: 12px;
+    font-weight: bold;
+    background-color: $bg-alert-color;
+}
+
+@mixin SuccessMessage($bg-success-color: transparent) {
+    color: $success-color;
+    font-size: 12px;
+    font-weight: bold;
+    background-color: $bg-success-color;
+}
+
+@mixin crear-flexbox($aling: center, $justify: center) {
+    display: flex;
+    align-items: $aling;
+    justify-content: $justify;
+}
+
+@mixin text-color($color) {
+    @if ($color ==$black) {
+        background-color: $white;
+    }
+
+    @else if ($color ==$white) {
+        background-color: $black;
+    }
+
+    @else if ($color ==$lightgrey) {
+        background-color: $black;
+    }
+
+    @else {
+        background-color: $white;
+    }
+}
+
+@mixin transition($properties, $duration: 0.3s, $timing-function: ease, $delay: 0s) {
+    transition-duration: $duration;
+    transition-timing-function: $timing-function;
+    transition-delay: $delay;
+    transition-property: $properties;
+}
+
+// Functions
+
+@function pixeles-rem($pixeles) {
+    $rem: math.div($pixeles, 16) * 1rem;
+    @return $rem
+}

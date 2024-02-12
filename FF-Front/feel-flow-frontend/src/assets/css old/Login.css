@@ -1,0 +1,84 @@
+div {
+    display: flex;
+}
+
+.Login {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    margin: 1rem;
+    background-color: rgba(69, 130, 158, 0.323);
+    border-radius: 3rem;
+    width: 60rem;
+    gap: 1.5rem;
+    padding: 0.7rem;
+}
+
+.Header {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.Titulo {
+    font-size: 35px;
+    position: top;
+    text-align: center;
+    align-items: center;
+}
+
+.Contenedor {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+
+.Formulario {
+    position: relative;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 1.5rem;
+}
+
+.Formulario>hr {
+    width: 75%;
+}
+
+.Logo {
+    width: 50%;
+    height: auto;
+    border-radius: 100px;
+    margin-bottom: 0.5rem;
+    position: relative;
+}
+
+@media screen and (min-width: 768px) {
+    .Titulo {
+        width: 50%;
+    }
+
+    .Contenedor {
+        align-items: center;
+        justify-content: space-around;
+    }
+
+    .Header {
+        width: 100%;
+    }
+
+    .Formulario {
+        width: 50%;
+    }
+}
+
+.error-message {
+    color: red;
+    font-size: 12px;
+    font-weight: bold;
+    text-align: center;
+}
