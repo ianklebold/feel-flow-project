@@ -1,12 +1,3 @@
-
-
-// Background
-$primary-background: white;
-$secondary-background: black;
-$login-background-color: rgba(69, 130, 158, 0.323);
-$bg-transparent: transparent;
-
-
 // Colors
 $primary-color: #007bff;
 $secondary-color: #6c757d;
@@ -15,11 +6,52 @@ $danger-color: #dc3545;
 $warning-color: #ffc107;
 $info-color: #17a2b8;
 
+// Unique Background
+$primary-background: white;
+$secondary-background: black;
+$bg-transparent: transparent;
+
+// Light Theme Background
+$login-background-color: rgba(69, 130, 158, 0.323);
+$nav-background: rgba(69, 130, 158, 0.323);
+$icon-dropdown-background: rgba(74, 122, 194, 0.7);
+$dropdown-background: rgba(74, 122, 194, 0.5);
+$dropdown-background-hover: rgba(69, 130, 158, 0.323);
+
+// Dark Theme Background
+$login-background-dark: #705E9C;
+$nav-background-dark: #705E9C;
+$icon-dropdown-background-dark: #524571;
+$dropdown-background-dark: #8F78C6;
+$dropdown-background-hover-dark: #AD92F1;
+// Source: https://hotpot.ai/color-generator?s=google&ad=color-generator&gad_source=1&gclid=Cj0KCQiAw6yuBhDrARIsACf94RX5R6hew1o0A7vrxKBBRRhFgaruZmqelkg7qUYYkA20kEGUaqg8UAcaAliCEALw_wcB
+
 // Typography
 $default-font: Arial, sans-serif;
 $base-font-size: 16px;
 $base-line-height: 1.5;
 $title-font-size: 35px;
+
+// Typography size
+$title-size: 35px;
+$text-size: 16px;
+$path-size: 12px;
+$icon-size: 20px;
+$notification-size: 14px;
+
+// Typography unique colors
+
+
+// Typography Light theme colors
+$path-element: #344767;
+$path-page: #344767;
+$path-divisor: #6c757d;
+
+// Typography Dark theme colors
+$path-element-dark: #cac0e4;
+$path-page-dark: #f1ecfd;
+$path-divisor-dark: #cac0e4;
+
 
 // Spacing
 $small-spacing: 0.5rem;

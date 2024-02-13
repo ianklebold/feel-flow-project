@@ -2,13 +2,15 @@
 import { useState } from 'react'
 import { NavLink } from 'react-router-dom';
 import axios from 'axios'
+import { Navigate } from 'react-router-dom';
 
 // Components
 import { Boton, InputText } from '../layout/components/DefaultElements'
 import DefaultLogin from '../layout/components/DefaulLogin';
 
+
 // Styles
-import '../assets/css/styles.css'
+// import '../assets/css/styles.css'
 // import '../layout/css/Button.css'
 // import '../layout/css/Input.css'
 
@@ -33,16 +35,15 @@ export function Login() {
         console.log(data)
         console.log(data.email)
         console.log(data.password)
-        const datos = {
+        const dato = {
             username: data.email,
             password: data.password
         };
-
         try {
-            const response = await axios.post('http://localhost:8080/login', datos);
-            console.log(response.data);
+            const response = await axios.post('http://localhost:8080/login', dato);
             if (response.status === 200) {
-                return <Navigate to="/home" />;
+                window.location.replace('/home');
+                // return (<NavLink to="/home"></NavLink>);
             }
         } catch (error) {
             console.error(error);
@@ -77,9 +78,7 @@ export function Login() {
                         onChange={handleInputChange}
                     />
                     {data.errorMessage && <div className="error-message">{data.errorMessage}</div>}
-                    <NavLink to="/home">
-                        <Boton clase="btn login" tipo="submit" nombre="INICIAR SESION" />
-                    </NavLink>
+                    <Boton clase="btn login" tipo="submit" nombre="INICIAR SESION" />
                 </>
                 <hr />
             </form>

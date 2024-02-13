@@ -55,9 +55,9 @@
     background-color: $bg-success-color;
 }
 
-@mixin crear-flexbox($aling: center, $justify: center) {
+@mixin create-flexbox($align: center, $justify: center) {
     display: flex;
-    align-items: $aling;
+    align-items: $align;
     justify-content: $justify;
 }
 
@@ -84,6 +84,14 @@
     transition-timing-function: $timing-function;
     transition-delay: $delay;
     transition-property: $properties;
+}
+
+@mixin pathElement() {
+    color: $path-element;
+    text-decoration: none;
+    @media (prefers-color-scheme: dark) {
+        color: $path-element-dark;
+    }
 }
 
 // Functions

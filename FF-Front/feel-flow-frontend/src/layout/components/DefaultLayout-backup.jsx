@@ -11,7 +11,7 @@ export default function DefaultLayout({ children }) {
     return (
         <>
             <header>
-                <nav className="navbar">
+                <nav>
                     <div className="ContainerPath">
                         <ol className="path">
                             <li className="path-item">
@@ -25,7 +25,7 @@ export default function DefaultLayout({ children }) {
                     <div className='ContainerDropdown'>
                         <ul>
                             <li className="dropdown">
-                                <a href="#" className="downbutton"><CiBellOn /></a>
+                                <a href="#" className="dropbtn"><CiBellOn /></a>
                                 <div className="dropdown-content">
                                     <a href="#">Notification 1</a>
                                     <a href="#">Notification 2</a>
@@ -33,7 +33,7 @@ export default function DefaultLayout({ children }) {
                                 </div>
                             </li>
                             <li className="dropdown">
-                                <a href="#" className="downbutton"><CiSettings /></a>
+                                <a href="#" className="dropbtn"><CiSettings /></a>
                                 <div className="dropdown-content">
                                     <a href="#">Setting 1</a>
                                     <a href="#">Setting 2</a>
@@ -41,7 +41,7 @@ export default function DefaultLayout({ children }) {
                                 </div>
                             </li>
                             <li className="dropdown">
-                                <a href="#" className="downbutton"><CiUser /></a>
+                                <a href="#" className="dropbtn"><CiUser /></a>
                                 <div className="dropdown-content">
                                     <a href="#">My Profile</a>
                                     <a href="#">Log Off</a>
@@ -52,33 +52,32 @@ export default function DefaultLayout({ children }) {
                 </nav>
             </header>
 
-            <div className="container">
-                <div className="sidebar">
-                    <div className='sidebar-header'>
+            <main>
+                <nav className='sidenav'>
+                    <div className='sidenav-header'>
                         <img src="../src/assets/image/icons/FeelFlow.png" alt="Feel Flow" />
                         <span>Feel Flow</span>
                     </div>
                     <hr />
-                    <div className='sidebar-body'>
+                    <div className='sidenav-body'>
                         <>
-                            <ul className="elements">
-                                {
+                            <ul className="navbar-nav">
+                                {   
                                     modulos.map(mod => (
-
-                                        <Menu key={mod.id} name={mod.nombre} icon={mod.logo} url={mod.link} />
-
+                                        
+                                        <Menu key={mod.id} name={mod.nombre} icon={mod.logo} url={mod.link}/>
+                                        
                                     ))
                                 }
                             </ul>
-
+                            
                         </>
                     </div>
-                </div>
-                <div className='page'>
+                </nav>
+                <div className='contenido'>
                     {children}
                 </div>
-            </div>
-
+            </main>
         </>
 
     )

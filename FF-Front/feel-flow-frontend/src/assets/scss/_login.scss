@@ -2,7 +2,7 @@
 @import 'mixins';
 
 div {
-    @include crear-flexbox();
+    @include create-flexbox();
 }
 
 .Login {
@@ -13,7 +13,7 @@ div {
     gap: 1.5rem;
     padding: 0.7rem;
 
-    @include crear-flexbox(center, space-between);
+    @include create-flexbox(center, space-between);
     @include theme(dark) {
         background-color: $dark-element-bg-color;
         color: $dark-element-text-color;
@@ -25,7 +25,7 @@ div {
         flex-direction: row;
         width: 100%;
     
-        @include crear-flexbox(center);
+        @include create-flexbox(center);
 
         .Titulo {
             font-size: $title-font-size;
@@ -47,7 +47,7 @@ div {
         flex-direction: row;
         width: 100%;
     
-        @include crear-flexbox(center, space-around);
+        @include create-flexbox(center, space-around);
 
         .Logo {
             width: 50%;
@@ -62,7 +62,7 @@ div {
             gap: 1.5rem;
             width: 100%;
         
-            @include crear-flexbox(center, space-between);
+            @include create-flexbox(center, space-between);
         
             hr {
                 width: 75%;

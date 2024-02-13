@@ -1,0 +1,140 @@
+header {
+    width: 100%;
+    position: fixed;
+    top: 0;
+    margin: 1rem;
+}
+.navbar {
+    flex-wrap: wrap;
+    list-style: none;
+    border-radius: $border-radius;
+    background-color: $nav-background;
+    width: 100%;
+
+    @include create-flexbox(center, space-between);
+
+    @media (prefers-color-scheme: dark) {
+        background-color: $nav-background-dark;
+    }
+
+    .ContainerPath {
+        align-items: start;
+        display: flex;
+        background-color: $bg-transparent;
+
+        .path {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+
+            .path-item {
+                font-size: $path-size;
+                opacity: 0.5;
+                list-style: none;
+
+                >a {
+                    @include pathElement();
+                }
+
+                &+.path-item {
+                    color: $path-page;
+                    @media (prefers-color-scheme: dark) {
+                        color: $path-page-dark;
+                    }
+                }
+
+                &+.path-item::before {
+                    float: left;
+                    padding-right: 5px;
+                    padding-left: 5px;
+                    color: $path-divisor;
+                    content: var(--bs-breadcrumb-divider, "/");
+                    @media (prefers-color-scheme: dark) {
+                        color: $path-divisor-dark;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.ContainerDropdown {
+    display: flex;
+    right: 0;
+    align-items: end;
+
+    ul {
+        list-style-type: none;
+        margin: 10px;
+        padding: 0;
+        overflow: hidden;
+        background-color: $bg-transparent;
+        gap: 1rem;
+
+        @include create-flexbox(end, end);
+
+        .dropdown {
+            float: left;
+            font-size: $icon-size;
+            padding: 0, 5rem;
+            border-radius: 100%;
+
+            .downbutton {
+                display: inline-block;
+            }
+
+        }
+
+    }
+
+    .dropdown-content {
+        display: none;
+        position: absolute;
+        background-color: $dropdown-background;
+        min-width: 160px;
+        z-index: 1;
+        font-size: $notification-size;
+
+        @media (prefers-color-scheme: dark) {
+            background-color: $dropdown-background-dark;
+        }
+
+        a {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            text-align: left;
+
+            &:hover {
+                background-color: $dropdown-background-hover;
+                @media (prefers-color-scheme: dark) {
+                    background-color: $dropdown-background-hover-dark;
+                }
+            }
+        }
+    }
+    .dropdown:hover .dropdown-content {
+        display: block;
+        right: 1rem;
+    }
+}
+
+
+
+
+
+
+// main {
+//     display: flex;
+//     justify-content: space-between;
+// }
+
+// .contenido {
+//     display: flex;
+//     flex-direction: column;
+//     width: 80%;
+//     background-color: aquamarine;
+//     border-radius: 1rem;
+//     text-align: center;
+// }

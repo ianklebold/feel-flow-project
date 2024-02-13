@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import axios from 'axios'
 import { Boton, InputText, Check } from '../layout/components/DefaultElements'
-import '../assets/css/Register.css'
+// import '../assets/css/Register.css'
 import DefaultLogin from '../layout/components/DefaulLogin';
 
 export function Register() {
