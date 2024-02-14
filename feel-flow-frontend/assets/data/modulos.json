@@ -57,11 +57,18 @@
         "nombre": "Encuestas",
         "perfiles": [
             "ADMIN",
-            "TEAM_LEADER",
+            "TEAM_LEADER"
+        ],
+        "logo": "fa-puzzle-piece",
+        "link": "../pages/encuestas_activas_lead.html"
+    },
+    "EncuestasMiembro": {
+        "nombre": "Encuestas",
+        "perfiles": [
             "USER_REGULAR"
         ],
         "logo": "fa-puzzle-piece",
-        "link": "../pages/Modulos.html"
+        "link": "../pages/Encuesta_TSM.html"
     },
     "Usuarios": {
         "nombre": "Usuarios",
