@@ -97,7 +97,7 @@ async function llenarTabla(moduleData) {
 
         const enableToCloseCell = document.createElement('td');
         if (moduleData.moduleState === 'FINISHED') {
-            enableToCloseCell.textContent = '-';
+            enableToCloseCell.textContent = 'Si';
         } else {
             enableToCloseCell.textContent = moduleData.enableToClose ? 'Si' : 'No';
         }
@@ -111,12 +111,28 @@ async function llenarTabla(moduleData) {
         creationDateCell.textContent = formattedDate;
         creationDateCell.classList.add('text-center');
 
+        const closeDateCell = document.createElement('td');
+        // Obtener la fecha y formatearla
+        console.log(moduleData)
+        const closeDate = new Date(moduleData.closeDate);
+        closeDate.setHours(closeDate.getHours() + 3);
+        const formattedDateClose = `${String(closeDate.getDate()).padStart(2, '0')}-${String(closeDate.getMonth() + 1).padStart(2, '0')}-${closeDate.getFullYear()}`;
+        
+        closeDateCell.classList.add('text-center');
+
+        if (moduleData.moduleState !== 'FINISHED') {
+            closeDateCell.textContent = '-';
+        } else {
+            closeDateCell.textContent = formattedDateClose;
+        }
+
         // Agregar las celdas a la fila
         newRow.appendChild(nameCell);
         newRow.appendChild(moduleStateCell);
         newRow.appendChild(finishedSurveysCell);
         newRow.appendChild(enableToCloseCell);
         newRow.appendChild(creationDateCell);
+        newRow.appendChild(closeDateCell);
 
         // Agregar la fila al tbody de la tabla
         tableBody.appendChild(newRow);
