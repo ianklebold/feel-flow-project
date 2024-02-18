@@ -5,6 +5,11 @@ const token = localStorage.getItem('Token');
 console.log(token)
 console.log(idLocation)
 
+if (token == null) {
+    window.location.href = '../pages/sign_in.html';
+}
+
+
 const titulo_pagina = document.querySelector('title');
 const pagina = titulo_pagina.textContent;
 

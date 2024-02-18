@@ -8,6 +8,20 @@ var respuestas_a_enviar = {
     surveyState: "ACTIVE"
 }
 
+async function tieneEncuestas() {
+    console.log("hola")
+    return ObtenerEncuestas(token)
+        .then(data => {
+            let tiene_encuesta
+            data.length > 0 ? tiene_encuesta = true : tiene_encuesta = false
+            return data.length;
+        })
+        .catch(error => {
+            console.error("Error al obtener las encuestas activas: " + error);
+            return false;
+        })
+}
+
 function Preguntas() {
     ObtenerPreguntas(token)
         .then(data => {
@@ -47,6 +61,7 @@ function CargarDatos(question, answer) {
 function Respuestas() {
     ObtenerRespuestas(token)
         .then(data => {
+            console.log(data)
             for (var i = 0; i < data.length; i++) { // Recorre el grupo de respuestas que corresponde a la pregunta | de 1 a 12
                 for (var j = data[i].length - 1; j >= 0; j--) { // Recorre cada respuesta de cada pregunta | de 1 a 5
                     var respuesta = document.createElement('label');
@@ -57,8 +72,10 @@ function Respuestas() {
                     checkbox.setAttribute('type', 'radio');
                     checkbox.setAttribute('name', 'respuestaRadio-' + i);
                     checkbox.setAttribute('value', data[i][j]);
-                    checkbox.id = "Respuesta " + i + j
+                    checkbox.id = "Respuesta " + i + j;
+                    // console.log(answer_saved);
                     if (answer_saved[i] == j) {
+                        console.log("Respuesta marcada " + checkbox.id);
                         checkbox.setAttribute('checked', true)
                     }
 
@@ -82,22 +99,22 @@ function toNumber(number) {
     let nro
     switch (number) {
         case 'I am Ian':
-            nro = 0;
+            nro = 5;
             break;
         case 'UNO':
-            nro = 1;
+            nro = 0;
             break;
         case 'DOS':
-            nro = 2;
+            nro = 1;
             break;
         case 'TRES':
-            nro = 3;
+            nro = 2;
             break;
         case 'CUATRO':
-            nro = 4;
+            nro = 3;
             break;
         case 'CINCO':
-            nro = 5;
+            nro = 4;
             break;
     }
     return nro
@@ -131,6 +148,7 @@ function toString(number) {
 function EstadoEncuesta() { // Obtengo un array con las preguntas que ya están contestadas
     return ObtenerEncuestas(token)
         .then(data => {
+            console.log(data)
             let activity = data[0].activityList;
             for (let i = 0; i < activity.length; i++) {
                 answer_saved.push(toNumber(data[0].activityList[i].answer));
@@ -149,7 +167,7 @@ function ObtenerDatos() {
             for (var i = 0; i < 12; i++) { // Recorre el grupo de respuestas que corresponde a la pregunta | de 1 a 12
                 let nro_rta = 5;
                 let rta = toString(nro_rta);
-                for (var j = 0; j < 4; j++) { // Recorre cada respuesta de cada pregunta | de 1 a 5
+                for (var j = 0; j < 5; j++) { // Recorre cada respuesta de cada pregunta | de 1 a 5
                     let id = "Respuesta " + i + j;
                     let check = document.getElementById(id).checked;
                     if (check) {
@@ -188,7 +206,8 @@ function EstablecerEstado() {
             if (response.statusCode == 200) {
                 console.info("El formulario se envio correctamente con un codigo " + response.statusCode);
                 let mensaje = "Se guardo la encuesta con exito"
-                document.getElementById("MensajeRequest").textContent = mensaje
+                document.getElementById("MensajeRequest").textContent = mensaje;
+                console.log(respuestas_a_enviar)
                 openPopup()
             } else {
                 console.error("Fallo el envio del formulario, se retorno un codigo " + response.statusCode)
@@ -202,14 +221,14 @@ function openPopup() {
 
 function closePopup() {
     document.getElementById('overlay').style.display = 'none';
-    window.location.href = '../pages/Modulos.html'
+    window.location.href = '../pages/Home.html'
 }
 
 
 document.getElementById("enviarButton").addEventListener("click", function (event) {
     event.preventDefault();
     ObtenerDatos(); // Carga los datos a enviar en el POST
-    setTimeout(EstablecerEstado, 4000) // Envia el POST
+    setTimeout(EstablecerEstado, 1000) // Envia el POST
 
 })
 
@@ -217,9 +236,23 @@ document.getElementById("closePopup").addEventListener("click", closePopup);
 
 
 function MostrarPantalla() {
+    tieneEncuestas()
+        .then(activo => {
+            if (activo === 0) {
+                document.getElementById("sinModulos").classList.remove("hidden");
+
+            } else {
+                document.getElementById("Encuesta").classList.remove("hidden");
+
+
+            }
+        })
+        .catch(error => {
+            console.error("Error al obtener las encuestas activas:", error);
+        });
     EstadoEncuesta() // Busca las preguntas guardadas
     Preguntas(); // Renderiza las preguntas
-    setTimeout(Respuestas, 3000); // Renderiza las respuestas
+    setTimeout(Respuestas, 500); // Renderiza las respuestas
 }
 
 MostrarPantalla();
