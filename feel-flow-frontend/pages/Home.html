@@ -12,6 +12,7 @@
   <!--El segundo link utuliza en la barra de arriba-->
   <!--Estilos-->
   <link rel="stylesheet" href="../css/styles.css">
+  <link rel="stylesheet" href="../css/niko_niko.css">
   <link rel="stylesheet" href="../css/Estilos-Feel-Flow.css">
 </head>
 
@@ -160,6 +161,24 @@
     </nav>
     <!-- End Navbar -->
     <!--      Hasta aca lo que va si o si   -->
+
+    <div id="popup-container" class="popup-container">
+      <div class="popup">
+        <h3>¿Cómo te sientes hoy?</h3>
+        <div id="emoji-options" class="emoji-options">
+          <button type="button" class="button-emoji" onclick="selectEmoji('😊', 'Feliz')">😊</button>
+          <button type="button" class="button-emoji" onclick="selectEmoji('😄', 'Contento')">😄</button>
+          <button type="button" class="button-emoji" onclick="selectEmoji('😐', 'Neutral')">😐</button>
+          <button type="button" class="button-emoji" onclick="selectEmoji('😢', 'Triste')">😢</button>
+          <button type="button" class="button-emoji" onclick="selectEmoji('😡', 'Enojado')">😡</button>
+        </div>
+        <p id="selected-mood">Estado seleccionado: Ninguno</p>
+        <textarea id="comment" placeholder="Añade un comentario opcional" class="textarea-comment"></textarea>
+        <button class="button-share" onclick="closePopup()">Compartir Estado de Ánimo</button>
+        <!-- <button onclick="shareMood()">Compartir Estado de Ánimo</button> -->
+      </div>
+    </div>
+
     <div class="container-fluid">
       <h2 class="text-center mt-2 mb-4">Ultimas novedades</h2>
       <p class="text-center mb-5">Aquí puedes encontrar información importante y administrar tus opciones.</p>
@@ -198,6 +217,7 @@
   <script src="../js/core/bootstrap.min.js"></script> <!--Sin este no anda el dropdown-->
   <script type="module" src="../js/functions/GetPerfil.js"></script>
   <script type="module" src="../js/controller/aside.js"></script>
+  <script src="../js/pop_up_niko_niko.js"></script>
 
   <!-- Github buttons -->
   <script async defer src="https://buttons.github.io/buttons.js"></script>
