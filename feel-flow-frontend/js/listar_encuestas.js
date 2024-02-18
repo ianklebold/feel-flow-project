@@ -55,10 +55,6 @@ function obtenerValoresSeleccionados() {
 
 // Función para llenar la tabla con los módulos obtenidos
 async function llenarTabla(moduleData) {
-
-    // // Llamar a la función para obtener los valores seleccionados
-    // obtenerValoresSeleccionados();
-    // console.log("modulo: " + name_module + " | " + "estado: " + state + " | " + "orden: " + order + " | ");
     // Verificar si se obtuvo la información de algún módulo
     if (moduleData !== null) {
         // Obtener el tbody de la tabla en el HTML
@@ -86,19 +82,11 @@ async function llenarTabla(moduleData) {
         }
         moduleStateCell.classList.add('text-center');
 
-        // Calcular la cantidad de "idSurvey" con "surveyState" igual a "FINISHED"
-        const surveys = moduleData.surveyList;
-        const finishedSurveys = surveys.filter(survey => survey.surveyState === 'FINISHED');
-        const ratioFinishedSurveys = (finishedSurveys.length / surveys.length) * 100;
 
         const finishedSurveysCell = document.createElement('td');
-        finishedSurveysCell.textContent = `${finishedSurveys.length} / ${surveys.length} (${ratioFinishedSurveys.toFixed(2)}%)`;
-        finishedSurveysCell.classList.add('text-center');
-          
         const formattedData = `${moduleData.resumeModuleDto.totalOfSurveysReplied} / ${moduleData.resumeModuleDto.totalOfSurveys} (${moduleData.resumeModuleDto.percentOfSurveysReplied.toFixed(2)}%)`;
-          
-        console.log(formattedData);
-          
+        finishedSurveysCell.textContent = formattedData;
+        finishedSurveysCell.classList.add('text-center');
 
         const enableToCloseCell = document.createElement('td');
         if (moduleData.moduleState === 'FINISHED') {
@@ -147,19 +135,6 @@ async function llenarTabla(moduleData) {
 
 // Agregar un evento de clic al botón
 const busquedaModuloBtn = document.getElementById('busqueda_modulo');
-// Llamar a la función realizarBusqueda cuando la página haya cargado
-
-// document.addEventListener('DOMContentLoaded', function () {
-//     const moduleData = ObtenerModulos(token, name_module, state);
-//     // moduleData.forEach(currentModule => {
-//     //     console.log(currentModule);
-//     //     llenarTabla(currentModule);
-//     // })
-//     for (let modulo in moduleData) {
-//         console.log(modulo)
-//         llenarTabla(modulo)
-//     }
-// });
 
 function Filtrar() {
     ObtenerModulos(token, name_module, state, order)
@@ -185,12 +160,5 @@ busquedaModuloBtn.addEventListener('click', function(){
 });
 
 Filtrar();
-
-// const moduleData = ObtenerModulos(token, name_module, state);
-// console.log(moduleData)
-// for (let modulo in moduleData) {
-//     console.log(modulo)
-//     llenarTabla(modulo)
-// }
 
 
