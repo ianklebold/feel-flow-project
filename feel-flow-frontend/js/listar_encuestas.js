@@ -55,10 +55,6 @@ function obtenerValoresSeleccionados() {
 
 // Función para llenar la tabla con los módulos obtenidos
 async function llenarTabla(moduleData) {
-
-    // // Llamar a la función para obtener los valores seleccionados
-    // obtenerValoresSeleccionados();
-    // console.log("modulo: " + name_module + " | " + "estado: " + state + " | " + "orden: " + order + " | ");
     // Verificar si se obtuvo la información de algún módulo
     if (moduleData !== null) {
         // Obtener el tbody de la tabla en el HTML
@@ -86,13 +82,10 @@ async function llenarTabla(moduleData) {
         }
         moduleStateCell.classList.add('text-center');
 
-        // Calcular la cantidad de "idSurvey" con "surveyState" igual a "FINISHED"
-        const surveys = moduleData.surveyList;
-        const finishedSurveys = surveys.filter(survey => survey.surveyState === 'FINISHED');
-        const ratioFinishedSurveys = (finishedSurveys.length / surveys.length) * 100;
 
         const finishedSurveysCell = document.createElement('td');
-        finishedSurveysCell.textContent = `${finishedSurveys.length} / ${surveys.length} (${ratioFinishedSurveys.toFixed(2)}%)`;
+        const formattedData = `${moduleData.resumeModuleDto.totalOfSurveysReplied} / ${moduleData.resumeModuleDto.totalOfSurveys} (${moduleData.resumeModuleDto.percentOfSurveysReplied.toFixed(2)}%)`;
+        finishedSurveysCell.textContent = formattedData;
         finishedSurveysCell.classList.add('text-center');
 
         const enableToCloseCell = document.createElement('td');
@@ -102,6 +95,7 @@ async function llenarTabla(moduleData) {
             enableToCloseCell.textContent = moduleData.enableToClose ? 'Si' : 'No';
         }
         enableToCloseCell.classList.add('text-center');
+        
 
         const creationDateCell = document.createElement('td');
         // Obtener la fecha y formatearla
@@ -113,7 +107,6 @@ async function llenarTabla(moduleData) {
 
         const closeDateCell = document.createElement('td');
         // Obtener la fecha y formatearla
-        console.log(moduleData)
         const closeDate = new Date(moduleData.closeDate);
         closeDate.setHours(closeDate.getHours() + 3);
         const formattedDateClose = `${String(closeDate.getDate()).padStart(2, '0')}-${String(closeDate.getMonth() + 1).padStart(2, '0')}-${closeDate.getFullYear()}`;
@@ -142,26 +135,13 @@ async function llenarTabla(moduleData) {
 
 // Agregar un evento de clic al botón
 const busquedaModuloBtn = document.getElementById('busqueda_modulo');
-// Llamar a la función realizarBusqueda cuando la página haya cargado
-
-// document.addEventListener('DOMContentLoaded', function () {
-//     const moduleData = ObtenerModulos(token, name_module, state);
-//     // moduleData.forEach(currentModule => {
-//     //     console.log(currentModule);
-//     //     llenarTabla(currentModule);
-//     // })
-//     for (let modulo in moduleData) {
-//         console.log(modulo)
-//         llenarTabla(modulo)
-//     }
-// });
 
 function Filtrar() {
     ObtenerModulos(token, name_module, state, order)
         .then((result) => {
-            console.log(result)
+            //console.log(result)
             for (let i = 0; i < result.length; i++) {
-                console.log(result[i]);
+                //console.log(result[i]);
                 llenarTabla(result[i]);
             }
         }).catch((err) => {
@@ -176,18 +156,9 @@ busquedaModuloBtn.addEventListener('click', function(){
 
     // Llamar a la función para obtener los valores seleccionados
     obtenerValoresSeleccionados();
-    console.log("modulo: " + name_module + " | " + "estado: " + state + " | " + "orden: " + order + " | ");
-
     Filtrar();
 });
 
 Filtrar();
-
-// const moduleData = ObtenerModulos(token, name_module, state);
-// console.log(moduleData)
-// for (let modulo in moduleData) {
-//     console.log(modulo)
-//     llenarTabla(modulo)
-// }
 
 

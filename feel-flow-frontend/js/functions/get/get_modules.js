@@ -1,4 +1,4 @@
-export async function ObtenerModulos(token, name_module, state, includeCreationDateOrder = true) {
+export async function ObtenerModulos(token, name_module, state, order) {
     let url = 'http://localhost:8080/api/v1/modules';
 
     // Construir los parámetros de la URL basados en los filtros opcionales
@@ -11,11 +11,11 @@ export async function ObtenerModulos(token, name_module, state, includeCreationD
     }
     
     // Agregar el filtro creation_date_order solo si includeCreationDateOrder es true
-    if (includeCreationDateOrder) {
-        params.append('creation_date_order', 'true');
+    if (order) {
+        params.append('creation_date_order', true);
     }
     else {
-        params.append('creation_date_order', 'false');
+        params.append('creation_date_order', false);
     }
 
     console.log(params.toString());
