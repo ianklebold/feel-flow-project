@@ -97,11 +97,10 @@ body {
     background-color: #000000;
 }
 
-.pie {
+.accordion-footer {
     display: flex;
     align-items: center;
     justify-content: center;
-    background-image: url("../img/curved-images/twelve_steps_footer.png");
     border-bottom-left-radius: 1rem;
     border-bottom-right-radius: 1rem;
     margin-top: -1rem;
@@ -112,10 +111,10 @@ body {
     margin: 1rem;
 }
 
-.btn-crear {
+/* .btn-crear {
     background-color: #DF888F;
     margin: 1rem;
-}
+} */
 
 .btn-crear.hidden {
     display: none;
@@ -179,3 +178,96 @@ body {
 .sinEncuestas.hidden {
     display: none;
 }
+
+.accordion-item {
+    color: black;
+    text-align: center;
+    margin-bottom: 0.5rem;
+}
+
+.accordion-item .accordion-body > img {
+    max-width: 500px;
+    max-height: 500px;
+}
+
+.accordion-item .accordion-button {
+    font-size: 20px;
+    font-weight: bold;
+    color: whitesmoke;
+}
+
+.accordion-item.twelve-steps .accordion-button {
+    background-image: url("../img/curved-images/twelve_steps_header.jpg");
+
+}
+
+.accordion-item .accordion-collapse {
+    color: black;
+    padding-top: 12px;
+    font-weight: bold;
+}
+
+.accordion-item.twelve-steps .accordion-collapse {
+    background-image: url("../img/curved-images/twelve_steps_body.jpg");
+    background-color: #df888f;
+}
+
+.accordion-item.twelve-steps .accordion-collapse .accordion-footer {
+    background-image: url("../img/curved-images/twelve_steps_footer.jpg");
+}
+
+.accordion-item.twelve-steps .accordion-collapse .accordion-footer .btn-crear {
+    background-color: #DF888F;
+    margin: 1rem;
+}
+
+.accordion-item.niko-niko .accordion-button {
+    background-image: url("../img/curved-images/niko_niko_header.jpg");
+
+}
+
+.accordion-item.niko-niko .accordion-collapse {
+    background-image: url("../img/curved-images/niko_niko_body.jpg");
+    background-color: #a8d1e0;
+}
+
+.accordion-item.niko-niko .accordion-collapse .accordion-footer {
+    background-image: url("../img/curved-images/niko_niko_footer.jpg");
+}
+
+.accordion-item.niko-niko .accordion-collapse .accordion-footer .btn-crear {
+    background-color: #a8d1e0;
+    margin: 1rem;
+}
+
+.accordion-item.kudos .accordion-button {
+    background-image: url("../img/curved-images/kudos_header.jpg");
+
+}
+
+.accordion-item.kudos .accordion-collapse {
+    background-image: url("../img/curved-images/kudos_body.jpg");
+    background-color: #BDA8E0;
+}
+
+.accordion-item.kudos .accordion-collapse .accordion-footer {
+    background-image: url("../img/curved-images/kudos_footer.jpg");
+}
+
+.accordion-item.kudos .accordion-collapse .accordion-footer .btn-crear {
+    background-color: #BDA8E0;
+    margin: 1rem;
+}
+
+.accordion-item .accordion-collapse .accordion-body > p {
+    margin-top: 1rem;
+}
+
+.accordion-item .accordion-collapse .accordion-body > p:hover {
+    background-color: rgba(245, 245, 245, 0.7);
+    color: #000;
+    border-radius: 1rem;
+}
+
+
+

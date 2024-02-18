@@ -171,6 +171,7 @@
         <!--      Hasta aca lo que va si o si   -->
         <div class="container-fluid">
             <h2 class="text-center mt-4 mb-5">Modulos Ágiles</h2>
+            <!-- Pop Ups -->
             <div class="overlay" id="CloseAlertPopUp">
                 <div class="popup">
                     <div class="containerPopup">
@@ -188,25 +189,114 @@
                     <div class="containerPopup">
                         <div class="mensaje" id="MensajeRequest"></div>
                         <button class="btn bg-gradient-dark" id="closePopup">OK</button>
-                    </div> 
+                    </div>
                 </div>
             </div>
             <div class="sinEncuestas hidden" id="sinModulos">
                 En este momento no dispone de encuestas disponibles
             </div>
-            <div class="modulo hidden" id="twelveSteps">
-                <div class="encabezado">
-                    <h3>12 Pasos de la felicidad</h3>
-                    <section class="contenido">
-                        <div class="cuerpo">
+
+            <!-- Contenido -->
+
+            <div class="accordion accordion-flush" id="accordionModules">
+                <div class="accordion-item twelve-steps hidden" id="twelveSteps">
+                    <h2 class="accordion-header" id="flush-headingOne">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#twelve-steps-collapsed" aria-expanded="false" aria-controls="twelve-steps-collapsed">
+                            12 Pasos de la Felicidad
+                        </button>
+                    </h2>
+                    <div id="twelve-steps-collapsed" class="accordion-collapse collapse" aria-labelledby="flush-headingOne"
+                        data-bs-parent="#accordionModules">
+                        <div class="accordion-body">
                             <img src="../img/curved-images/twelve_steps-removebg.png" alt="twelve_steps">
                             <p>
-                                <span>“La felicidad es algo que creamos, no es algo que hay que lograr. Es un camino que
+                                <span>“La felicidad es algo que creamos, no es algo que hay que lograr. Es un camino
+                                    que eliges, no un destino al que llegar”.
+                                </span>
+                                <br>
+                                El objetivo de esta práctica es reflexionar sobre diferentes aspectos relacionados
+                                con la felicidad, cómo los incorporamos en nuestro día a día y poder generar acciones
+                                que
+                                impulsen nuestra felicidad.
+                            </p>
+                        </div>
+                        <div class="accordion-footer">
+                            <button class="btn btn-crear" id="crearModuloButton">Crear Modulo</button>
+                            <button class="btn btn-crear" id="contestarModuloButton">Contestar Encuesta</button>
+                            <button class="btn btn-crear" id="cerrarModuloButton">Cerrar Modulo</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item niko-niko hidden" id="niko-niko">
+                    <h2 class="accordion-header" id="flush-headingOne">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#niko-niko-collapsed" aria-expanded="false" aria-controls="niko-niko-collapsed">
+                            Niko Niko
+                        </button>
+                    </h2>
+                    <div id="niko-niko-collapsed" class="accordion-collapse collapse" aria-labelledby="flush-headingOne"
+                        data-bs-parent="#accordionModules">
+                        <div class="accordion-body">
+                            <img src="../img/curved-images/Niko_Niko.png" alt="niko_niko">
+                            <p>
+                                Esta técnica es una práctica simple y efectiva que consiste en que los miembros del equipo coloquen una carita en un calendario todos los días para reflejar su estado de ánimo. Esta técnica ayuda a visualizar de manera rápida y clara cómo se sienten los integrantes del equipo a lo largo del proyecto. Al analizar las caritas a lo largo del tiempo, se puede identificar patrones, tendencias y posibles problemas emocionales que puedan afectar el desempeño del equipo. Esta herramienta fomenta la comunicación abierta, la empatía y la colaboración entre los miembros del equipo, lo que contribuye a un ambiente de trabajo más saludable y productivo.
+                            </p>
+                        </div>
+                        <div class="accordion-footer">
+                            <button class="btn btn-crear" id="crearModuloButton">Crear Modulo</button>
+                            <button class="btn btn-crear" id="contestarModuloButton">Contestar Encuesta</button>
+                            <button class="btn btn-crear" id="cerrarModuloButton">Cerrar Modulo</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item kudos hidden" id="kudos">
+                    <h2 class="accordion-header" id="flush-headingThree">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#kudos-collapsed" aria-expanded="false"
+                            aria-controls="kudos-collapsed">
+                            Kudos
+                        </button>
+                    </h2>
+                    <div id="kudos-collapsed" class="accordion-collapse collapse"
+                        aria-labelledby="flush-headingThree" data-bs-parent="#accordionModules">
+                        <div class="accordion-body">
+                            <img src="../img/curved-images/kudos.png" alt="kudos">
+                            <p>
+                                Próximamente en la release 5.
+                            </p>
+                        </div>
+                        <div class="accordion-footer">
+                            <button class="btn btn-crear" id="crearModuloButton">Crear Modulo</button>
+                            <button class="btn btn-crear" id="contestarModuloButton">Contestar Encuesta</button>
+                            <button class="btn btn-crear" id="cerrarModuloButton">Cerrar Modulo</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- 
+            <div class="accordion accordion-flush" id="accordionFlushExample">
+                <div class="accordion-item modulo encabezado hidden" id="twelveSteps">
+                    <h2 class="accordion-header" id="flush-headingOne">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                            12 Pasos de la felicidad
+                        </button>
+                    </h2>
+                    <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne"
+                        data-bs-parent="#accordionFlushExample">
+                        <div class="accordion-body cuerpo">
+                            <img src="../img/curved-images/twelve_steps-removebg.png" alt="twelve_steps">
+                            <p>
+                                <span>“La felicidad es algo que creamos, no es algo que hay que lograr. Es un camino
+                                    que
                                     eliges,
                                     no un destino al que llegar”.</span>
                                 <br>
-                                El objetivo de esta práctica es reflexionar sobre diferentes aspectos relacionados con la
-                                felicidad, cómo los incorporamos en nuestro día a día y poder generar acciones que impulsen
+                                El objetivo de esta práctica es reflexionar sobre diferentes aspectos relacionados
+                                con la
+                                felicidad, cómo los incorporamos en nuestro día a día y poder generar acciones que
+                                impulsen
                                 nuestra felicidad.
                             </p>
                         </div>
@@ -215,9 +305,66 @@
                             <button class="btn btn-crear" id="contestarModuloButton">Contestar Encuesta</button>
                             <button class="btn btn-crear" id="cerrarModuloButton">Cerrar Modulo</button>
                         </div>
-                    </section>
+                    </div>
+                    
+                    <div class="encabezado">
+                        <h3>12 Pasos de la felicidad</h3>
+                        <section class="contenido">
+                            <div class="cuerpo">
+                                <img src="../img/curved-images/twelve_steps-removebg.png" alt="twelve_steps">
+                                <p>
+                                    <span>“La felicidad es algo que creamos, no es algo que hay que lograr. Es un camino
+                                        que
+                                        eliges,
+                                        no un destino al que llegar”.</span>
+                                    <br>
+                                    El objetivo de esta práctica es reflexionar sobre diferentes aspectos relacionados
+                                    con la
+                                    felicidad, cómo los incorporamos en nuestro día a día y poder generar acciones que
+                                    impulsen
+                                    nuestra felicidad.
+                                </p>
+                            </div>
+                            <div class="pie">
+                                <button class="btn btn-crear" id="crearModuloButton">Crear Modulo</button>
+                                <button class="btn btn-crear" id="contestarModuloButton">Contestar Encuesta</button>
+                                <button class="btn btn-crear" id="cerrarModuloButton">Cerrar Modulo</button>
+                            </div>
+                        </section>
+                    </div> 
+                    
+                </div>
+
+                <div class="modulo ModuleNikoNiko">
+                    <div class="encabezado">
+                        <h3>12 Pasos de la felicidad</h3>
+                        <section class="contenido">
+                            <div class="cuerpo">
+                                <img src="../img/curved-images/twelve_steps-removebg.png" alt="twelve_steps">
+                                <p>
+                                    <span>“La felicidad es algo que creamos, no es algo que hay que lograr. Es un camino
+                                        que
+                                        eliges,
+                                        no un destino al que llegar”.</span>
+                                    <br>
+                                    El objetivo de esta práctica es reflexionar sobre diferentes aspectos relacionados
+                                    con la
+                                    felicidad, cómo los incorporamos en nuestro día a día y poder generar acciones que
+                                    impulsen
+                                    nuestra felicidad.
+                                </p>
+                            </div>
+                            <div class="pie">
+                                <button class="btn btn-crear" id="crearModuloButton">Crear Modulo</button>
+                                <button class="btn btn-crear" id="contestarModuloButton">Contestar Encuesta</button>
+                                <button class="btn btn-crear" id="cerrarModuloButton">Cerrar Modulo</button>
+                            </div>
+                        </section>
+                    </div>
                 </div>
             </div>
+
+-->
             <!-- Aca continuar agregando los demás modulos -->
         </div>
     </main>

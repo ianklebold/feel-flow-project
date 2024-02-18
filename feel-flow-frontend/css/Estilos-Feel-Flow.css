@@ -5482,13 +5482,13 @@ fieldset:disabled .btn {
 
 .accordion-button {
   position: relative;
-  display: flex;
-  align-items: center;
+  /* display: flex;
+  align-items: center; */
   width: 100%;
   padding: 1rem 1rem;
   font-size: 1rem;/*
   color: #67748e;*/
-  text-align: left;
+  /* text-align: left; */
   background-color: transparent;
   border: 0;
   border-radius: 0;
