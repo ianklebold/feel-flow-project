@@ -19,6 +19,7 @@ import com.equipo5.feelflowapp.service.users.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.util.*;
 
@@ -60,24 +61,22 @@ public class ModuleServiceImpl implements ModuleService {
     @Override
     public List<ModuleListDto> getModules(ModuleNames moduleName, ModuleState moduleState, String creationOrder) {
         var username = userService.getUsernameByCurrentUser();
-        String teamId = teamLeaderRepository.findTeamByUsername(username);
+        final String teamId = teamLeaderRepository.findTeamByUsername(username);
 
-        Optional<Team> team = teamRepository.findById(UUID.fromString(teamId));
-
-        if (team.isPresent()){
+        if (StringUtils.hasText(teamId)){
             List<Module> modules = new ArrayList<>();
             if (moduleName != null && moduleState == null){
                 //Buscar por moduleName
-                modules = findModulesByModuleName(moduleName.toString(),creationOrder);
+                modules = findModulesByModuleName(moduleName.toString(),creationOrder,teamId);
             }else if (moduleName == null && moduleState != null){
                 //Buscar por moduleState
-                modules = findModulesByState(moduleState.toString(),creationOrder);
+                modules = findModulesByState(moduleState.toString(),creationOrder,teamId);
             } else if (moduleName != null && moduleState != null) {
                 //Buscar por ambos
-                modules = findModulesByModuleStateAndName(moduleState.toString(),moduleName.toString(),creationOrder);
+                modules = findModulesByModuleStateAndName(moduleState.toString(),moduleName.toString(),creationOrder,teamId);
             }else {
                 //Retornar todos
-                modules = findAllModules(creationOrder);
+                modules = findAllModules(creationOrder,teamId);
             }
             var modulesDtos = modules.stream()
                     .map(moduleListMapper::moduleToModuleListDto).toList();
@@ -85,38 +84,36 @@ public class ModuleServiceImpl implements ModuleService {
             moduleTwelveStepsMapperCustom.mapModuleToTwelveStepsModule(modulesDtos,modules);
             return modulesDtos;
         }
-
         return Collections.emptyList();
     }
 
 
-    private List<Module> findModulesByModuleName(String moduleName, String creationOrder){
+    private List<Module> findModulesByModuleName(String moduleName, String creationOrder, String teamId){
         if (creationOrder.equals("true")){
-            return moduleRepository.findAllModulesByNameWithCreationDateOrder(moduleName);
+            return moduleRepository.findAllModulesByNameWithCreationDateOrder(moduleName,UUID.fromString(teamId));
         }
-        return moduleRepository.findAllModulesByNameWithoutOrder(moduleName);
+        return moduleRepository.findAllModulesByNameWithoutOrder(moduleName,UUID.fromString(teamId));
     }
 
-    private List<Module> findModulesByState(String moduleState, String creationOrder){
+    private List<Module> findModulesByState(String moduleState, String creationOrder, String teamId){
         if (creationOrder.equals("true")){
-            return moduleRepository.findAllModulesByStateWithCreationDateOrder(ModuleState.valueOf(moduleState));
+            return moduleRepository.findAllModulesByStateWithCreationDateOrder(ModuleState.valueOf(moduleState),UUID.fromString(teamId));
         }
-        return moduleRepository.findAllModulesByStateWithoutOrder(ModuleState.valueOf(moduleState));
+        return moduleRepository.findAllModulesByStateWithoutOrder(ModuleState.valueOf(moduleState),UUID.fromString(teamId));
     }
 
-    private List<Module> findModulesByModuleStateAndName(String moduleState, String moduleName,String creationOrder){
+    private List<Module> findModulesByModuleStateAndName(String moduleState, String moduleName,String creationOrder, String teamId){
         if (creationOrder.equals("true")){
-            return moduleRepository.findAllModulesByStateAndNameWithCreationDateOrder(ModuleState.valueOf(moduleState),moduleName);
+            return moduleRepository.findAllModulesByStateAndNameWithCreationDateOrder(ModuleState.valueOf(moduleState),moduleName,UUID.fromString(teamId));
         }
-        return moduleRepository.findAllModulesByStateAndNameWithoutOrder(ModuleState.valueOf(moduleState),moduleName);
+        return moduleRepository.findAllModulesByStateAndNameWithoutOrder(ModuleState.valueOf(moduleState),moduleName,UUID.fromString(teamId));
     }
 
-    private List<Module> findAllModules(String creationOrder){
+    private List<Module> findAllModules(String creationOrder,String teamId){
         if (creationOrder.equals("true")){
-            Sort sortElements = Sort.by(Sort.Order.asc("creationDate"));
-            return moduleRepository.findAll(sortElements);
+            return moduleRepository.findAllModulesWithOrder(UUID.fromString(teamId));
         }
-        return moduleRepository.findAll();
+        return moduleRepository.findAllModulesWithoutOrder(UUID.fromString(teamId));
     }
 
 }

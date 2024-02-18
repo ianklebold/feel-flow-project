@@ -6,6 +6,7 @@ import com.equipo5.feelflowapp.domain.enumerations.modules.SurveyStateEnum;
 import com.equipo5.feelflowapp.domain.modules.Module;
 import com.equipo5.feelflowapp.domain.modules.twelvesteps.TwelveStepsModule;
 import com.equipo5.feelflowapp.dto.modules.ModuleListDto;
+import com.equipo5.feelflowapp.dto.modules.ResumeModuleDto;
 import com.equipo5.feelflowapp.mappers.modules.SurveyListMapper;
 import com.equipo5.feelflowapp.mappers.modules.custom.ModuleTwelveStepsMapperCustom;
 import lombok.AllArgsConstructor;
@@ -23,6 +24,28 @@ public class ModuleTwelveStepsMapperCustomImpl implements ModuleTwelveStepsMappe
     public void mapModuleToTwelveStepsModule(List<ModuleListDto> modulesDtos, List<Module> modules) {
         setSurveysToTwelveStepsModuleDto(modulesDtos,modules);
         setIsReadyToCloseTwelveStepsModule(modulesDtos,modules);
+        setResumeModuleToTwelveStepsModuleDto(modulesDtos);
+    }
+
+    private void setResumeModuleToTwelveStepsModuleDto(List<ModuleListDto> modulesDtos){
+
+        modulesDtos.forEach(
+                module -> {
+
+                    int totalOfSurveys = module.getSurveyList().size();
+                    int totalOfSurveysReplied = module.getSurveyList()
+                            .stream()
+                            .filter(survey -> survey.surveyState().equals(SurveyStateEnum.FINISHED) || survey.surveyState().equals(SurveyStateEnum.CLOSED)
+                            ).toList().size();
+
+                    double percentOfSurveysReplied =  ((double)totalOfSurveysReplied / (double)totalOfSurveys) * 100;
+
+                        module.setResumeModuleDto(
+                                new ResumeModuleDto(totalOfSurveys,totalOfSurveysReplied,percentOfSurveysReplied)
+                        );
+                }
+        );
+
     }
 
     private void setSurveysToTwelveStepsModuleDto(List<ModuleListDto> modulesDtos,List<Module> modules){

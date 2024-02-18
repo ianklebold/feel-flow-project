@@ -25,5 +25,6 @@ public class ModuleListDto{
         @Schema(description = "Date of close module", example = "2024-12-31") LocalDate closeDate;
         @Schema(description = "State of module", examples = {"ACTIVE","FINISHED"}) ModuleState moduleState;
         @Schema(description = "List of Surveys")List<SurveyListDto> surveyList;
+        @Schema(description = "Resume of module") ResumeModuleDto resumeModuleDto;
         boolean isEnableToClose;
 }

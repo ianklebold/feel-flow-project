@@ -92,10 +92,10 @@ public class TwelveStepsSurveyServiceImpl extends SurveyServiceImpl implements T
     public void forceToCloseSurvey(List<Survey> surveyList) {
         surveyList.forEach(survey -> {
             if (!survey.getSurveyStateEnum().toString().equals(SurveyStateEnum.FINISHED.toString())) {
+                survey.setSurveyStateEnum(SurveyStateEnum.CLOSED_NOT_FINISHED);
                 survey.setActivities(activityService.forceTocloseActivities(survey.getActivities()));
                 survey.setCloseDate(LocalDate.now());
             }
-            survey.setSurveyStateEnum(SurveyStateEnum.CLOSED);
         }
         );
         surveyRepository.saveAll(surveyList);
