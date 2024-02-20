@@ -101,7 +101,7 @@ input[type="radio"] {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background-color: #df888fc1;
+  background-color: rgba(245, 245, 245, 0.4);
   padding: 20px;
   z-index: 1001;
   /* Ajusta según sea necesario para superponer otros elementos */
@@ -121,7 +121,7 @@ input[type="radio"] {
   text-align: center;
   justify-content: center;
   font-weight: bold;
-  color: rgb(0, 200, 0);
+  color: black;
 }
 
 .btn-crear {
@@ -136,7 +136,7 @@ input[type="radio"] {
 .sinEncuestas {
   font-size: 20px;
   color: #000;
-  background-color: rgba(0, 128, 0, 0.619);
+  background-color: rgba(0, 128, 0, 0.2);
   border-radius: 0.5rem;
   height: 4rem;
   display: flex;
