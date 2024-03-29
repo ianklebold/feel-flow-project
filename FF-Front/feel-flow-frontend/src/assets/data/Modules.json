@@ -7,8 +7,8 @@
             "TEAM_LEADER",
             "USER_REGULAR"
         ],
-        "logo": "IoMdHome",
-        "link": "../pages/Home.html"
+        "logo": "CiHome",
+        "link": "/home"
     },
     {
         "id": 2,
@@ -18,8 +18,8 @@
             "TEAM_LEADER",
             "USER_REGULAR"
         ],
-        "logo": "<CiHome />",
-        "link": "../pages/proximamente.html"
+        "logo": "FaPalette",
+        "link": "/soon"
     },
     {
         "id": 3,
@@ -27,8 +27,8 @@
         "perfiles": [
             "ADMIN"
         ],
-        "logo": "CiHome",
-        "link": "../pages/proximamente.html"
+        "logo": "FaCrown",
+        "link": "/soon"
     },
     {
         "id": 4,
@@ -36,18 +36,8 @@
         "perfiles": [
             "ADMIN"
         ],
-        "logo": "CiHome",
-        "link": "../pages/Teams.html"
-    },
-    {
-        "id": 5,
-        "nombre": "Equipos",
-        "perfiles": [
-            "TEAM_LEADER",
-            "USER_REGULAR"
-        ],
-        "logo": "CiHome",
-        "link": "../pages/MyTeam.html"
+        "logo": "FaTrophy",
+        "link": "/soon"
     },
     {
         "id": 6,
@@ -57,8 +47,8 @@
             "TEAM_LEADER",
             "USER_REGULAR"
         ],
-        "logo": "CiHome",
-        "link": "../pages/modulos.html"
+        "logo": "FaModx",
+        "link": "/soon"
     },
     {
         "id": 7,
@@ -67,8 +57,8 @@
             "ADMIN",
             "TEAM_LEADER"
         ],
-        "logo": "CiHome",
-        "link": "../pages/proximamente.html"
+        "logo": "FaUsers",
+        "link": "/soon"
     },
     {
         "id": 8,
@@ -78,8 +68,8 @@
             "TEAM_LEADER",
             "USER_REGULAR"
         ],
-        "logo": "CiHome",
-        "link": "../pages/profile.html"
+        "logo": "FaIdCard",
+        "link": "/profile"
     },
     {
         "id": 9,
@@ -89,7 +79,7 @@
             "TEAM_LEADER",
             "USER_REGULAR"
         ],
-        "logo": "CiHome",
-        "link": "../pages/proximamente.html"
+        "logo": "CiSettings",
+        "link": "/soon"
     }
 ]

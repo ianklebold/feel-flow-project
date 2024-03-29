@@ -4,7 +4,7 @@ import { CiSettings } from "react-icons/ci";
 import { CiBellOn } from "react-icons/ci";
 import { Menu } from './Menu';
 
-import modulos from '../../assets/data/Modules.json'
+import modules from '../../assets/data/Modules.json'
 
 
 export default function DefaultLayout({ children }) {
@@ -63,7 +63,7 @@ export default function DefaultLayout({ children }) {
                         <>
                             <ul className="elements">
                                 {
-                                    modulos.map(mod => (
+                                    modules.map(mod => (
 
                                         <Menu key={mod.id} name={mod.nombre} icon={mod.logo} url={mod.link} />
 

@@ -1,4 +1,4 @@
-// Colors
+// ------------- Colors -------------------------
 $primary-color: #007bff;
 $secondary-color: #6c757d;
 $success-color: #28a745;
@@ -6,6 +6,23 @@ $danger-color: #dc3545;
 $warning-color: #ffc107;
 $info-color: #17a2b8;
 
+// Light theme colors
+$light-bg-color: #ffffff;
+$light-text-color: #333333;
+$light-border-color: #dddddd;
+$light-element-bg-color:  rgba(69, 130, 158, 0.323); 
+$light-element-text-color: #333333;
+$light-element-border-color: #dddddd;
+
+// Dark theme colors
+$dark-bg-color: #333333;
+$dark-text-color: #ffffff;
+$dark-border-color: #555555;
+$dark-element-bg-color:  rgba(69, 130, 158, 0.323); 
+$dark-element-text-color: #344767;
+$dark-element-border-color: #dddddd;
+
+// --------------------------------- Background Color ---------------------------------
 // Unique Background
 $primary-background: white;
 $secondary-background: black;
@@ -26,7 +43,7 @@ $dropdown-background-dark: #8F78C6;
 $dropdown-background-hover-dark: #AD92F1;
 // Source: https://hotpot.ai/color-generator?s=google&ad=color-generator&gad_source=1&gclid=Cj0KCQiAw6yuBhDrARIsACf94RX5R6hew1o0A7vrxKBBRRhFgaruZmqelkg7qUYYkA20kEGUaqg8UAcaAliCEALw_wcB
 
-// Typography
+// --------------------------------- Typography ---------------------------------
 $default-font: Arial, sans-serif;
 $base-font-size: 16px;
 $base-line-height: 1.5;
@@ -73,22 +90,6 @@ $sm-breakpoint: 576px;
 $md-breakpoint: 768px;
 $lg-breakpoint: 992px;
 $xl-breakpoint: 1200px;
-
-// Light theme colors
-$light-bg-color: #ffffff;
-$light-text-color: #333333;
-$light-border-color: #dddddd;
-$light-element-bg-color:  rgba(69, 130, 158, 0.323); 
-$light-element-text-color: #333333;
-$light-element-border-color: #dddddd;
-
-// Dark theme colors
-$dark-bg-color: #333333;
-$dark-text-color: #ffffff;
-$dark-border-color: #555555;
-$dark-element-bg-color:  rgba(69, 130, 158, 0.323); 
-$dark-element-text-color: #344767;
-$dark-element-border-color: #dddddd;
 
 // Padding
 $padding-x-small: 0.25rem;

@@ -9,7 +9,9 @@ header {
     list-style: none;
     border-radius: $border-radius;
     background-color: $nav-background;
-    width: 100%;
+    // width: 100%;
+    margin-left: 1rem;
+    margin-right: 1rem;
 
     @include create-flexbox(center, space-between);
 
