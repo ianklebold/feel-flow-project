@@ -8,3 +8,7 @@ C:\Program Files\Java\jdk-17
 
 mvn -U clean compile install -e -X
 
+mvn clean install -DskipTests
+
+mvn spring-boot:run
+
