@@ -12,3 +12,6 @@ mvn clean install -DskipTests
 
 mvn spring-boot:run
 
+Documentacion del Endpoint con el backend levantado:
+http://localhost:8080/swagger-ui/index.html#/
+
