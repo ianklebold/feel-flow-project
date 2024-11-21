@@ -21,7 +21,10 @@ public class Module {
     private Long id;
 
     private String name;
+
     private LocalDate creationDate;
+
+    private LocalDate moduleClosedDate;
 
     @Enumerated(EnumType.STRING)
     private ModuleState moduleState;

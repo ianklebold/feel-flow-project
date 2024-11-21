@@ -2,7 +2,7 @@ package com.equipo5.feelflowapp.exception;
 
 import com.equipo5.feelflowapp.dto.response.ErrorResponseDto;
 import com.equipo5.feelflowapp.exception.badrequest.invitation.InvitationException;
-import com.equipo5.feelflowapp.exception.module.ModuleException;
+import com.equipo5.feelflowapp.exception.badrequest.module.ModuleException;
 import com.equipo5.feelflowapp.exception.notfound.NotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

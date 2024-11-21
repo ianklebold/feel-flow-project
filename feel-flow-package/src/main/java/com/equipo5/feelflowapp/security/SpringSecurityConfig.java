@@ -1,5 +1,7 @@
 package com.equipo5.feelflowapp.security;
 
+import com.equipo5.feelflowapp.controller.QuestionsAnswersModuleController;
+import com.equipo5.feelflowapp.controller.SurveyModuleController;
 import com.equipo5.feelflowapp.repository.users.UserRepository;
 import com.equipo5.feelflowapp.security.filters.JwtAutheticationFilter;
 import com.equipo5.feelflowapp.security.filters.JwtValidationFilter;
@@ -58,6 +60,10 @@ public class SpringSecurityConfig {
                                 .requestMatchers(HttpMethod.GET,"/api/v1/team/{idTeam}").hasAnyAuthority("TEAM_LEADER","ADMIN","USER_REGULAR")
                                 .requestMatchers(HttpMethod.GET,"/api/v1/team").hasAnyAuthority("TEAM_LEADER","ADMIN","USER_REGULAR")
                                 .requestMatchers(HttpMethod.POST,"/api/v1/team").hasAnyAuthority("TEAM_LEADER","ADMIN","USER_REGULAR")
+                                .requestMatchers(HttpMethod.GET,SurveyModuleController.SURVEY_PATH).hasAnyAuthority("USER_REGULAR")
+                                .requestMatchers(HttpMethod.POST,SurveyModuleController.SURVEY_PATH.concat("/twelve_steps_module")).hasAnyAuthority("USER_REGULAR")
+                                .requestMatchers(HttpMethod.GET, QuestionsAnswersModuleController.QUESTION_AND_ANSWERS_PATH+QuestionsAnswersModuleController.ANSWERS_MODULE).hasAnyAuthority("USER_REGULAR")
+                                .requestMatchers(HttpMethod.GET,QuestionsAnswersModuleController.QUESTION_AND_ANSWERS_PATH+QuestionsAnswersModuleController.QUESTIONS_MODULE).hasAnyAuthority("USER_REGULAR")
                                 .requestMatchers("/api/v1/regular_user/**").permitAll()
                                 .requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
                                 .anyRequest()
@@ -73,7 +79,7 @@ public class SpringSecurityConfig {
     CorsConfigurationSource corsConfigurationSource(){
         CorsConfiguration config = new CorsConfiguration();
         config.setAllowedOrigins(
-                Arrays.asList("http://127.0.0.1:8000", "http://127.0.0.1:5500", "http://127.0.0.1:3000","http://127.0.0.1:5173")
+                Arrays.asList("http://127.0.0.1:8000", "http://127.0.0.1:5500", "http://127.0.0.1:3000","http://localhost:5173")
         );
         config.setAllowedMethods(Arrays.asList("GET","POST","PUT","DELETE"));
         config.setAllowedHeaders(Arrays.asList("Authorization", "Cache-Control", "Content-Type"));
