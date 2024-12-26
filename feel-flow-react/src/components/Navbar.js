@@ -4,10 +4,10 @@ import { Link, useLocation } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 
 const Navbar = ({ onLogout }) => {
-  useEffect(() => {
-    console.log("Título actual:", document.title);
-  }, []);
-  
+  // useEffect(() => {
+  //   console.log("Título actual:", document.title);
+  // }, []);
+
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleDropdown = () => {
