@@ -1,0 +1,86 @@
+{
+    "Home": {
+        "nombre": "Home",
+        "perfiles": [
+            "ADMIN",
+            "TEAM_LEADER",
+            "USER_REGULAR"
+        ],
+        "logo": "fa-home",
+        "link": "/home"
+    },
+    "Dashboard": {
+        "nombre": "Dashboard",
+        "perfiles": [
+            "ADMIN",
+            "TEAM_LEADER",
+            "USER_REGULAR"
+        ],
+        "logo": "fa-pie-chart",
+        "link": "/dashboard"
+    },
+    "Lideres": {
+        "nombre": "Lideres",
+        "perfiles": [
+            "ADMIN"
+        ],
+        "logo": "fa-user-circle",
+        "link": "/leader"
+    },
+    "Equipos": {
+        "nombre": "Equipos",
+        "perfiles": [
+            "ADMIN"
+        ],
+        "logo": "fa-users",
+        "link": "/teams"
+    },
+    "Equipos2": {
+        "nombre": "Equipos",
+        "perfiles": [
+            "TEAM_LEADER",
+            "USER_REGULAR"
+        ],
+        "logo": "fa-users",
+        "link": "/teams"
+    },
+    "Modulos": {
+        "nombre": "Modulos",
+        "perfiles": [
+            "ADMIN",
+            "TEAM_LEADER",
+            "USER_REGULAR"
+        ],
+        "logo": "fa-puzzle-piece",
+        "link": "/modules"
+    },
+    "Usuarios": {
+        "nombre": "Usuarios",
+        "perfiles": [
+            "ADMIN",
+            "TEAM_LEADER"
+        ],
+        "logo": "fa-user-circle",
+        "link": "/users"
+    },
+    "Perfil": {
+        "nombre": "Perfil",
+        "perfiles": [
+            "ADMIN",
+            "TEAM_LEADER",
+            "USER_REGULAR"
+        ],
+        "logo": "fa-id-card",
+        "link": "/profile"
+    },
+    "Configuración": {
+        "nombre": "Configuración",
+        "perfiles": [
+            "ADMIN",
+            "TEAM_LEADER",
+            "USER_REGULAR"
+        ],
+        "logo": "fa-cog",
+        "link": "/settings"
+    }
+}
