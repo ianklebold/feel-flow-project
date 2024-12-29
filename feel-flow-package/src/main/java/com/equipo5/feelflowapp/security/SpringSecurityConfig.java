@@ -79,7 +79,7 @@ public class SpringSecurityConfig {
     CorsConfigurationSource corsConfigurationSource(){
         CorsConfiguration config = new CorsConfiguration();
         config.setAllowedOrigins(
-                Arrays.asList("http://127.0.0.1:8000", "http://127.0.0.1:5500", "http://127.0.0.1:3000","http://localhost:5173")
+                Arrays.asList("http://127.0.0.1:8000", "http://127.0.0.1:5500", "http://127.0.0.1:3000", "http://localhost:51741")
         );
         config.setAllowedMethods(Arrays.asList("GET","POST","PUT","DELETE"));
         config.setAllowedHeaders(Arrays.asList("Authorization", "Cache-Control", "Content-Type"));

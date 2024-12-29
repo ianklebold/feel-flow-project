@@ -2,10 +2,13 @@
 import { useEffect, useState } from "react";
 import { BrowserRouter as Router, Routes, Route, json } from "react-router-dom";
 // Components
+import Layout from "./Layout/Layout";
 import Login from "./components/Login";
 import HamburgerMenu from "./components/HamburgerMenu";
-import Navbar from "./components/Navbar";
+import Sidebar from "./components/Sidebar";
+// import Navbar from "./components/Navbar";
 import VerticalMenu from "./components/MenuVertical";
+import Navbar from "./components/NewNavbar";
 // Pages
 import UserManagement from "./pages/UserManagement";
 import Profile from "./pages/Profile";
@@ -35,62 +38,20 @@ function App() {
 
   return (
     <Router>
-      <div className="flex min-h-screen">
-        {isAuthenticated ? (
-          <>
-            {/* Menú vertical */}
-            <VerticalMenu />
-
-            {/* Contenido principal */}
-            <div className="flex-grow">
-              {/* <button
-                onClick={handleLogout}
-                className="absolute top-5 right-4 bg-red-500 text-white px-4 py-2 rounded"
-              >
-                Cerrar Sesión
-              </button> */}
-              <main className="p-6">
-                <Navbar onLogout={() => setIsAuthenticated(false)} />
-                <Routes>
-                  <Route path="/dashboard" element={<Dashboard />} />
-                  <Route path="/users" element={<Users />} />
-                  <Route path="/profile" element={<Profile />} />
-                  <Route path="/" element={<Dashboard />} /> {/* Ruta inicial */}
-                </Routes>
-              </main>
-            </div>
-          </>
-        ) : (
-          <Login onLogin={handleLogin} />
-        )}
-      </div>
-    </Router>
-  );
-  return (
-    <Router>
-      <div>
-        {isAuthenticated ? (
-          <>
-            {/* <HamburgerMenu onLogout={() => setIsAuthenticated(false)} /> */}
-            <VerticalMenu />
-            <button
-              onClick={handleLogout}
-              className="absolute top-5 right-4 bg-red-500 text-white px-4 py-2 rounded"
-            >
-              Cerrar Sesión
-            </button>
+      {isAuthenticated ? (
+        <>
+          <Layout>
             <Routes>
+              <Route path="/" element={<Dashboard />} /> {/* Ruta inicial */}
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/users" element={<Users />} />
-              {/* <Route path="/users" element={<UserManagement />} /> */}
               <Route path="/profile" element={<Profile />} />
             </Routes>
-          </>
-        ) : (
-          <Login onLogin={handleLogin} />
-          // <Login onLogin={() => setIsAuthenticated(true)} />
-        )}
-      </div>
+          </Layout>
+        </>
+      ) : (
+        <Login onLogin={handleLogin} />
+      )}
     </Router>
   );
 }

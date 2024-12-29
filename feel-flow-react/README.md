@@ -2,6 +2,46 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+# Clases de tamaños predefinidos:
+Clase	| Tamaño equivalente en rem
+text-xs	| 0.75rem (12px)
+text-sm	| 0.875rem (14px)
+text-base	| 1rem (16px)
+text-lg	| 1.125rem (18px)
+text-xl	| 1.25rem (20px)
+text-2xl	| 1.5rem (24px)
+text-3xl	| 1.875rem (30px)
+text-4xl	| 2.25rem (36px)
+text-5xl	| 3rem (48px)
+text-6xl	| 3.75rem (60px)
+text-7xl	| 4.5rem (72px)
+
+~~~
+<p class="text-sm">Texto pequeño</p>
+<p class="text-base">Texto normal</p>
+<p class="text-lg">Texto grande</p>
+<p class="text-xl">Texto extra grande</p>
+<p class="text-2xl">Texto aún más grande</p>
+~~~
+
+# Clases de peso de fuente disponibles:
+Clase	| Peso de fuente (font-weight)
+font-thin	| 100
+font-extralight	| 200
+font-light	| 300
+font-normal	| 400
+font-medium	| 500
+font-semibold	| 600
+font-bold	| 700
+font-extrabold	| 800
+font-black	| 900
+
+~~~
+<p class="font-bold">Texto en negrita</p>
+<p class="font-normal">Texto con peso normal</p>
+<p class="font-light">Texto con peso ligero</p>
+~~~
+
 ## Available Scripts
 
 In the project directory, you can run:
