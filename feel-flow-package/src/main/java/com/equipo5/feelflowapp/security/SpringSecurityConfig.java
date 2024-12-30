@@ -69,35 +69,35 @@ public class SpringSecurityConfig {
                                 .anyRequest()
                                 .authenticated()
                 ).csrf(AbstractHttpConfigurer::disable)
-                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
+                .cors(AbstractHttpConfigurer::disable)
                 .addFilter(new JwtAutheticationFilter(this.authenticationConfiguration.getAuthenticationManager(),userRepository))
                 .addFilter(new JwtValidationFilter(this.authenticationConfiguration.getAuthenticationManager()));
         return httpSecurity.build();
     }
 
-    @Bean
-    CorsConfigurationSource corsConfigurationSource(){
-        CorsConfiguration config = new CorsConfiguration();
-        config.setAllowedOrigins(
-                Arrays.asList("http://127.0.0.1:8000", "http://127.0.0.1:5500", "http://127.0.0.1:3000","http://localhost:5173")
-        );
-        config.setAllowedMethods(Arrays.asList("GET","POST","PUT","DELETE"));
-        config.setAllowedHeaders(Arrays.asList("Authorization", "Cache-Control", "Content-Type"));
-        config.setAllowCredentials(true);
-
-
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**",config);
-        return source;
-    }
-
-
-
-    @Bean
-    FilterRegistrationBean<CorsFilter> corsFilter() {
-        FilterRegistrationBean<CorsFilter> bean = new FilterRegistrationBean<>(
-                new CorsFilter(corsConfigurationSource()));
-        bean.setOrder(Ordered.HIGHEST_PRECEDENCE);
-        return bean;
-    }
+//    @Bean
+//    CorsConfigurationSource corsConfigurationSource(){
+//        CorsConfiguration config = new CorsConfiguration();
+//        config.setAllowedOrigins(
+//                Arrays.asList("http://127.0.0.1:8000","http://localhost:8100/","http://192.168.100.127:8100", "http://127.0.0.1:5500", "http://127.0.0.1:3000","http://localhost:5173")
+//        );
+//        config.setAllowedMethods(Arrays.asList("GET","POST","PUT","DELETE"));
+//        config.setAllowedHeaders(Arrays.asList("Authorization", "Cache-Control", "Content-Type"));
+//        config.setAllowCredentials(true);
+//
+//
+//        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+//        source.registerCorsConfiguration("/**",config);
+//        return source;
+//    }
+//
+//
+//
+//    @Bean
+//    FilterRegistrationBean<CorsFilter> corsFilter() {
+//        FilterRegistrationBean<CorsFilter> bean = new FilterRegistrationBean<>(
+//                new CorsFilter(corsConfigurationSource()));
+//        bean.setOrder(Ordered.HIGHEST_PRECEDENCE);
+//        return bean;
+//    }
 }
