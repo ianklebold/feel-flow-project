@@ -69,7 +69,7 @@ public class SpringSecurityConfig {
                                 .anyRequest()
                                 .authenticated()
                 ).csrf(AbstractHttpConfigurer::disable)
-                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
+                .cors(AbstractHttpConfigurer::disable)
                 .addFilter(new JwtAutheticationFilter(this.authenticationConfiguration.getAuthenticationManager(),userRepository))
                 .addFilter(new JwtValidationFilter(this.authenticationConfiguration.getAuthenticationManager()));
         return httpSecurity.build();
