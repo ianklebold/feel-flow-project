@@ -14,6 +14,7 @@ module.exports = {
         textBlack: '#000000',
         gray: 'rgb(55 65 81 / var(--tw-text-opacity, 1))', // text-gray-700
         bgPrimary: 'rgba(69, 130, 158, 0.323)',
+        Primary: 'rgba(69, 130, 158)',
         bgBluePrimary: '#3b82f6', //bg-blue-500
         bgBlueSecondary: '#2563eb', //bg-blue-600
       }, 

@@ -42,6 +42,14 @@ font-black	| 900
 <p class="font-light">Texto con peso ligero</p>
 ~~~
 
+# Border
+Para aplicar un borde en un solo lado en Tailwind CSS, utiliza las clases específicas para cada lado:
+
+border-t: Borde superior.
+border-b: Borde inferior.
+border-l: Borde izquierdo.
+border-r: Borde derecho.
+
 ## Available Scripts
 
 In the project directory, you can run:

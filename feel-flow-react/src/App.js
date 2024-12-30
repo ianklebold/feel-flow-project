@@ -1,6 +1,6 @@
 // Functions
 import { useEffect, useState } from "react";
-import { BrowserRouter as Router, Routes, Route, json } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, json, Navigate } from "react-router-dom";
 // Components
 import Layout from "./Layouts/FeelFlow";
 import Login from "./components/Login";
@@ -46,7 +46,7 @@ function App() {
     <Router>
       {isAuthenticated ? (
         <>
-          <FeelFlow>
+          <FeelFlow onLogout = {handleLogout}>
             <Routes>
               <Route path="/" element={<Home />} /> {/* Ruta inicial */}
               <Route path="/home" element={<Home />} />
@@ -58,11 +58,18 @@ function App() {
               <Route path="/teams" element={<Teams />} />
               <Route path="/usermanagement" element={<UserManagement />} />
               <Route path="/users" element={<Users />} />
+              <Route path="*" element={<Navigate to="/login" />} />
             </Routes>
           </FeelFlow>
         </>
       ) : (
-        <Login onLogin={handleLogin} />
+        <Routes>
+
+        {/* // <Login onLogin={handleLogin} /> */}
+          <Route path="/login" element={<Login onLogin={handleLogin} />} />
+          <Route path="*" element={<Navigate to="/login" />} />
+        </Routes>
+
       )}
     </Router>
   );
