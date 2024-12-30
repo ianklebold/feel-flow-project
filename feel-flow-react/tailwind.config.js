@@ -19,7 +19,7 @@ module.exports = {
       }, 
       fontFamily: {
         sans: ['Inter', 'ui-sans-serif', 'system-ui'], // Fuentes predeterminadas
-        display: ['Poppins', 'ui-sans-serif'], // Fuentes para títulos
+        display: ['Roboto', 'inherit', 'Poppins', 'ui-sans-serif'], // Fuentes para títulos
       }
     },
   },

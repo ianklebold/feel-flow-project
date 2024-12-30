@@ -10,9 +10,14 @@ import Sidebar from "./components/Sidebar";
 import VerticalMenu from "./components/MenuVertical";
 import Navbar from "./components/NewNavbar";
 // Pages
-import UserManagement from "./pages/UserManagement";
-import Profile from "./pages/Profile";
 import Dashboard from "./pages/Dashboard";
+import Home from "./pages/Home";
+import Leaders from "./page/Leaders";
+import Modules from "./pages/Modules";
+import Profile from "./pages/Profile";
+import Settings from "./pages/Settings";
+import Teams from "./pages/Teams";
+import UserManagement from "./pages/UserManagement";
 import Users from "./pages/Users";
 // Styles
 import './App.css';
@@ -42,10 +47,16 @@ function App() {
         <>
           <Layout>
             <Routes>
-              <Route path="/" element={<Dashboard />} /> {/* Ruta inicial */}
+              <Route path="/" element={<Home />} /> {/* Ruta inicial */}
+              <Route path="/home" element={<Home />} />
               <Route path="/dashboard" element={<Dashboard />} />
-              <Route path="/users" element={<Users />} />
+              <Route path="/leaders" element={<Leaders />} />
+              <Route path="/modules" element={<Modules />} />
               <Route path="/profile" element={<Profile />} />
+              <Route path="/settings" element={<Settings />} />
+              <Route path="/teams" element={<Teams />} />
+              <Route path="/usermanagement" element={<UserManagement />} />
+              <Route path="/users" element={<Users />} />
             </Routes>
           </Layout>
         </>
