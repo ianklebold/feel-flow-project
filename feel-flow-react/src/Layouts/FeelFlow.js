@@ -2,7 +2,7 @@ import React from "react";
 import Sidebar from "../components/Sidebar";
 import Navbar from "../components/NewNavbar";
 
-function Layout({ children }) {
+function FeelFlow({ children }) {
     return (
         <div className="flex flex-col min-h-screen">
             {/* Navbar */}
@@ -12,7 +12,7 @@ function Layout({ children }) {
 
             <div className="flex flex-1 pt-16">
                 {/* Sidebar */}
-                <aside className="bg-light w-14 hover:w-64 transition-all duration-300 overflow-hidden h-screen fixed top-16 left-0 z-10 font-display">
+                <aside className="bg-light w-14 hover:w-44 transition-all duration-300 overflow-hidden h-screen fixed top-16 left-0 z-10 font-display">
                     <Sidebar />
                 </aside>
 
@@ -25,4 +25,4 @@ function Layout({ children }) {
     );
 }
 
-export default Layout;
+export default FeelFlow;

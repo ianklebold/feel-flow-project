@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import { BrowserRouter as Router, Routes, Route, json } from "react-router-dom";
 // Components
-import Layout from "./Layout/Layout";
+import Layout from "./Layouts/FeelFlow";
 import Login from "./components/Login";
 import HamburgerMenu from "./components/HamburgerMenu";
 import Sidebar from "./components/Sidebar";
@@ -12,7 +12,7 @@ import Navbar from "./components/NewNavbar";
 // Pages
 import Dashboard from "./pages/Dashboard";
 import Home from "./pages/Home";
-import Leaders from "./page/Leaders";
+import Leaders from "./pages/Leaders";
 import Modules from "./pages/Modules";
 import Profile from "./pages/Profile";
 import Settings from "./pages/Settings";
@@ -21,6 +21,7 @@ import UserManagement from "./pages/UserManagement";
 import Users from "./pages/Users";
 // Styles
 import './App.css';
+import FeelFlow from "./Layouts/FeelFlow";
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(
@@ -45,7 +46,7 @@ function App() {
     <Router>
       {isAuthenticated ? (
         <>
-          <Layout>
+          <FeelFlow>
             <Routes>
               <Route path="/" element={<Home />} /> {/* Ruta inicial */}
               <Route path="/home" element={<Home />} />
@@ -58,7 +59,7 @@ function App() {
               <Route path="/usermanagement" element={<UserManagement />} />
               <Route path="/users" element={<Users />} />
             </Routes>
-          </Layout>
+          </FeelFlow>
         </>
       ) : (
         <Login onLogin={handleLogin} />
