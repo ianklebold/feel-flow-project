@@ -5,6 +5,7 @@ const TextInput = ({
     labelClass,
     placeholder = "Enter text",
     type = "text",
+    name,
     value,
     onChange,
     size = "md",
@@ -46,6 +47,7 @@ const TextInput = ({
             )}
             <input
                 type={type}
+                name={name}
                 value={value}
                 onChange={onChange}
                 placeholder={placeholder}

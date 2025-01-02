@@ -1,8 +1,7 @@
 import { useState } from "react";
-import { login } from "../services/Auth/Login";
-// import { login } from "../services/authService";
-import TextInput from "./TextInput";
-import Button from "./Button";
+import { login } from "../../services/Auth/Login";
+import TextInput from "../../components/TextInput";
+import Button from "../../components/Button";
 
 function Login( {onLogin} ) {
     // Estados para usuario y contraseña
