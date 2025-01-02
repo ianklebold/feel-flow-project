@@ -58,7 +58,7 @@ function App() {
               <Route path="/teams" element={<Teams />} />
               <Route path="/usermanagement" element={<UserManagement />} />
               <Route path="/users" element={<Users />} />
-              <Route path="*" element={<Navigate to="/login" />} />
+              <Route path="*" element={<Navigate to="/home" />} />
             </Routes>
           </FeelFlow>
         </>
