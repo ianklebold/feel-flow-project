@@ -2,6 +2,7 @@ import React from "react";
 
 const TextInput = ({
     label,
+    labelClass,
     placeholder = "Enter text",
     type = "text",
     value,
@@ -12,6 +13,10 @@ const TextInput = ({
     disabled = false,
     ...props
 }) => {
+    const classLabel = {
+        login: "block text-textSecondary font-medium mb-1"
+    };
+
     const sizeClasses = {
         sm: "text-sm py-1 px-2",
         md: "text-base py-2 px-3",
@@ -35,7 +40,7 @@ const TextInput = ({
     return (
         <div className="mb-4">
             {label && (
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+                <label className={`${classLabel[labelClass]}}`}>
                     {label}
                 </label>
             )}

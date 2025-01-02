@@ -8,7 +8,12 @@ import HamburgerMenu from "./components/HamburgerMenu";
 import Sidebar from "./components/Sidebar";
 // import Navbar from "./components/Navbar";
 import VerticalMenu from "./components/MenuVertical";
-import Navbar from "./components/NewNavbar";
+import Navbar from "./components/Navbar";
+
+// Layouts
+import Auth from "./Layouts/auth";
+import FeelFlow from "./Layouts/FeelFlow";
+
 // Pages
 import Dashboard from "./pages/Dashboard";
 import Home from "./pages/Home";
@@ -21,7 +26,9 @@ import UserManagement from "./pages/UserManagement";
 import Users from "./pages/Users";
 // Styles
 import './App.css';
-import FeelFlow from "./Layouts/FeelFlow";
+
+// API
+import { clearAuthData, getAuthData } from "./services/session";
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(
@@ -36,6 +43,9 @@ function App() {
   const handleLogout = () => {
     setIsAuthenticated(false);
     localStorage.removeItem("isAuthenticated");
+    console.log(getAuthData());
+    clearAuthData()
+    console.log(getAuthData());
   };
 
   // useEffect(() => {
@@ -46,7 +56,7 @@ function App() {
     <Router>
       {isAuthenticated ? (
         <>
-          <FeelFlow onLogout = {handleLogout}>
+          <FeelFlow onLogout={handleLogout}>
             <Routes>
               <Route path="/" element={<Home />} /> {/* Ruta inicial */}
               <Route path="/home" element={<Home />} />
@@ -63,12 +73,12 @@ function App() {
           </FeelFlow>
         </>
       ) : (
-        <Routes>
-
-        {/* // <Login onLogin={handleLogin} /> */}
-          <Route path="/login" element={<Login onLogin={handleLogin} />} />
-          <Route path="*" element={<Navigate to="/login" />} />
-        </Routes>
+        <Auth>
+          <Routes>
+            <Route path="/login" element={<Login onLogin={handleLogin} />} />
+            <Route path="*" element={<Navigate to="/login" />} />
+          </Routes>
+        </Auth>
 
       )}
     </Router>

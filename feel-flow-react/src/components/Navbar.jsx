@@ -7,8 +7,8 @@ import { FaExclamationCircle } from 'react-icons/fa';
 
 // Elements
 import FeelFlow from '../assets/img/FeelFlow.png';
-import Breadcrumbs from '../widgets/Breadcrumbs';
-import IconButton from '../widgets/Layout/IconButton';
+import Breadcrumbs from './Breadcrumbs';
+import IconButton from './IconButton';
 
 
 function Navbar({ onLogout }) {

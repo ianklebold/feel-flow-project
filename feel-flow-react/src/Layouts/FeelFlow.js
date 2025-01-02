@@ -1,6 +1,6 @@
 import React from "react";
 import Sidebar from "../components/Sidebar";
-import Navbar from "../components/NewNavbar";
+import Navbar from "../components/Navbar";
 
 function FeelFlow({ children , onLogout } ) {
     return (
