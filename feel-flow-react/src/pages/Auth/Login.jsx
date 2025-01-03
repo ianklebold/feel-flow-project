@@ -69,7 +69,7 @@ function Login( {onLogin} ) {
                 </a>
             </div>
             <div className="text-center mt-4">
-                <p className="text-sm text-center mt-3">
+                <p className="text-textPrimary text-sm">
                     ¿Aun no tienes cuenta?{" "}
                     <a
                         href="/register"
