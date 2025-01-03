@@ -9,6 +9,7 @@ import { FaExclamationCircle } from 'react-icons/fa';
 import FeelFlow from '../assets/img/FeelFlow.png';
 import Breadcrumbs from './Breadcrumbs';
 import IconButton from './IconButton';
+import Popup from './Popup';
 
 
 function Navbar({ onLogout }) {
@@ -82,42 +83,26 @@ function Navbar({ onLogout }) {
                                 </button>
                             </div>
                             {/* Modal de confirmación de cierre de sesión */}
-
-                            {modalIsOpen && (
-                                <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
-                                    <div className="bg-white max-w-sm w-full rounded-lg shadow-lg transform transition-all duration-300 scale-95 hover:scale-100 p-6">
-                                        <div className="flex items-center mb-4">
-                                        <FaExclamationCircle className="text-yellow-400 text-5xl mr-4" />
-                                            <h3 className="text-xl font-roboto-bold text-textBlack">¿Estás seguro que quieres cerrar sesión?</h3>
-                                        </div>
-                                        <div className="mt-6 flex justify-center space-x-4">
-                                            <button
-                                                className="px-4 py-2 text-gray-700 font-semibold rounded-lg border border-gray-300 bg-bgBluePrimary hover:bg-bgBlueSecondary transition-colors duration-200"
-                                                onClick={closeModal}
-                                            >
-                                                Cancelar
-                                            </button>
-                                            <button
-                                                className="px-4 py-2 text-white font-semibold rounded-lg bg-red-600 hover:bg-red-700 transition-colors duration-200"
-                                                onClick={handleLogout}
-                                            >
-                                                Cerrar sesión
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            )}
-                            {/* {modalIsOpen && (
-                                <div className="fixed inset-0 flex items-center justify-center z-50 bg-gray-500 bg-opacity-50">
-                                    <div className="bg-white p-6 rounded-lg shadow-lg">
-                                        <h3 className="text-lg font-semibold">¿Estas seguro que quieres cerrar sesión?</h3>
-                                        <div className="mt-4 flex justify-end space-x-4">
-                                            <button className="px-4 py-2 bg-primary text-gray-700 rounded" onClick={closeModal}>Cancel</button>
-                                            <button className="px-4 py-2 bg-error text-white rounded" onClick={handleLogout}>Log Out</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            )} */}
+                            <Popup
+                                isOpen={modalIsOpen}
+                                icon={<FaExclamationCircle className="text-yellow-400 text-5xl mr-4" />}
+                                title="¿Estás seguro que quieres cerrar sesión?"
+                                buttons={[
+                                    {
+                                        label: "Cancelar",
+                                        color: "blue",
+                                        size: "md",
+                                        onClick: closeModal,
+                                    },
+                                    {
+                                        label: "Cerrar sesión",
+                                        color: "red",
+                                        size: "md",
+                                        onClick: handleLogout,
+                                    },
+                                ]}
+                            />
+                            
                             {notificationsIsOpen && (
                                 <div class="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-light py-1 shadow-lg ring-1 ring-black/5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabindex="-1">
                                     {/* <!-- Active: "bg-gray-100 outline-none", Not Active: "" --> */}

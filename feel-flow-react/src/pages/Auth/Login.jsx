@@ -68,6 +68,17 @@ function Login( {onLogin} ) {
                     ¿Olvidaste tu Contraseña?
                 </a>
             </div>
+            <div className="text-center mt-4">
+                <p className="text-sm text-center mt-3">
+                    ¿Aun no tienes cuenta?{" "}
+                    <a
+                        href="/register"
+                        className="text-indigo-600 font-semibold hover:underline"
+                    >
+                        Registrate
+                    </a>
+                </p>
+            </div>
         </form>
     );
 

@@ -10,9 +10,9 @@ export const Sign_up = async(names, lastName, email, pw, company) => {
         }
 
     };
-    console.log(body);
 
     try {
+        console.log("Hola")
         const response = await fetch('http://localhost:8080/api/v1/admin', {
             method: 'POST',
             headers: {
@@ -20,19 +20,16 @@ export const Sign_up = async(names, lastName, email, pw, company) => {
             },
             body: JSON.stringify(body)
         })
+        console.log(response.status)
 
-        if (!response.ok) {
-            // Maneja errores HTTP
+        if (response.status !== 201) {
             const errorData = await response.json();
-            throw new Error(errorData.message || "Error en la solicitud");
+            return { errors: errorData };
         }
 
-        const data = await response.json();
-        console.log(data)
-        // saveAuthData(data.token, data.username);
-        return data; // Devuelve la respuesta del backend (por ejemplo, el token)
+        return response.status;
     } catch (error) {
-        // Manejo de errores de red o de la API
-        throw new Error(error.message || "Error al comunicarse con el servidor");
+        console.error("Error al comunicarse con el servidor:", error);
+        return { errors: { general: "Error de red o servidor." } };
     }
 }
