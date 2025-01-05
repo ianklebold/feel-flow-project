@@ -30,8 +30,8 @@ const styles = {
     overflow: 'hidden',
   },
   bannerImage: {
-    width: '100%',
-    height: '200px',
+    width: '1000%',
+    height: '300px',
     objectFit: 'cover',
   },
   profileDetails: {
@@ -46,6 +46,7 @@ const styles = {
     height: '80px',
     borderRadius: '50%',
     border: '3px solid white',
+    
   },
   editButton: {
     marginLeft: '15px',

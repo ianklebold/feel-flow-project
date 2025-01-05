@@ -1,6 +1,5 @@
 import React from "react";
 import { Helmet } from "react-helmet";
-import Header from "../components/Header";
 import ProfileBanner from "../components/ProfileBanner";
 import ProfileInfo from "../components/ProfileInfo";
 
@@ -14,9 +13,6 @@ function Profile() {
         <Helmet>
           <title>Perfil</title>
         </Helmet>
-
-        {/* Header */}
-        <Header />
 
         {/* Contenido del Perfil */}
         <div className="mt-6 space-y-6">
