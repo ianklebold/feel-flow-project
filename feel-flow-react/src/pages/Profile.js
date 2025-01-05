@@ -1,20 +1,34 @@
+import React from "react";
 import { Helmet } from "react-helmet";
+import Header from "../components/Header";
+import ProfileBanner from "../components/ProfileBanner";
+import ProfileInfo from "../components/ProfileInfo";
 
 function Profile() {
-    return (
-      
-      <div>
+  return (
+    <div className="flex">
+
+      {/* Main Content */}
+      <div className="flex-1 bg-gray-100 min-h-screen p-6">
+        {/* Helmet para el título de la página */}
         <Helmet>
-          <title>Profile</title>
+          <title>Perfil</title>
         </Helmet>
-        
-        <div className="p-6">
-          <h1 className="text-2xl font-bold">Mi Perfil</h1>
-          <p>Aquí puedes ver y editar la información de tu perfil.</p>
+
+        {/* Header */}
+        <Header />
+
+        {/* Contenido del Perfil */}
+        <div className="mt-6 space-y-6">
+          {/* Banner del Perfil */}
+          <ProfileBanner />
+
+          {/* Información del Perfil */}
+          <ProfileInfo />
         </div>
       </div>
-    );
-  }
-  
-  export default Profile;
-  
+    </div>
+  );
+}
+
+export default Profile;
