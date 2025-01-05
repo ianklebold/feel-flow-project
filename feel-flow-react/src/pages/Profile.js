@@ -1,37 +1,59 @@
-import React from "react";
+import { useState, useEffect } from "react";
 import { Helmet } from "react-helmet";
 import ProfileBanner from "../components/ProfileBanner";
-// import ProfileMiddle from "../components/ProfileMiddle";
-// import ProfileInfo from "../components/ProfileInfo";
-// import ProfileBanner from "../components/ProfileBanner";
 import ProfileCard from "../components/ProfileCard";
 import ProfileDetails from "../components/ProfileDetails";
+import { getProfileData } from "../services/Auth/Profile";  // Un servicio que implementas para obtener los datos del perfil
 
 function Profile() {
-  return (
-    <div className="flex">
+    const [profile, setProfile] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
 
-      {/* Main Content */}
-      <div className="flex-1 bg-gray-100 min-h-screen p-6">
-        {/* Helmet para el título de la página */}
-        <Helmet>
-          <title>Perfil</title>
-        </Helmet>
+    useEffect(() => {
+      const fetchProfileData = async () => {
+          try {
+              const data = await getProfileData();  // Realizar la solicitud con el token
+              console.log("Datos del perfil recibidos:", data);  // Verifica los datos del perfil
+              setProfile(data);
+              setLoading(false);
+          } catch (error) {
+              console.error("Error al obtener los datos del perfil:", error);
+              setError("No se pudieron cargar los datos del perfil.");
+              setLoading(false);
+          }
+      };
+  
+      fetchProfileData();
+  }, []);  
 
-        {/* Contenido del Perfil */}
-          <div className="space-y-8">
-          {/* Banner de Perfil */}
-          <ProfileBanner />
+    if (loading) {
+        return <div>Cargando...</div>;
+    }
 
-          {/* Tarjeta del Perfil */}
-          <ProfileCard />
+    if (error) {
+        return <div>{error}</div>;
+    }
 
-          {/* Detalles del Perfil */}
-          <ProfileDetails />
+    return (
+        <div className="min-h-screen bg-gray-50">
+            <Helmet>
+                <title>Perfil | Feel Flow</title>
+            </Helmet>
+
+            <div className="space-y-8">
+                <ProfileBanner />
+
+                {/* Mostrar datos del perfil si están disponibles */}
+                {profile && (
+                    <>
+                        <ProfileCard user={profile} />
+                        <ProfileDetails user={profile} />
+                    </>
+                )}
+            </div>
         </div>
-      </div>
-    </div>
-  );
+    );
 }
 
 export default Profile;
