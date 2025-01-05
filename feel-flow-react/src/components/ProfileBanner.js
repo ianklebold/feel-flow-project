@@ -1,7 +1,7 @@
 import React from 'react';
 // Elements
 import Banner from '../assets/img/banner.jpg';
-import Profile from '../assets/img/profile.jpg';
+// import Profile from '../assets/img/profile.jpg';
 
 const ProfileBanner = () => {
   return (
@@ -11,14 +11,7 @@ const ProfileBanner = () => {
         alt="Banner"
         style={styles.bannerImage}
       />
-      <div style={styles.profileDetails}>
-        <img
-          src={Profile}
-          alt="Avatar"
-          style={styles.avatar}
-        />
-        <button style={styles.editButton}>Editar Perfil</button>
-      </div>
+
     </div>
   );
 };

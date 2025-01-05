@@ -1,7 +1,11 @@
 import React from "react";
 import { Helmet } from "react-helmet";
 import ProfileBanner from "../components/ProfileBanner";
-import ProfileInfo from "../components/ProfileInfo";
+// import ProfileMiddle from "../components/ProfileMiddle";
+// import ProfileInfo from "../components/ProfileInfo";
+// import ProfileBanner from "../components/ProfileBanner";
+import ProfileCard from "../components/ProfileCard";
+import ProfileDetails from "../components/ProfileDetails";
 
 function Profile() {
   return (
@@ -15,12 +19,15 @@ function Profile() {
         </Helmet>
 
         {/* Contenido del Perfil */}
-        <div className="mt-6 space-y-6">
-          {/* Banner del Perfil */}
+          <div className="space-y-8">
+          {/* Banner de Perfil */}
           <ProfileBanner />
 
-          {/* Información del Perfil */}
-          <ProfileInfo />
+          {/* Tarjeta del Perfil */}
+          <ProfileCard />
+
+          {/* Detalles del Perfil */}
+          <ProfileDetails />
         </div>
       </div>
     </div>
