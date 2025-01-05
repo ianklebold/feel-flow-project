@@ -3,10 +3,11 @@ package com.equipo5.feelflowapp.mappers.modules;
 import com.equipo5.feelflowapp.domain.modules.Module;
 import com.equipo5.feelflowapp.dto.modules.ModuleDto;
 import com.equipo5.feelflowapp.mappers.users.UserMapper;
+import com.equipo5.feelflowapp.mappers.users.team.TeamMapper;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
-@Mapper(uses = UserMapper.class)
+@Mapper(uses = {UserMapper.class, TeamMapper.class})
 public interface ModuleMapper {
 
     @Mapping(source = "name",target = "name")

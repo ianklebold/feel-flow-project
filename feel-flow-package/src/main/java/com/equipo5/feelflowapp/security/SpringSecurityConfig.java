@@ -64,8 +64,8 @@ public class SpringSecurityConfig {
                                 .requestMatchers(HttpMethod.POST,SurveyModuleController.SURVEY_PATH.concat("/twelve_steps_module")).hasAnyAuthority("USER_REGULAR")
                                 .requestMatchers(HttpMethod.GET, QuestionsAnswersModuleController.QUESTION_AND_ANSWERS_PATH+QuestionsAnswersModuleController.ANSWERS_MODULE).hasAnyAuthority("USER_REGULAR")
                                 .requestMatchers(HttpMethod.GET,QuestionsAnswersModuleController.QUESTION_AND_ANSWERS_PATH+QuestionsAnswersModuleController.QUESTIONS_MODULE).hasAnyAuthority("USER_REGULAR")
-                                .requestMatchers("/api/v1/regular_user/**").permitAll()
                                 .requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
+                                .requestMatchers("/api/v1/regular_user/**").permitAll()
                                 .anyRequest()
                                 .authenticated()
                 ).csrf(AbstractHttpConfigurer::disable)
@@ -79,19 +79,16 @@ public class SpringSecurityConfig {
     CorsConfigurationSource corsConfigurationSource(){
         CorsConfiguration config = new CorsConfiguration();
         config.setAllowedOrigins(
-                Arrays.asList("http://127.0.0.1:8000","http://localhost:8100/","http://192.168.100.127:8100", "http://127.0.0.1:5500", "http://127.0.0.1:5500/", "http://127.0.0.1:3000","http://localhost:5173")
+                Arrays.asList("http://127.0.0.1:8000", "http://127.0.0.1:5500","http://localhost:8100/","http://192.168.100.127:8100",
+                        "http://127.0.0.1:3000","http://localhost:5173")
         );
         config.setAllowedMethods(Arrays.asList("GET","POST","PUT","DELETE"));
         config.setAllowedHeaders(Arrays.asList("Authorization", "Cache-Control", "Content-Type"));
         config.setAllowCredentials(true);
-
-
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**",config);
         return source;
     }
-
-
 
     @Bean
     FilterRegistrationBean<CorsFilter> corsFilter() {
