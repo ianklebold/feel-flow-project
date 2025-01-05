@@ -16,3 +16,13 @@ export const clearAuthData = () => {
     sessionStorage.removeItem("token");
     sessionStorage.removeItem("username");
 };
+
+// En la consola del navegador
+console.log("MOSTRANDO EL TOKEN e ID EN LOCALSTORAGE");
+console.log(localStorage.getItem('token'));  // Debe mostrar el token almacenado
+console.log(localStorage.getItem('userId'));
+
+// En la consola del navegador
+console.log("MOSTRANDO EL TOKEN e ID EN sessionStorage");
+console.log(sessionStorage.getItem('token'));  // Debe mostrar el token almacenado
+console.log(sessionStorage.getItem('username'));
