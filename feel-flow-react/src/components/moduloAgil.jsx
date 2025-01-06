@@ -60,7 +60,7 @@ const Modulo = ({
 
                                 )}
                             </div>
-                            <div className="relative flex flex-col items-center text-white w-full">
+                            <div className="relative flex flex-col items-center text-white w-full mt-4">
                                 {descripcionModulo && (
                                     <p className="text-center p-4">{descripcionModulo}</p>
                                 )}
