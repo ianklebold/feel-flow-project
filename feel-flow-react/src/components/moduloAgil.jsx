@@ -3,17 +3,17 @@ import Button from "./Button";
 
 const Modulo = ({
     mostrarSinEncuestas = false,
-    sinEncuestasMensaje = "En este momento no dispone de encuestas disponibles",
+    sinEncuestasMensaje = "",
     tituloModulo = "",
     imagenHeader = "",
     imagenBody = "",
     imagenFooter = "",
+    imagenContent = "", 
     descripcionModulo = "",
     botones = [],
-    imagenContent = "", // Nueva imagen para colocar encima de la imagen del cuerpo
 }) => {
     return (
-        <div className="max-h-screen overflow-hidden mt-5"> {/* Limitar el tamaño del contenedor principal */}
+        <div className="max-h-screen overflow-hidden mt-10 mr-8 ml-2"> {/* Limitar el tamaño del contenedor principal */}
             {/* Mensaje Sin Encuestas */}
             {mostrarSinEncuestas && (
                 <div className="text-center text-gray-700 p-4">{sinEncuestasMensaje}</div>
@@ -34,7 +34,7 @@ const Modulo = ({
                                         className="absolute inset-0 w-full h-full object-cover"
                                     />
                                 )}
-                                <h3 className="text-lg font-bold relative z-10">{tituloModulo}</h3>
+                                <h3 className="font-sans text-3xl text-textWhite font-bold text-center relative z-10">{tituloModulo}</h3>
                             </div>
                         )}
 
@@ -52,7 +52,7 @@ const Modulo = ({
                                             <img
                                                 src={imagenContent}
                                                 alt="Content"
-                                                className="absolute inset-0 w-full h-full object-contain z-10 m-0 p-0"
+                                                className="absolute inset-0 w-full h-full mt-5 object-contain z-10 m-0 p-0"
                                             />
 
                                         )}
@@ -79,7 +79,7 @@ const Modulo = ({
                                                     key={index}
                                                     label={boton.texto} 
                                                     onClick={boton.onClick} 
-                                                    color="light_pink" 
+                                                    color= {boton.color}	
                                                     size="md" 
                                                     className=""
                                                 />

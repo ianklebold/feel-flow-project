@@ -25,6 +25,8 @@ const Button = ({
         green: "text-white bg-green-500 hover:bg-green-600 focus:ring-2 focus:ring-green-400",
         gray: "text-gray-700 bg-gray-200 hover:bg-gray-300 focus:ring-2 focus:ring-gray-400",
         light_pink: "text-white bg-[#DF888F] hover:bg-[#D5737C] focus:ring-2 focus:ring-[#D5737C]",
+        light_blue: "text-white bg-[#88D9DF] hover:bg-[#6DB6C4] focus:ring-2 focus:ring-[#6DB6C4]",
+        light_purple: "text-white bg-[#8444D7] hover:bg-[#7237B9] focus:ring-2 focus:ring-[#7237B9]",
     };
     const variantClasses = {
         solid: "",
