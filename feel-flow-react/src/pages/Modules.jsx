@@ -21,12 +21,8 @@ import contentImageKudos from "../img/kudos_content.png";
 
 
 function Modules() {
-    const handleEnviarEncuesta = () => {
+    const handleHabilitarEncuesta = () => {
         console.log("Enviar Encuesta");
-    };
-
-    const handleContestarEncuesta = () => {
-        console.log("Contestar Encuesta");
     };
     const handleComenzarNikoNiko = () => {
         console.log("Enviar Encuesta");
@@ -60,8 +56,7 @@ function Modules() {
                 imagenContent={contentImage12pasos}
                 descripcionModulo="El objetivo de esta práctica es reflexionar sobre diferentes aspectos relacionados con la felicidad, cómo los incorporamos en nuestro día a día y poder generar acciones que impulsen nuestra felicidad."
                 botones={[
-                    { texto: "Enviar Encuesta", onClick: handleEnviarEncuesta, color: "light_pink" },
-                    { texto: "Contestar Encuesta", onClick: handleContestarEncuesta, color: "light_pink" },
+                    { texto: "Habilitar Encuesta", onClick: handleHabilitarEncuesta, color: "light_pink" },
                 ]}
             />
 
