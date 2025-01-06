@@ -9,12 +9,11 @@ const Modulo = ({
     imagenBody = "",
     imagenFooter = "",
     descripcionModulo = "",
-    citaModulo = "",
     botones = [],
     imagenContent = "", // Nueva imagen para colocar encima de la imagen del cuerpo
 }) => {
     return (
-        <div className="max-h-screen overflow-hidden"> {/* Limitar el tamaño del contenedor principal */}
+        <div className="max-h-screen overflow-hidden mt-5"> {/* Limitar el tamaño del contenedor principal */}
             {/* Mensaje Sin Encuestas */}
             {mostrarSinEncuestas && (
                 <div className="text-center text-gray-700 p-4">{sinEncuestasMensaje}</div>
@@ -35,7 +34,7 @@ const Modulo = ({
                                         className="absolute inset-0 w-full h-full object-cover"
                                     />
                                 )}
-                                <h3 className="text-lg font-semibold relative z-10">{tituloModulo}</h3>
+                                <h3 className="text-lg font-bold relative z-10">{tituloModulo}</h3>
                             </div>
                         )}
 
@@ -43,7 +42,7 @@ const Modulo = ({
                         <div className="group-hover:block hidden overflow-hidden transition-all duration-500 ease-in-out">
                             <div className="relative flex flex-col items-center text-white w-full">
                                 {imagenBody && (
-                                    <div className="relative w-full max-h-[calc(80vh-70px)] mb-0">
+                                    <div className="relative w-full max-h-[calc(70vh-70px)] mb-0">
                                         <img
                                             src={imagenBody}
                                             alt="Cuerpo"
@@ -62,22 +61,27 @@ const Modulo = ({
                                 )}
                             </div>
                             <div className="relative flex flex-col items-center text-white w-full">
+                                {descripcionModulo && (
+                                    <p className="text-center p-4">{descripcionModulo}</p>
+                                )}
+                            </div>
+                            <div className="relative flex flex-col items-center text-white w-full">
                                 {imagenFooter && (
                                     <div className="bottom-0 w-full mt-3">
                                         <img
                                             src={imagenFooter}
                                             alt="Footer"
-                                            className="w-full object-contain"
+                                            className="w-full h-20 object-cover"
                                         />
                                         <div className="absolute inset-x-0 bottom-4 flex justify-center space-x-4 z-20">
                                             {botones.map((boton, index) => (
                                                 <Button
                                                     key={index}
-                                                    label={boton.texto} // Se usa 'texto' de 'boton' como el texto del botón
-                                                    onClick={boton.onClick} // Se pasa la función 'onClick' de 'boton'
-                                                    color="light_pink" // Esto es solo un ejemplo, puedes hacer que el color sea dinámico si lo deseas
-                                                    size="md" // Similarmente, el tamaño puede ser dinámico
-                                                    className="" // Si deseas agregar clases personalizadas, puedes hacerlo aquí
+                                                    label={boton.texto} 
+                                                    onClick={boton.onClick} 
+                                                    color="light_pink" 
+                                                    size="md" 
+                                                    className=""
                                                 />
                                             ))}
                                         </div>
