@@ -1,6 +1,6 @@
 import React from "react";
 
-const IconButton = ({ icon: Icon, onClick, color = "blue", size = "md", tooltip = "" }) => {
+const IconButton = ({ icon: Icon, onClick, color = "blue", size = "md", tooltip = "", id }) => {
     const sizeClasses = {
         sm: "p-2 text-sm",
         md: "p-3 text-base",
@@ -21,6 +21,7 @@ const IconButton = ({ icon: Icon, onClick, color = "blue", size = "md", tooltip 
             className={`flex items-center justify-center rounded-full ${sizeClasses[size]} ${colorClasses[color]} transition-all duration-200`}
             aria-label={tooltip}
             title={tooltip}
+            id={id}
         >
             <Icon className="w-5 h-5" />
         </button>
