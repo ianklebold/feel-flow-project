@@ -15,7 +15,7 @@ const decodeJWT = (token) => {
 export const getProfileData = async () => {
     // Recuperar el token de sessionStorage
     const token = sessionStorage.getItem('token'); 
-    console.log("Token recuperado:", token);
+    console.log("Token recuperado en Session:", token);
 
     // Comprobar si el token es válido
     if (!token) {
@@ -25,6 +25,7 @@ export const getProfileData = async () => {
 
     // Decodificar el token para obtener el ID del usuario
     const { id } = decodeJWT(token);
+    sessionStorage.setItem('userId', id);
     console.log("ID recuperado del token:", id);
 
     try {
