@@ -36,7 +36,7 @@
         "link": "/teams"
     },
     "Equipos2": {
-        "nombre": "Equipos",
+        "nombre": "Equipos2",
         "perfiles": [
             "TEAM_LEADER",
             "USER_REGULAR"

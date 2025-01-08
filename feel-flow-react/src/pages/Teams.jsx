@@ -4,11 +4,16 @@ import { GetEquipos } from "../services/GetEquipos"; // Importa la función GetE
 import Searchbar from "../components/Searchbar";
 import Table from "../components/Table";
 import Button from "../components/Button";
+import Popup from "../components/Popup";
+import Form from "../components/Form";
+import { FaExclamationCircle } from "react-icons/fa";
 
 function Teams() {
     const [teams, setTeams] = useState([]);
     const [searchTeams, setSearchTeams] = useState("");
     const [searchLeaders, setSearchLeaders] = useState("");
+    const [newTeamPopup, setNewTeamIsOpen] = useState(false);
+
 
     useEffect(() => {
         const fetchTeams = async () => {
@@ -26,7 +31,7 @@ function Teams() {
                 // Ajusta los datos para la tabla
                 const formattedTeams = response.map((team) => ({
                     teamName: team.nameTeam || "Sin nombre", // Nombre del equipo
-                    leaderName: team.teamLeaderDTO 
+                    leaderName: team.teamLeaderDTO
                         ? `${team.teamLeaderDTO.name} ${team.teamLeaderDTO.surname}`.trim()
                         : "Sin líder", // Nombre completo del líder
                 }));
@@ -61,8 +66,92 @@ function Teams() {
         console.log("Clic en el icono de:", row.teamName);
     };
 
+    const togglePopup = () => {
+        setNewTeamIsOpen(!newTeamPopup);
+    };
+
+    const closePopup = () => {
+        setNewTeamIsOpen(false);
+    };
+
+    const [nameTeam, setNameTeam] = useState();
+    const [descriptionTeam, setDescriptionTeam] = useState();
+    const [nameTeamLeader, setNameTeamLeader] = useState();
+    const [surnameTeamLeader, setSurnameTeamLeader] = useState();
+    const [usernameTeamLeader, setUsernameTeamLeader] = useState();
+    const [passwordTeamLeader, setPasswordTeamLeader] = useState();
+    const [error, setError] = useState();
+
+
+    const newTeamInputs = [
+        {
+            label: "Nombre del Equipo",
+            labelClass: "login",
+            value: nameTeam,
+            onChange: (e) => setNameTeam(e.target.value),
+            placeholder: "Ingresa el nombre del equipo",
+            color: "blue",
+        },
+        {
+            label: "Descripcion",
+            labelClass: "login",
+            value: descriptionTeam,
+            onChange: (e) => setDescriptionTeam(e.target.value),
+            placeholder: "Ingresa la descripcion del equipo",
+            color: "blue",
+        },
+        {
+            label: "Nombre Team Leader",
+            labelClass: "login",
+            value: nameTeamLeader,
+            onChange: (e) => setNameTeamLeader(e.target.value),
+            placeholder: "Ingresa el nombre del lider del equipo",
+            color: "blue",
+        },
+        {
+            label: "Apellido del Team Leader",
+            labelClass: "login",
+            value: surnameTeamLeader,
+            onChange: (e) => setSurnameTeamLeader(e.target.value),
+            placeholder: "Ingresa el apellido del lider del equipo",
+            color: "blue",
+        },
+        {
+            label: "Username del Team Leader",
+            labelClass: "login",
+            value: usernameTeamLeader,
+            onChange: (e) => setUsernameTeamLeader(e.target.value),
+            placeholder: "Ingresa el username del lider del equipo",
+            color: "blue",
+        },
+        {
+            label: "Password del Team Leader",
+            labelClass: "login",
+            value: passwordTeamLeader,
+            type: "password",
+            onChange: (e) => setPasswordTeamLeader(e.target.value),
+            placeholder: "Ingresa la nueva password del lider del equipo",
+            color: "blue",
+        },
+    ];
+
+    const newTeamButtons = [
+        {
+            label: "Guardar",
+            type: "submit",
+            color: "green",
+            variant: "solid",
+            className: "w-full",
+        },
+    ];
+
+    const handleSubmit = async (e) => {
+        // e.preventDefault();
+        console.log(e)
+    };
+
     return (
-        <div>
+        <>
             <Helmet>
                 <title>Teams</title>
             </Helmet>
@@ -71,11 +160,39 @@ function Teams() {
                 <div className="mb-4">
                     <Button
                         label="Crear Equipos"
-                        onClick={() => console.log("Crear Equipos Clicked")}
+                        onClick={togglePopup}
                         color="blue"
                         size="md"
                         variant="solid"
                     />
+                    <Popup
+                        isOpen={newTeamPopup}
+                        title="Crear nuevo Equipo"
+                        // message="Crear un equipo nuevo"
+                        buttons={[
+                            {
+                                label: "Aceptar",
+                                onClick: () => {setNewTeamIsOpen(false)},
+                                color: "blue",
+                            },
+                            {
+                                label: "Cancelar",
+                                onClick: () => {setNewTeamIsOpen(false)},
+                                color: "red",
+                            },
+                        ]}
+                    >
+                        <div>
+                            <Form
+                                // onSubmit={ }
+                                inputs={newTeamInputs}
+                                buttons={newTeamButtons}
+                                error={error}
+
+                            />
+                        </div>
+                    </Popup>
+
                 </div>
 
                 <div className="flex flex-col md:flex-row gap-6 mt-6">
@@ -108,9 +225,9 @@ function Teams() {
                     striped={true}
                     noDataText="No se encontraron equipos."
                 />
-            </div>
-        </div>
-    );
+                </div>
+            </>
+            );
 }
 
 export default Teams;

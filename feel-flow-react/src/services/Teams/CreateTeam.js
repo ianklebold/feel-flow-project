@@ -1,26 +1,21 @@
-
-export const Sign_up = async(names, lastName, email, pw, company) => {
+export async function createTeam(name, description, teamLeader, token) {
     const body = {
-        name: names,
-        surname: lastName,
-        username: email,
-        password: pw,
-        enterpriseDTO: {
-            name: company
-        }
-
+        nameTeam: name,
+        descriptionTeam: description,
+        teamLeaderDTO: teamLeader
     };
 
     try {
-        const response = await fetch('http://localhost:8080/api/v1/admin', {
+        const response = await fetch('http://localhost:8080/api/v1/team', {
             method: 'POST',
             headers: {
+                'Authorization': `Bearer ${token}`,
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(body)
         })
 
-        if (response.status !== 201) {
+        if (response.status !== 200) {
             const errorData = await response.json();
             return { errors: errorData };
         }
