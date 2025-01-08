@@ -7,7 +7,8 @@ const Popup = ({
     message,
     icon,
     // icon = <FaExclamationCircle className="text-yellow-400 text-5xl mr-4" />,
-    buttons
+    buttons,
+    children
 }) => {
     if (!isOpen) return null;
 
@@ -19,6 +20,7 @@ const Popup = ({
                     <h3 className="text-xl font-roboto-bold text-textBlack">{title}</h3>
                 </div>
                 <p className="text-gray-700 mb-6">{message}</p>
+                {children && <div className="mb-4">{children}</div>}
                 <div className="flex justify-center space-x-4">
                     {buttons.map((button, index) => (
                         <Button
