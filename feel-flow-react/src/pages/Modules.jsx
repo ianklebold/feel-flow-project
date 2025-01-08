@@ -28,15 +28,8 @@ function Modules() {
         console.log("Enviar Encuesta");
     };
 
-    const handleTerminarNikoNiko = () => {
-        console.log("Contestar Encuesta");
-    };
     const handleComenzarKudos = () => {
         console.log("Enviar Encuesta");
-    };
-
-    const handleTerminarKudos = () => {
-        console.log("Contestar Encuesta");
     };
 
     return (
@@ -70,8 +63,7 @@ function Modules() {
                 descripcionModulo="El objetivo de esta práctica es reflexionar sobre diferentes aspectos relacionados con la felicidad, cómo los incorporamos en nuestro día a día y poder generar acciones que impulsen nuestra felicidad."
                 citaModulo="La felicidad es algo que creamos, no es algo que hay que lograr."
                 botones={[
-                    { texto: "Comenzar", onClick: handleComenzarNikoNiko, color: "light_blue"},
-                    { texto: "Terminar", onClick: handleTerminarNikoNiko, color: "light_blue" },
+                    { texto: "Habilitar Niko Niko", onClick: handleComenzarNikoNiko, color: "light_blue"},
                 ]}
             />
 
@@ -85,8 +77,7 @@ function Modules() {
                 descripcionModulo="El objetivo de esta práctica es reflexionar sobre diferentes aspectos relacionados con la felicidad, cómo los incorporamos en nuestro día a día y poder generar acciones que impulsen nuestra felicidad."
                 citaModulo="La felicidad es algo que creamos, no es algo que hay que lograr."
                 botones={[
-                    { texto: "Comenzar", onClick: handleComenzarKudos, color: "light_purple" },
-                    { texto: "Terminar", onClick: handleTerminarKudos, color: "light_purple" },
+                    { texto: "Habilitar Kudos", onClick: handleComenzarKudos, color: "light_purple" },
                 ]}
             />
 
