@@ -199,7 +199,7 @@ function Modules() {
                         {
                             label: "Aceptar",
                             onClick: handleConfigurarModulo,
-                            color: "green",
+                            color: "blue",
                         },
                     ]}
                 >
