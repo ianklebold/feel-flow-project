@@ -20,6 +20,7 @@ import Home from "./pages/Home";
 import Leaders from "./pages/Leaders";
 import Modules from "./pages/Modules";
 import Profile from "./pages/Profile";
+import EditProfile from "./pages/EditProfile";
 import Settings from "./pages/Settings";
 import Teams from "./pages/Teams";
 import UserManagement from "./pages/UserManagement";
@@ -65,6 +66,7 @@ function App() {
               <Route path="/leaders" element={<Leaders />} />
               <Route path="/modules" element={<Modules />} />
               <Route path="/profile" element={<Profile />} />
+              <Route path="/edit-profile" element={<EditProfile />} />
               <Route path="/settings" element={<Settings />} />
               <Route path="/teams" element={<Teams />} />
               <Route path="/usermanagement" element={<UserManagement />} />
