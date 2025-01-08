@@ -4,8 +4,6 @@ import Modulo from "../components/moduloAgil.jsx";
 import Popup from "../components/Popup.jsx";
 import { crearModulo } from "../services/crearModuloTwelveSteps.js";
 import { GetIdEquipo } from "../services/GetEquipos.js";
-import DatePicker from "react-datepicker"; // Importar DatePicker
-import "react-datepicker/dist/react-datepicker.css"; // Estilos para el DatePicker
 
 // Imágenes
 import headerImage12pasos from "../img/twelve_steps_header.png";
@@ -29,7 +27,6 @@ function Modules() {
     const [idTeam, setIdTeam] = useState("");
     const [isPopupOpen, setIsPopupOpen] = useState(false);
     const [isConfigPopupOpen, setIsConfigPopupOpen] = useState(false);
-    const [equipos, setEquipos] = useState([]);
     const [popupContent, setPopupContent] = useState({
         title: "",
         message: "",
@@ -42,8 +39,19 @@ function Modules() {
     const [selectedSet, setSelectedSet] = useState(""); // Set de preguntas seleccionado
     const [startDate, setStartDate] = useState(null); // Fecha de inicio seleccionada
     const [endDate, setEndDate] = useState(null); // Fecha de fin seleccionada
+    const [startTime, setStartTime] = useState(""); // Hora de inicio seleccionada
+    const [endTime, setEndTime] = useState(""); // Hora de fin seleccionada
     const [teams, setTeams] = useState([]); // Lista de equipos
     const [setsPreguntas, setSetsPreguntas] = useState([]); // Lista de sets de preguntas
+    const [errors, setErrors] = useState({
+        selectedTeam: "",
+        selectedSet: "",
+        startDate: "",
+        startTime: "",
+        endDate: "",
+        endTime: "",
+    }); // Errores de validación
+
 
     useEffect(() => {
         // Simula la carga de datos desde un API
@@ -65,12 +73,12 @@ function Modules() {
         GetIdEquipo(token)
             .then((uuid) => {
                 if (uuid) {
-                    setEquipos([uuid]); // Simulando lista de equipos
+                    setIdTeam(uuid); // Guarda el UUID directamente en idTeam
                 }
             })
-            .catch((error) =>
-                console.error("Error al obtener los equipos:", error)
-            );
+            .catch((error) => {
+                console.error("Error al obtener los equipos:", error);
+            });
     }, [token]);
 
     const handleCrearModulo = () => {
@@ -100,7 +108,7 @@ function Modules() {
         }
 
         try {
-            const result = await crearModulo(token, selectedTeam);
+            const result = await crearModulo(token, idTeam);
             if (result === "Module created successfully") {
                 openAlertPopup(
                     "Éxito",
@@ -123,6 +131,41 @@ function Modules() {
             );
         } finally {
             setIsConfigPopupOpen(false); // Cerrar popup de configuración
+        }
+    };
+
+    const handleSubmit = () => {
+        const newErrors = {};
+
+        if (!selectedTeam) {
+            newErrors.selectedTeam = "Por favor, selecciona un equipo.";
+        }
+
+        if (!selectedSet) {
+            newErrors.selectedSet = "Por favor, selecciona un set de preguntas.";
+        }
+
+        if (!startDate || !startTime ){
+            newErrors.startDate = "Por favor, selecciona la fecha y/o la hora de inicio.";
+        }
+
+        if (!endDate || (!endTime)) {
+            newErrors.endDate = "Por favor, selecciona la fecha y/o la hora de fin.";
+        }
+
+        const startDateTime = new Date(`${startDate}T${startTime}`);
+        const endDateTime = new Date(`${endDate}T${endTime}`);
+
+        if (startDateTime >= endDateTime ) {
+            newErrors.startDate = "La fecha y hora de inicio deben ser anteriores a la fecha y hora de fin.";
+            newErrors.endDate = "La fecha y hora de fin deben ser posteriores a la fecha y hora de inicio.";
+        }
+
+        setErrors(newErrors);
+
+        // Si no hay errores, continúa
+        if (Object.keys(newErrors).length === 0) {
+            handleConfigurarModulo(); // Llama a la función principal
         }
     };
 
@@ -188,7 +231,7 @@ function Modules() {
             {isConfigPopupOpen && (
                 <Popup
                     isOpen={isConfigPopupOpen}
-                    title="Configurar Módulo"
+                    title="Configurar Módulo 12 Pasos de la Felicidad"
                     message="Seleccione las opciones para configurar el módulo."
                     buttons={[
                         {
@@ -198,7 +241,7 @@ function Modules() {
                         },
                         {
                             label: "Aceptar",
-                            onClick: handleConfigurarModulo,
+                            onClick: handleSubmit, // Valida las fechas, horas y otros campos
                             color: "blue",
                         },
                     ]}
@@ -222,6 +265,9 @@ function Modules() {
                                     </option>
                                 ))}
                             </select>
+                            {errors.selectedTeam && (
+                                <p className="text-red-500 text-sm mt-1">{errors.selectedTeam}</p>
+                            )}
                         </div>
 
                         {/* Selección de set de preguntas */}
@@ -242,6 +288,9 @@ function Modules() {
                                     </option>
                                 ))}
                             </select>
+                            {errors.selectedSet && (
+                                <p className="text-red-500 text-sm mt-1">{errors.selectedSet}</p>
+                            )}
                         </div>
 
                         {/* Selección de fechas */}
@@ -249,29 +298,59 @@ function Modules() {
                             {/* Selección de fecha de inicio */}
                             <div>
                                 <label htmlFor="fechaInicio" className="block text-gray-700 font-bold mb-2">
-                                    Fecha de Inicio
+                                    Fecha y Hora de Inicio
                                 </label>
-                                <input
-                                    id="fechaInicio"
-                                    type="date"
-                                    value={startDate}
-                                    onChange={(e) => setStartDate(e.target.value)}
-                                    className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                />
+                                <div className="flex space-x-2">
+                                    <input
+                                        id="fechaInicio"
+                                        type="date"
+                                        value={startDate}
+                                        onChange={(e) => setStartDate(e.target.value)}
+                                        className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                    />
+                                    <input
+                                        id="horaInicio"
+                                        type="time"
+                                        value={startTime}
+                                        onChange={(e) => setStartTime(e.target.value)}
+                                        className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                    />
+                                </div>
+                                {errors.startDate && (
+                                    <p className="text-red-500 text-sm mt-1">{errors.startDate}</p>
+                                )}
+                                {errors.startTime && (
+                                    <p className="text-red-500 text-sm mt-1">{errors.startTime}</p>
+                                )}
                             </div>
 
                             {/* Selección de fecha de fin */}
                             <div>
                                 <label htmlFor="fechaFin" className="block text-gray-700 font-bold mb-2">
-                                    Fecha de Fin
+                                    Fecha y Hora de Fin
                                 </label>
-                                <input
-                                    id="fechaFin"
-                                    type="date"
-                                    value={endDate}
-                                    onChange={(e) => setEndDate(e.target.value)}
-                                    className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                />
+                                <div className="flex space-x-2">
+                                    <input
+                                        id="fechaFin"
+                                        type="date"
+                                        value={endDate}
+                                        onChange={(e) => setEndDate(e.target.value)}
+                                        className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                    />
+                                    <input
+                                        id="horaFin"
+                                        type="time"
+                                        value={endTime}
+                                        onChange={(e) => setEndTime(e.target.value)}
+                                        className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                    />
+                                </div>
+                                {errors.endDate && (
+                                    <p className="text-red-500 text-sm mt-1">{errors.endDate}</p>
+                                )}
+                                {errors.endTime && (
+                                    <p className="text-red-500 text-sm mt-1">{errors.endTime}</p>
+                                )}
                             </div>
                         </div>
                     </div>
