@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Helmet } from 'react-helmet';
+import { useNavigate } from "react-router-dom"; // Importamos useNavigate
 import { GetEquipos } from "../services/GetEquipos"; // Importa la función GetEquipos
 import Searchbar from "../components/Searchbar";
 import Table from "../components/Table";
@@ -9,6 +10,7 @@ function Teams() {
     const [teams, setTeams] = useState([]);
     const [searchTeams, setSearchTeams] = useState("");
     const [searchLeaders, setSearchLeaders] = useState("");
+    const navigate = useNavigate(); // Usamos useNavigate para la navegación
 
     useEffect(() => {
         const fetchTeams = async () => {
@@ -61,6 +63,11 @@ function Teams() {
         console.log("Clic en el icono de:", row.teamName);
     };
 
+    // Navegación al hacer clic en "Crear Equipos"
+    const handleCreateTeam = () => {
+        navigate("/edit-equipo"); // Cambia a la página "EditEquipo"
+    };
+
     return (
         <div>
             <Helmet>
@@ -71,7 +78,7 @@ function Teams() {
                 <div className="mb-4">
                     <Button
                         label="Crear Equipos"
-                        onClick={() => console.log("Crear Equipos Clicked")}
+                        onClick={handleCreateTeam} // Vinculamos el botón a la navegación
                         color="blue"
                         size="md"
                         variant="solid"
