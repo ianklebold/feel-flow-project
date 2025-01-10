@@ -1,6 +1,6 @@
 const saveUserData = (token) => {
     const payload = token.split('.')[1];
-    const decodedPayload = JSON.parse(atob(payload)); 
+    const decodedPayload = JSON.parse(atob(payload));
 
     sessionStorage.setItem("userID", decodedPayload.id);
     sessionStorage.setItem("isAdmin", decodedPayload.isAdmin);
@@ -15,8 +15,8 @@ export const saveAuthData = (token, username) => {
 
 export const getAuthData = () => {
     const token = sessionStorage.getItem("token");
-    const username = sessionStorage.getItem("username");
-    return { token, username };
+    // const username = sessionStorage.getItem("username");
+    return { token };
 };
 
 export const getUserData = () => {

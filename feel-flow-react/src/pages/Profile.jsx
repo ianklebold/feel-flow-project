@@ -14,7 +14,7 @@ function Profile() {
       const fetchProfileData = async () => {
           try {
               const data = await getProfileData();  // Realizar la solicitud con el token
-              console.log("Datos del perfil recibidos:", data);  // Verifica los datos del perfil
+            //   console.log("Datos del perfil recibidos:", data);  // Verifica los datos del perfil
               setProfile(data);
               setLoading(false);
           } catch (error) {
