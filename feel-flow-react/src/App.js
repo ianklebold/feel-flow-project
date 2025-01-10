@@ -1,6 +1,7 @@
 // Functions
 import { useEffect, useState } from "react";
-import { BrowserRouter as Router, Routes, Route, json, Navigate } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+
 // Components
 import Layout from "./Layouts/FeelFlow";
 import Login from "./pages/Auth/Login";
@@ -23,9 +24,11 @@ import Profile from "./pages/Profile";
 import EditProfile from "./pages/EditProfile";
 import Settings from "./pages/Settings";
 import Teams from "./pages/Teams";
+import TeamDetails from "./pages/TeamDetails"; // Asegúrate de que esta página esté correctamente importada
 import UserManagement from "./pages/UserManagement";
 import Users from "./pages/Users";
 import Sign_up from "./pages/Auth/Sign_up";
+
 // Styles
 import './App.css';
 
@@ -46,13 +49,9 @@ function App() {
     setIsAuthenticated(false);
     localStorage.removeItem("isAuthenticated");
     console.log(getAuthData());
-    clearAuthData()
+    clearAuthData();
     console.log(getAuthData());
   };
-
-  // useEffect(() => {
-  //   localStorage.setItem("isAuthenticated", JSON.stringify(isAuthenticated));
-  // }, [isAuthenticated])
 
   return (
     <Router>
@@ -69,6 +68,7 @@ function App() {
               <Route path="/edit-profile" element={<EditProfile />} />
               <Route path="/settings" element={<Settings />} />
               <Route path="/teams" element={<Teams />} />
+              <Route path="/teams/:teamId" element={<TeamDetails />} /> {/* Nueva ruta para TeamDetails */}
               <Route path="/usermanagement" element={<UserManagement />} />
               <Route path="/users" element={<Users />} />
               <Route path="*" element={<Navigate to="/home" />} />
@@ -83,7 +83,6 @@ function App() {
             <Route path="*" element={<Navigate to="/login" />} />
           </Routes>
         </Auth>
-
       )}
     </Router>
   );
