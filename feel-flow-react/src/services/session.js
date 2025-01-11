@@ -1,3 +1,5 @@
+import { getUser } from "./Users/GetUser";
+
 const saveUserData = (token) => {
     const payload = token.split('.')[1];
     const decodedPayload = JSON.parse(atob(payload));
@@ -32,6 +34,16 @@ export const clearAuthData = () => {
     sessionStorage.removeItem("username");
 };
 
-export async function sessionTimeLife(params) {
-    
-}
+export const validateToken = async () => {
+    const { userID } = await getUserData();
+    try {
+        const session = await getUser(userID);
+
+        if (session === "El token JWT no es valido") {
+            clearAuthData()
+        }
+
+    } catch (error) {
+        console.error("Error en sessionTimeLife:", error);
+    }
+};

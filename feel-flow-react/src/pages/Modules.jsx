@@ -4,6 +4,7 @@ import Modulo from "../components/moduloAgil.jsx";
 import Popup from "../components/Popup.jsx";
 import { crearModulo } from "../services/crearModuloTwelveSteps.js";
 import { GetIdEquipo } from "../services/GetEquipos.js";
+import { getAuthData, getUserData } from "../services/session";
 
 // Imágenes
 import headerImage12pasos from "../img/twelve_steps_header.png";
@@ -22,8 +23,8 @@ import footerImageKudos from "../img/kudos_footer.png";
 import contentImageKudos from "../img/kudos_content.png";
 
 function Modules() {
-    const [token] = useState(localStorage.getItem("authToken"));
-    const [rol] = useState(localStorage.getItem("userRole"));
+    const { token } = getAuthData();
+    const  { authority } = getUserData();
     const [idTeam, setIdTeam] = useState("");
     const [isPopupOpen, setIsPopupOpen] = useState(false);
     const [isConfigPopupOpen, setIsConfigPopupOpen] = useState(false);
@@ -33,7 +34,7 @@ function Modules() {
         icon: null,
         buttons: [],
     });
-
+    
     // Estados para la configuración del módulo
     const [selectedTeam, setSelectedTeam] = useState(""); // Equipo seleccionado
     const [selectedSet, setSelectedSet] = useState(""); // Set de preguntas seleccionado
@@ -73,6 +74,7 @@ function Modules() {
         GetIdEquipo(token)
             .then((uuid) => {
                 if (uuid) {
+                    console.log("UUID del equipo:", uuid);
                     setIdTeam(uuid); // Guarda el UUID directamente en idTeam
                 }
             })
@@ -86,7 +88,7 @@ function Modules() {
     };
 
     const handleCrearModulo12Pasos = async () => {
-        if (rol === "TEAM_LEADER") {
+        if (authority === "TEAM_LEADER") {
             setIsConfigPopupOpen(true); // Mostrar el popup de configuración
         } else {
             openAlertPopup(
@@ -112,13 +114,13 @@ function Modules() {
             if (result === "Module created successfully") {
                 openAlertPopup(
                     "Éxito",
-                    "Se creó el módulo exitosamente",
+                    "Se creó el módulo de 12 Pasos exitosamente",
                     "success"
                 );
             } else {
                 openAlertPopup(
                     "Error",
-                    `No se pudo crear el módulo: ${result}`,
+                    `No se pudo crear el módulo de 12 Pasos: ${result}`,
                     "error"
                 );
             }
