@@ -6,6 +6,7 @@ import { crearModulo } from "../services/crearModuloTwelveSteps.js";
 import { GetIdEquipo } from "../services/GetEquipos.js";
 import { getAuthData, getUserData } from "../services/session";
 import useTwelveStepsModule from "../hooks/useTwelveStepsModule";
+import useConfigurarNikoNikoModulo from "../hooks/useNikoNikoModule.jsx";
 
 // Imágenes
 import headerImage12pasos from "../img/twelve_steps_header.png";
@@ -25,7 +26,7 @@ import contentImageKudos from "../img/kudos_content.png";
 
 function Modules() {
     const { token } = getAuthData();
-    const  { authority } = getUserData();
+    const { authority } = getUserData();
     const [idTeam, setIdTeam] = useState("");
     const [isPopupOpen, setIsPopupOpen] = useState(false);
     const [popupContent, setPopupContent] = useState({
@@ -34,9 +35,16 @@ function Modules() {
         icon: null,
         buttons: [],
     });
-    
+    const [isPopupOpenNikoNiko, setIsPopupOpenNikoNiko] = useState(false);
+    const [popupContentNikoNiko, setPopupContentNikoNiko] = useState({
+        title: "",
+        message: "",
+        icon: null,
+        buttons: [],
+    });
+
     // Estados para la configuración del módulo
-   const [teams, setTeams] = useState([]); // Lista de equipos
+    const [teams, setTeams] = useState([]); // Lista de equipos
     const [setsPreguntas, setSetsPreguntas] = useState([]); // Lista de sets de preguntas
 
 
@@ -72,7 +80,7 @@ function Modules() {
     const handleCrearModulo = () => {
         console.log("handleCrearModulo fue llamado, pero no realiza ninguna acción.");
     };
-    
+
     const openAlertPopup = (title, message, type) => {
         const icons = {
             success: <span className="text-green-500 text-5xl mr-4">✔</span>,
@@ -95,28 +103,72 @@ function Modules() {
 
         setIsPopupOpen(true);
     };
-    
-  const {
-    isConfigPopupOpen,
-    setIsConfigPopupOpen,
-    errors,
-    setErrors,
-    selectedTeam,
-    setSelectedTeam,
-    selectedSet,
-    setSelectedSet,
-    startDate,
-    setStartDate,
-    endDate,
-    setEndDate,
-    startTime,
-    setStartTime,
-    endTime,
-    setEndTime,
-    handleCrearModulo12Pasos,
-    handleConfigurarModulo,
-    handleSubmit,
-  } = useTwelveStepsModule(authority, token, idTeam, openAlertPopup);
+
+    const openAlertPopupNikoNiko = (title, message, type) => {
+        const icons = {
+            success: <span className="text-green-500 text-5xl mr-4">✔</span>,
+            error: <span className="text-red-500 text-5xl mr-4">✖</span>,
+            warning: <span className="text-yellow-400 text-5xl mr-4">⚠</span>,
+        };
+
+        setPopupContentNikoNiko({
+            title,
+            message,
+            icon: icons[type],
+            buttons: [
+                {
+                    label: "Aceptar",
+                    onClick: () => setIsPopupOpenNikoNiko(false),
+                    color: type === "success" ? "green" : "red",
+                },
+            ],
+        });
+
+        setIsPopupOpenNikoNiko(true);
+    };
+
+
+    const {
+        isConfigPopupOpen,
+        setIsConfigPopupOpen,
+        errors,
+        setErrors,
+        selectedTeam,
+        setSelectedTeam,
+        selectedSet,
+        setSelectedSet,
+        startDate,
+        setStartDate,
+        endDate,
+        setEndDate,
+        startTime,
+        setStartTime,
+        endTime,
+        setEndTime,
+        handleCrearModulo12Pasos,
+        handleConfigurarModulo,
+        handleSubmit,
+    } = useTwelveStepsModule(authority, token, idTeam, openAlertPopup);
+
+
+    const {
+        isNikoNikoPopupOpen,
+        handleNikoNikoPopupOpen,
+        handleNikoNikoPopupClose,
+        handleNikoNikoFormSubmit,
+        nikoNikoErrors,
+        selectedNikoNikoTeam,
+        nikoNikoStartDate,
+        nikoNikoEndDate,
+        nikoNikoStartTime,
+        nikoNikoEndTime,
+        nikoNikoTeams,
+        setSelectedNikoNikoTeam,
+        setNikoNikoStartDate,
+        setNikoNikoStartTime,
+        setNikoNikoEndDate,
+        setNikoNikoEndTime,
+    } = useConfigurarNikoNikoModulo(teams, handleSubmit, openAlertPopup);
 
 
     return (
@@ -296,11 +348,118 @@ function Modules() {
                 botones={[
                     {
                         texto: "Habilitar Niko Niko",
-                        onClick: handleCrearModulo,
+                        onClick: handleNikoNikoPopupOpen,
                         color: "light_blue",
                     },
                 ]}
             />
+
+            {/* Popup de configuración de Niko Niko */}
+            {isNikoNikoPopupOpen && (
+                <Popup
+                    isOpen={isNikoNikoPopupOpen}
+                    title="Configurar Niko Niko"
+                    message="Seleccione las opciones para configurar el módulo."
+                    buttons={[
+                        {
+                            label: "Cancelar",
+                            onClick: handleNikoNikoPopupClose,
+                            color: "red",
+                        },
+                        {
+                            label: "Aceptar",
+                            onClick: handleNikoNikoFormSubmit,
+                            color: "blue",
+                        },
+                    ]}
+                >
+                    <div className="flex flex-col space-y-4">
+                        {/* Selección de equipo */}
+                        <div>
+                            <label htmlFor="equipo" className="block text-gray-700 font-bold mb-2">
+                                Seleccionar Equipo
+                            </label>
+                            <select
+                                id="equipo"
+                                value={selectedNikoNikoTeam}
+                                onChange={(e) => setSelectedNikoNikoTeam(e.target.value)}
+                                className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            >
+                                <option value="">Seleccione un equipo</option>
+                                {nikoNikoTeams.map((team) => (
+                                    <option key={team.id} value={team.id}>
+                                        {team.name}
+                                    </option>
+                                ))}
+                            </select>
+                            {nikoNikoErrors.selectedNikoNikoTeam && (
+                                <p className="text-red-500 text-sm mt-1">{nikoNikoErrors.selectedNikoNikoTeam}</p>
+                            )}
+                        </div>
+
+                        {/* Selección de fechas */}
+                        <div className="flex flex-col space-y-4">
+                            {/* Fecha y hora de inicio */}
+                            <div>
+                                <label htmlFor="fechaInicio" className="block text-gray-700 font-bold mb-2">
+                                    Fecha y Hora de Inicio
+                                </label>
+                                <div className="flex space-x-2">
+                                    <input
+                                        id="fechaInicio"
+                                        type="date"
+                                        value={nikoNikoStartDate}
+                                        onChange={(e) => setNikoNikoStartDate(e.target.value)}
+                                        className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                    />
+                                    <input
+                                        id="horaInicio"
+                                        type="time"
+                                        value={nikoNikoStartTime}
+                                        onChange={(e) => setNikoNikoStartTime(e.target.value)}
+                                        className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                    />
+                                </div>
+                                {nikoNikoErrors.nikoNikoStartDate && (
+                                    <p className="text-red-500 text-sm mt-1">{nikoNikoErrors.nikoNikoStartDate}</p>
+                                )}
+                                {nikoNikoErrors.nikoNikoStartTime && (
+                                    <p className="text-red-500 text-sm mt-1">{nikoNikoErrors.nikoNikoStartTime}</p>
+                                )}
+                            </div>
+
+                            {/* Fecha y hora de fin */}
+                            <div>
+                                <label htmlFor="fechaFin" className="block text-gray-700 font-bold mb-2">
+                                    Fecha y Hora de Fin
+                                </label>
+                                <div className="flex space-x-2">
+                                    <input
+                                        id="fechaFin"
+                                        type="date"
+                                        value={nikoNikoEndDate}
+                                        onChange={(e) => setNikoNikoEndDate(e.target.value)}
+                                        className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                    />
+                                    <input
+                                        id="horaFin"
+                                        type="time"
+                                        value={nikoNikoEndTime}
+                                        onChange={(e) => setNikoNikoEndTime(e.target.value)}
+                                        className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                    />
+                                </div>
+                                {nikoNikoErrors.nikoNikoEndDate && (
+                                    <p className="text-red-500 text-sm mt-1">{nikoNikoErrors.nikoNikoEndDate}</p>
+                                )}
+                                {nikoNikoErrors.nikoNikoEndTime && (
+                                    <p className="text-red-500 text-sm mt-1">{nikoNikoErrors.nikoNikoEndTime}</p>
+                                )}
+                            </div>
+                        </div>
+                    </div>
+                </Popup>
+            )}
 
             {/* Módulo Kudos */}
             <Modulo
