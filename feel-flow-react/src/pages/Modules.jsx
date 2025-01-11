@@ -5,6 +5,7 @@ import Popup from "../components/Popup.jsx";
 import { crearModulo } from "../services/crearModuloTwelveSteps.js";
 import { GetIdEquipo } from "../services/GetEquipos.js";
 import { getAuthData, getUserData } from "../services/session";
+import useTwelveStepsModule from "../hooks/useTwelveStepsModule";
 
 // Imágenes
 import headerImage12pasos from "../img/twelve_steps_header.png";
@@ -27,7 +28,6 @@ function Modules() {
     const  { authority } = getUserData();
     const [idTeam, setIdTeam] = useState("");
     const [isPopupOpen, setIsPopupOpen] = useState(false);
-    const [isConfigPopupOpen, setIsConfigPopupOpen] = useState(false);
     const [popupContent, setPopupContent] = useState({
         title: "",
         message: "",
@@ -36,22 +36,8 @@ function Modules() {
     });
     
     // Estados para la configuración del módulo
-    const [selectedTeam, setSelectedTeam] = useState(""); // Equipo seleccionado
-    const [selectedSet, setSelectedSet] = useState(""); // Set de preguntas seleccionado
-    const [startDate, setStartDate] = useState(null); // Fecha de inicio seleccionada
-    const [endDate, setEndDate] = useState(null); // Fecha de fin seleccionada
-    const [startTime, setStartTime] = useState(""); // Hora de inicio seleccionada
-    const [endTime, setEndTime] = useState(""); // Hora de fin seleccionada
-    const [teams, setTeams] = useState([]); // Lista de equipos
+   const [teams, setTeams] = useState([]); // Lista de equipos
     const [setsPreguntas, setSetsPreguntas] = useState([]); // Lista de sets de preguntas
-    const [errors, setErrors] = useState({
-        selectedTeam: "",
-        selectedSet: "",
-        startDate: "",
-        startTime: "",
-        endDate: "",
-        endTime: "",
-    }); // Errores de validación
 
 
     useEffect(() => {
@@ -86,91 +72,7 @@ function Modules() {
     const handleCrearModulo = () => {
         console.log("handleCrearModulo fue llamado, pero no realiza ninguna acción.");
     };
-
-    const handleCrearModulo12Pasos = async () => {
-        if (authority === "TEAM_LEADER") {
-            setIsConfigPopupOpen(true); // Mostrar el popup de configuración
-        } else {
-            openAlertPopup(
-                "Permiso denegado",
-                "Solo el Team Leader puede abrir el módulo",
-                "warning"
-            );
-        }
-    };
-
-    const handleConfigurarModulo = async () => {
-        if (!selectedTeam || !selectedSet || !startDate || !endDate) {
-            openAlertPopup(
-                "Error de configuración",
-                "Por favor, selecciona equipo, set de preguntas y fechas.",
-                "error"
-            );
-            return;
-        }
-
-        try {
-            const result = await crearModulo(token, idTeam);
-            if (result === "Module created successfully") {
-                openAlertPopup(
-                    "Éxito",
-                    "Se creó el módulo de 12 Pasos exitosamente",
-                    "success"
-                );
-            } else {
-                openAlertPopup(
-                    "Error",
-                    `No se pudo crear el módulo de 12 Pasos: ${result}`,
-                    "error"
-                );
-            }
-        } catch (error) {
-            console.error("Error al crear módulo:", error);
-            openAlertPopup(
-                "Error",
-                "Ocurrió un error al intentar crear el módulo",
-                "error"
-            );
-        } finally {
-            setIsConfigPopupOpen(false); // Cerrar popup de configuración
-        }
-    };
-
-    const handleSubmit = () => {
-        const newErrors = {};
-
-        if (!selectedTeam) {
-            newErrors.selectedTeam = "Por favor, selecciona un equipo.";
-        }
-
-        if (!selectedSet) {
-            newErrors.selectedSet = "Por favor, selecciona un set de preguntas.";
-        }
-
-        if (!startDate || !startTime ){
-            newErrors.startDate = "Por favor, selecciona la fecha y/o la hora de inicio.";
-        }
-
-        if (!endDate || (!endTime)) {
-            newErrors.endDate = "Por favor, selecciona la fecha y/o la hora de fin.";
-        }
-
-        const startDateTime = new Date(`${startDate}T${startTime}`);
-        const endDateTime = new Date(`${endDate}T${endTime}`);
-
-        if (startDateTime >= endDateTime ) {
-            newErrors.startDate = "La fecha y hora de inicio deben ser anteriores a la fecha y hora de fin.";
-            newErrors.endDate = "La fecha y hora de fin deben ser posteriores a la fecha y hora de inicio.";
-        }
-
-        setErrors(newErrors);
-
-        // Si no hay errores, continúa
-        if (Object.keys(newErrors).length === 0) {
-            handleConfigurarModulo(); // Llama a la función principal
-        }
-    };
-
+    
     const openAlertPopup = (title, message, type) => {
         const icons = {
             success: <span className="text-green-500 text-5xl mr-4">✔</span>,
@@ -193,6 +95,29 @@ function Modules() {
 
         setIsPopupOpen(true);
     };
+    
+  const {
+    isConfigPopupOpen,
+    setIsConfigPopupOpen,
+    errors,
+    setErrors,
+    selectedTeam,
+    setSelectedTeam,
+    selectedSet,
+    setSelectedSet,
+    startDate,
+    setStartDate,
+    endDate,
+    setEndDate,
+    startTime,
+    setStartTime,
+    endTime,
+    setEndTime,
+    handleCrearModulo12Pasos,
+    handleConfigurarModulo,
+    handleSubmit,
+  } = useTwelveStepsModule(authority, token, idTeam, openAlertPopup);
+
 
     return (
         <div>
