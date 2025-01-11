@@ -51,20 +51,6 @@ function App() {
     localStorage.removeItem("isAuthenticated");
     clearAuthData()
   };
-  
-  useEffect(() => {
-    const checkToken = async () => {
-      try {
-        await validateToken();
-      } catch (error) {
-        console.error("Error al validar el token:", error);
-      }
-    };
-
-    if (token) {
-      checkToken();
-    }
-  }, [token]);
 
   return (
     <Router>
