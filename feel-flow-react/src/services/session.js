@@ -31,3 +31,7 @@ export const clearAuthData = () => {
     sessionStorage.removeItem("token");
     sessionStorage.removeItem("username");
 };
+
+export async function sessionTimeLife(params) {
+    
+}

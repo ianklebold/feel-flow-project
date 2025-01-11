@@ -1,18 +1,26 @@
-import React, { act } from "react";
+import React from "react";
 import TextInput from "./TextInput";
 import Button from "./Button";
 
 const Form = ({
-    onSubmit,
+    handleSubmit,
     inputs = [],
     error = [],
+    success,
     buttons = [],
     links = []
 }) => {
-    
 
+    const formSubmit = (event) => {
+        event.preventDefault(); // Prevent default form submission here
+        if (handleSubmit) {
+            handleSubmit(event);  // Call the passed down handleSubmit function
+        } else {
+            console.error("handleSubmit function is not provided");
+        }
+    };
     return (
-        <form onSubmit={onSubmit}>
+        <form onSubmit={formSubmit}>
             <div className="mb-6">
                 {inputs.map((input, index) => (
                     <TextInput
@@ -33,11 +41,13 @@ const Form = ({
                 ))}
             </div>
             {error && <p className="text-error text-sm mb-4">{error}</p>}
+            {success && <p className="text-success text-sm mb-4">{success}</p>}
             {buttons.map((button, index) => (
                 <Button
                     key={index}
                     label={button.label}
                     onClick={button.onClick}
+                    type={button.type}
                     color={button.color || "blue"}
                     size={button.size || "md"}
                     variant={button.variant || "solid"}
@@ -62,7 +72,7 @@ const Form = ({
                 </div>
             )}
         </form>
-        
+
     );
 };
 

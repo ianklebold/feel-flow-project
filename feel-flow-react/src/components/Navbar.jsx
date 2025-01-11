@@ -1,6 +1,5 @@
 // Dependencies
 import React from 'react';
-import { NavLink, useLocation, Link } from 'react-router-dom';
 import { useState } from 'react';
 import { FaBell } from 'react-icons/fa';
 import { FaExclamationCircle } from 'react-icons/fa';
@@ -11,8 +10,6 @@ import Breadcrumbs from './Breadcrumbs';
 import IconButton from './IconButton';
 import Popup from './Popup';
 import NotificationDropdown from './NotificationDropdown';
-
-import profile from '../assets/img/profile.jpg'
 
 function Navbar({ onLogout }) {
     const notifications = [
@@ -129,8 +126,8 @@ function Navbar({ onLogout }) {
                             {isOpen && (
                                 <div className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-light py-1 shadow-lg ring-1 ring-black/5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabindex="-1">
                                     {/* <!-- Active: "bg-gray-100 outline-none", Not Active: "" --> */}
-                                    <a href="#" className="block px-4 py-2 text-sm text-gray hover:bg-bgBlueSecondary" role="menuitem" tabindex="-1" id="user-menu-item-0">Your Profile</a>
-                                    <a href="#" className="block px-4 py-2 text-sm text-gray hover:bg-bgBlueSecondary" role="menuitem" tabindex="-1" id="user-menu-item-1">Settings</a>
+                                    <a href="/profile" className="block px-4 py-2 text-sm text-gray hover:bg-bgBlueSecondary" role="menuitem" tabindex="-1" id="user-menu-item-0">Your Profile</a>
+                                    <a href="/settings" className="block px-4 py-2 text-sm text-gray hover:bg-bgBlueSecondary" role="menuitem" tabindex="-1" id="user-menu-item-1">Settings</a>
                                     <a href="/" className="block px-4 py-2 text-sm text-gray hover:bg-bgBlueSecondary" role="menuitem" tabindex="-1" id="user-menu-item-2" onClick={openModal}>Sign out</a>
                                 </div>
                             )}
@@ -144,10 +141,10 @@ function Navbar({ onLogout }) {
             <div className="sm:hidden" id="mobile-menu">
                 <div className="space-y-1 px-2 pb-3 pt-2">
                     {/* <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" --> */}
-                    <a href="#" className="block rounded-md bg-gray-900 px-3 py-2 text-base font-medium text-white" aria-current="page">Dashboard</a>
-                    <a href="#" className="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Team</a>
-                    <a href="#" className="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Projects</a>
-                    <a href="#" className="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Calendar</a>
+                    <a href="/dashboard" className="block rounded-md bg-gray-900 px-3 py-2 text-base font-medium text-white" aria-current="page">Dashboard</a>
+                    <a href="/team" className="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Team</a>
+                    <a href="/projects" className="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Projects</a>
+                    <a href="/calendar" className="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Calendar</a>
                 </div>
             </div>
         </nav>

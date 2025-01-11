@@ -45,9 +45,7 @@ function App() {
   const handleLogout = () => {
     setIsAuthenticated(false);
     localStorage.removeItem("isAuthenticated");
-    console.log(getAuthData());
     clearAuthData()
-    console.log(getAuthData());
   };
 
   // useEffect(() => {

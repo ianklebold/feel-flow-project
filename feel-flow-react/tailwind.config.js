@@ -8,6 +8,7 @@ module.exports = {
         secondary: '#1E40AF', // Azul oscuro
         light: '#E0F2FE', // Azul claro
         error: '#DC2626', // Rojo para errores
+        success: 'rgb(34 197 94 / var(--tw-text-opacity, 1));', // Verde para los exitosos
         textPrimary: '#1E3A8A', // Azul para texto principal
         textSecondary: '#64748B', // Gris para subtítulos
         textWhite: '#FFFFFF',
