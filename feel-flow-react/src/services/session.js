@@ -23,10 +23,10 @@ export const getAuthData = () => {
 
 export const getUserData = () => {
     const username = sessionStorage.getItem("username");
-    const userID = sessionStorage.getItem("userID");
+    const authUserID = sessionStorage.getItem("userID");
     const isAdmin = sessionStorage.getItem("isAdmin");
     const authority = sessionStorage.getItem("authority");
-    return { username, userID, isAdmin, authority }
+    return { username, authUserID, isAdmin, authority }
 }
 
 export const clearAuthData = () => {
@@ -35,9 +35,9 @@ export const clearAuthData = () => {
 };
 
 export const validateToken = async () => {
-    const { userID } = await getUserData();
+    const { authUserID } = await getUserData();
     try {
-        const session = await getUser(userID);
+        const session = await getUser(authUserID);
 
         if (session === "El token JWT no es valido") {
             clearAuthData()

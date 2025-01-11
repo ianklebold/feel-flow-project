@@ -8,7 +8,7 @@ const IconButton = ({ icon: Icon, onClick, color = "blue", size = "md", tooltip 
     };
 
     const colorClasses = {
-        blue: "text-blue-500 hover:bg-bgBlueSecondary",
+        blue: "text-textPrimary hover:bg-bgBluePrimary",
         black: "text-black hover:bg-bgBlueSecondary",
         red: "text-red-500 hover:bg-red-100",
         green: "text-green-500 hover:bg-green-100",

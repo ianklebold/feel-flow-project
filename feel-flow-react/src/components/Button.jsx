@@ -9,18 +9,22 @@ const Button = ({
     variant = "solid",
     disabled = false,
     icon: Icon,
+    rounded = "rounded-md",
     className = "",
+    children,
     ...props
 }) => {
-    const baseClasses = "rounded-md font-medium focus:outline-none transition duration-300 rounded-lg";
+    const baseClasses = "font-medium focus:outline-none transition duration-300";
     const sizeClasses = {
         sm: "text-sm px-3 py-1.5",
         md: "text-base px-4 py-2",
         lg: "text-lg px-5 py-3",
     };
     const colorClasses = {
+        black: "text-black hover:bg-bgBlueSecondary",
         blue: "text-white bg-blue-600 hover:bg-blue-700 focus:ring-2 focus:ring-blue-400",
         cyan: "text-white bg-blue-600 hover:bg-blue-700",
+        transparent: "text-gray-700 bg-transparent focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 hover:bg-bgBluePrimary",
         red: "text-white bg-red-500 hover:bg-red-600 focus:ring-2 focus:ring-red-400",
         green: "text-white bg-green-500 hover:bg-green-600 focus:ring-2 focus:ring-green-400",
         gray: "text-gray-700 bg-gray-200 hover:bg-gray-300 focus:ring-2 focus:ring-gray-400",
@@ -43,12 +47,13 @@ const Button = ({
             type={type}
             onClick={onClick}
             disabled={disabled}
-            className={`${baseClasses} ${sizeClasses[size]} ${variant === "solid" ? colorClasses[color] : variantClasses[variant]
+            className={`${baseClasses} ${rounded} ${sizeClasses[size]} ${variant === "solid" ? colorClasses[color] : variantClasses[variant]
                 } ${disabledClasses} ${className}`}
             {...props}
         >
             {Icon && <Icon className="inline-block w-5 h-5 mr-2" />}
             {label}
+            {children && <div>{children}</div>}
         </button>
     );
 };

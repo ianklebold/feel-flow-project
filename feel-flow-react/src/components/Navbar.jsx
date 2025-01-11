@@ -10,6 +10,9 @@ import Breadcrumbs from './Breadcrumbs';
 import IconButton from './IconButton';
 import Popup from './Popup';
 import NotificationDropdown from './NotificationDropdown';
+import Button from './Button';
+
+import { getUserData } from '../services/session';
 
 function Navbar({ onLogout }) {
     const notifications = [
@@ -27,9 +30,15 @@ function Navbar({ onLogout }) {
     const [isOpen, setIsOpen] = useState(false);
     const [notificationsIsOpen, setNotificationsIsOpen] = useState(false);
     const [modalIsOpen, setModalIsOpen] = useState(false);
-    const toggleDropdown = () => {
-        setIsOpen(!isOpen);
+    const [activeDropdown, setActiveDropdown] = useState(null);  // null significa ninguno abierto
+
+    const toggleDropdown = (dropdownName) => {
+        setActiveDropdown(prevState => prevState === dropdownName ? null : dropdownName);
     };
+
+    // const toggleDropdown = () => {
+    //     setIsOpen(!isOpen);
+    // };
     const notificationsDropdown = () => {
         setNotificationsIsOpen(!notificationsIsOpen);
     };
@@ -42,6 +51,8 @@ function Navbar({ onLogout }) {
     const closeModal = () => {
         setModalIsOpen(false); // Cierra el modal
     };
+    const { username } = getUserData()
+    console.log(username)
 
     const handleLogout = () => {
         onLogout();
@@ -81,26 +92,49 @@ function Navbar({ onLogout }) {
                         </div>
                     </div>
                     <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
+                        <div className='relative mx-1 border border-color-blue rounded-lg px-2'>
+                            <span>{username}</span>
+                        </div>
                         <div className='relative'>
-                            <IconButton icon={FaBell} onClick={notificationsDropdown} color="black" size="md" tooltip="Notifications" id="user-notifications-button" />
+                            <IconButton 
+                                icon={FaBell} 
+                                onClick={() => toggleDropdown('notifications')} 
+                                color="blue" 
+                                size="md" 
+                                tooltip="Notifications" 
+                                id="user-notifications-button" 
+                            />
 
-                            {notificationsIsOpen && (
-                                <div className="absolute right-0 z-10 mt-2 w-80 origin-top-right rounded-md bg-light py-1 shadow-lg ring-1 ring-black/5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="user-notifications-button" tabindex="-1">
+                            {activeDropdown === 'notifications' && (
+                                <div className="absolute right-0 z-10 mt-3 w-80 origin-top-right rounded-md bg-light shadow-lg ring-1 ring-black/5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="user-notifications-button" tabindex="-1">
                                     <NotificationDropdown notifications={notifications} />
                                 </div>
                             )}
                         </div>
-                        
 
                         {/* <!-- Profile dropdown --> */}
-                        <div className="relative ml-3">
+                        <div className="relative">
+                            <Button 
+                                type='button'
+                                id='user-menu-button'
+                                color='black'
+                                size='sm'
+                                rounded='rounded-full'
+                                onClick={() => toggleDropdown('menu')}
+                                aria-expanded={isOpen} 
+                                aria-haspopup="true"
+                            >
+                                <img className="size-8 rounded-full" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="" />
+                            </Button>
+
+                            {/* 
                             <div>
-                                <button type="button" className="relative flex rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 hover:bg-bgBluePrimary" id="user-menu-button" onClick={toggleDropdown} aria-expanded={isOpen} aria-haspopup="true">
+                                <button type="button" className="relative flex rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 hover:bg-bgBluePrimary" id="user-menu-button" onClick={() => toggleDropdown('menu')} aria-expanded={isOpen} aria-haspopup="true">
                                     <span className="absolute -inset-1.5"></span>
                                     <span className="sr-only">Open user menu</span>
                                     <img className="size-8 rounded-full" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="" />
                                 </button>
-                            </div>
+                            </div> */}
                             {/* Modal de confirmación de cierre de sesión */}
                             <Popup
                                 isOpen={modalIsOpen}
@@ -123,8 +157,8 @@ function Navbar({ onLogout }) {
                             />
 
                             
-                            {isOpen && (
-                                <div className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-light py-1 shadow-lg ring-1 ring-black/5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabindex="-1">
+                            {activeDropdown === 'menu' && (
+                                <div className="absolute right-0 z-10 mt-3 w-48 origin-top-right rounded-md bg-light py-1 shadow-lg ring-1 ring-black/5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabindex="-1">
                                     {/* <!-- Active: "bg-gray-100 outline-none", Not Active: "" --> */}
                                     <a href="/profile" className="block px-4 py-2 text-sm text-gray hover:bg-bgBlueSecondary" role="menuitem" tabindex="-1" id="user-menu-item-0">Your Profile</a>
                                     <a href="/settings" className="block px-4 py-2 text-sm text-gray hover:bg-bgBlueSecondary" role="menuitem" tabindex="-1" id="user-menu-item-1">Settings</a>

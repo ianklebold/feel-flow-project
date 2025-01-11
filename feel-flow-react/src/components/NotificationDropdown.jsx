@@ -2,7 +2,7 @@ import List from "./List";
 import NotificationItem from "./NotificationItem";
 
 const NotificationDropdown = ({ notifications }) => (
-    <div className="dropdown-menu dropdown-menu-end px-2 py-3 me-sm-n1">
+    <div className="dropdown-menu dropdown-menu-end px-2 py-2 me-sm-n1">
         {notifications.length > 0 ? (
             <List
                 items={notifications}

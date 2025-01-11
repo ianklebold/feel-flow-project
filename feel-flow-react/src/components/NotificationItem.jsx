@@ -1,8 +1,8 @@
 import React from "react";
 
 const NotificationItem = ({ image, title, time, icon }) => (
-    <a className="dropdown-item border-radius-md" href="javascript:void(0);">
-        <div className="flex items-center py-1">
+    <a className="dropdown-item" href="javascript:void(0);">
+        <div className="flex items-center py-2 px-2 border border-textPrimary rounded hover:bg-bgPrimary ">
             {/* Imagen opcional */}
             {image && (
                 <div className="my-auto">
