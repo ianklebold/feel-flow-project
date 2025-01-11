@@ -4,17 +4,11 @@ import { getAuthData, getUserData } from "../session";
 export const getProfileData = async () => {
     // Recuperar el token de sessionStorage
     const { token } = getAuthData();
+    const { authUserID } = getUserData();
 
-    // Comprobar si el token es válido
-    if (!token) {
-        console.error("No se pudo validar la sesión.");
-        throw new Error("El token no está disponible en sessionStorage.");
-    }
-
-    const { userID } = getUserData()
     try {
         // Realizar la solicitud con el token en el encabezado
-        const response = await fetch(`http://localhost:8080/api/v1/user/${userID}`, {
+        const response = await fetch(`http://localhost:8080/api/v1/user/${authUserID}`, {
             method: 'GET',
             headers: {
                 'Authorization': `Bearer ${token}`, // El token se pasa aquí en el encabezado

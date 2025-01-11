@@ -32,6 +32,9 @@ export const getUserData = () => {
 export const clearAuthData = () => {
     sessionStorage.removeItem("token");
     sessionStorage.removeItem("username");
+    sessionStorage.removeItem("userID");
+    sessionStorage.removeItem("isAdmin");
+    sessionStorage.removeItem("authority");
 };
 
 export const validateToken = async () => {

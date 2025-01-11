@@ -40,8 +40,8 @@ const Form = ({
                     />
                 ))}
             </div>
-            {error && <p className="text-error text-sm mb-4">{error}</p>}
-            {success && <p className="text-success text-sm mb-4">{success}</p>}
+            {error && <p className="text-error text-sm mb-4 text-center">{error}</p>}
+            {success && <p className="text-success text-sm mb-4 text-center">{success}</p>}
             {buttons.map((button, index) => (
                 <Button
                     key={index}
