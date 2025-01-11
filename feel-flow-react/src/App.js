@@ -33,7 +33,7 @@ import Sign_up from "./pages/Auth/Sign_up";
 import './App.css';
 
 // API
-import { clearAuthData, getAuthData } from "./services/session";
+import { clearAuthData, getAuthData, validateToken } from "./services/session";
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(
@@ -51,6 +51,20 @@ function App() {
     localStorage.removeItem("isAuthenticated");
     clearAuthData()
   };
+  
+  useEffect(() => {
+    const checkToken = async () => {
+      try {
+        await validateToken();
+      } catch (error) {
+        console.error("Error al validar el token:", error);
+      }
+    };
+
+    if (token) {
+      checkToken();
+    }
+  }, [token]);
 
   return (
     <Router>
