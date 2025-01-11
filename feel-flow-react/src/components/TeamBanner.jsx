@@ -2,12 +2,11 @@ import React from "react";
 import Swal from "sweetalert2";
 import { invite } from "../services/invite";
 
-const TeamBanner = ({ bannerUrl = "https://via.placeholder.com/1200x300", name, uuid }) => {
+const TeamBanner = ({ bannerUrl = "https://via.placeholder.com/1200x300", name, uuid, onEdit }) => {
   const handleInviteMember = async () => {
     const token = sessionStorage.getItem("token");
 
     if (!token) {
-      console.error("Token no encontrado.");
       Swal.fire({
         title: "Error",
         text: "No se encontró el token. Por favor, inicia sesión.",
@@ -18,7 +17,6 @@ const TeamBanner = ({ bannerUrl = "https://via.placeholder.com/1200x300", name, 
     }
 
     if (!uuid) {
-      console.error("UUID del equipo no proporcionado.");
       Swal.fire({
         title: "Error",
         text: "No se encontró el UUID del equipo. Por favor, inténtalo de nuevo.",
@@ -31,7 +29,6 @@ const TeamBanner = ({ bannerUrl = "https://via.placeholder.com/1200x300", name, 
     try {
       const inviteLink = await invite(token, uuid);
 
-      // Mostrar el popup personalizado con colores
       Swal.fire({
         html: `
           <p class="text-gray-800 font-semibold mb-2">Enlace de Invitación:</p>
@@ -54,8 +51,7 @@ const TeamBanner = ({ bannerUrl = "https://via.placeholder.com/1200x300", name, 
                 confirmButtonColor: "#3b82f6", // Azul primario
               });
             })
-            .catch((error) => {
-              console.error("Error al copiar el enlace:", error);
+            .catch(() => {
               Swal.fire({
                 title: "Error",
                 text: "No se pudo copiar el enlace.",
@@ -66,7 +62,6 @@ const TeamBanner = ({ bannerUrl = "https://via.placeholder.com/1200x300", name, 
         }
       });
     } catch (error) {
-      console.error("Error al invitar miembro:", error);
       Swal.fire({
         title: "Error",
         text: "No se pudo generar el enlace de invitación.",
@@ -92,10 +87,16 @@ const TeamBanner = ({ bannerUrl = "https://via.placeholder.com/1200x300", name, 
           >
             Invitar Miembro
           </button>
-          <button className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 w-32">
+          <button
+            onClick={onEdit}
+            className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 w-32"
+          >
             Editar
           </button>
-          <button className="bg-pink-500 text-white px-4 py-2 rounded hover:bg-pink-600 w-32">
+          <button
+            onClick={() => console.log("Eliminar equipo")}
+            className="bg-pink-500 text-white px-4 py-2 rounded hover:bg-pink-600 w-32"
+          >
             Eliminar
           </button>
         </div>
