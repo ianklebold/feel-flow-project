@@ -3,7 +3,8 @@ import { Helmet } from "react-helmet";
 import ProfileBanner from "../components/ProfileBanner";
 import ProfileCard from "../components/ProfileCard";
 import ProfileDetails from "../components/ProfileDetails";
-import { getProfileData } from "../services/Auth/Profile";  // Un servicio que implementas para obtener los datos del perfil
+import { getUser } from "../services/Users/GetUser";
+import { getUserData } from "../services/session";  // Para obtener el userID desde el sessionStorage
 
 function Profile() {
     const [profile, setProfile] = useState(null);
@@ -11,21 +12,28 @@ function Profile() {
     const [error, setError] = useState(null);
 
     useEffect(() => {
-      const fetchProfileData = async () => {
-          try {
-              const data = await getProfileData();  // Realizar la solicitud con el token
-            //   console.log("Datos del perfil recibidos:", data);  // Verifica los datos del perfil
-              setProfile(data);
-              setLoading(false);
-          } catch (error) {
-              console.error("Error al obtener los datos del perfil:", error);
-              setError("No se pudieron cargar los datos del perfil.");
-              setLoading(false);
-          }
-      };
-  
-      fetchProfileData();
-  }, []);  
+        const fetchProfileData = async () => {
+            const { authUserID } = getUserData();  // Obtener el userID desde sessionStorage
+
+            try {
+                const data = await getUser(authUserID);  // Obtener los datos del perfil usando getUser
+                console.log("Datos del perfil:", data);  // Verifica los datos recibidos
+
+                if (typeof data === "string") {
+                    setError(data);  // Si es un error, muestra el mensaje
+                } else {
+                    setProfile(data);  // Establece los datos del perfil
+                }
+                setLoading(false);
+            } catch (error) {
+                console.error("Error al obtener los datos del perfil:", error);
+                setError(`Error al obtener los datos del perfil: ${error.message || error}`);
+                setLoading(false);
+            }
+        };
+
+        fetchProfileData();
+    }, []);  // Este efecto se ejecutará una sola vez al montar el componente
 
     if (loading) {
         return <div>Cargando...</div>;

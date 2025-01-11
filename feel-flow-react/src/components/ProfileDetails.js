@@ -19,6 +19,15 @@ function ProfileDetails({ user }) {
                 <p>
                     <span className="font-semibold text-gray-700">Correo:</span> {user.username}
                 </p>
+                <p>
+                    <span className="font-semibold text-gray-700">Empresa:</span> {user.enterpriseName || 'No disponible'}
+                </p>
+                <p>
+                    <span className="font-semibold text-gray-700">ID de Empresa:</span> {user.enterpriseID || 'No disponible'}
+                </p>
+                <p>
+                    <span className="font-semibold text-gray-700">ID de Usuario:</span> {user.userID || 'No disponible'}
+                </p>
             </div>
         </div>
     );
