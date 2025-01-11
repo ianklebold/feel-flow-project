@@ -56,9 +56,8 @@ function Teams() {
   ];
 
   const handleIconClick = (row) => {
-    const selectedTeamUUID = row.uuid;
-    console.log("Redirigiendo al equipo con UUID:", selectedTeamUUID);
-    navigate(`/teams/${selectedTeamUUID}`);
+    sessionStorage.setItem("teamID", row.uuid)
+    navigate(`/teams/${row.teamName}`);
   };
 
   return (

@@ -60,7 +60,7 @@ function Settings() {
                 }, {});
                 console.log(formattedErrors);
                 setErrors(formattedErrors); 
-                console.log(errors.{ teamLeaderDTO.name });
+                // console.log(errors.{ teamLeaderDTO.name });
             } else {
                 setSuccess("Equipo creado correctamente");
             }

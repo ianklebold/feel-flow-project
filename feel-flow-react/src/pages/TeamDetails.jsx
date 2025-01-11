@@ -4,9 +4,11 @@ import { GetEquipobyID } from "../services/GetEquipoId";
 import TeamBanner from "../components/TeamBanner";
 import TeamDetailsCard from "../components/TeamDetailsCard";
 import TeamMembersList from "../components/TeamMembersList";
+import { getAuthData, getUserData } from "../services/session";
 
 const TeamDetails = () => {
-  const { teamId: uuid } = useParams(); // Captura el UUID desde la URL
+  // const { teamId: uuid } = useParams(); // Captura el UUID desde la URL
+  const uuid = sessionStorage.getItem("teamID")
   const navigate = useNavigate();
   const [teamDetails, setTeamDetails] = useState(null);
   const [error, setError] = useState(null);
@@ -14,8 +16,8 @@ const TeamDetails = () => {
 
   useEffect(() => {
     const fetchTeamDetails = async () => {
-      const token = sessionStorage.getItem("token");
-
+      const { token } = getAuthData();
+      
       if (!token) {
         console.error("Token no encontrado. Redirigiendo al login.");
         setError("No se encontró el token. Redirigiendo al login.");
