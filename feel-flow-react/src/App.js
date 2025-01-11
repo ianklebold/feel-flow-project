@@ -39,6 +39,7 @@ function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(
     JSON.parse(localStorage.getItem("isAuthenticated")) || false
   );
+  const { token } = getAuthData()
 
   const handleLogin = () => {
     setIsAuthenticated(true);
@@ -53,7 +54,7 @@ function App() {
 
   return (
     <Router>
-      {isAuthenticated ? (
+      {isAuthenticated && token != null ? (
         <>
           <FeelFlow onLogout={handleLogout}>
             <Routes>
