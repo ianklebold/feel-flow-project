@@ -26,3 +26,4 @@ export async function UpdateEquipo(id, token, nameTeam, descriptionTeam) {
         return false; // Devuelve false en caso de error
     }
 }
+

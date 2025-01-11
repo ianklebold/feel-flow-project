@@ -4,12 +4,20 @@ import { GetEquipobyID } from "../services/GetEquipoId";
 import TeamBanner from "../components/TeamBanner";
 import TeamDetailsCard from "../components/TeamDetailsCard";
 import TeamMembersList from "../components/TeamMembersList";
+import Popup from "../components/Popup";
+import Form from "../components/Form";
 import { getAuthData } from "../services/session";
+import { UpdateEquipo } from "../services/UpdateEquipo";
 
 const TeamDetails = () => {
-  const { teamId } = useParams(); // Captura el UUID desde la URL
+  const { teamId } = useParams();
   const navigate = useNavigate();
   const [teamDetails, setTeamDetails] = useState(null);
+  const [editPopupOpen, setEditPopupOpen] = useState(false);
+  const [formData, setFormData] = useState({
+    nameTeam: "",
+    descriptionTeam: "",
+  });
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -23,14 +31,12 @@ const TeamDetails = () => {
       return;
     }
 
-    // Guardar el UUID en sessionStorage para consistencia
     sessionStorage.setItem("teamID", uuid);
 
     const fetchTeamDetails = async () => {
       const { token } = getAuthData();
 
       if (!token) {
-        console.error("Token no encontrado. Redirigiendo al login.");
         setError("No se encontró el token. Redirigiendo al login.");
         setTimeout(() => navigate("/login"), 2000);
         return;
@@ -38,10 +44,12 @@ const TeamDetails = () => {
 
       try {
         const data = await GetEquipobyID(token, uuid);
-        console.log("Detalles del equipo recibidos:", data);
         setTeamDetails(data);
-      } catch (err) {
-        console.error("Error al obtener los detalles del equipo:", err);
+        setFormData({
+          nameTeam: data.nameTeam,
+          descriptionTeam: data.descriptionTeam,
+        });
+      } catch {
         setError("No se pudieron cargar los detalles del equipo.");
       } finally {
         setIsLoading(false);
@@ -50,6 +58,25 @@ const TeamDetails = () => {
 
     fetchTeamDetails();
   }, [uuid, navigate]);
+
+  const handleUpdateTeam = async (event) => {
+    event.preventDefault();
+    const { token } = getAuthData();
+
+    try {
+      const success = await UpdateEquipo(uuid, token, formData.nameTeam, formData.descriptionTeam);
+      if (success) {
+        setTeamDetails((prev) => ({
+          ...prev,
+          nameTeam: formData.nameTeam,
+          descriptionTeam: formData.descriptionTeam,
+        }));
+        setEditPopupOpen(false);
+      }
+    } catch {
+      console.error("Error en la actualización del equipo");
+    }
+  };
 
   if (isLoading) {
     return <p>Cargando detalles del equipo...</p>;
@@ -67,16 +94,60 @@ const TeamDetails = () => {
 
   return (
     <div className="p-6 space-y-6">
-      {/* Banner del Equipo */}
-      <TeamBanner name={nameTeam} uuid={uuid} />
+      <TeamBanner
+        name={nameTeam}
+        uuid={uuid}
+        onEdit={() => setEditPopupOpen(true)}
+      />
 
-      {/* Detalles del Equipo */}
+      <Popup
+        isOpen={editPopupOpen}
+        title="Editar Equipo"
+        buttons={[]}
+      >
+        <Form
+          handleSubmit={handleUpdateTeam}
+          inputs={[
+            {
+              label: "Nombre del Equipo",
+              name: "nameTeam",
+              value: formData.nameTeam,
+              placeholder: "Edita el nombre del equipo",
+              onChange: (e) => setFormData({ ...formData, nameTeam: e.target.value }),
+              color: "blue",
+            },
+            {
+              label: "Descripción del Equipo",
+              name: "descriptionTeam",
+              value: formData.descriptionTeam,
+              placeholder: "Edita la descripción del equipo",
+              onChange: (e) => setFormData({ ...formData, descriptionTeam: e.target.value }),
+              color: "blue",
+            },
+          ]}
+          buttons={[
+            {
+              label: "Guardar",
+              type: "submit",
+              color: "green",
+              className: "w-auto px-6",
+            },
+            {
+              label: "Cerrar",
+              onClick: () => setEditPopupOpen(false),
+              color: "red",
+              className: "w-auto px-6",
+            },
+          ]}
+          customButtonsStyle="flex justify-center gap-4"
+        />
+      </Popup>
+
       <TeamDetailsCard
         description={descriptionTeam}
         leader={`${teamLeaderDTO?.name || ""} ${teamLeaderDTO?.surname || ""}`}
       />
 
-      {/* Miembros del Equipo */}
       <TeamMembersList members={regularUsers || []} />
     </div>
   );
