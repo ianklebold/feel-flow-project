@@ -85,12 +85,12 @@ function Dashboard() {
       </Helmet>
 
       <div className="max-w-7xl mx-auto bg-white rounded-lg shadow-lg p-8">
-        <h1 className="text-4xl font-semibold text-gray-900 mb-6">Dashboard</h1>
-        <p className="text-gray-600 mb-8 text-lg">¡Bienvenido al panel principal!</p>
+        <h1 className="text-4xl font-semibold text-gray-900 mb-6 text-center">Dashboard</h1>
+        <p className="text-gray-600 mb-8 text-lg text-center">¡Bienvenido al panel principal!</p>
 
         {/* Mensajes de carga o error */}
-        {loading && <p className="text-blue-500 font-semibold">Cargando equipos...</p>}
-        {error && <p className="text-red-500 font-semibold">{error}</p>}
+        {loading && <p className="text-blue-500 font-semibold text-center">Cargando equipos...</p>}
+        {error && <p className="text-red-500 font-semibold text-center">{error}</p>}
 
         {/* Controles de selección */}
         <div className="mt-8 grid gap-6 grid-cols-1 md:grid-cols-2">
@@ -140,23 +140,24 @@ function Dashboard() {
         </div>
 
         {/* Gráfico NicoNiko */}
+        <h2 className="text-2xl font-semibold text-gray-800 mb-6 text-center">Niko-Niko</h2>
         <div className="mt-8 overflow-x-auto bg-white rounded-lg shadow-lg p-6">
-          <h2 className="text-2xl font-semibold text-gray-800 mb-6">Gráfico NicoNiko</h2>
-          <table className="min-w-full text-sm text-center table-auto border-separate border-spacing-0">
+          {/* <h2 className="text-2xl font-semibold text-gray-800 mb-6 text-center">Gráfico Niko-Niko</h2> */}
+          <table className="min-w-full text-sm table-auto border-separate border-spacing-0">
             <thead className="bg-gray-100">
               <tr>
-                <th className="px-6 py-3 text-gray-600 font-semibold">Miembro</th>
+                <th className="px-6 py-3 text-gray-600 font-semibold text-center">Miembro / Día</th>
                 {Array.from({ length: 30 }, (_, i) => (
-                  <th key={i} className="px-4 py-2 text-gray-600">{i + 1}</th>
+                  <th key={i} className="px-4 py-2 text-gray-600 text-center">{i + 1}</th>
                 ))}
               </tr>
             </thead>
             <tbody>
               {teamMembers.map((member) => (
                 <tr key={member} className="border-b">
-                  <td className="px-6 py-4 font-medium text-gray-700">{member}</td>
+                  <td className="px-6 py-4 font-medium text-gray-700 text-center">{member}</td>
                   {nikoData[member]?.map((value, i) => (
-                    <td key={i} className="px-4 py-2">{getFaceWithColor(value)}</td>
+                    <td key={i} className="px-4 py-2 text-center">{getFaceWithColor(value)}</td>
                   ))}
                 </tr>
               ))}
