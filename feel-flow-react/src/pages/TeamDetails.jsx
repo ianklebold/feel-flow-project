@@ -4,31 +4,35 @@ import { GetEquipobyID } from "../services/GetEquipoId";
 import TeamBanner from "../components/TeamBanner";
 import TeamDetailsCard from "../components/TeamDetailsCard";
 import TeamMembersList from "../components/TeamMembersList";
-import { getAuthData, getUserData } from "../services/session";
+import { getAuthData } from "../services/session";
 
 const TeamDetails = () => {
-  // const { teamId: uuid } = useParams(); // Captura el UUID desde la URL
-  const uuid = sessionStorage.getItem("teamID")
+  const { teamId } = useParams(); // Captura el UUID desde la URL
   const navigate = useNavigate();
   const [teamDetails, setTeamDetails] = useState(null);
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
+  const uuid = sessionStorage.getItem("teamID") || teamId;
+
   useEffect(() => {
+    if (!uuid) {
+      console.error("UUID del equipo no proporcionado. Redirigiendo a equipos.");
+      setError("No se pudo identificar el equipo.");
+      navigate("/teams");
+      return;
+    }
+
+    // Guardar el UUID en sessionStorage para consistencia
+    sessionStorage.setItem("teamID", uuid);
+
     const fetchTeamDetails = async () => {
       const { token } = getAuthData();
-      
+
       if (!token) {
         console.error("Token no encontrado. Redirigiendo al login.");
         setError("No se encontró el token. Redirigiendo al login.");
         setTimeout(() => navigate("/login"), 2000);
-        return;
-      }
-
-      if (!uuid) {
-        console.error("UUID no proporcionado en la URL.");
-        setError("No se pudo identificar el equipo. Redirigiendo.");
-        setTimeout(() => navigate("/teams"), 2000);
         return;
       }
 
@@ -64,7 +68,7 @@ const TeamDetails = () => {
   return (
     <div className="p-6 space-y-6">
       {/* Banner del Equipo */}
-      <TeamBanner name={nameTeam} />
+      <TeamBanner name={nameTeam} uuid={uuid} />
 
       {/* Detalles del Equipo */}
       <TeamDetailsCard
