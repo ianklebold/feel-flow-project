@@ -1,6 +1,7 @@
 package com.equipo5.feelflowapp.controller;
 
 import com.equipo5.feelflowapp.constants.response.HttpResponses;
+import com.equipo5.feelflowapp.domain.enumerations.modules.SurveyStateEnum;
 import com.equipo5.feelflowapp.dto.modules.SurveyDto;
 import com.equipo5.feelflowapp.dto.modules.SurveyTwelveStepsResponseDto;
 import com.equipo5.feelflowapp.dto.response.ErrorResponseDto;
@@ -25,6 +26,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Tag(
@@ -58,10 +60,30 @@ public class SurveyModuleController {
                     description = "HTTP Request Success"
             )
     })
-    @GetMapping
+    @GetMapping("/filter")
     @SecurityRequirement(name = "Bearer Authentication")
-    public List<SurveyDto> getSurveys(){
-        return surveyService.getSurveys();
+    public List<SurveyDto> getSurveys(
+            @RequestParam(required = false, name = "surveyState") SurveyStateEnum surveyState,
+            @RequestParam(required = false, name = "creationDate") LocalDate creationDate,
+            @RequestParam(name = "moduleName") String moduleName
+    ){
+        return surveyService.getSurveys(surveyState, creationDate, moduleName);
+    }
+
+    @Operation(
+            summary = "Get Last Survey REST API",
+            description = "REST API to get the last survey"
+    )
+    @ApiResponses({
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "HTTP Request Success"
+            )
+    })
+    @GetMapping("/last")
+    @SecurityRequirement(name = "Bearer Authentication")
+    public SurveyDto getSurveysLastSurvey(){
+        return surveyService.getLastSurvey();
     }
 
     @Operation(
