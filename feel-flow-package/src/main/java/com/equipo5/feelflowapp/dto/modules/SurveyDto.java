@@ -15,5 +15,7 @@ public record SurveyDto(
         @Schema(description = "State of the Survey", examples = {"ACTIVE","FINISHED","CLOSED"})  SurveyStateEnum surveyState,
         RegularUserDTO regularUser,
         List<ActivityDto> activityList,
+        boolean isAfterTheDateOfPublic,
+        boolean isBeforeTheDateOfClose,
         ModuleDto module) {
 }

@@ -1,8 +1,9 @@
 package com.equipo5.feelflowapp.service.module.twelveSteps;
 
-import java.util.UUID;
+import com.equipo5.feelflowapp.dto.modules.CreationTwelveStepsModuleDto;
+
 
 public interface TwelveStepsService {
 
-    void publishingModule(final UUID idTeam);
+    void publishingModule(final CreationTwelveStepsModuleDto creationTwelveStepsModuleDto);
 }

@@ -3,7 +3,9 @@ package com.equipo5.feelflowapp.service.module.twelveSteps.impl;
 import com.equipo5.feelflowapp.domain.Team;
 import com.equipo5.feelflowapp.domain.enumerations.modules.ModuleState;
 import com.equipo5.feelflowapp.domain.modules.twelvesteps.TwelveStepsModule;
+import com.equipo5.feelflowapp.dto.modules.CreationTwelveStepsModuleDto;
 import com.equipo5.feelflowapp.exception.badrequest.module.ModuleAlreadyActiveException;
+import com.equipo5.feelflowapp.exception.badrequest.module.ModuleException;
 import com.equipo5.feelflowapp.exception.notfound.NotFoundTeamException;
 import com.equipo5.feelflowapp.repository.module.ModuleTwelveStepsRepository;
 import com.equipo5.feelflowapp.repository.team.TeamRepository;
@@ -17,7 +19,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.Optional;
-import java.util.UUID;
 
 import static com.equipo5.feelflowapp.domain.enumerations.modules.ModuleNames.TWELVE_STEPS;
 
@@ -41,9 +42,9 @@ public class TwelveStepsImpl implements TwelveStepsService {
 
     @Override
     @Transactional
-    public void publishingModule(final UUID uuidTeam){
+    public void publishingModule(final CreationTwelveStepsModuleDto creationTwelveStepsModuleDto){
         //Verificar si existe encuesta activa para modulo
-        Optional<Team> team = teamRepository.findById(uuidTeam);
+        Optional<Team> team = teamRepository.findById(creationTwelveStepsModuleDto.idTeam());
 
         if (team.isPresent()){
             var currentTeam = team.get();
@@ -55,11 +56,19 @@ public class TwelveStepsImpl implements TwelveStepsService {
                 throw new ModuleAlreadyActiveException("Actualmente se tiene un modulo de 12 pasos de la felicidad activo");
             }
 
+            if( creationTwelveStepsModuleDto.dateAndTimeToClose().isBefore( creationTwelveStepsModuleDto.dateAndTimeToPublish() )
+                || creationTwelveStepsModuleDto.dateAndTimeToClose().isEqual( creationTwelveStepsModuleDto.dateAndTimeToPublish() )
+            ){
+                throw new ModuleException("La fecha de cierre es igual o antes que la fecha de creacion");
+            }
+
             TwelveStepsModule twelveStepsModule = new TwelveStepsModule();
             twelveStepsModule.setCreationDate(LocalDate.now());
             twelveStepsModule.setModuleState(ModuleState.ACTIVE);
             twelveStepsModule.setName(TWELVE_STEPS.toString());
             twelveStepsModule.setTeam(currentTeam);
+            twelveStepsModule.setDateAndTimeToClose(creationTwelveStepsModuleDto.dateAndTimeToClose());
+            twelveStepsModule.setDateAndTimeToPublish( creationTwelveStepsModuleDto.dateAndTimeToPublish() );
 
             //Crear las N encuestas para cada integrante del equipo
             // Parametros : Lista de miembros y modulo
