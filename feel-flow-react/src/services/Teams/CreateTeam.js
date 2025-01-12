@@ -21,13 +21,12 @@ export async function createTeam(nameTeam, descriptionTeam, nameTeamLeader, surn
             },
             body: JSON.stringify(body)
         });
-        if (response.status !== 200) {
+
+        if (response.status !== 201) {
             const errorData = await response.json();
             // Access the "message" field from the response
             return { errors: errorData };
         }
-
-        return response.status;
     } catch (error) {
         return { errors: { general: "Error de red o servidor." } };
     }

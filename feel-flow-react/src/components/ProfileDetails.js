@@ -11,19 +11,22 @@ function ProfileDetails({ user }) {
 
             <div className="space-y-2">
                 <p>
-                    <span className="font-semibold text-gray-700">Nombre Completo:</span> {user.name}
+                    <span className="font-semibold text-gray-700">Nombre:</span> {user.name}
                 </p>
                 <p>
-                    <span className="font-semibold text-gray-700">Email:</span> {user.email}
+                    <span className="font-semibold text-gray-700">Apellido:</span> {user.surname}
                 </p>
                 <p>
-                    <span className="font-semibold text-gray-700">Empresa:</span> {user.company}
+                    <span className="font-semibold text-gray-700">Correo:</span> {user.username}
                 </p>
                 <p>
-                    <span className="font-semibold text-gray-700">Equipo:</span> {user.team}
+                    <span className="font-semibold text-gray-700">Empresa:</span> {user.enterpriseName || 'No disponible'}
                 </p>
                 <p>
-                    <span className="font-semibold text-gray-700">Rol:</span> {user.role}
+                    <span className="font-semibold text-gray-700">ID de Empresa:</span> {user.enterpriseID || 'No disponible'}
+                </p>
+                <p>
+                    <span className="font-semibold text-gray-700">ID de Usuario:</span> {user.userID || 'No disponible'}
                 </p>
             </div>
         </div>

@@ -28,7 +28,7 @@ function Modules() {
     const { token } = getAuthData();
     const { authority } = getUserData();
     const [idTeam, setIdTeam] = useState("");
-    const [isPopupOpen, setIsPopupOpen] = useState(false);
+    const [isPopupOpen, setIsPopupOpen] = useState(false); //12 pasos
     const [popupContent, setPopupContent] = useState({
         title: "",
         message: "",
@@ -162,7 +162,6 @@ function Modules() {
         nikoNikoEndDate,
         nikoNikoStartTime,
         nikoNikoEndTime,
-        nikoNikoTeams,
         setSelectedNikoNikoTeam,
         setNikoNikoStartDate,
         setNikoNikoStartTime,
@@ -386,7 +385,7 @@ function Modules() {
                                 className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
                             >
                                 <option value="">Seleccione un equipo</option>
-                                {nikoNikoTeams.map((team) => (
+                                {teams.map((team) => (
                                     <option key={team.id} value={team.id}>
                                         {team.name}
                                     </option>
