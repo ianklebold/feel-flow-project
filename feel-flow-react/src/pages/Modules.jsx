@@ -28,15 +28,8 @@ function Modules() {
     const { token } = getAuthData();
     const { authority } = getUserData();
     const [idTeam, setIdTeam] = useState("");
-    const [isPopupOpen, setIsPopupOpen] = useState(false); //12 pasos
+    const [isPopupOpen, setIsPopupOpen] = useState(false);
     const [popupContent, setPopupContent] = useState({
-        title: "",
-        message: "",
-        icon: null,
-        buttons: [],
-    });
-    const [isPopupOpenNikoNiko, setIsPopupOpenNikoNiko] = useState(false);
-    const [popupContentNikoNiko, setPopupContentNikoNiko] = useState({
         title: "",
         message: "",
         icon: null,
@@ -104,35 +97,11 @@ function Modules() {
         setIsPopupOpen(true);
     };
 
-    const openAlertPopupNikoNiko = (title, message, type) => {
-        const icons = {
-            success: <span className="text-green-500 text-5xl mr-4">✔</span>,
-            error: <span className="text-red-500 text-5xl mr-4">✖</span>,
-            warning: <span className="text-yellow-400 text-5xl mr-4">⚠</span>,
-        };
-
-        setPopupContentNikoNiko({
-            title,
-            message,
-            icon: icons[type],
-            buttons: [
-                {
-                    label: "Aceptar",
-                    onClick: () => setIsPopupOpenNikoNiko(false),
-                    color: type === "success" ? "green" : "red",
-                },
-            ],
-        });
-
-        setIsPopupOpenNikoNiko(true);
-    };
-
 
     const {
         isConfigPopupOpen,
         setIsConfigPopupOpen,
         errors,
-        setErrors,
         selectedTeam,
         setSelectedTeam,
         selectedSet,
@@ -146,14 +115,12 @@ function Modules() {
         endTime,
         setEndTime,
         handleCrearModulo12Pasos,
-        handleConfigurarModulo,
         handleSubmit,
     } = useTwelveStepsModule(authority, token, idTeam, openAlertPopup);
 
 
     const {
         isNikoNikoPopupOpen,
-        handleNikoNikoPopupOpen,
         handleNikoNikoPopupClose,
         handleNikoNikoFormSubmit,
         nikoNikoErrors,
@@ -167,7 +134,8 @@ function Modules() {
         setNikoNikoStartTime,
         setNikoNikoEndDate,
         setNikoNikoEndTime,
-    } = useConfigurarNikoNikoModulo(teams, handleSubmit, openAlertPopup);
+        handleCrearModuloNikoNiko,
+    } = useConfigurarNikoNikoModulo(authority, token, idTeam, openAlertPopup);
 
 
     return (
@@ -206,134 +174,133 @@ function Modules() {
             />
 
             {/* Popup de configuración */}
-            {isConfigPopupOpen && (
-                <Popup
-                    isOpen={isConfigPopupOpen}
-                    title="Configurar Módulo 12 Pasos de la Felicidad"
-                    message="Seleccione las opciones para configurar el módulo."
-                    buttons={[
-                        {
-                            label: "Cancelar",
-                            onClick: () => setIsConfigPopupOpen(false),
-                            color: "red",
-                        },
-                        {
-                            label: "Aceptar",
-                            onClick: handleSubmit, // Valida las fechas, horas y otros campos
-                            color: "blue",
-                        },
-                    ]}
-                >
+            <Popup
+                isOpen={isConfigPopupOpen}
+                title="Configurar Módulo 12 Pasos de la Felicidad"
+                message="Seleccione las opciones para configurar el módulo."
+                buttons={[
+                    {
+                        label: "Cancelar",
+                        onClick: () => setIsConfigPopupOpen(false),
+                        color: "red",
+                    },
+                    {
+                        label: "Aceptar",
+                        onClick: handleSubmit, // Valida las fechas, horas y otros campos
+                        color: "blue",
+                    },
+                ]}
+            >
+                <div className="flex flex-col space-y-4">
+                    {/* Selección de equipo */}
+                    <div>
+                        <label htmlFor="equipo" className="block text-gray-700 font-bold mb-2">
+                            Seleccionar Equipo
+                        </label>
+                        <select
+                            id="equipo"
+                            value={selectedTeam}
+                            onChange={(e) => setSelectedTeam(e.target.value)}
+                            className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        >
+                            <option value="">Seleccione un equipo</option>
+                            {teams.map((team) => (
+                                <option key={team.id} value={team.id}>
+                                    {team.name}
+                                </option>
+                            ))}
+                        </select>
+                        {errors.selectedTeam && (
+                            <p className="text-red-500 text-sm mt-1">{errors.selectedTeam}</p>
+                        )}
+                    </div>
+
+                    {/* Selección de set de preguntas */}
+                    <div>
+                        <label htmlFor="setPreguntas" className="block text-gray-700 font-bold mb-2">
+                            Seleccionar Set de Preguntas
+                        </label>
+                        <select
+                            id="setPreguntas"
+                            value={selectedSet}
+                            onChange={(e) => setSelectedSet(e.target.value)}
+                            className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        >
+                            <option value="">Seleccione un set</option>
+                            {setsPreguntas.map((set) => (
+                                <option key={set.id} value={set.id}>
+                                    {set.name}
+                                </option>
+                            ))}
+                        </select>
+                        {errors.selectedSet && (
+                            <p className="text-red-500 text-sm mt-1">{errors.selectedSet}</p>
+                        )}
+                    </div>
+
+                    {/* Selección de fechas */}
                     <div className="flex flex-col space-y-4">
-                        {/* Selección de equipo */}
+                        {/* Selección de fecha de inicio */}
                         <div>
-                            <label htmlFor="equipo" className="block text-gray-700 font-bold mb-2">
-                                Seleccionar Equipo
+                            <label htmlFor="fechaInicio" className="block text-gray-700 font-bold mb-2">
+                                Fecha y Hora de Inicio
                             </label>
-                            <select
-                                id="equipo"
-                                value={selectedTeam}
-                                onChange={(e) => setSelectedTeam(e.target.value)}
-                                className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                            >
-                                <option value="">Seleccione un equipo</option>
-                                {teams.map((team) => (
-                                    <option key={team.id} value={team.id}>
-                                        {team.name}
-                                    </option>
-                                ))}
-                            </select>
-                            {errors.selectedTeam && (
-                                <p className="text-red-500 text-sm mt-1">{errors.selectedTeam}</p>
+                            <div className="flex space-x-2">
+                                <input
+                                    id="fechaInicio"
+                                    type="date"
+                                    value={startDate}
+                                    onChange={(e) => setStartDate(e.target.value)}
+                                    className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                />
+                                <input
+                                    id="horaInicio"
+                                    type="time"
+                                    value={startTime}
+                                    onChange={(e) => setStartTime(e.target.value)}
+                                    className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                />
+                            </div>
+                            {errors.startDate && (
+                                <p className="text-red-500 text-sm mt-1">{errors.startDate}</p>
+                            )}
+                            {errors.startTime && (
+                                <p className="text-red-500 text-sm mt-1">{errors.startTime}</p>
                             )}
                         </div>
 
-                        {/* Selección de set de preguntas */}
+                        {/* Selección de fecha de fin */}
                         <div>
-                            <label htmlFor="setPreguntas" className="block text-gray-700 font-bold mb-2">
-                                Seleccionar Set de Preguntas
+                            <label htmlFor="fechaFin" className="block text-gray-700 font-bold mb-2">
+                                Fecha y Hora de Fin
                             </label>
-                            <select
-                                id="setPreguntas"
-                                value={selectedSet}
-                                onChange={(e) => setSelectedSet(e.target.value)}
-                                className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                            >
-                                <option value="">Seleccione un set</option>
-                                {setsPreguntas.map((set) => (
-                                    <option key={set.id} value={set.id}>
-                                        {set.name}
-                                    </option>
-                                ))}
-                            </select>
-                            {errors.selectedSet && (
-                                <p className="text-red-500 text-sm mt-1">{errors.selectedSet}</p>
+                            <div className="flex space-x-2">
+                                <input
+                                    id="fechaFin"
+                                    type="date"
+                                    value={endDate}
+                                    onChange={(e) => setEndDate(e.target.value)}
+                                    className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                />
+                                <input
+                                    id="horaFin"
+                                    type="time"
+                                    value={endTime}
+                                    onChange={(e) => setEndTime(e.target.value)}
+                                    className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                />
+                            </div>
+                            {errors.endDate && (
+                                <p className="text-red-500 text-sm mt-1">{errors.endDate}</p>
                             )}
-                        </div>
-
-                        {/* Selección de fechas */}
-                        <div className="flex flex-col space-y-4">
-                            {/* Selección de fecha de inicio */}
-                            <div>
-                                <label htmlFor="fechaInicio" className="block text-gray-700 font-bold mb-2">
-                                    Fecha y Hora de Inicio
-                                </label>
-                                <div className="flex space-x-2">
-                                    <input
-                                        id="fechaInicio"
-                                        type="date"
-                                        value={startDate}
-                                        onChange={(e) => setStartDate(e.target.value)}
-                                        className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                    />
-                                    <input
-                                        id="horaInicio"
-                                        type="time"
-                                        value={startTime}
-                                        onChange={(e) => setStartTime(e.target.value)}
-                                        className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                    />
-                                </div>
-                                {errors.startDate && (
-                                    <p className="text-red-500 text-sm mt-1">{errors.startDate}</p>
-                                )}
-                                {errors.startTime && (
-                                    <p className="text-red-500 text-sm mt-1">{errors.startTime}</p>
-                                )}
-                            </div>
-
-                            {/* Selección de fecha de fin */}
-                            <div>
-                                <label htmlFor="fechaFin" className="block text-gray-700 font-bold mb-2">
-                                    Fecha y Hora de Fin
-                                </label>
-                                <div className="flex space-x-2">
-                                    <input
-                                        id="fechaFin"
-                                        type="date"
-                                        value={endDate}
-                                        onChange={(e) => setEndDate(e.target.value)}
-                                        className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                    />
-                                    <input
-                                        id="horaFin"
-                                        type="time"
-                                        value={endTime}
-                                        onChange={(e) => setEndTime(e.target.value)}
-                                        className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                    />
-                                </div>
-                                {errors.endDate && (
-                                    <p className="text-red-500 text-sm mt-1">{errors.endDate}</p>
-                                )}
-                                {errors.endTime && (
-                                    <p className="text-red-500 text-sm mt-1">{errors.endTime}</p>
-                                )}
-                            </div>
+                            {errors.endTime && (
+                                <p className="text-red-500 text-sm mt-1">{errors.endTime}</p>
+                            )}
                         </div>
                     </div>
-                </Popup>
-            )}
+                </div>
+            </Popup>
+
 
             {/* Módulo Niko Niko */}
             <Modulo
@@ -347,7 +314,7 @@ function Modules() {
                 botones={[
                     {
                         texto: "Habilitar Niko Niko",
-                        onClick: handleNikoNikoPopupOpen,
+                        onClick: handleCrearModuloNikoNiko,
                         color: "light_blue",
                     },
                 ]}

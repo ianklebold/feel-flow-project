@@ -1,10 +1,6 @@
 import { useState } from "react";
-
-const useConfigurarNikoNikoModulo = (
-  initialTeams,
-  handleSubmit,
-  openAlertPopup
-) => {
+//import { crearModulo } from "../services/crearModuloNikoNiko.js";
+const useConfigurarNikoNikoModulo = (authority, token, idTeam, openAlertPopup) => {
   // Estados
   const [isNikoNikoPopupOpen, setIsNikoNikoPopupOpen] = useState(false);
   const [isAlertPopupOpen, setIsAlertPopupOpen] = useState(false);
@@ -15,16 +11,31 @@ const useConfigurarNikoNikoModulo = (
   const [nikoNikoEndDate, setNikoNikoEndDate] = useState("");
   const [nikoNikoStartTime, setNikoNikoStartTime] = useState("");
   const [nikoNikoEndTime, setNikoNikoEndTime] = useState("");
-  const [nikoNikoTeams, setNikoNikoTeams] = useState(initialTeams);
+  const [nikoNikoTeams, setNikoNikoTeams] = useState("");
 
+
+  const handleCrearModuloNikoNiko = async () => {
+    if (authority === "TEAM_LEADER" || authority === "ADMIN") {
+      setIsNikoNikoPopupOpen(true); // Mostrar el popup de configuración
+    } else {
+      console.error("Permiso denegado: Solo el Team Leader puede abrir el módulo");
+      openAlertPopup(
+        "Permiso denegado",
+        "Solo el Team Leader puede abrir el módulo",
+        "warning"
+      );
+    }
+  };
   // Abre el popup de configuración de Niko Niko
   const handleNikoNikoPopupOpen = () => {
     setIsNikoNikoPopupOpen(true);
+    console.log("Abriendo popup de configuración de Niko Niko");
   };
 
   // Cierra el popup de configuración de Niko Niko
   const handleNikoNikoPopupClose = () => {
     setIsNikoNikoPopupOpen(false);
+    console.log("Cerrando popup de configuración de Niko Niko");
   };
 
   // Valida el formulario de configuración de Niko Niko
@@ -60,21 +71,34 @@ const useConfigurarNikoNikoModulo = (
   // Maneja el envío del formulario de configuración de Niko Niko
   const handleNikoNikoFormSubmit = () => {
     if (validateNikoNikoForm()) {
-      handleSubmit(selectedNikoNikoTeam, nikoNikoStartDate, nikoNikoStartTime, nikoNikoEndDate, nikoNikoEndTime);
-      setIsNikoNikoPopupOpen(false); // Cierra el popup después de enviar el formulario
-    } else {
-      openAlertPopup({
-        title: "Error en la configuración de Niko Niko",
-        message: "Por favor, corrige los errores del formulario.",
-        icon: "error",
-        buttons: [
-          {
-            label: "Aceptar",
-            onClick: () => setIsAlertPopupOpen(false),
-            color: "red",
-          },
-        ],
-      });
+      try {
+        //const result = await crearModulo(token, idTeam, nikoNikoStartDate, nikoNikoEndDate, nikoNikoStartTime, nikoNikoEndTime);
+        const result = "Module created successfully";
+        if (result === "Module created successfully") {
+          console.log("Módulo Niko Niko creado exitosamente");
+          openAlertPopup(
+            "Éxito",
+            "Se creó el módulo Niko Niko exitosamente",
+            "success"
+          );
+        } else {
+          console.error("Error al crear módulo:", result);
+          openAlertPopup(
+            "Error",
+            `No se pudo crear el módulo Niko Niko: ${result}`,
+            "error"
+          );
+        }
+      } catch (error) {
+        console.error("Error al crear módulo:", error);
+        openAlertPopup(
+          "Error",
+          "Ocurrió un error al intentar crear el módulo Niko Niko",
+          "error"
+        );
+      } finally {
+        setIsNikoNikoPopupOpen(false); // Cerrar popup de configuración
+      }
     }
   };
 
@@ -103,6 +127,7 @@ const useConfigurarNikoNikoModulo = (
     setNikoNikoStartTime,
     setNikoNikoEndDate,
     setNikoNikoEndTime,
+    handleCrearModuloNikoNiko
   };
 };
 

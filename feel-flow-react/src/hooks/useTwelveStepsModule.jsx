@@ -12,7 +12,7 @@ const useTwelveStepsModule = (authority, token, idTeam, openAlertPopup) => {
   const [endTime, setEndTime] = useState("");
 
   const handleCrearModulo12Pasos = async () => {
-    if (authority === "TEAM_LEADER") {
+    if (authority === "TEAM_LEADER" || authority === "ADMIN") {
       setIsConfigPopupOpen(true); // Mostrar el popup de configuración
     } else {
       openAlertPopup(
