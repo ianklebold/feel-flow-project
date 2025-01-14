@@ -1,13 +1,13 @@
 
 const permissions = {
     modules: {
-        dashboard: ["ADMIN", "TEAM_LEADER"],
-        settings: ["ADMIN"],
-        users: ["ADMIN"],
-        modules: ["ADMIN", "TEAM_LEADER"],
-        team: ["TEAM_LEADER"],
-        teams: ["ADMIN"],
-        profile: ["ADMIN", "TEAM_LEADER"]
+        Dashboard: ["ADMIN", "TEAM_LEADER"],
+        Configuracion: ["ADMIN"],
+        Usuarios: ["ADMIN"],
+        Modulos: ["ADMIN", "TEAM_LEADER"],
+        Equipo: ["TEAM_LEADER"],
+        Equipos: ["ADMIN"],
+        Perfil: ["ADMIN", "TEAM_LEADER"]
     }
 };
 

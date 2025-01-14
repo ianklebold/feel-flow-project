@@ -1,36 +1,36 @@
 {
     "Dashboard": {
-        "name": "dashboard",
+        "name": "Dashboard",
         "logo": "fa-pie-chart",
         "link": "/dashboard"
     },
     "Equipos": {
-        "name": "teams",
+        "name": "Equipos",
         "logo": "fa-users",
         "link": "/teams"
     },
     "Equipo": {
-        "name": "team",
+        "name": "Equipo",
         "logo": "fa-users",
         "link": "/team"
     },
     "Modulos": {
-        "name": "modules",
+        "name": "Modulos",
         "logo": "fa-puzzle-piece",
         "link": "/modules"
     },
     "Usuarios": {
-        "name": "users",
+        "name": "Usuarios",
         "logo": "fa-user-circle",
         "link": "/users"
     },
     "Perfil": {
-        "name": "profile",
+        "name": "Perfil",
         "logo": "fa-id-card",
         "link": "/profile"
     },
     "Configuración": {
-        "name": "settings",
+        "name": "Configuracion",
         "logo": "fa-cog",
         "link": "/settings"
     }
