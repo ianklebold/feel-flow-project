@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
 import Modulo from "../components/moduloAgil.jsx";
 import Popup from "../components/Popup.jsx";
-import { crearModulo } from "../services/crearModuloTwelveSteps.js";
+import { GetEquipos } from "../services/GetEquipos";
 import { GetIdEquipo } from "../services/GetEquipos.js";
 import { getAuthData, getUserData } from "../services/session";
 import useTwelveStepsModule from "../hooks/useTwelveStepsModule";
@@ -43,12 +43,6 @@ function Modules() {
 
     useEffect(() => {
         // Simula la carga de datos desde un API
-        setTeams([
-            { id: "1", name: "Equipo A" },
-            { id: "2", name: "Equipo B" },
-            { id: "3", name: "Equipo C" },
-        ]);
-
         setSetsPreguntas([
             { id: "1", name: "Set de Preguntas 1" },
             { id: "2", name: "Set de Preguntas 2" },
@@ -58,6 +52,17 @@ function Modules() {
 
     useEffect(() => {
         // Obtener lista de equipos cuando se monta el componente
+        GetEquipos(token)
+            .then((data) => {
+                if (data) { // Si hay datos
+                    const formattedTeams = data.map((team) => ({
+                        id: team.uuid, 
+                        name: team.nameTeam,
+                      }));
+                    console.log("Equipos obtenidos:", formattedTeams);
+                    setTeams(formattedTeams);
+                }
+            })
         GetIdEquipo(token)
             .then((uuid) => {
                 if (uuid) {
@@ -68,6 +73,7 @@ function Modules() {
             .catch((error) => {
                 console.error("Error al obtener los equipos:", error);
             });
+            
     }, [token]);
 
     const handleCrearModulo = () => {
