@@ -36,13 +36,6 @@ function Navbar({ onLogout }) {
         setActiveDropdown(prevState => prevState === dropdownName ? null : dropdownName);
     };
 
-    // const toggleDropdown = () => {
-    //     setIsOpen(!isOpen);
-    // };
-    const notificationsDropdown = () => {
-        setNotificationsIsOpen(!notificationsIsOpen);
-    };
-
     const openModal = (e) => {
         e.preventDefault();
         setModalIsOpen(true);  // Abre el modal
@@ -51,8 +44,7 @@ function Navbar({ onLogout }) {
     const closeModal = () => {
         setModalIsOpen(false); // Cierra el modal
     };
-    const { username } = getUserData()
-    console.log(username)
+    const { username } = getUserData();
 
     const handleLogout = () => {
         onLogout();

@@ -1,6 +1,7 @@
 // Functions
 import { useEffect, useState } from "react";
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import { canAccess } from "./hooks/auth/authorization";
 
 // Components
 import Layout from "./Layouts/FeelFlow";
@@ -33,13 +34,14 @@ import Sign_up from "./pages/Auth/Sign_up";
 import './App.css';
 
 // API
-import { clearAuthData, getAuthData, validateToken } from "./services/session";
+import { clearAuthData, getAuthData, getUserData, validateToken } from "./services/session";
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(
     JSON.parse(localStorage.getItem("isAuthenticated")) || false
   );
-  const { token } = getAuthData()
+  const { token } = getAuthData();
+  const { authority } = getUserData();
 
   const handleLogin = () => {
     setIsAuthenticated(true);
@@ -58,19 +60,46 @@ function App() {
         <>
           <FeelFlow onLogout={handleLogout}>
             <Routes>
-              <Route path="/" element={<Home />} /> {/* Ruta inicial */}
-              <Route path="/home" element={<Home />} />
-              <Route path="/dashboard" element={<Dashboard />} />
-              <Route path="/leaders" element={<Leaders />} />
+              <Route path="/" element={<Navigate to="/dashboard" replace />} />,
+              <Route path="/login" element={<Navigate to="/dashboard" replace />} />,
+
+              {canAccess("dashboard", authority) && (
+                <Route path="/dashboard" element={<Dashboard />} />
+              )}
+
+              {/* Ruta accesible solo para ADMIN */}
+              {canAccess("settings", authority) && (
+                <Route path="/settings" element={<Settings />} />
+              )}
+
+              {/* Ruta accesible solo para TEAM_LEADER */}
+              {canAccess("modules", authority) && (
+                <Route path="/modules" element={<Modules />} />
+              )}
+              {canAccess("team", authority) && (
+                <Route path="/team" element={<TeamDetails />} />
+              )}
+              {canAccess("teams", authority) && (
+                <Route path="/teams" element={<Teams />} />
+              )}
+              {canAccess("profile", authority) && (
+                <Route path="/profile" element={<Profile />} />
+              )}
+              {canAccess("users", authority) && (
+                <Route path="/users" element={<Users />} />
+              )}
+
+              <Route path="*" element={<Navigate to="/unauthorized" replace />} />
+
+             {/* 
               <Route path="/modules" element={<Modules />} />
               <Route path="/profile" element={<Profile />} />
               <Route path="/edit-profile" element={<EditProfile />} />
-              <Route path="/settings" element={<Settings />} />
               <Route path="/teams" element={<Teams />} />
-              <Route path="/teams/:teamId" element={<TeamDetails />} /> {/* Nueva ruta para TeamDetails */}
+              <Route path="/teams/:teamId" element={<TeamDetails />} /> Nueva ruta para TeamDetails
               <Route path="/usermanagement" element={<UserManagement />} />
               <Route path="/users" element={<Users />} />
-              <Route path="*" element={<Navigate to="/home" />} />
+             */}
             </Routes>
           </FeelFlow>
         </>

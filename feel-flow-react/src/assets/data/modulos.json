@@ -1,85 +1,36 @@
 {
-    "Home": {
-        "nombre": "Home",
-        "perfiles": [
-            "ADMIN",
-            "TEAM_LEADER",
-            "USER_REGULAR"
-        ],
-        "logo": "fa-home",
-        "link": "/home"
-    },
     "Dashboard": {
-        "nombre": "Dashboard",
-        "perfiles": [
-            "ADMIN",
-            "TEAM_LEADER",
-            "USER_REGULAR"
-        ],
+        "name": "dashboard",
         "logo": "fa-pie-chart",
         "link": "/dashboard"
     },
-    "Lideres": {
-        "nombre": "Lideres",
-        "perfiles": [
-            "ADMIN"
-        ],
-        "logo": "fa-user-circle",
-        "link": "/leader"
-    },
     "Equipos": {
-        "nombre": "Equipos",
-        "perfiles": [
-            "ADMIN"
-        ],
+        "name": "teams",
         "logo": "fa-users",
         "link": "/teams"
     },
-    "Equipos2": {
-        "nombre": "Equipos2",
-        "perfiles": [
-            "TEAM_LEADER",
-            "USER_REGULAR"
-        ],
+    "Equipo": {
+        "name": "team",
         "logo": "fa-users",
-        "link": "/teams"
+        "link": "/team"
     },
     "Modulos": {
-        "nombre": "Modulos",
-        "perfiles": [
-            "ADMIN",
-            "TEAM_LEADER",
-            "USER_REGULAR"
-        ],
+        "name": "modules",
         "logo": "fa-puzzle-piece",
         "link": "/modules"
     },
     "Usuarios": {
-        "nombre": "Usuarios",
-        "perfiles": [
-            "ADMIN",
-            "TEAM_LEADER"
-        ],
+        "name": "users",
         "logo": "fa-user-circle",
         "link": "/users"
     },
     "Perfil": {
-        "nombre": "Perfil",
-        "perfiles": [
-            "ADMIN",
-            "TEAM_LEADER",
-            "USER_REGULAR"
-        ],
+        "name": "profile",
         "logo": "fa-id-card",
         "link": "/profile"
     },
     "Configuración": {
-        "nombre": "Configuración",
-        "perfiles": [
-            "ADMIN",
-            "TEAM_LEADER",
-            "USER_REGULAR"
-        ],
+        "name": "settings",
         "logo": "fa-cog",
         "link": "/settings"
     }

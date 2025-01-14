@@ -4,6 +4,9 @@ import modulosData from '../assets/data/modulos.json';
 import FeelFlow from "../assets/img/FeelFlow.png";
 import { FaHome, FaChartPie, FaUserCircle, FaUsers, FaPuzzlePiece, FaIdCard, FaCog } from "react-icons/fa";
 
+import { canAccess } from "../hooks/auth/authorization";
+import { getUserData } from "../services/session";
+
 
 function VerticalMenu() {
     const [isOpen, setIsOpen] = useState(false);
@@ -12,7 +15,9 @@ function VerticalMenu() {
         setIsOpen(!isOpen);
     };
 
+    const { authority } = getUserData();
     const modulos = Object.values(modulosData);
+    var module = "";
 
     const iconMapping = {
         "fa-home": <FaHome className="text-gray-500" />, // Home
@@ -23,6 +28,9 @@ function VerticalMenu() {
         "fa-id-card": <FaIdCard className="text-gray-500" />, // Perfil
         "fa-cog": <FaCog className="text-gray-500" />, // Configuración
     };
+
+    console.log(canAccess("dashboard", authority));
+
 
     return (
         <div className="relative min-h-screen flex textPrimary">
@@ -56,20 +64,26 @@ function VerticalMenu() {
 
                 {/* Modulos */}
                 <ul className="navbar-nav space-y-2">
-                    {modulos.map((modulo, index) => (
-                        <li className="nav-item" key={index}>
-                            <Link
-                                to={modulo.link}
-                                className={`nav-link flex items-center p-2 rounded hover:bg-blue-500 hover:text-white ${modulo.nombre === document.title ? "bg-blue-600" : ""
-                                    }`}
-                            >
-                                <div className="icon icon-shape icon-sm shadow border-radius-md flex items-center justify-center mr-2">
-                                    {iconMapping[modulo.logo] || <span className="text-gray-500">N/A</span>}
-                                </div>
-                                <span className="nav-link-text">{modulo.nombre}</span>
-                            </Link>
-                        </li>
-                    ))}
+                    {modulos.map((modulo, index) => {
+                        if (!canAccess(modulo.nombre, authority)) {
+                            return null; // No renderizar si no tiene acceso
+                        } 
+                        
+                        return (
+                            <li className="nav-item" key={index}>
+                                <Link
+                                    to={modulo.link}
+                                    className={`nav-link flex items-center p-2 rounded hover:bg-blue-500 hover:text-white ${modulo.nombre === document.title ? "bg-blue-600" : ""
+                                        }`}
+                                >
+                                    <div className="icon icon-shape icon-sm shadow border-radius-md flex items-center justify-center mr-2">
+                                        {iconMapping[modulo.logo] || <span className="text-gray-500">N/A</span>}
+                                    </div>
+                                    <span className="nav-link-text">{modulo.nombre}</span>
+                                </Link>
+                            </li>
+                        );
+                    })}
                 </ul>
 
             </aside>
