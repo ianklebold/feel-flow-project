@@ -59,14 +59,12 @@ function Modules() {
                         id: team.uuid, 
                         name: team.nameTeam,
                       }));
-                    console.log("Equipos obtenidos:", formattedTeams);
                     setTeams(formattedTeams);
                 }
             })
         GetIdEquipo(token)
             .then((uuid) => {
                 if (uuid) {
-                    console.log("UUID del equipo:", uuid);
                     setIdTeam(uuid); // Guarda el UUID directamente en idTeam
                 }
             })
