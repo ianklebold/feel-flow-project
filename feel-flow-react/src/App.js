@@ -63,29 +63,29 @@ function App() {
               <Route path="/" element={<Navigate to="/dashboard" replace />} />,
               <Route path="/login" element={<Navigate to="/dashboard" replace />} />,
 
-              {canAccess("dashboard", authority) && (
+              {canAccess("Dashboard", authority) && (
                 <Route path="/dashboard" element={<Dashboard />} />
               )}
 
               {/* Ruta accesible solo para ADMIN */}
-              {canAccess("settings", authority) && (
+              {canAccess("Configuracion", authority) && (
                 <Route path="/settings" element={<Settings />} />
               )}
 
               {/* Ruta accesible solo para TEAM_LEADER */}
-              {canAccess("modules", authority) && (
+              {canAccess("Modulos", authority) && (
                 <Route path="/modules" element={<Modules />} />
               )}
-              {canAccess("team", authority) && (
+              {canAccess("Equipo", authority) && (
                 <Route path="/team" element={<TeamDetails />} />
               )}
-              {canAccess("teams", authority) && (
+              {canAccess("Equipos", authority) && (
                 <Route path="/teams" element={<Teams />} />
               )}
               {canAccess("profile", authority) && (
                 <Route path="/profile" element={<Profile />} />
               )}
-              {canAccess("users", authority) && (
+              {canAccess("Usuarios", authority) && (
                 <Route path="/users" element={<Users />} />
               )}
 
