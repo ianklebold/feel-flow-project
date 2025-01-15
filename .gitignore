@@ -36,3 +36,6 @@ reports/*
 #Frontend files
 /FF-Front/
 .vscode/
+
+# dependencies
+/node_modules

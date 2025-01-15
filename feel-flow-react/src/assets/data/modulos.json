@@ -1,0 +1,37 @@
+{
+    "Dashboard": {
+        "name": "Dashboard",
+        "logo": "fa-pie-chart",
+        "link": "/dashboard"
+    },
+    "Equipos": {
+        "name": "Equipos",
+        "logo": "fa-users",
+        "link": "/teams"
+    },
+    "Equipo": {
+        "name": "Equipo",
+        "logo": "fa-users",
+        "link": "/team"
+    },
+    "Modulos": {
+        "name": "Modulos",
+        "logo": "fa-puzzle-piece",
+        "link": "/modules"
+    },
+    "Usuarios": {
+        "name": "Usuarios",
+        "logo": "fa-user-circle",
+        "link": "/users"
+    },
+    "Perfil": {
+        "name": "Perfil",
+        "logo": "fa-id-card",
+        "link": "/profile"
+    },
+    "Configuración": {
+        "name": "Configuracion",
+        "logo": "fa-cog",
+        "link": "/settings"
+    }
+}
