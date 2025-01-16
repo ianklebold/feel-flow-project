@@ -1,6 +1,7 @@
 package com.equipo5.feelflowapp.service.activity.impl;
 
-import com.equipo5.feelflowapp.constants.module.twelvesteps.QuestionsConstants;
+import com.equipo5.feelflowapp.constants.module.nikoniko.QuestionsConstantsNikoNiko;
+import com.equipo5.feelflowapp.constants.module.twelvesteps.QuestionsConstantsTwelveSteps;
 import com.equipo5.feelflowapp.domain.enumerations.modules.ActivityState;
 import com.equipo5.feelflowapp.domain.modules.Activity;
 import com.equipo5.feelflowapp.domain.modules.Survey;
@@ -23,6 +24,32 @@ public class ActivityServiceImpl implements ActivityService {
 
 
     @Override
+    public List<Activity> createActivityToNikoNiko() {
+
+        var activities = new ArrayList<Activity>();
+        activities.add(
+                Activity
+                        .builder()
+                        .question(QuestionsConstantsNikoNiko.ANSWERS_1_POOL_NIKO_NIKO)
+                        .activityState(ActivityState.ACTIVE)
+                        .answer(null)
+                        .build()
+        );
+
+        activities.add(
+                Activity
+                        .builder()
+                        .question(QuestionsConstantsNikoNiko.ANSWERS_2_POOL_NIKO_NIKO)
+                        .activityState(ActivityState.ACTIVE)
+                        .answer(null)
+                        .build()
+        );
+
+        activityRepository.saveAll(activities);
+        return activities;
+    }
+
+    @Override
     public List<Activity> createActivityToTwelveSteps() {
 
         var activities = new ArrayList<Activity>();
@@ -31,7 +58,7 @@ public class ActivityServiceImpl implements ActivityService {
             activities.add(
                     Activity
                             .builder()
-                            .question(QuestionsConstants.QUESTIONS_POOL_CLASSIC_TWELVE_STEPS.get(i))
+                            .question(QuestionsConstantsTwelveSteps.QUESTIONS_POOL_CLASSIC_TWELVE_STEPS.get(i))
                             .activityState(ActivityState.ACTIVE)
                             .build()
             );

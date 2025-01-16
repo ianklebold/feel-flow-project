@@ -3,7 +3,7 @@ package com.equipo5.feelflowapp.constants.module.twelvesteps;
 import java.util.List;
 
 
-public class QuestionsConstants {
+public class QuestionsConstantsTwelveSteps {
     public static final List<String> QUESTIONS_POOL_CLASSIC_TWELVE_STEPS = List.of(
         "¿En qué medida expresamos gratitud y aprecio entre colegas cada día?",
             "¿Fomentamos la posibilidad de dar y recibir regalos, así como ayudarnos mutuamente en el equipo?",
