@@ -37,15 +37,14 @@ export const clearAuthData = () => {
     sessionStorage.removeItem("authority");
 };
 
-export const validateToken = async () => {
+export const validateToken = async ( onLogout ) => {
     const { authUserID } = await getUserData();
     try {
         const session = await getUser(authUserID);
-
+        
         if (session === "El token JWT no es valido") {
-            return false
+            onLogout();
         }
-        return true
 
     } catch (error) {
         console.error("Error en sessionTimeLife:", error);

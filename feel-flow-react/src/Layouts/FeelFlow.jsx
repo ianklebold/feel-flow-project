@@ -8,16 +8,13 @@ import { validateToken } from "../services/session";
 function FeelFlow({ children , onLogout } ) {
     const checkToken = async () => {
         try {
-            const isValid = await validateToken();
-            return isValid;
+            await validateToken(onLogout);
+            // return isValid;
         } catch (error) {
             console.error("Error al validar el token:", error);
-            return false;
         }
     };
-    if (!checkToken()) {
-        onLogout();
-    } 
+    checkToken();
 
     return (
         <div className="flex flex-col min-h-screen">
