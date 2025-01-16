@@ -17,6 +17,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 import static com.equipo5.feelflowapp.domain.enumerations.modules.ModuleNames.NIKO_NIKO;
@@ -80,9 +81,6 @@ public class NikoNikoSurveyScheduledTaskImpl implements SurveyScheduledTask{
 
     }
 
-    private boolean isModuleEnabled(LocalDateTime localDateTimeModule) {
-        return localDateTimeModule.isAfter(LocalDateTime.now());
-    }
 
     private void closeOldActivities(NikoNikoModule nikoNikoModule){
         nikoNikoModule
@@ -91,7 +89,11 @@ public class NikoNikoSurveyScheduledTaskImpl implements SurveyScheduledTask{
                     survey.getActivities()
                             .forEach(
                                     activity -> {
-                                        if (!ActivityState.FINISHED.toString().equals(activity.getActivityState().toString()) && activity.getAnswer() == null){
+                                        if (
+                                                !ActivityState.FINISHED.toString().equals(activity.getActivityState().toString())
+                                                && activity.getAnswer() == null
+                                                && isEqualOrMoreThanOneDayAgo(nikoNikoModule.getDateAndTimeToPublish())
+                                        ){
                                             activity.setActivityState(ActivityState.FINISHED);
                                             activityRepository.save(activity);
                                             nikoNikoRepository.save(nikoNikoModule);
@@ -99,6 +101,16 @@ public class NikoNikoSurveyScheduledTaskImpl implements SurveyScheduledTask{
                                     }
                             );
                 });
+    }
+
+    private boolean isModuleEnabled(LocalDateTime localDateTimeModule) {
+        return localDateTimeModule.isAfter(LocalDateTime.now());
+    }
+
+    public static boolean isEqualOrMoreThanOneDayAgo(LocalDateTime dateTime) {
+        LocalDateTime now = LocalDateTime.now();
+        long daysBetween = ChronoUnit.DAYS.between(dateTime, now);
+        return daysBetween >= 1;
     }
 
 }
