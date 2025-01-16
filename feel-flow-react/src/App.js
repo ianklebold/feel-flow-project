@@ -82,7 +82,7 @@ function App() {
               {canAccess("Equipos", authority) && (
                 <Route path="/teams" element={<Teams />} />
               )}
-              {canAccess("profile", authority) && (
+              {canAccess("Perfil", authority) && (
                 <Route path="/profile" element={<Profile />} />
               )}
               {canAccess("Usuarios", authority) && (
