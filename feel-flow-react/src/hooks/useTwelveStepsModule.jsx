@@ -10,6 +10,9 @@ const useTwelveStepsModule = (authority, token, idTeam, openAlertPopup) => {
   const [endDate, setEndDate] = useState(null);
   const [startTime, setStartTime] = useState("");
   const [endTime, setEndTime] = useState("");
+  const startDateTime = `${startDate}T${startTime}:00.000Z`;
+  const endDateTime = `${endDate}T${endTime}:00.000Z`;
+
 
   const handleCrearModulo12Pasos = async () => {
     if (authority === "TEAM_LEADER" || authority === "ADMIN") {
@@ -34,7 +37,7 @@ const useTwelveStepsModule = (authority, token, idTeam, openAlertPopup) => {
     }
 
     try {
-      const result = await crearModulo(token, idTeam);
+      const result = await crearModulo(token, idTeam, selectedSet, startDateTime, endDateTime);
       if (result === "Module created successfully") {
         openAlertPopup(
           "Éxito",
@@ -78,9 +81,6 @@ const useTwelveStepsModule = (authority, token, idTeam, openAlertPopup) => {
     if (!endDate || !endTime) {
       newErrors.endDate = "Por favor, selecciona la fecha y/o la hora de fin.";
     }
-
-    const startDateTime = new Date(`${startDate}T${startTime}`);
-    const endDateTime = new Date(`${endDate}T${endTime}`);
 
     if (startDateTime >= endDateTime) {
       newErrors.startDate =
