@@ -43,8 +43,9 @@ export const validateToken = async () => {
         const session = await getUser(authUserID);
 
         if (session === "El token JWT no es valido") {
-            clearAuthData()
+            return false
         }
+        return true
 
     } catch (error) {
         console.error("Error en sessionTimeLife:", error);

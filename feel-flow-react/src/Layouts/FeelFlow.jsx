@@ -1,30 +1,23 @@
 import React from "react";
-import { useEffect } from "react";
-import { Link } from "react-router-dom";
 
 import Sidebar from "../components/Sidebar";
 import Navbar from "../components/Navbar";
 
 import { validateToken } from "../services/session";
-import { getAuthData } from "../services/session";
 
 function FeelFlow({ children , onLogout } ) {
-    const { token } = getAuthData();
-    useEffect(() => {
-        const checkToken = async () => {
-            try {
-                await validateToken();
-            } catch (error) {
-                console.error("Error al validar el token:", error);
-            }
-        };
-
-        if (token) {
-            checkToken();
-        } else {    
-            <Link to="/login" />
+    const checkToken = async () => {
+        try {
+            const isValid = await validateToken();
+            return isValid;
+        } catch (error) {
+            console.error("Error al validar el token:", error);
+            return false;
         }
-    }, [token]);
+    };
+    if (!checkToken()) {
+        onLogout();
+    } 
 
     return (
         <div className="flex flex-col min-h-screen">
