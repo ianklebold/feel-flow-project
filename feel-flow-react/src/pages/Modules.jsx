@@ -56,22 +56,25 @@ function Modules() {
             .then((data) => {
                 if (data) { // Si hay datos
                     const formattedTeams = data.map((team) => ({
-                        id: team.uuid, 
+                        id: team.uuid,
                         name: team.nameTeam,
-                      }));
+                    }));
                     setTeams(formattedTeams);
                 }
             })
         GetIdEquipo(token)
             .then((uuid) => {
                 if (uuid) {
-                    setIdTeam(uuid); // Guarda el UUID directamente en idTeam
+                    setIdTeam(uuid);
+                    if (authority === "TEAM_LEADER") {
+                        setSelectedTeam(uuid);
+                    } // Guarda el UUID directamente en idTeam
                 }
             })
             .catch((error) => {
                 console.error("Error al obtener los equipos:", error);
             });
-            
+
     }, [token]);
 
     const handleCrearModulo = () => {
@@ -206,6 +209,7 @@ function Modules() {
                             value={selectedTeam}
                             onChange={(e) => setSelectedTeam(e.target.value)}
                             className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            disabled={sessionStorage.getItem("authority") === "TEAM_LEADER"}
                         >
                             <option value="">Seleccione un equipo</option>
                             {teams.map((team) => (
