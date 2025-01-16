@@ -5,6 +5,7 @@ import TeamSelector from "../components/TeamSelector";
 import NikoNikoTable from "../components/NikoNikoTable";
 import HappinessChart from "../components/HappinessChart";
 import DashboardHeader from "../components/DashboardHeader";
+import PodiumChart from "../components/PodiumChart";
 
 function Dashboard() {
   const [teams, setTeams] = useState([]);
@@ -18,11 +19,25 @@ function Dashboard() {
   const [selectedMember, setSelectedMember] = useState(null);
   const [selectedSprint, setSelectedSprint] = useState("current");
 
+  // Estados específicos para el Kudos Dashboard
+  const [selectedKudosMember, setSelectedKudosMember] = useState("Equipo");
+  const [selectedKudosSprint, setSelectedKudosSprint] = useState("Sprint 1");
+
   const months = [
     "Enero", "Febrero", "Marzo", "Abril",
     "Mayo", "Junio", "Julio", "Agosto",
     "Septiembre", "Octubre", "Noviembre", "Diciembre",
   ];
+
+  const kudosData = {
+    "Sprint 1": {
+      Equipo: { "Manos Amigas": 8, "Resolutor Estrella": 5, "Energía Positiva": 7, "Maestro del Detalle": 6 },
+      Juan: { "Manos Amigas": 2, "Resolutor Estrella": 1, "Energía Positiva": 3, "Maestro del Detalle": 2 },
+      Ana: { "Manos Amigas": 3, "Resolutor Estrella": 2, "Energía Positiva": 2, "Maestro del Detalle": 1 },
+      Luis: { "Manos Amigas": 1, "Resolutor Estrella": 1, "Energía Positiva": 1, "Maestro del Detalle": 2 },
+      Marta: { "Manos Amigas": 2, "Resolutor Estrella": 1, "Energía Positiva": 1, "Maestro del Detalle": 1 },
+    },
+  };
 
   useEffect(() => {
     const fetchTeams = async () => {
@@ -110,6 +125,43 @@ function Dashboard() {
             selectedData={selectedData}
           />
         )}
+
+        <div className="mt-8">
+          <h2 className="text-2xl font-bold text-center mb-4">Kudos Dashboard</h2>
+          <div className="p-4 bg-gray-100 rounded-lg shadow-md">
+            <div className="flex gap-4 mb-4">
+              <select
+                className="p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-400"
+                value={selectedKudosMember || "Equipo"}
+                onChange={(e) => setSelectedKudosMember(e.target.value)}
+              >
+                {Object.keys(kudosData["Sprint 1"] || {}).map((member) => (
+                  <option key={member} value={member}>
+                    {member}
+                  </option>
+                ))}
+              </select>
+
+              <select
+                className="p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-400"
+                value={selectedKudosSprint || "Sprint 1"}
+                onChange={(e) => setSelectedKudosSprint(e.target.value)}
+              >
+                {Object.keys(kudosData || {}).map((sprint) => (
+                  <option key={sprint} value={sprint}>
+                    {sprint}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            {selectedKudosSprint && selectedKudosMember && kudosData[selectedKudosSprint]?.[selectedKudosMember] ? (
+              <PodiumChart data={kudosData[selectedKudosSprint][selectedKudosMember]} />
+            ) : (
+              <p className="text-gray-500 text-center">Seleccione un miembro y un sprint para ver los datos.</p>
+            )}
+          </div>
+        </div>
       </div>
     </div>
   );
