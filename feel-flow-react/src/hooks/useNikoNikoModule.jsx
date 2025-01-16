@@ -1,5 +1,6 @@
 import { useState } from "react";
-//import { crearModulo } from "../services/crearModuloNikoNiko.js";
+import { crearModulo } from "../services/crearModuloNikoNiko.js";
+
 const useConfigurarNikoNikoModulo = (authority, token, idTeam, openAlertPopup) => {
   // Estados
   const [isNikoNikoPopupOpen, setIsNikoNikoPopupOpen] = useState(false);
@@ -11,6 +12,12 @@ const useConfigurarNikoNikoModulo = (authority, token, idTeam, openAlertPopup) =
   const [nikoNikoEndDate, setNikoNikoEndDate] = useState("");
   const [nikoNikoStartTime, setNikoNikoStartTime] = useState("");
   const [nikoNikoEndTime, setNikoNikoEndTime] = useState("");
+  const [nikoNikoTimeToResponseStartDay, setNikoNikoTimeToResponseStartDay] = useState("");
+  const [nikoNikoTimeToResponseEndDay, setNikoNikoTimeToResponseEndDay] = useState("");
+  const nikoNikostartDateTime = `${nikoNikoStartDate}T${nikoNikoStartTime}:00.000Z`;
+  const nikoNikoendDateTime = `${nikoNikoEndDate}T${nikoNikoEndTime}:00.000Z`;
+  const timeStartToResponse = `${nikoNikoTimeToResponseStartDay}:00.000Z`;
+  const timeEndToResponse = `${nikoNikoTimeToResponseEndDay}:00.000Z`;
   const [nikoNikoTeams, setNikoNikoTeams] = useState("");
 
 
@@ -54,14 +61,30 @@ const useConfigurarNikoNikoModulo = (authority, token, idTeam, openAlertPopup) =
       newErrors.nikoNikoEndDate = "Por favor, selecciona la fecha y/o la hora de fin.";
     }
 
-    const nikoNikoStartDateTime = new Date(`${nikoNikoStartDate}T${nikoNikoStartTime}`);
-    const nikoNikoEndDateTime = new Date(`${nikoNikoEndDate}T${nikoNikoEndTime}`);
+    if (!nikoNikoTimeToResponseStartDay ) {
+      newErrors.nikoNikoEndDate = "Por favor, selecciona la hora de inicio para responder las emociones.";
+    }
+    
+    if (!nikoNikoTimeToResponseEndDay ) {
+      newErrors.nikoNikoEndDate = "Por favor, selecciona la hora de fin para responder las emociones.";
+    }
 
-    if (nikoNikoStartDateTime >= nikoNikoEndDateTime) {
+    if (!nikoNikoTimeToResponseEndDay || !nikoNikoTimeToResponseStartDay) {
+      newErrors.nikoNikoEndDate = "Por favor, selecciona la hora de inicio y fin para responder las emociones.";
+    }
+
+    if (nikoNikostartDateTime >= nikoNikoendDateTime) {
       newErrors.nikoNikoStartDate =
         "La fecha y hora de inicio deben ser anteriores a la fecha y hora de fin.";
       newErrors.nikoNikoEndDate =
         "La fecha y hora de fin deben ser posteriores a la fecha y hora de inicio.";
+    }
+
+    if (nikoNikoTimeToResponseStartDay >= nikoNikoTimeToResponseEndDay) {
+      newErrors.nikoNikoTimeToResponseStartDay =
+        "La hora de inicio para responder las emociones debe ser anterior a la hora de fin.";
+      newErrors.nikoNikoTimeToResponseEndDay =
+        "La hora de fin para responder las emociones debe ser posterior a la hora de inicio.";
     }
 
     setNikoNikoErrors(newErrors);
@@ -72,8 +95,8 @@ const useConfigurarNikoNikoModulo = (authority, token, idTeam, openAlertPopup) =
   const handleNikoNikoFormSubmit = () => {
     if (validateNikoNikoForm()) {
       try {
-        //const result = await crearModulo(token, idTeam, nikoNikoStartDate, nikoNikoEndDate, nikoNikoStartTime, nikoNikoEndTime);
-        const result = "Module created successfully";
+        const result = crearModulo(token, idTeam, nikoNikostartDateTime, nikoNikoendDateTime, timeStartToResponse, timeEndToResponse);
+  
         if (result === "Module created successfully") {
           console.log("Módulo Niko Niko creado exitosamente");
           openAlertPopup(
@@ -116,6 +139,10 @@ const useConfigurarNikoNikoModulo = (authority, token, idTeam, openAlertPopup) =
     nikoNikoEndDate,
     nikoNikoStartTime,
     nikoNikoEndTime,
+    nikoNikostartDateTime,
+    nikoNikoendDateTime,
+    nikoNikoTimeToResponseStartDay,
+    nikoNikoTimeToResponseEndDay,
     nikoNikoTeams,
 
     // Funciones
@@ -127,6 +154,8 @@ const useConfigurarNikoNikoModulo = (authority, token, idTeam, openAlertPopup) =
     setNikoNikoStartTime,
     setNikoNikoEndDate,
     setNikoNikoEndTime,
+    setNikoNikoTimeToResponseEndDay,
+    setNikoNikoTimeToResponseStartDay,
     handleCrearModuloNikoNiko
   };
 };
