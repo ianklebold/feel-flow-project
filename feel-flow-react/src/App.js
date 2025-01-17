@@ -80,7 +80,10 @@ function App() {
                 <Route path="/team" element={<TeamDetails />} />
               )}
               {canAccess("Equipos", authority) && (
-                <Route path="/teams" element={<Teams />} />
+                <>
+                  <Route path="/teams" element={<Teams />} />
+                  <Route path="/teams/*" element={<TeamDetails />} />
+                </>
               )}
               {canAccess("Perfil", authority) && (
                 <Route path="/profile" element={<Profile />} />

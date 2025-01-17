@@ -53,21 +53,21 @@ public class NikoNikoSurveyScheduledTaskImpl implements SurveyScheduledTask{
             teams.forEach((
                             team -> {
                                 var module = team.getModules().stream().filter(
-                                        nikoNiko -> NIKO_NIKO.toString().equals(nikoNiko.getName()) && ModuleState.ACTIVE.equals(nikoNiko.getModuleState()
-                                        )
+                                        nikoNiko -> NIKO_NIKO.toString().equals(nikoNiko.getName()) && ModuleState.ACTIVE.equals(nikoNiko.getModuleState())
                                 )
                                         .map(  nikoNiko -> (NikoNikoModule) nikoNiko )
                                         .findFirst()
                                         .orElse(null);
 
                                 if (module != null) {
-                                    if( isModuleEnabled( module.getDateAndTimeToPublish() ) ){
+                                    if( isModuleEnabled( module.getDateAndTimeToPublish(), module.getDateAndTimeToClose() ) ){
                                         closeOldActivities(module);
                                         nikoNikoSurveyService.createSurveis(team.getRegularUsers(), module);
                                         nikoNikoRepository.save( module );
                                         log.info(String.format("Niko surveis created: For User of the team %s", team.getName() ));
-                                    }else{
-                                        log.error(" Date and time to publish is before to today - Module not enabled ");
+                                    }else if (module.getDateAndTimeToClose().isBefore(LocalDateTime.now())){
+                                        log.error(" Module is not enabled - Closing Module ");
+                                        this.closeModule( module );
                                     }
                                 }else{
                                     log.error(" Module is null ");
@@ -103,8 +103,13 @@ public class NikoNikoSurveyScheduledTaskImpl implements SurveyScheduledTask{
                 });
     }
 
-    private boolean isModuleEnabled(LocalDateTime localDateTimeModule) {
-        return localDateTimeModule.isAfter(LocalDateTime.now());
+    private void closeModule(NikoNikoModule nikoNikoModule){
+        nikoNikoModule.setModuleState(ModuleState.FINISHED);
+        nikoNikoRepository.save(nikoNikoModule);
+    }
+
+    private boolean isModuleEnabled(LocalDateTime dateAndTimeToPublish,LocalDateTime dateAndTimeToClose) {
+        return dateAndTimeToPublish.isAfter(LocalDateTime.now()) && dateAndTimeToClose.isBefore(LocalDateTime.now());
     }
 
     public static boolean isEqualOrMoreThanOneDayAgo(LocalDateTime dateTime) {

@@ -65,6 +65,7 @@ public class NikoNikoServiceImpl implements NikoNikoService {
             nikoNikoModule.setName(NIKO_NIKO.toString());
             nikoNikoModule.setTeam(currentTeam);
             nikoNikoModule.setDateAndTimeToPublish(creationNikoNikoModule.dateAndTimeToPublish());
+            nikoNikoModule.setDateAndTimeToClose(creationNikoNikoModule.dateAndTimeToClose());
             nikoNikoModule.setTimeToToResponseStartDay(nikoNikoModule.getTimeToToResponseStartDay());
             nikoNikoModule.setTimeToToResponseEndDay(nikoNikoModule.getTimeToToResponseEndDay());
 

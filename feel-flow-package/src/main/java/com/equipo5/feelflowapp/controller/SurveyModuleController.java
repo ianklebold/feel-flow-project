@@ -2,11 +2,13 @@ package com.equipo5.feelflowapp.controller;
 
 import com.equipo5.feelflowapp.constants.response.HttpResponses;
 import com.equipo5.feelflowapp.domain.enumerations.modules.SurveyStateEnum;
+import com.equipo5.feelflowapp.dto.modules.SurveyAvailableNikoNikoReponseDto;
 import com.equipo5.feelflowapp.dto.modules.SurveyDto;
 import com.equipo5.feelflowapp.dto.modules.SurveyTwelveStepsResponseDto;
 import com.equipo5.feelflowapp.dto.response.ErrorResponseDto;
 import com.equipo5.feelflowapp.dto.response.ResponseDto;
 import com.equipo5.feelflowapp.service.survey.SurveyService;
+import com.equipo5.feelflowapp.service.survey.nikoniko.NikoNikoSurveyService;
 import com.equipo5.feelflowapp.service.survey.twelvesteps.TwelveStepsSurveyService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import io.swagger.v3.oas.annotations.Operation;
@@ -44,10 +46,13 @@ public class SurveyModuleController {
 
     private final TwelveStepsSurveyService twelveStepsSurveyService;
 
+    private final NikoNikoSurveyService nikoNikoSurveyService;
+
     @Autowired
-    public SurveyModuleController(@Qualifier("SurveyService") SurveyService surveyService, @Qualifier("TwelveStepsSurveyService") TwelveStepsSurveyService twelveStepsSurveyService) {
+    public SurveyModuleController(@Qualifier("SurveyService") SurveyService surveyService, @Qualifier("TwelveStepsSurveyService") TwelveStepsSurveyService twelveStepsSurveyService, @Qualifier("NikoNikoSurveyServiceImpl") NikoNikoSurveyService nikoNikoSurveyService) {
         this.surveyService = surveyService;
         this.twelveStepsSurveyService = twelveStepsSurveyService;
+        this.nikoNikoSurveyService = nikoNikoSurveyService;
     }
 
     @Operation(
@@ -105,11 +110,58 @@ public class SurveyModuleController {
     })
     @PostMapping("/twelve_steps_module")
     @SecurityRequirement(name = "Bearer Authentication")
-    public ResponseEntity<ResponseDto> completeSurvey(@Valid @RequestBody SurveyTwelveStepsResponseDto surveyResponse) throws JsonProcessingException {
+    public ResponseEntity<ResponseDto> completeTwelveStepsSurvey(@Valid @RequestBody SurveyTwelveStepsResponseDto surveyResponse) throws JsonProcessingException {
             twelveStepsSurveyService.completeSurvey(surveyResponse);
 
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(new ResponseDto(HttpResponses.STATUS_200,HttpResponses.MESSAGE_200));
     }
+
+    @Operation(
+            summary = "Complete Surveys for Niko Niko Module REST API",
+            description = "REST API to complete survey"
+    )
+    @ApiResponses({
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "HTTP Request Success"
+            ),
+            @ApiResponse(
+                    responseCode = "400",
+                    description = "HTTP Status BAD REQUEST",
+                    content = @Content(
+                            schema = @Schema(implementation = ErrorResponseDto.class)
+                    )
+            )
+    })
+    @PostMapping("/niko_niko_module")
+    @SecurityRequirement(name = "Bearer Authentication")
+    public ResponseEntity<ResponseDto> completeNikoNikoSurvey(@Valid @RequestBody SurveyTwelveStepsResponseDto surveyResponse){
+
+
+
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(new ResponseDto(HttpResponses.STATUS_200,HttpResponses.MESSAGE_200));
+    }
+
+    @Operation(
+            summary = "Get Survey available for Niko Niko Module REST API",
+            description = "REST API to get available survey"
+    )
+    @ApiResponses({
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "HTTP Request Success"
+            )
+    })
+    @GetMapping("/niko_niko_module")
+    @SecurityRequirement(name = "Bearer Authentication")
+    public SurveyAvailableNikoNikoReponseDto getNikoNikoAvailableSurvey(){
+
+        return this.nikoNikoSurveyService.getSurveyAvailable();
+    }
+
+
 }

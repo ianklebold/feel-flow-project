@@ -17,5 +17,4 @@ public interface SurveyRepository extends JpaRepository<Survey,Long>, JpaSpecifi
     Survey getSurveyByRegularUserAndSurveyModule(RegularUser regularUser, SurveyModule surveyModule);
 
     Survey getSurveyByRegularUserAndSurveyModuleAndSurveyStateEnum(RegularUser regularUser, SurveyModule surveyModule, SurveyStateEnum surveyState);
-
 }

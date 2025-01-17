@@ -10,6 +10,7 @@ import com.equipo5.feelflowapp.domain.modules.SurveyModule;
 import com.equipo5.feelflowapp.domain.users.RegularUser;
 import com.equipo5.feelflowapp.dto.modules.SurveyDto;
 import com.equipo5.feelflowapp.exception.notfound.NotFoundException;
+import com.equipo5.feelflowapp.mappers.modules.ActivityMapper;
 import com.equipo5.feelflowapp.mappers.modules.SurveyMapper;
 import com.equipo5.feelflowapp.repository.module.ModuleRepository;
 import com.equipo5.feelflowapp.repository.survey.SurveyRepository;
@@ -53,6 +54,8 @@ public class SurveyServiceImpl implements SurveyService{
     protected final SurveyMapper surveyMapper;
 
     protected final ModuleService moduleService;
+
+    protected final ActivityMapper activityMapper;
 
     @Override
     public List<SurveyDto> getSurveys() {

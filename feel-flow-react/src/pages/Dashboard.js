@@ -1,118 +1,177 @@
 import React, { useState, useEffect } from "react";
 import { Helmet } from "react-helmet";
-import { GetEquipos } from "../services/GetEquipos"; // Ajustar ruta si es necesario
-import TeamSelector from "../components/TeamSelector";
-import NikoNikoTable from "../components/NikoNikoTable";
-import HappinessChart from "../components/HappinessChart";
-import DashboardHeader from "../components/DashboardHeader";
+import {
+  BarChart,
+  Bar,
+  LineChart,
+  Line,
+  PieChart,
+  Pie,
+  Cell,
+  Tooltip,
+  CartesianGrid,
+  XAxis,
+  YAxis,
+  Legend,
+  ResponsiveContainer,
+} from "recharts";
 
-function Dashboard() {
-  const [teams, setTeams] = useState([]);
-  const [selectedTeam, setSelectedTeam] = useState("");
-  const [selectedMonth, setSelectedMonth] = useState("");
+function EnhancedDashboard() {
+  const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const [teamMembers, setTeamMembers] = useState([]);
-  const [nikoData, setNikoData] = useState({});
-  const [teamData, setTeamData] = useState(null);
-  const [selectedMember, setSelectedMember] = useState(null);
-  const [selectedSprint, setSelectedSprint] = useState("current");
+  const [selectedChart, setSelectedChart] = useState("kudos");
+  const [selectedMonth, setSelectedMonth] = useState("Enero");
+  const [selectedTeam, setSelectedTeam] = useState("Manos Amigas");
 
-  const months = [
-    "Enero", "Febrero", "Marzo", "Abril",
-    "Mayo", "Junio", "Julio", "Agosto",
-    "Septiembre", "Octubre", "Noviembre", "Diciembre",
+  // Datos de ejemplo para gráficos
+  const sampleData = [
+    { name: "Enero", satisfacción: 80, productividad: 70 },
+    { name: "Febrero", satisfacción: 85, productividad: 75 },
+    { name: "Marzo", satisfacción: 90, productividad: 80 },
+    { name: "Abril", satisfacción: 70, productividad: 65 },
+    { name: "Mayo", satisfacción: 75, productividad: 70 },
   ];
 
-  useEffect(() => {
-    const fetchTeams = async () => {
-      const token = sessionStorage.getItem("token");
-      if (!token) {
-        console.error("Token no encontrado. Redirigiendo al login.");
-        return;
-      }
+  const pieDataKudos = [
+    { name: "Manos Amigas", value: 8 },
+    { name: "Resolutor Estrella", value: 5 },
+    { name: "Energía Positiva", value: 7 },
+    { name: "Maestro del Detalle", value: 6 },
+  ];
 
-      try {
-        setLoading(true);
-        const response = await GetEquipos(token);
-        setTeams(response);
+  const pieDataNikoNiko = [
+    { name: "Feliz", value: 15 },
+    { name: "Neutral", value: 8 },
+    { name: "Triste", value: 5 },
+  ];
 
-        // Simulación de miembros y datos NicoNiko
-        const mockTeamMembers = ["Juan", "María", "Pedro", "Lucía"];
-        const mockNikoData = mockTeamMembers.reduce((acc, member) => {
-          acc[member] = Array.from({ length: 30 }, () => Math.floor(Math.random() * 3) + 1);
-          return acc;
-        }, {});
-
-        setTeamMembers(mockTeamMembers);
-        setNikoData(mockNikoData);
-      } catch (err) {
-        console.error("Error al obtener los equipos:", err);
-        setError("No se pudieron cargar los equipos. Inténtalo más tarde.");
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchTeams();
-  }, []);
+  const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
 
   useEffect(() => {
-    const fetchMockData = async () => {
-      return {
-        teamName: "Equipo Ágil",
-        members: [
-          { name: "Juan Pérez", responses: [4, 5, 4, 3, 4, 5, 5, 4, 5, 4, 4, 5] },
-          { name: "Ana López", responses: [5, 4, 3, 4, 5, 4, 4, 3, 4, 3, 5, 4] },
-        ],
-        averages: [4.5, 4.5, 3.5, 3.5, 4.5, 4.5, 4.5, 3.5, 4.5, 3.5, 4.5, 4.5],
-      };
-    };
-
-    const fetchData = async () => {
-      const response = await fetchMockData();
-      setTeamData(response);
-    };
-
-    fetchData();
+    // Simula una llamada a la API
+    setTimeout(() => {
+      setData(sampleData);
+      setLoading(false);
+    }, 1000);
   }, []);
 
-  const selectedData =
-    selectedMember === null || selectedMember === ""
-      ? teamData?.averages || []
-      : teamData?.members[parseInt(selectedMember, 10)]?.responses || [];
+  const renderSelectedChart = () => {
+    if (selectedChart === "kudos") {
+      return (
+        <PieChart>
+          <Pie
+            data={pieDataKudos}
+            dataKey="value"
+            nameKey="name"
+            cx="50%"
+            cy="50%"
+            outerRadius={100}
+            fill="#8884d8"
+            label
+          >
+            {pieDataKudos.map((entry, index) => (
+              <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+            ))}
+          </Pie>
+          <Tooltip />
+        </PieChart>
+      );
+    } else if (selectedChart === "niko") {
+      return (
+        <PieChart>
+          <Pie
+            data={pieDataNikoNiko}
+            dataKey="value"
+            nameKey="name"
+            cx="50%"
+            cy="50%"
+            outerRadius={100}
+            fill="#8884d8"
+            label
+          >
+            {pieDataNikoNiko.map((entry, index) => (
+              <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+            ))}
+          </Pie>
+          <Tooltip />
+        </PieChart>
+      );
+    }
+  };
+
+  if (loading) {
+    return <p className="text-center text-blue-500 font-bold">Cargando datos...</p>;
+  }
 
   return (
-    <div className="min-h-screen bg-gradient-to-r from-indigo-500 via-purple-600 to-pink-500 py-6 px-8">
+    <div className="min-h-screen bg-gradient-to-r from-blue-500 via-purple-600 to-indigo-500 py-6 px-8">
       <Helmet>
-        <title>Dashboard</title>
+        <title>Power BI Style Dashboard</title>
       </Helmet>
       <div className="max-w-7xl mx-auto bg-white rounded-lg shadow-lg p-8">
-        <DashboardHeader />
-        {loading && <p className="text-blue-500 font-semibold text-center">Cargando equipos...</p>}
-        {error && <p className="text-red-500 font-semibold text-center">{error}</p>}
-        <TeamSelector
-          teams={teams}
-          selectedTeam={selectedTeam}
-          setSelectedTeam={setSelectedTeam}
-          months={months}
-          selectedMonth={selectedMonth}
-          setSelectedMonth={setSelectedMonth}
-        />
-        <NikoNikoTable teamMembers={teamMembers} nikoData={nikoData} />
-        {teamData && (
-          <HappinessChart
-            teamData={teamData}
-            selectedMember={selectedMember}
-            setSelectedMember={setSelectedMember}
-            selectedSprint={selectedSprint}
-            setSelectedSprint={setSelectedSprint}
-            selectedData={selectedData}
-          />
-        )}
+        <h1 className="text-3xl font-bold text-center mb-8">Dashboard estilo Power BI</h1>
+          
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          {/* Gráfico de barras */}
+          <div className="p-4 bg-gray-100 rounded-lg shadow-md">
+            <h2 className="text-xl font-bold text-center mb-4">Satisfacción vs Productividad</h2>
+            <ResponsiveContainer width="100%" height={300}>
+              <BarChart data={data}>
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="name" />
+                <YAxis />
+                <Tooltip />
+                <Legend />
+                <Bar dataKey="satisfacción" fill="#8884d8" />
+                <Bar dataKey="productividad" fill="#82ca9d" />
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
+
+          {/* Gráfico dinámico */}
+          <div className="p-4 bg-gray-100 rounded-lg shadow-md">
+            <h2 className="text-xl font-bold text-center mb-4">
+              {selectedChart === "kudos" ? "Distribución de Kudos" : "Niko Niko"}
+            </h2>
+            <div className="mb-4 text-center">
+              <label htmlFor="chart-select" className="mr-2">
+                Seleccione un gráfico:
+              </label>
+              <select
+                id="chart-select"
+                className="border rounded px-2 py-1"
+                value={selectedChart}
+                onChange={(e) => setSelectedChart(e.target.value)}
+              >
+                <option value="kudos">Distribución de Kudos</option>
+                <option value="niko">Niko Niko</option>
+              </select>
+            </div>
+            <ResponsiveContainer width="100%" height={300}>
+              {renderSelectedChart()}
+            </ResponsiveContainer>
+          </div>
+        </div>
+
+        {/* Gráfico de líneas */}
+        <div className="mt-8 p-4 bg-gray-100 rounded-lg shadow-md">
+          <h2 className="text-xl font-bold text-center mb-4">Tendencia Mensual</h2>
+          <ResponsiveContainer width="100%" height={300}>
+            <LineChart data={data}>
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="name" />
+              <YAxis />
+              <Tooltip />
+              <Legend />
+              <Line type="monotone" dataKey="satisfacción" stroke="#8884d8" />
+              <Line type="monotone" dataKey="productividad" stroke="#82ca9d" />
+            </LineChart>
+          </ResponsiveContainer>
+        </div>
       </div>
     </div>
   );
 }
 
-export default Dashboard;
+export default EnhancedDashboard;
