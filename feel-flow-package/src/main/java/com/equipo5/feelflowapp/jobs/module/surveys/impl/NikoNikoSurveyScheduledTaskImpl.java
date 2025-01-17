@@ -65,7 +65,7 @@ public class NikoNikoSurveyScheduledTaskImpl implements SurveyScheduledTask{
                                         nikoNikoSurveyService.createSurveis(team.getRegularUsers(), module);
                                         nikoNikoRepository.save( module );
                                         log.info(String.format("Niko surveis created: For User of the team %s", team.getName() ));
-                                    }else{
+                                    }else if (module.getDateAndTimeToClose().isBefore(LocalDateTime.now())){
                                         log.error(" Module is not enabled - Closing Module ");
                                         this.closeModule( module );
                                     }
