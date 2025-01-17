@@ -16,8 +16,8 @@ const useConfigurarNikoNikoModulo = (authority, token, idTeam, openAlertPopup) =
   const [nikoNikoTimeToResponseEndDay, setNikoNikoTimeToResponseEndDay] = useState("");
   const nikoNikostartDateTime = `${nikoNikoStartDate}T${nikoNikoStartTime}:00.000Z`;
   const nikoNikoendDateTime = `${nikoNikoEndDate}T${nikoNikoEndTime}:00.000Z`;
-  const timeStartToResponse = `${nikoNikoTimeToResponseStartDay}:00.000Z`;
-  const timeEndToResponse = `${nikoNikoTimeToResponseEndDay}:00.000Z`;
+  const timeStartToResponse = `${nikoNikoTimeToResponseStartDay}:00`;
+  const timeEndToResponse = `${nikoNikoTimeToResponseEndDay}:00`;
   const [nikoNikoTeams, setNikoNikoTeams] = useState("");
 
 
@@ -36,13 +36,11 @@ const useConfigurarNikoNikoModulo = (authority, token, idTeam, openAlertPopup) =
   // Abre el popup de configuración de Niko Niko
   const handleNikoNikoPopupOpen = () => {
     setIsNikoNikoPopupOpen(true);
-    console.log("Abriendo popup de configuración de Niko Niko");
   };
 
   // Cierra el popup de configuración de Niko Niko
   const handleNikoNikoPopupClose = () => {
     setIsNikoNikoPopupOpen(false);
-    console.log("Cerrando popup de configuración de Niko Niko");
   };
 
   // Valida el formulario de configuración de Niko Niko
@@ -61,11 +59,11 @@ const useConfigurarNikoNikoModulo = (authority, token, idTeam, openAlertPopup) =
       newErrors.nikoNikoEndDate = "Por favor, selecciona la fecha y/o la hora de fin.";
     }
 
-    if (!nikoNikoTimeToResponseStartDay ) {
+    if (!nikoNikoTimeToResponseStartDay) {
       newErrors.nikoNikoEndDate = "Por favor, selecciona la hora de inicio para responder las emociones.";
     }
-    
-    if (!nikoNikoTimeToResponseEndDay ) {
+
+    if (!nikoNikoTimeToResponseEndDay) {
       newErrors.nikoNikoEndDate = "Por favor, selecciona la hora de fin para responder las emociones.";
     }
 
@@ -87,41 +85,58 @@ const useConfigurarNikoNikoModulo = (authority, token, idTeam, openAlertPopup) =
         "La hora de fin para responder las emociones debe ser posterior a la hora de inicio.";
     }
 
+    if (nikoNikoTimeToResponseEndDay !== nikoNikoEndTime) {
+      newErrors.nikoNikoTimeToResponseEndDay =
+        "La hora de fin para responder las emociones debe ser igual a la hora de fin del módulo.";
+    }
+
     setNikoNikoErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
 
   // Maneja el envío del formulario de configuración de Niko Niko
-  const handleNikoNikoFormSubmit = () => {
+  const handleNikoNikoFormSubmit = async () => {
     if (validateNikoNikoForm()) {
       try {
-        const result = crearModulo(token, idTeam, nikoNikostartDateTime, nikoNikoendDateTime, timeStartToResponse, timeEndToResponse);
-  
+        // Espera el resultado de la función asíncrona
+        const result = await crearModulo(
+          token,
+          idTeam,
+          nikoNikostartDateTime,
+          nikoNikoendDateTime,
+          timeStartToResponse,
+          timeEndToResponse
+        );
+
+        // Manejo del resultado exitoso
         if (result === "Module created successfully") {
-          console.log("Módulo Niko Niko creado exitosamente");
           openAlertPopup(
             "Éxito",
             "Se creó el módulo Niko Niko exitosamente",
             "success"
           );
         } else {
+          // Manejo de casos inesperados, aunque no sean errores
           console.error("Error al crear módulo:", result);
           openAlertPopup(
             "Error",
-            `No se pudo crear el módulo Niko Niko: ${result}`,
+            `No se pudo crear el módulo Niko Niko: ${result.message || result}`,
             "error"
           );
         }
       } catch (error) {
+        // Manejo de errores al ejecutar la promesa
         console.error("Error al crear módulo:", error);
         openAlertPopup(
           "Error",
-          "Ocurrió un error al intentar crear el módulo Niko Niko",
+          `No se pudo crear el módulo Niko Niko: ${error.message || error}`,
           "error"
         );
       } finally {
-        setIsNikoNikoPopupOpen(false); // Cerrar popup de configuración
+        // Cerrar el popup de configuración siempre, incluso si hay error
+        setIsNikoNikoPopupOpen(false);
       }
+
     }
   };
 
