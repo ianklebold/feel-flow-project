@@ -43,7 +43,7 @@ public class TwelveStepsSurveyServiceImpl extends SurveyServiceImpl implements T
                                         RegularUserRepository regularUserRepository, TeamRepository teamRepository, ModuleRepository moduleRepository,
                                         SurveyMapper surveyMapper, ActivityService activityService, ActivityMapper activityMapper, ReportService reportService,
                                         ModuleService moduleService) {
-        super(surveyRepository, userRepository,regularUserRepository,teamRepository,moduleRepository, userService, surveyMapper, moduleService);
+        super(surveyRepository, userRepository,regularUserRepository,teamRepository,moduleRepository, userService, surveyMapper, moduleService, activityMapper);
         this.activityService = activityService;
         this.activityMapper = activityMapper;
         this.reportService = reportService;
