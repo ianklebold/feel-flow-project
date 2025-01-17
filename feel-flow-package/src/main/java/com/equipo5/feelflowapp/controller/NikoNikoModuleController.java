@@ -35,7 +35,7 @@ public class NikoNikoModuleController {
 
     private final String MODULE = "Module";
 
-    private NikoNikoService nikoNikoService;
+    private final NikoNikoService nikoNikoService;
 
     @Operation(
             summary = "Create Module Niko Niko REST API",
@@ -67,7 +67,7 @@ public class NikoNikoModuleController {
             @RequestBody CreationNikoNikoModule creationNikoNikoModule
             ){
 
-        nikoNikoService.publishingModule(creationNikoNikoModule);
+        this.nikoNikoService.publishingModule(creationNikoNikoModule);
 
         return ResponseEntity
                 .status(HttpStatus.CREATED)
