@@ -10,8 +10,8 @@ function HappinessChart({
   selectedData,
 }) {
   return (
-    <div className="bg-white p-6 rounded-lg shadow-lg mt-10">
-      <h1 className="text-2xl font-bold mb-4">12 pasos de la felicidad - {teamData.teamName}</h1>
+    <div className="bg-white p-6 rounded-lg shadow-lg mt-10 relative">
+      <h1 className="text-2xl font-bold text-center mb-6">12 pasos de la felicidad - {teamData.teamName}</h1>
       <div className="flex justify-start items-center mb-6 gap-4">
         <select
           id="member-select"
@@ -33,6 +33,7 @@ function HappinessChart({
           <option value="twoAgo">Hace Dos Sprints</option>
         </select>
       </div>
+      <div className="absolute top-0 left-0 right-0 h-6 bg-gradient-to-b from-white to-transparent pointer-events-none"></div>
       {renderChart(selectedData)}
     </div>
   );
