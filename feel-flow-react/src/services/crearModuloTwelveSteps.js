@@ -1,14 +1,20 @@
-export async function crearModulo(token, idTeam) {
-    const endpoint = `http://localhost:8080/api/v1/twelve_steps_modules/${idTeam}`;
+export async function crearModulo(token, idTeam, idPoolQuestion, dateAndTimeToPublish, dateAndTimeToClose) {
+    const endpoint = `http://localhost:8080/api/v1/twelve_steps_modules`;
 
     try {
         const response = await fetch(endpoint, {
             method: 'POST',
             headers: {
-                'Authorization': `Bearer ${token}`,
-                'Content-Type': 'application/json',
+              'Authorization': `Bearer ${token}`,
+              'Content-Type': 'application/json',
             },
-        });
+            body: JSON.stringify({
+              "idTeam": idTeam,
+              "idPoolQuestion": idPoolQuestion, 
+              "dateAndTimeToPublish": dateAndTimeToPublish,
+              "dateAndTimeToClose": dateAndTimeToClose, 
+            }),
+          });
 
         if (response.ok) {
             const data = await response.json();
