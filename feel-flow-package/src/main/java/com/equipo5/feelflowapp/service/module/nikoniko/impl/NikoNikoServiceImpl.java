@@ -47,7 +47,7 @@ public class NikoNikoServiceImpl implements NikoNikoService {
 
         if (team.isPresent() ){
             var currentTeam = team.get();
-            boolean existModuleActive =  moduleService.isAnyModuleActive(TWELVE_STEPS.toString(),currentTeam.getModules());
+            boolean existModuleActive =  moduleService.isAnyModuleActive(NIKO_NIKO.toString(),currentTeam.getModules());
 
             if (existModuleActive){
                 //Error retornar excepcion
