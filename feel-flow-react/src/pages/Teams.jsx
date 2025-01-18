@@ -8,7 +8,7 @@ import Button from "../components/Button";
 import Popup from "../components/Popup";
 import Form from "../components/Form";
 import { createTeam } from "../services/Teams/CreateTeam";
-import { FaPlus } from 'react-icons/fa';
+import { FaPlus, FaEye, FaEyeSlash } from 'react-icons/fa';
 
 
 function Teams() {
@@ -17,17 +17,22 @@ function Teams() {
   const [searchLeaders, setSearchLeaders] = useState("");
   const navigate = useNavigate();
   const [newTeamPopup, setNewTeamIsOpen] = useState(false);
-      const [formData, setFormData] = useState({
-          nameTeam: "",
-          descriptionTeam: "",
-          nameTL: "",
-          surnameTL: "",
-          usernameTL: "",
-          passwordTL: "",
-      });
-      const [errors, setErrors] = useState({}); // Error por cada input
-      const [success, setSuccess] = useState(); // Éxito de la respuesta de la API
-      const [apiError, setError] = useState(); // Error de la respuesta de la API
+  const [formData, setFormData] = useState({
+      nameTeam: "",
+      descriptionTeam: "",
+      nameTL: "",
+      surnameTL: "",
+      usernameTL: "",
+      passwordTL: "",
+  });
+  const [errors, setErrors] = useState({}); // Error por cada input
+  const [success, setSuccess] = useState(); // Éxito de la respuesta de la API
+  const [apiError, setError] = useState(); // Error de la respuesta de la API
+  const [showPassword, setShowPassword] = useState(false);
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  }
 
   useEffect(() => {
     const fetchTeams = async () => {
@@ -240,11 +245,13 @@ function Teams() {
                       labelClass: "login",
                       name: "passwordTL",
                       value: formData.passwordTL,
-                      type: "password",
+                      type: showPassword ? "text" : "password",
                       onChange: handleChange,
                       placeholder: "Ingresa la nueva password del líder del equipo",
                       color: "blue",
-                      error: errors.passwordTL
+                      error: errors.passwordTL,
+                      icon: showPassword ? FaEyeSlash : FaEye,
+                      onIconClick: togglePasswordVisibility,
                     },
                   ]}
                   buttons={[
