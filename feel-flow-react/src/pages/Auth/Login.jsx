@@ -4,7 +4,6 @@ import TextInput from "../../components/TextInput";
 import Button from "../../components/Button";
 
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import PasswordInput from "../../components/PasswordIcon";
 
 import { saveAuthData } from "../../services/session";
 
