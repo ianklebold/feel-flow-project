@@ -7,6 +7,7 @@ import { GetIdEquipo } from "../services/GetEquipos.js";
 import { getAuthData, getUserData } from "../services/session";
 import useTwelveStepsModule from "../hooks/useTwelveStepsModule";
 import useConfigurarNikoNikoModulo from "../hooks/useNikoNikoModule.jsx";
+import useConfigurarKudosModulo from "../hooks/useKudosModule.jsx";
 
 // Imágenes
 import headerImage12pasos from "../img/twelve_steps_header.png";
@@ -69,6 +70,7 @@ function Modules() {
                     if (authority === "TEAM_LEADER") {
                         setSelectedTeam(uuid);
                         setSelectedNikoNikoTeam(uuid);
+                        setSelectedKudosTeam(uuid)
                     } // Guarda el UUID directamente en idTeam
                 }
             })
@@ -149,6 +151,25 @@ function Modules() {
         handleCrearModuloNikoNiko,
     } = useConfigurarNikoNikoModulo(authority, token, idTeam, openAlertPopup);
 
+    const {
+        isKudosPopupOpen,
+        handleKudosPopupClose,
+        handleKudosFormSubmit,
+        kudosErrors,
+        selectedKudosTeam,
+        kudosStartDate,
+        kudosEndDate,
+        kudosStartTime,
+        kudosEndTime,
+        kudosDailyLimit,
+        setSelectedKudosTeam,
+        setKudosStartDate,
+        setKudosStartTime,
+        setKudosEndDate,
+        setKudosEndTime,
+        setKudosDailyLimit,
+        handleCrearModuloKudos,
+    } = useConfigurarKudosModulo(authority, token, idTeam, openAlertPopup);
 
     return (
         <div>
@@ -439,7 +460,7 @@ function Modules() {
                             {/* Hora incio del dia para respuesta de estado de emocion */}
                             <div>
                                 <label htmlFor="horaInicioyFinEmocion" className="block text-gray-700 font-bold mb-2">
-                                    Hora de inicio y fin del día para respuesta 
+                                    Hora de inicio y fin del día para respuesta
                                 </label>
                                 <div className="flex space-x-4">
                                     <div className="flex flex-col w-full">
@@ -491,11 +512,148 @@ function Modules() {
                 botones={[
                     {
                         texto: "Habilitar Kudos",
-                        onClick: handleCrearModulo,
+                        onClick: handleCrearModuloKudos,
                         color: "light_purple",
                     },
                 ]}
             />
+
+            {/* Popup de configuración de Kudos */}
+            {isKudosPopupOpen && (
+                <Popup
+                    isOpen={isKudosPopupOpen}
+                    title="Configurar Kudos"
+                    message="Seleccione las opciones para configurar el módulo."
+                    buttons={[
+                        {
+                            label: "Cancelar",
+                            onClick: handleKudosPopupClose,
+                            color: "red",
+                        },
+                        {
+                            label: "Aceptar",
+                            onClick: handleKudosFormSubmit,
+                            color: "blue",
+                        },
+                    ]}
+                >
+                    <div className="flex flex-col space-y-4">
+                        {/* Selección de equipo */}
+                        <div>
+                            <label htmlFor="equipoKudos" className="block text-gray-700 font-bold mb-2">
+                                Seleccionar Equipo
+                            </label>
+                            <select
+                                id="equipoKudos"
+                                value={selectedKudosTeam}
+                                onChange={(e) => setSelectedKudosTeam(e.target.value)}
+                                className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500"
+                                disabled={sessionStorage.getItem("authority") === "TEAM_LEADER"}
+                            >
+                                <option value="">Seleccione un equipo</option>
+                                {teams.map((team) => (
+                                    <option key={team.id} value={team.id}>
+                                        {team.name}
+                                    </option>
+                                ))}
+                            </select>
+                            {kudosErrors.selectedKudosTeam && (
+                                <p className="text-red-500 text-sm mt-1">{kudosErrors.selectedKudosTeam}</p>
+                            )}
+                        </div>
+
+                        {/* Configuración de fechas */}
+                        <div className="flex flex-col space-y-4">
+                            {/* Fecha y hora de inicio */}
+                            <div>
+                                <label htmlFor="fechaInicioKudos" className="block text-gray-700 font-bold mb-2">
+                                    Fecha y Hora de inicio del módulo
+                                </label>
+                                <div className="flex space-x-2">
+                                    <input
+                                        id="fechaInicioModuloKudos"
+                                        type="date"
+                                        value={kudosStartDate}
+                                        onChange={(e) => setKudosStartDate(e.target.value)}
+                                        className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500"
+                                    />
+                                    <input
+                                        id="horaInicioModuloKudos"
+                                        type="time"
+                                        value={kudosStartTime}
+                                        onChange={(e) => setKudosStartTime(e.target.value)}
+                                        className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500"
+                                    />
+                                </div>
+                                {kudosErrors.kudosStartDate && (
+                                    <p className="text-red-500 text-sm mt-1">{kudosErrors.kudosStartDate}</p>
+                                )}
+                                {kudosErrors.kudosStartTime && (
+                                    <p className="text-red-500 text-sm mt-1">{kudosErrors.kudosStartTime}</p>
+                                )}
+                            </div>
+
+                            {/* Fecha y hora de fin */}
+                            <div>
+                                <label htmlFor="fechaFinKudos" className="block text-gray-700 font-bold mb-2">
+                                    Fecha y Hora de fin del módulo
+                                </label>
+                                <div className="flex space-x-2">
+                                    <input
+                                        id="fechaFinModuloKudos"
+                                        type="date"
+                                        value={kudosEndDate}
+                                        onChange={(e) => setKudosEndDate(e.target.value)}
+                                        className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500"
+                                    />
+                                    <input
+                                        id="horaFinModuloKudos"
+                                        type="time"
+                                        value={kudosEndTime}
+                                        onChange={(e) => setKudosEndTime(e.target.value)}
+                                        className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500"
+                                    />
+                                </div>
+                                {kudosErrors.kudosEndDate && (
+                                    <p className="text-red-500 text-sm mt-1">{kudosErrors.kudosEndDate}</p>
+                                )}
+                                {kudosErrors.kudosEndTime && (
+                                    <p className="text-red-500 text-sm mt-1">{kudosErrors.kudosEndTime}</p>
+                                )}
+                            </div>
+                        </div>
+                        {/* Configuración de límites de reconocimientos */}            
+                        <div>
+                            <label htmlFor="limiteKudos" className="block text-gray-700 font-bold mb-2">
+                                Límite de reconocimientos diarios para dar por persona
+                            </label>
+                            <input
+                                id="limiteKudos"
+                                type="number"
+                                min="1"
+                                value={kudosDailyLimit}
+                                onChange={(e) => {
+                                    const newValue = parseInt(e.target.value);
+                                    // Si el valor es mayor o igual a 1 y el nuevo valor es mayor o igual a 1
+                                    if (newValue >= 1) {
+                                        if (newValue === 1 && kudosDailyLimit > 1) {
+                                            setKudosDailyLimit(1); // Limita a 1 si el valor original era mayor
+                                        } else {
+                                            setKudosDailyLimit(newValue); // Permite incrementar o decrementar
+                                        }
+                                    }
+                                }}
+                                className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500"
+                            />
+                            {kudosErrors.kudosDailyLimit && (
+                                <p className="text-red-500 text-sm mt-1">{kudosErrors.kudosDailyLimit}</p>
+                            )}
+                        </div>
+                    </div>
+                </Popup>
+            )}
+
+
         </div>
     );
 }
