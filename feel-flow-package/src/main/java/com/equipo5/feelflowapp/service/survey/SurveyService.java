@@ -7,6 +7,7 @@ import com.equipo5.feelflowapp.domain.modules.SurveyModule;
 import com.equipo5.feelflowapp.domain.users.RegularUser;
 import com.equipo5.feelflowapp.dto.modules.SurveyDto;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -26,7 +27,11 @@ public interface SurveyService{
         users.forEach(user -> createSurvey(module,user));
     }
 
+    List<SurveyDto> getSurveys(SurveyStateEnum surveyState, LocalDate creationDate,  String moduleName);
+
     List<SurveyDto> getSurveys();
+
+    SurveyDto getLastSurvey();
 
     Optional<SurveyDto> getSurveyActiveByModuleName(ModuleNames moduleNames);
 

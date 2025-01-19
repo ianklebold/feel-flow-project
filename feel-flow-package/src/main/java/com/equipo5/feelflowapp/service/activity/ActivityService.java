@@ -7,6 +7,9 @@ import com.equipo5.feelflowapp.domain.modules.Survey;
 import java.util.List;
 
 public interface ActivityService {
+
+    List<Activity> createActivityToNikoNiko();
+
     List<Activity> createActivityToTwelveSteps();
 
     List<Activity> refreshActivities(Survey survey,List<Activity> activitiesCompleted);

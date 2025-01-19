@@ -9,7 +9,7 @@ import jakarta.validation.constraints.Size;
 import java.util.List;
 
 @Schema(
-        name = "SurveyResponseDto",
+        name = "SurveyTwelveStepsResponseDto",
         description = "Schema to hold survey information"
 )
 public record SurveyTwelveStepsResponseDto(

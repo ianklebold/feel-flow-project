@@ -8,7 +8,7 @@ import Button from "../components/Button";
 import Popup from "../components/Popup";
 import Form from "../components/Form";
 import { createTeam } from "../services/Teams/CreateTeam";
-import { FaPlus } from "react-icons/fa";
+import { FaPlus, FaEye, FaEyeSlash } from "react-icons/fa";
 
 function Teams() {
   const [teams, setTeams] = useState([]);
@@ -239,7 +239,7 @@ function Teams() {
                       labelClass: "login",
                       name: "passwordTL",
                       value: formData.passwordTL,
-                      type: "password",
+                      type: showPassword ? "text" : "password",
                       onChange: handleChange,
                       placeholder: "Ingresa la nueva password del líder del equipo",
                       color: "blue",

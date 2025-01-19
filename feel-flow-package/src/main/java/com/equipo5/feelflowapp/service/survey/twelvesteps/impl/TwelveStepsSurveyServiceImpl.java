@@ -9,9 +9,13 @@ import com.equipo5.feelflowapp.dto.modules.SurveyTwelveStepsResponseDto;
 import com.equipo5.feelflowapp.exception.badrequest.survey.SurveyException;
 import com.equipo5.feelflowapp.mappers.modules.ActivityMapper;
 import com.equipo5.feelflowapp.mappers.modules.SurveyMapper;
+import com.equipo5.feelflowapp.repository.module.ModuleRepository;
 import com.equipo5.feelflowapp.repository.survey.SurveyRepository;
+import com.equipo5.feelflowapp.repository.team.TeamRepository;
 import com.equipo5.feelflowapp.repository.users.UserRepository;
+import com.equipo5.feelflowapp.repository.users.regularuser.RegularUserRepository;
 import com.equipo5.feelflowapp.service.activity.ActivityService;
+import com.equipo5.feelflowapp.service.module.ModuleService;
 import com.equipo5.feelflowapp.service.report.ReportService;
 import com.equipo5.feelflowapp.service.survey.impl.SurveyServiceImpl;
 import com.equipo5.feelflowapp.service.survey.twelvesteps.TwelveStepsSurveyService;
@@ -35,8 +39,11 @@ public class TwelveStepsSurveyServiceImpl extends SurveyServiceImpl implements T
 
 
     @Autowired
-    public TwelveStepsSurveyServiceImpl(SurveyRepository surveyRepository, UserRepository userRepository, UserService userService, SurveyMapper surveyMapper, ActivityService activityService, ActivityMapper activityMapper, ReportService reportService) {
-        super(surveyRepository, userRepository, userService, surveyMapper);
+    public TwelveStepsSurveyServiceImpl(SurveyRepository surveyRepository, UserRepository userRepository, UserService userService,
+                                        RegularUserRepository regularUserRepository, TeamRepository teamRepository, ModuleRepository moduleRepository,
+                                        SurveyMapper surveyMapper, ActivityService activityService, ActivityMapper activityMapper, ReportService reportService,
+                                        ModuleService moduleService) {
+        super(surveyRepository, userRepository,regularUserRepository,teamRepository,moduleRepository, userService, surveyMapper, moduleService, activityMapper);
         this.activityService = activityService;
         this.activityMapper = activityMapper;
         this.reportService = reportService;

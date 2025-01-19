@@ -1,5 +1,7 @@
 import React from "react";
 
+import IconButton from "./IconButton"
+
 const TextInput = ({
     label,
     labelClass,
@@ -12,6 +14,8 @@ const TextInput = ({
     color = "blue",
     error = "",
     disabled = false,
+    icon: Icon, // Añadido para el ícono
+    onIconClick, // Función para el clic en el ícono
     ...props
 }) => {
     const classLabel = {
@@ -39,25 +43,30 @@ const TextInput = ({
         : "border-gray-300";
 
     return (
-        <div className="mb-4">
+        <>
             {label && (
                 <label className={`${classLabel[labelClass]}}`}>
                     {label}
                 </label>
             )}
-            <input
-                type={type}
-                name={name}
-                value={value}
-                onChange={onChange}
-                placeholder={placeholder}
-                disabled={disabled}
-                className={`${baseClasses} ${sizeClasses[size]} ${colorClasses[color]} ${errorClasses} ${disabled ? "bg-gray-100 cursor-not-allowed" : "bg-white"
-                    }`}
-                {...props}
-            />
+            <div className="relative">
+                <input
+                    type={type}
+                    name={name}
+                    value={value}
+                    onChange={onChange}
+                    placeholder={placeholder}
+                    disabled={disabled}
+                    className={`${baseClasses} ${sizeClasses[size]} ${colorClasses[color]} ${errorClasses} ${disabled ? "bg-gray-100 cursor-not-allowed" : "bg-white"
+                        }`}
+                    {...props}
+                />
+                {Icon && onIconClick && ( // Renderiza el ícono si se proporciona
+                    <IconButton icon={Icon} onClick={onIconClick} size="sm" className="absolute inset-y-0 right-0 flex items-center pr-3"/>
+                )}
+            </div>
             {error && <p className="mt-1 text-sm text-red-500">{error}</p>}
-        </div>
+        </>
     );
 };
 

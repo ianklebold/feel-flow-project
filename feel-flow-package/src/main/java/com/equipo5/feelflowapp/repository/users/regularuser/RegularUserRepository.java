@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.util.Optional;
 import java.util.UUID;
 
 public interface RegularUserRepository extends JpaRepository<RegularUser, UUID> {
@@ -15,4 +16,6 @@ public interface RegularUserRepository extends JpaRepository<RegularUser, UUID> 
             """,
             nativeQuery = true)
     String findTeamByUsername(@Param("username") String username);
+
+    Optional<RegularUser> findByUsername(String username);
 }

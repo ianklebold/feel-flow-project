@@ -4,9 +4,9 @@ import com.equipo5.feelflowapp.domain.Team;
 import com.equipo5.feelflowapp.domain.enumerations.modules.ModuleState;
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.GenericGenerator;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity(name = "module")
 @Inheritance(strategy = InheritanceType.JOINED)
@@ -25,6 +25,10 @@ public class Module {
     private LocalDate creationDate;
 
     private LocalDate moduleClosedDate;
+
+    private LocalDateTime dateAndTimeToPublish;
+
+    private LocalDateTime dateAndTimeToClose;
 
     @Enumerated(EnumType.STRING)
     private ModuleState moduleState;

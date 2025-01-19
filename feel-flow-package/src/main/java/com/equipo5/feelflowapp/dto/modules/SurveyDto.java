@@ -7,7 +7,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.List;
 
 @Schema(
-        name = "SurveyDto",
+        name = "SurveyTwelveStepsDto",
         description = "Schema to hold survey information"
 )
 public record SurveyDto(
@@ -15,5 +15,7 @@ public record SurveyDto(
         @Schema(description = "State of the Survey", examples = {"ACTIVE","FINISHED","CLOSED"})  SurveyStateEnum surveyState,
         RegularUserDTO regularUser,
         List<ActivityDto> activityList,
+        boolean isAfterTheDateOfPublic,
+        boolean isBeforeTheDateOfClose,
         ModuleDto module) {
 }
