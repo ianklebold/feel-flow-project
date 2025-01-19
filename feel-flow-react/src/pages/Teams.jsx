@@ -8,8 +8,7 @@ import Button from "../components/Button";
 import Popup from "../components/Popup";
 import Form from "../components/Form";
 import { createTeam } from "../services/Teams/CreateTeam";
-import { FaPlus } from 'react-icons/fa';
-
+import { FaPlus } from "react-icons/fa";
 
 function Teams() {
   const [teams, setTeams] = useState([]);
@@ -17,17 +16,17 @@ function Teams() {
   const [searchLeaders, setSearchLeaders] = useState("");
   const navigate = useNavigate();
   const [newTeamPopup, setNewTeamIsOpen] = useState(false);
-      const [formData, setFormData] = useState({
-          nameTeam: "",
-          descriptionTeam: "",
-          nameTL: "",
-          surnameTL: "",
-          usernameTL: "",
-          passwordTL: "",
-      });
-      const [errors, setErrors] = useState({}); // Error por cada input
-      const [success, setSuccess] = useState(); // Éxito de la respuesta de la API
-      const [apiError, setError] = useState(); // Error de la respuesta de la API
+  const [formData, setFormData] = useState({
+    nameTeam: "",
+    descriptionTeam: "",
+    nameTL: "",
+    surnameTL: "",
+    usernameTL: "",
+    passwordTL: "",
+  });
+  const [errors, setErrors] = useState({});
+  const [success, setSuccess] = useState();
+  const [apiError, setError] = useState();
 
   useEffect(() => {
     const fetchTeams = async () => {
@@ -73,66 +72,67 @@ function Teams() {
     { header: "Team Leader", key: "leaderName" },
   ];
 
-  const handleIconClick = (row) => {
-    sessionStorage.setItem("teamID", row.uuid)
+  const handleRowClick = (row) => {
+    sessionStorage.setItem("teamID", row.uuid);
     navigate(`/teams/${row.teamName}`);
   };
 
   const openPopup = (event) => {
-          event.preventDefault();
-          setNewTeamIsOpen(true);
-      };
-  
-      const handleChange = (e) => {
-          const { name, value } = e.target;
-          setFormData({
-              ...formData,
-              [name]: value,
-          });
-  
-          if (errors[name]) {
-              setErrors({ ...errors, [name]: null });
-          }
-      };
-      const keyMapping = {
-          "teamLeaderDTO.name": "nameTL",
-          "teamLeaderDTO.surname": "surnameTL",
-          "teamLeaderDTO.username": "usernameTL",
-          "teamLeaderDTO.password": "passwordTL",
-          "descriptionTeam": "descriptionTeam",
-          "nameTeam": "nameTeam",
-      };
-      
-      const handleSubmit = async (event) => {
-          event.preventDefault();
-          console.log("Formulario enviado");
-          console.log(formData.surnameTL)
-          
-          try {
-              const result = await createTeam(
-                  formData.nameTeam,
-                  formData.descriptionTeam,
-                  formData.nameTL,
-                  formData.surnameTL,
-                  formData.usernameTL,
-                  formData.passwordTL
-              );
-              console.log(result);
-              if (result) {
-                  const formattedErrors = result.errors.reduce((acc, curr) => {
-                      const apiKey = Object.keys(curr)[0]; // Clave devuelta por la API
-                      const inputKey = keyMapping[apiKey] || apiKey; // Mapear a la clave del input
-                      acc[inputKey] = curr[apiKey]; // Asignar el mensaje de error
-                      return acc;
-                  }, {});
-                  setErrors(formattedErrors);
-              } else {
-                  setSuccess("Equipo creado correctamente");
-              }
-          } catch (error) {
-              console.error("Error al crear el equipo:", error);
-          }
-      };
+    event.preventDefault();
+    setNewTeamIsOpen(true);
+  };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+
+    if (errors[name]) {
+      setErrors({ ...errors, [name]: null });
+    }
+  };
+
+  const keyMapping = {
+    "teamLeaderDTO.name": "nameTL",
+    "teamLeaderDTO.surname": "surnameTL",
+    "teamLeaderDTO.username": "usernameTL",
+    "teamLeaderDTO.password": "passwordTL",
+    descriptionTeam: "descriptionTeam",
+    nameTeam: "nameTeam",
+  };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    console.log("Formulario enviado");
+    console.log(formData.surnameTL);
+
+    try {
+      const result = await createTeam(
+        formData.nameTeam,
+        formData.descriptionTeam,
+        formData.nameTL,
+        formData.surnameTL,
+        formData.usernameTL,
+        formData.passwordTL
+      );
+      console.log(result);
+      if (result) {
+        const formattedErrors = result.errors.reduce((acc, curr) => {
+          const apiKey = Object.keys(curr)[0];
+          const inputKey = keyMapping[apiKey] || apiKey;
+          acc[inputKey] = curr[apiKey];
+          return acc;
+        }, {});
+        setErrors(formattedErrors);
+      } else {
+        setSuccess("Equipo creado correctamente");
+      }
+    } catch (error) {
+      console.error("Error al crear el equipo:", error);
+    }
+  };
 
   return (
     <>
@@ -167,16 +167,15 @@ function Teams() {
             <Popup
               isOpen={newTeamPopup}
               title="Crear nuevo Equipo"
-              // message="Crear un equipo nuevo"
               buttons={[
                 {
                   label: "Aceptar",
-                  onClick: () => { setNewTeamIsOpen(false) },
+                  onClick: () => setNewTeamIsOpen(false),
                   color: "blue",
                 },
                 {
                   label: "Cancelar",
-                  onClick: () => { setNewTeamIsOpen(false) },
+                  onClick: () => setNewTeamIsOpen(false),
                   color: "red",
                 },
               ]}
@@ -188,12 +187,12 @@ function Teams() {
                     {
                       label: "Nombre del Equipo",
                       labelClass: "login",
-                      name: "nameTeam", // Ajusta al nombre correcto en formData
+                      name: "nameTeam",
                       value: formData.nameTeam,
-                      onChange: handleChange, // Pasa solo handleChange
+                      onChange: handleChange,
                       placeholder: "Ingresa el nombre del equipo",
                       color: "blue",
-                      error: errors.nameTeam
+                      error: errors.nameTeam,
                     },
                     {
                       label: "Descripción",
@@ -213,7 +212,7 @@ function Teams() {
                       onChange: handleChange,
                       placeholder: "Ingresa el nombre del líder del equipo",
                       color: "blue",
-                      error: errors.nameTL
+                      error: errors.nameTL,
                     },
                     {
                       label: "Apellido del Team Leader",
@@ -223,7 +222,7 @@ function Teams() {
                       onChange: handleChange,
                       placeholder: "Ingresa el apellido del líder del equipo",
                       color: "blue",
-                      error: errors.surnameTL
+                      error: errors.surnameTL,
                     },
                     {
                       label: "Username del Team Leader",
@@ -233,7 +232,7 @@ function Teams() {
                       onChange: handleChange,
                       placeholder: "Ingresa el username del líder del equipo",
                       color: "blue",
-                      error: errors.usernameTL
+                      error: errors.usernameTL,
                     },
                     {
                       label: "Password del Team Leader",
@@ -244,7 +243,7 @@ function Teams() {
                       onChange: handleChange,
                       placeholder: "Ingresa la nueva password del líder del equipo",
                       color: "blue",
-                      error: errors.passwordTL
+                      error: errors.passwordTL,
                     },
                   ]}
                   buttons={[
@@ -267,7 +266,7 @@ function Teams() {
           columns={columns}
           data={filteredTeams}
           showIcon={true}
-          onIconClick={handleIconClick}
+          onRowClick={handleRowClick}
           striped={true}
           noDataText="No se encontraron equipos."
         />
