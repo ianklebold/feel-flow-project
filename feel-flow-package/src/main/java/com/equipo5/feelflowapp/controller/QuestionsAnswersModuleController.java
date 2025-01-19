@@ -1,7 +1,7 @@
 package com.equipo5.feelflowapp.controller;
 
 
-import com.equipo5.feelflowapp.constants.module.twelvesteps.QuestionsConstants;
+import com.equipo5.feelflowapp.constants.module.twelvesteps.QuestionsConstantsTwelveSteps;
 import com.equipo5.feelflowapp.domain.enumerations.modules.ModuleNames;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -47,7 +47,7 @@ public class QuestionsAnswersModuleController {
     public List<String> getQuestions(
             @Parameter(allowEmptyValue = false, name = "nameModule", example = "TWELVE_STEPS")
             @PathVariable(value = "name_module") String nameModule){
-         return QuestionsConstants.QUESTIONS_POOL_CLASSIC_TWELVE_STEPS;
+         return QuestionsConstantsTwelveSteps.QUESTIONS_POOL_CLASSIC_TWELVE_STEPS;
     }
 
     @Operation(
@@ -66,18 +66,18 @@ public class QuestionsAnswersModuleController {
             @Parameter(allowEmptyValue = false, name = "nameModule", example = "TWELVE_STEPS")
             @PathVariable(value = "name_module") String nameModule){
         return  List.of(
-                QuestionsConstants.ANSWERS_1_POOL_CLASSIC,
-                QuestionsConstants.ANSWERS_2_POOL_CLASSIC,
-                QuestionsConstants.ANSWERS_3_POOL_CLASSIC,
-                QuestionsConstants.ANSWERS_4_POOL_CLASSIC,
-                QuestionsConstants.ANSWERS_5_POOL_CLASSIC,
-                QuestionsConstants.ANSWERS_6_POOL_CLASSIC,
-                QuestionsConstants.ANSWERS_7_POOL_CLASSIC,
-                QuestionsConstants.ANSWERS_8_POOL_CLASSIC,
-                QuestionsConstants.ANSWERS_9_POOL_CLASSIC,
-                QuestionsConstants.ANSWERS_10_POOL_CLASSIC,
-                QuestionsConstants.ANSWERS_11_POOL_CLASSIC,
-                QuestionsConstants.ANSWERS_12_POOL_CLASSIC
+                QuestionsConstantsTwelveSteps.ANSWERS_1_POOL_CLASSIC,
+                QuestionsConstantsTwelveSteps.ANSWERS_2_POOL_CLASSIC,
+                QuestionsConstantsTwelveSteps.ANSWERS_3_POOL_CLASSIC,
+                QuestionsConstantsTwelveSteps.ANSWERS_4_POOL_CLASSIC,
+                QuestionsConstantsTwelveSteps.ANSWERS_5_POOL_CLASSIC,
+                QuestionsConstantsTwelveSteps.ANSWERS_6_POOL_CLASSIC,
+                QuestionsConstantsTwelveSteps.ANSWERS_7_POOL_CLASSIC,
+                QuestionsConstantsTwelveSteps.ANSWERS_8_POOL_CLASSIC,
+                QuestionsConstantsTwelveSteps.ANSWERS_9_POOL_CLASSIC,
+                QuestionsConstantsTwelveSteps.ANSWERS_10_POOL_CLASSIC,
+                QuestionsConstantsTwelveSteps.ANSWERS_11_POOL_CLASSIC,
+                QuestionsConstantsTwelveSteps.ANSWERS_12_POOL_CLASSIC
         );
     }
 

@@ -1,6 +1,7 @@
 package com.equipo5.feelflowapp.controller;
 
 import com.equipo5.feelflowapp.constants.response.HttpResponses;
+import com.equipo5.feelflowapp.dto.modules.CreationTwelveStepsModuleDto;
 import com.equipo5.feelflowapp.dto.response.ErrorResponseDto;
 import com.equipo5.feelflowapp.dto.response.ResponseDto;
 import com.equipo5.feelflowapp.service.module.twelveSteps.TwelveStepsService;
@@ -61,10 +62,12 @@ public class TwelveStepsModuleController {
             )
     })
     @SecurityRequirement(name = "Bearer Authentication")
-    @PostMapping(PATH_TEAM_ID)
-    public ResponseEntity<ResponseDto> publishingModule(@PathVariable(value = "idTeam") UUID idTeam){
+    @PostMapping()
+    public ResponseEntity<ResponseDto> publishingModule(
+            @RequestBody CreationTwelveStepsModuleDto creationTwelveStepsModuleDto
+            ){
 
-        twelveStepsService.publishingModule(idTeam);
+        twelveStepsService.publishingModule(creationTwelveStepsModuleDto);
 
         return ResponseEntity
                 .status(HttpStatus.CREATED)

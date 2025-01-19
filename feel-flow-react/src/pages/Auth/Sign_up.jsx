@@ -5,7 +5,7 @@ import Checkbox from "../../components/checkbox";
 import Popup from "../../components/Popup";
 import { Sign_up } from "../../services/Auth/Signup";
 import { useNavigate } from "react-router-dom";
-
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { FaCheckCircle } from "react-icons/fa";
 
 const RegistroFormulario = () => {
@@ -19,6 +19,12 @@ const RegistroFormulario = () => {
     });
     const [errors, setErrors] = useState({});
     const [isPopupOpen, setIsPopupOpen] = useState(false);
+    const [showPassword, setShowPassword] = useState(false);
+
+    const togglePasswordVisibility = () => {
+        setShowPassword(!showPassword);
+    };
+
     const navigate = useNavigate();
 
 
@@ -114,13 +120,15 @@ const RegistroFormulario = () => {
                     <TextInput
                         label="Password"
                         labelClass="login"
-                        type="password"
+                        type={showPassword ? "text" : "password"}
                         name="password"
                         value={formData.password}
                         onChange={handleChange}
                         placeholder="Enter your password"
                         color="blue"
                         error={errors.password}
+                        icon={showPassword ? FaEyeSlash : FaEye} // Cambia el ícono según el estado
+                        onIconClick={togglePasswordVisibility} // Función para mostrar/ocultar
                     />
                 </div>
                 {/* <div className="mb-4">

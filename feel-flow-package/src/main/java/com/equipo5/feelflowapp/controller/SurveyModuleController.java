@@ -1,11 +1,16 @@
 package com.equipo5.feelflowapp.controller;
 
 import com.equipo5.feelflowapp.constants.response.HttpResponses;
+import com.equipo5.feelflowapp.domain.enumerations.modules.SurveyStateEnum;
+import com.equipo5.feelflowapp.dto.modules.SurveyAvailableNikoNikoReponseDto;
 import com.equipo5.feelflowapp.dto.modules.SurveyDto;
+import com.equipo5.feelflowapp.dto.modules.SurveyNikoNikoResponseDto;
 import com.equipo5.feelflowapp.dto.modules.SurveyTwelveStepsResponseDto;
 import com.equipo5.feelflowapp.dto.response.ErrorResponseDto;
 import com.equipo5.feelflowapp.dto.response.ResponseDto;
+import com.equipo5.feelflowapp.jobs.module.surveys.SurveyScheduledTask;
 import com.equipo5.feelflowapp.service.survey.SurveyService;
+import com.equipo5.feelflowapp.service.survey.nikoniko.NikoNikoSurveyService;
 import com.equipo5.feelflowapp.service.survey.twelvesteps.TwelveStepsSurveyService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import io.swagger.v3.oas.annotations.Operation;
@@ -25,6 +30,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Tag(
@@ -42,10 +48,16 @@ public class SurveyModuleController {
 
     private final TwelveStepsSurveyService twelveStepsSurveyService;
 
+    private final NikoNikoSurveyService nikoNikoSurveyService;
+
+    private final SurveyScheduledTask surveyScheduledTask;
+
     @Autowired
-    public SurveyModuleController(@Qualifier("SurveyService") SurveyService surveyService, @Qualifier("TwelveStepsSurveyService") TwelveStepsSurveyService twelveStepsSurveyService) {
+    public SurveyModuleController(@Qualifier("SurveyService") SurveyService surveyService, @Qualifier("TwelveStepsSurveyService") TwelveStepsSurveyService twelveStepsSurveyService, @Qualifier("NikoNikoSurveyServiceImpl") NikoNikoSurveyService nikoNikoSurveyService, SurveyScheduledTask surveyScheduledTask) {
         this.surveyService = surveyService;
         this.twelveStepsSurveyService = twelveStepsSurveyService;
+        this.nikoNikoSurveyService = nikoNikoSurveyService;
+        this.surveyScheduledTask = surveyScheduledTask;
     }
 
     @Operation(
@@ -58,10 +70,30 @@ public class SurveyModuleController {
                     description = "HTTP Request Success"
             )
     })
-    @GetMapping
+    @GetMapping("/filter")
     @SecurityRequirement(name = "Bearer Authentication")
-    public List<SurveyDto> getSurveys(){
-        return surveyService.getSurveys();
+    public List<SurveyDto> getSurveys(
+            @RequestParam(required = false, name = "surveyState") SurveyStateEnum surveyState,
+            @RequestParam(required = false, name = "creationDate") LocalDate creationDate,
+            @RequestParam(name = "moduleName") String moduleName
+    ){
+        return surveyService.getSurveys(surveyState, creationDate, moduleName);
+    }
+
+    @Operation(
+            summary = "Get Last Survey REST API",
+            description = "REST API to get the last survey"
+    )
+    @ApiResponses({
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "HTTP Request Success"
+            )
+    })
+    @GetMapping("/last")
+    @SecurityRequirement(name = "Bearer Authentication")
+    public SurveyDto getSurveysLastSurvey(){
+        return surveyService.getLastSurvey();
     }
 
     @Operation(
@@ -83,11 +115,78 @@ public class SurveyModuleController {
     })
     @PostMapping("/twelve_steps_module")
     @SecurityRequirement(name = "Bearer Authentication")
-    public ResponseEntity<ResponseDto> completeSurvey(@Valid @RequestBody SurveyTwelveStepsResponseDto surveyResponse) throws JsonProcessingException {
+    public ResponseEntity<ResponseDto> completeTwelveStepsSurvey(@Valid @RequestBody SurveyTwelveStepsResponseDto surveyResponse) throws JsonProcessingException {
             twelveStepsSurveyService.completeSurvey(surveyResponse);
 
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(new ResponseDto(HttpResponses.STATUS_200,HttpResponses.MESSAGE_200));
     }
+
+    @Operation(
+            summary = "Complete Surveys for Niko Niko Module REST API",
+            description = "REST API to complete survey"
+    )
+    @ApiResponses({
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "HTTP Request Success"
+            ),
+            @ApiResponse(
+                    responseCode = "400",
+                    description = "HTTP Status BAD REQUEST",
+                    content = @Content(
+                            schema = @Schema(implementation = ErrorResponseDto.class)
+                    )
+            )
+    })
+    @PostMapping("/niko_niko_module")
+    @SecurityRequirement(name = "Bearer Authentication")
+    public ResponseEntity<ResponseDto> completeNikoNikoSurvey(@Valid @RequestBody SurveyAvailableNikoNikoReponseDto surveyResponse){
+
+        nikoNikoSurveyService.completeSurvey( surveyResponse );
+
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(new ResponseDto(HttpResponses.STATUS_200,HttpResponses.MESSAGE_200));
+    }
+
+    @Operation(
+            summary = "Get Survey available for Niko Niko Module REST API",
+            description = "REST API to get available survey"
+    )
+    @ApiResponses({
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "HTTP Request Success"
+            )
+    })
+    @GetMapping("/niko_niko_module")
+    @SecurityRequirement(name = "Bearer Authentication")
+    public SurveyAvailableNikoNikoReponseDto getNikoNikoAvailableSurvey(){
+
+        return this.nikoNikoSurveyService.getSurveyAvailable();
+    }
+
+    @Operation(
+            summary = "Force creation and close of Niko Niko Surveys ",
+            description = "REST API for Force creation and close of Niko Niko Surveys "
+    )
+    @ApiResponses({
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "HTTP Request Success"
+            )
+    })
+    @PostMapping("/niko_niko_module/force_surveys")
+    public ResponseEntity<ResponseDto> forceNikoNikoSurvey(){
+
+        this.surveyScheduledTask.sendSurveys();
+
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(new ResponseDto(HttpResponses.STATUS_200,HttpResponses.MESSAGE_200));
+    }
+
+
 }
