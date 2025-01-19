@@ -3,8 +3,10 @@ package com.equipo5.feelflowapp.jobs.module.surveys.impl;
 import com.equipo5.feelflowapp.domain.Team;
 import com.equipo5.feelflowapp.domain.enumerations.modules.ActivityState;
 import com.equipo5.feelflowapp.domain.enumerations.modules.ModuleState;
+import com.equipo5.feelflowapp.domain.enumerations.modules.SurveyStateEnum;
 import com.equipo5.feelflowapp.domain.modules.SurveyModule;
 import com.equipo5.feelflowapp.domain.modules.nikoniko.NikoNikoModule;
+import com.equipo5.feelflowapp.exception.badrequest.survey.SurveyException;
 import com.equipo5.feelflowapp.jobs.module.surveys.ClosingSurveisScheduledTask;
 import com.equipo5.feelflowapp.jobs.module.surveys.SurveyScheduledTask;
 import com.equipo5.feelflowapp.repository.activity.ActivityRepository;
@@ -62,6 +64,7 @@ public class NikoNikoSurveyScheduledTaskImpl implements SurveyScheduledTask{
                                 if (module != null) {
                                     if( isModuleEnabled( module.getDateAndTimeToPublish(), module.getDateAndTimeToClose() ) ){
                                         closeOldActivities(module);
+                                        checkIfNotExistsSurveysEnabled(module);
                                         nikoNikoSurveyService.createSurveis(team.getRegularUsers(), module);
                                         nikoNikoRepository.save( module );
                                         log.info(String.format("Niko surveis created: For User of the team %s", team.getName() ));
@@ -103,13 +106,25 @@ public class NikoNikoSurveyScheduledTaskImpl implements SurveyScheduledTask{
                 });
     }
 
+    private void checkIfNotExistsSurveysEnabled(NikoNikoModule nikoNikoModule){
+        boolean isAnySurveyActive = nikoNikoModule
+                .getSurveys().stream()
+                .anyMatch(survey -> SurveyStateEnum.ACTIVE.toString().equals(survey.getSurveyStateEnum().toString()));
+
+        if (isAnySurveyActive){
+            throw new SurveyException("Existe encuestas activas, no es posible crearlas hasta cerrarlas.");
+        }
+
+    }
+
     private void closeModule(NikoNikoModule nikoNikoModule){
         nikoNikoModule.setModuleState(ModuleState.FINISHED);
         nikoNikoRepository.save(nikoNikoModule);
     }
 
     private boolean isModuleEnabled(LocalDateTime dateAndTimeToPublish,LocalDateTime dateAndTimeToClose) {
-        return dateAndTimeToPublish.isAfter(LocalDateTime.now()) && dateAndTimeToClose.isBefore(LocalDateTime.now());
+        return LocalDateTime.now().isAfter(dateAndTimeToPublish) || LocalDateTime.now().isEqual(dateAndTimeToPublish)
+                && LocalDateTime.now().isBefore(dateAndTimeToClose) || LocalDateTime.now().isEqual(dateAndTimeToClose);
     }
 
     public static boolean isEqualOrMoreThanOneDayAgo(LocalDateTime dateTime) {

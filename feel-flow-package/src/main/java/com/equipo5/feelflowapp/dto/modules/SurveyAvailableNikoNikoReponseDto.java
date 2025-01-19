@@ -9,6 +9,8 @@ import io.swagger.v3.oas.annotations.media.Schema;
 public record SurveyAvailableNikoNikoReponseDto(
         @Schema(description = "Id of the Survey")
         Long idSurvey,
+        @Schema(description = "Number of activity")
+        int numberOfActivity,
         @Schema(description = "Activity available")
         ActivityDto activityAvailable
 ) {

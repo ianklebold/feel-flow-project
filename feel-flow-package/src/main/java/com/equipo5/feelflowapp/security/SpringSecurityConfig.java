@@ -50,6 +50,7 @@ public class SpringSecurityConfig {
     SecurityFilterChain configure(HttpSecurity httpSecurity) throws Exception{
         httpSecurity.authorizeHttpRequests(
                         auth -> auth
+                                .requestMatchers(HttpMethod.POST,"/api/v1/surveys/niko_niko_module/force_surveys").hasAnyAuthority("TEAM_LEADER","ADMIN")
                                 .requestMatchers(HttpMethod.POST,"/api/v1/twelve_steps_modules").hasAnyAuthority("TEAM_LEADER","ADMIN")
                                 .requestMatchers(HttpMethod.POST,"/api/v1/niko_niko").hasAnyAuthority("TEAM_LEADER","ADMIN")
                                 .requestMatchers(HttpMethod.POST,"/api/v1/twelve_steps_modules/{idTeam}").hasAnyAuthority("TEAM_LEADER","ADMIN")
@@ -64,6 +65,8 @@ public class SpringSecurityConfig {
                                 .requestMatchers(HttpMethod.POST,"/api/v1/team").hasAnyAuthority("TEAM_LEADER","ADMIN","USER_REGULAR")
                                 .requestMatchers(HttpMethod.GET,SurveyModuleController.SURVEY_PATH).hasAnyAuthority("USER_REGULAR")
                                 .requestMatchers(HttpMethod.POST,SurveyModuleController.SURVEY_PATH.concat("/twelve_steps_module")).hasAnyAuthority("USER_REGULAR")
+                                .requestMatchers(HttpMethod.POST,SurveyModuleController.SURVEY_PATH.concat("/niko_niko_module")).hasAnyAuthority("USER_REGULAR")
+                                .requestMatchers(HttpMethod.GET,SurveyModuleController.SURVEY_PATH.concat("/niko_niko_module")).hasAnyAuthority("USER_REGULAR")
                                 .requestMatchers(HttpMethod.GET, QuestionsAnswersModuleController.QUESTION_AND_ANSWERS_PATH+QuestionsAnswersModuleController.ANSWERS_MODULE).hasAnyAuthority("USER_REGULAR")
                                 .requestMatchers(HttpMethod.GET,QuestionsAnswersModuleController.QUESTION_AND_ANSWERS_PATH+QuestionsAnswersModuleController.QUESTIONS_MODULE).hasAnyAuthority("USER_REGULAR")
                                 .requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
