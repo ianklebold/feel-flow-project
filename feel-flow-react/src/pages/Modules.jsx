@@ -68,6 +68,7 @@ function Modules() {
                     setIdTeam(uuid);
                     if (authority === "TEAM_LEADER") {
                         setSelectedTeam(uuid);
+                        setSelectedNikoNikoTeam(uuid);
                     } // Guarda el UUID directamente en idTeam
                 }
             })
@@ -136,11 +137,15 @@ function Modules() {
         nikoNikoEndDate,
         nikoNikoStartTime,
         nikoNikoEndTime,
+        nikoNikoTimeToResponseStartDay,
+        nikoNikoTimeToResponseEndDay,
         setSelectedNikoNikoTeam,
         setNikoNikoStartDate,
         setNikoNikoStartTime,
         setNikoNikoEndDate,
         setNikoNikoEndTime,
+        setNikoNikoTimeToResponseStartDay,
+        setNikoNikoTimeToResponseEndDay,
         handleCrearModuloNikoNiko,
     } = useConfigurarNikoNikoModulo(authority, token, idTeam, openAlertPopup);
 
@@ -358,6 +363,7 @@ function Modules() {
                                 value={selectedNikoNikoTeam}
                                 onChange={(e) => setSelectedNikoNikoTeam(e.target.value)}
                                 className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                disabled={sessionStorage.getItem("authority") === "TEAM_LEADER"}
                             >
                                 <option value="">Seleccione un equipo</option>
                                 {teams.map((team) => (
@@ -376,18 +382,18 @@ function Modules() {
                             {/* Fecha y hora de inicio */}
                             <div>
                                 <label htmlFor="fechaInicio" className="block text-gray-700 font-bold mb-2">
-                                    Fecha y Hora de Inicio
+                                    Fecha y Hora de inicio del modulo
                                 </label>
                                 <div className="flex space-x-2">
                                     <input
-                                        id="fechaInicio"
+                                        id="fechaInicioModulo"
                                         type="date"
                                         value={nikoNikoStartDate}
                                         onChange={(e) => setNikoNikoStartDate(e.target.value)}
                                         className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
                                     />
                                     <input
-                                        id="horaInicio"
+                                        id="horaInicioModulo"
                                         type="time"
                                         value={nikoNikoStartTime}
                                         onChange={(e) => setNikoNikoStartTime(e.target.value)}
@@ -405,18 +411,18 @@ function Modules() {
                             {/* Fecha y hora de fin */}
                             <div>
                                 <label htmlFor="fechaFin" className="block text-gray-700 font-bold mb-2">
-                                    Fecha y Hora de Fin
+                                    Fecha y Hora de fin del modulo
                                 </label>
                                 <div className="flex space-x-2">
                                     <input
-                                        id="fechaFin"
+                                        id="fechaFinModulo"
                                         type="date"
                                         value={nikoNikoEndDate}
                                         onChange={(e) => setNikoNikoEndDate(e.target.value)}
                                         className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
                                     />
                                     <input
-                                        id="horaFin"
+                                        id="horaFinModulo"
                                         type="time"
                                         value={nikoNikoEndTime}
                                         onChange={(e) => setNikoNikoEndTime(e.target.value)}
@@ -429,6 +435,44 @@ function Modules() {
                                 {nikoNikoErrors.nikoNikoEndTime && (
                                     <p className="text-red-500 text-sm mt-1">{nikoNikoErrors.nikoNikoEndTime}</p>
                                 )}
+                            </div>
+                            {/* Hora incio del dia para respuesta de estado de emocion */}
+                            <div>
+                                <label htmlFor="horaInicioyFinEmocion" className="block text-gray-700 font-bold mb-2">
+                                    Hora de inicio y fin del día para respuesta 
+                                </label>
+                                <div className="flex space-x-4">
+                                    <div className="flex flex-col w-full">
+                                        <label htmlFor="horaInicioDelDia" className="text-gray-700 font-medium mb-1">
+                                            Hora de inicio
+                                        </label>
+                                        <input
+                                            id="horaInicioDelDia"
+                                            type="time"
+                                            value={nikoNikoTimeToResponseStartDay}
+                                            onChange={(e) => setNikoNikoTimeToResponseStartDay(e.target.value)}
+                                            className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                        />
+                                        {nikoNikoErrors.nikoNikoTimeToResponseStartDay && (
+                                            <p className="text-red-500 text-sm mt-1">{nikoNikoErrors.nikoNikoTimeToResponseStartDay}</p>
+                                        )}
+                                    </div>
+                                    <div className="flex flex-col w-full">
+                                        <label htmlFor="horaFinDelDia" className="text-gray-700 font-medium mb-1">
+                                            Hora de fin
+                                        </label>
+                                        <input
+                                            id="horaFinDelDia"
+                                            type="time"
+                                            value={nikoNikoTimeToResponseEndDay}
+                                            onChange={(e) => setNikoNikoTimeToResponseEndDay(e.target.value)}
+                                            className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                        />
+                                        {nikoNikoErrors.nikoNikoTimeToResponseEndDay && (
+                                            <p className="text-red-500 text-sm mt-1">{nikoNikoErrors.nikoNikoTimeToResponseEndDay}</p>
+                                        )}
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
