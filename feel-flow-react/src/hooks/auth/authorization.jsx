@@ -5,8 +5,8 @@ const permissions = {
         Configuracion: ["ADMIN"],
         Usuarios: ["ADMIN"],
         Modulos: ["ADMIN", "TEAM_LEADER"],
-        Equipo: ["TEAM_LEADER"],
-        Equipos: ["ADMIN"],
+        // Equipo: ["TEAM_LEADER"],
+        Equipos: ["ADMIN","TEAM_LEADER"],
         Perfil: ["ADMIN", "TEAM_LEADER"]
     }
 };
