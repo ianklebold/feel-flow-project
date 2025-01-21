@@ -4,9 +4,11 @@ import com.equipo5.feelflowapp.constants.response.HttpResponses;
 import com.equipo5.feelflowapp.domain.enumerations.modules.SurveyStateEnum;
 import com.equipo5.feelflowapp.dto.modules.SurveyAvailableNikoNikoReponseDto;
 import com.equipo5.feelflowapp.dto.modules.SurveyDto;
+import com.equipo5.feelflowapp.dto.modules.SurveyNikoNikoResponseDto;
 import com.equipo5.feelflowapp.dto.modules.SurveyTwelveStepsResponseDto;
 import com.equipo5.feelflowapp.dto.response.ErrorResponseDto;
 import com.equipo5.feelflowapp.dto.response.ResponseDto;
+import com.equipo5.feelflowapp.jobs.module.surveys.SurveyScheduledTask;
 import com.equipo5.feelflowapp.service.survey.SurveyService;
 import com.equipo5.feelflowapp.service.survey.nikoniko.NikoNikoSurveyService;
 import com.equipo5.feelflowapp.service.survey.twelvesteps.TwelveStepsSurveyService;
@@ -48,11 +50,14 @@ public class SurveyModuleController {
 
     private final NikoNikoSurveyService nikoNikoSurveyService;
 
+    private final SurveyScheduledTask surveyScheduledTask;
+
     @Autowired
-    public SurveyModuleController(@Qualifier("SurveyService") SurveyService surveyService, @Qualifier("TwelveStepsSurveyService") TwelveStepsSurveyService twelveStepsSurveyService, @Qualifier("NikoNikoSurveyServiceImpl") NikoNikoSurveyService nikoNikoSurveyService) {
+    public SurveyModuleController(@Qualifier("SurveyService") SurveyService surveyService, @Qualifier("TwelveStepsSurveyService") TwelveStepsSurveyService twelveStepsSurveyService, @Qualifier("NikoNikoSurveyServiceImpl") NikoNikoSurveyService nikoNikoSurveyService, SurveyScheduledTask surveyScheduledTask) {
         this.surveyService = surveyService;
         this.twelveStepsSurveyService = twelveStepsSurveyService;
         this.nikoNikoSurveyService = nikoNikoSurveyService;
+        this.surveyScheduledTask = surveyScheduledTask;
     }
 
     @Operation(
@@ -137,9 +142,9 @@ public class SurveyModuleController {
     })
     @PostMapping("/niko_niko_module")
     @SecurityRequirement(name = "Bearer Authentication")
-    public ResponseEntity<ResponseDto> completeNikoNikoSurvey(@Valid @RequestBody SurveyTwelveStepsResponseDto surveyResponse){
+    public ResponseEntity<ResponseDto> completeNikoNikoSurvey(@Valid @RequestBody SurveyAvailableNikoNikoReponseDto surveyResponse){
 
-
+        nikoNikoSurveyService.completeSurvey( surveyResponse );
 
         return ResponseEntity
                 .status(HttpStatus.OK)
@@ -161,6 +166,26 @@ public class SurveyModuleController {
     public SurveyAvailableNikoNikoReponseDto getNikoNikoAvailableSurvey(){
 
         return this.nikoNikoSurveyService.getSurveyAvailable();
+    }
+
+    @Operation(
+            summary = "Force creation and close of Niko Niko Surveys ",
+            description = "REST API for Force creation and close of Niko Niko Surveys "
+    )
+    @ApiResponses({
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "HTTP Request Success"
+            )
+    })
+    @PostMapping("/niko_niko_module/force_surveys")
+    public ResponseEntity<ResponseDto> forceNikoNikoSurvey(){
+
+        this.surveyScheduledTask.sendSurveys();
+
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(new ResponseDto(HttpResponses.STATUS_200,HttpResponses.MESSAGE_200));
     }
 
 

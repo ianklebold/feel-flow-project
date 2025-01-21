@@ -1,7 +1,7 @@
 // Dependencies
 import React from "react";
 import { Link } from "react-router-dom";
-import { FaHome, FaChartPie, FaUserCircle, FaUsers, FaPuzzlePiece, FaIdCard, FaCog } from "react-icons/fa";
+import { FaHome, FaChartPie, FaUserCircle, FaUsers, FaPuzzlePiece, FaIdCard, FaCog, FaTrophy } from "react-icons/fa";
 import { canAccess } from "../hooks/auth/authorization";
 import { getUserData } from "../services/session";
 // Resources
@@ -13,6 +13,7 @@ function Sidebar() {
 
     const iconMapping = {
         "fa-home": <FaHome />, // Home
+        "fa-trophy": <FaTrophy />,
         "fa-pie-chart": <FaChartPie />, // Dashboard
         "fa-user-circle": <FaUserCircle />, // Lideres, Usuarios
         "fa-users": <FaUsers />, // Equipos

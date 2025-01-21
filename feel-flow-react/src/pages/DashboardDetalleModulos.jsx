@@ -7,7 +7,7 @@ import HappinessChart from "../components/HappinessChart";
 import DashboardHeader from "../components/DashboardHeader";
 import PodiumChart from "../components/PodiumChart";
 
-function Dashboard() {
+function Resultados() {
   const [teams, setTeams] = useState([]);
   const [selectedTeam, setSelectedTeam] = useState("");
   const [selectedMonth, setSelectedMonth] = useState("");
@@ -168,4 +168,4 @@ function Dashboard() {
   );
 }
 
-export default Dashboard;
+export default Resultados;

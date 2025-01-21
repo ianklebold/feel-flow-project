@@ -10,6 +10,8 @@ import com.equipo5.feelflowapp.domain.modules.nikoniko.NikoNikoModule;
 import com.equipo5.feelflowapp.domain.users.RegularUser;
 import com.equipo5.feelflowapp.dto.modules.ActivityDto;
 import com.equipo5.feelflowapp.dto.modules.SurveyAvailableNikoNikoReponseDto;
+import com.equipo5.feelflowapp.dto.modules.SurveyNikoNikoResponseDto;
+import com.equipo5.feelflowapp.dto.response.ResponseDto;
 import com.equipo5.feelflowapp.mappers.modules.ActivityMapper;
 import com.equipo5.feelflowapp.mappers.modules.SurveyMapper;
 import com.equipo5.feelflowapp.repository.module.ModuleRepository;
@@ -25,6 +27,8 @@ import com.equipo5.feelflowapp.service.users.UserService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
@@ -64,14 +68,17 @@ public class NikoNikoSurveyServiceImpl extends SurveyServiceImpl implements Niko
                 long idSurvey = nikoNikoSurvey.get().getId();
 
                 ActivityDto activityDto;
-                if(isTimeOfActivityOne(nikoNikoModule.getTimeToToResponseStartDay(), nikoNikoModule.getTimeToToResponseEndDay()) ){
+                int numberOfActivity;
+                if( isTimeOfActivityOne( nikoNikoModule.getTimeToToResponseStartDay(), nikoNikoModule.getTimeToToResponseEndDay() ) ){
                     activityDto = super.activityMapper.activityToActivityDto(activity1);
+                    numberOfActivity = 1;
                 }else if ( isTimeOfActivityTwo( nikoNikoModule.getTimeToToResponseEndDay() ) ){
                     activityDto = super.activityMapper.activityToActivityDto(activity2);
+                    numberOfActivity = 2;
                 }else{
                     return null;
                 }
-                return new SurveyAvailableNikoNikoReponseDto(idSurvey, activityDto);
+                return new SurveyAvailableNikoNikoReponseDto(idSurvey,numberOfActivity,activityDto);
             }
 
         }
@@ -79,12 +86,40 @@ public class NikoNikoSurveyServiceImpl extends SurveyServiceImpl implements Niko
         return null;
     }
 
+    @Override
+    public void completeSurvey(SurveyAvailableNikoNikoReponseDto surveyResponse) {
+
+        //Buscar el survey, si existe y esta activa entonces completar la actividad.
+        Optional<Survey> survey = super.surveyRepository.findById(surveyResponse.idSurvey());
+
+        if(survey.isPresent() && SurveyStateEnum.ACTIVE.equals( survey.get().getSurveyStateEnum() ) ) {
+            Optional<Activity> activity = survey.get().getActivities()
+                    .stream()
+                    .filter(activityAvailable ->  activityAvailable.getQuestion().equals( surveyResponse.activityAvailable().question() ))
+                    .findFirst();
+
+            if(activity.isPresent()){
+
+                activity.get().setAnswer(surveyResponse.activityAvailable().answer());
+                super.surveyRepository.save( survey.get() );
+
+            }
+
+        }
+    }
+
     private boolean isTimeOfActivityOne(LocalTime timeToResponseStartDay, LocalTime timeToResponseEndDay){
-        return timeToResponseStartDay.isBefore( LocalTime.now() ) && timeToResponseEndDay.isAfter( LocalTime.now() );
+        return LocalTime.now().isAfter(timeToResponseStartDay) && LocalTime.now().isBefore(timeToResponseEndDay);
     }
 
     private boolean isTimeOfActivityTwo(LocalTime timeToResponseEndDay){
-        return timeToResponseEndDay.isBefore( LocalTime.now() );
+        return LocalTime.now().isAfter( timeToResponseEndDay ) &&
+                LocalDateTime.of(LocalDate.now(),
+                                LocalTime.of(timeToResponseEndDay.getHour(),timeToResponseEndDay.getMinute(),timeToResponseEndDay.getSecond())
+                        ).isBefore(
+                                LocalDateTime.of(LocalDate.now().plusDays(1),
+                                        LocalTime.of(0,0,0))
+                                );
     }
 
     private Optional<Survey> getSurveyNikoNikoAvailableByRegularUser(RegularUser regularUser){

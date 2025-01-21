@@ -4,6 +4,11 @@
         "logo": "fa-pie-chart",
         "link": "/dashboard"
     },
+    "Resultados": {
+        "name": "Resultados",
+        "logo": "fa-trophy",
+        "link": "/resultados"
+    },
     "Equipos": {
         "name": "Equipos",
         "logo": "fa-users",

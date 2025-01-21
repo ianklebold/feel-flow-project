@@ -20,11 +20,25 @@ public class NikoNikoModule extends SurveyModule {
 
     private LocalTime timeToToResponseEndDay;
 
+
+    @Builder
+    public NikoNikoModule(List<Survey> surveys, LocalTime timeToToResponseStartDay, LocalTime timeToToResponseEndDay) {
+        super(surveys);
+        this.timeToToResponseStartDay = timeToToResponseStartDay;
+        this.timeToToResponseEndDay = timeToToResponseEndDay;
+    }
+
     @Builder
     public NikoNikoModule(List<Survey> surveys) {
         super(surveys);
     }
 
+    @Builder
+    public NikoNikoModule(LocalTime timeToToResponseStartDay, LocalTime timeToToResponseEndDay) {
+        super();
+    }
+
+    @Builder
     public NikoNikoModule() {
         super();
     }

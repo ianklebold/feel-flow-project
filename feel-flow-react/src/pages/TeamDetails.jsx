@@ -8,8 +8,10 @@ import Popup from "../components/Popup";
 import Form from "../components/Form";
 import { getAuthData } from "../services/session";
 import { UpdateEquipo } from "../services/UpdateEquipo";
+import { GetIdEquipo } from "../services/GetEquipos.js";
 
 const TeamDetails = () => {
+  const { token } = getAuthData();
   const { teamId } = useParams();
   const navigate = useNavigate();
   const [teamDetails, setTeamDetails] = useState(null);
@@ -20,43 +22,55 @@ const TeamDetails = () => {
   });
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+  const uuid = sessionStorage.getItem("teamID");
 
-  const uuid = sessionStorage.getItem("teamID") || teamId;
-
-  useEffect(() => {
-    if (!uuid) {
-      console.error("UUID del equipo no proporcionado. Redirigiendo a equipos.");
-      setError("No se pudo identificar el equipo.");
-      navigate("/teams");
-      return;
-    }
-
-    sessionStorage.setItem("teamID", uuid);
-
-    const fetchTeamDetails = async () => {
-      const { token } = getAuthData();
-
-      if (!token) {
-        setError("No se encontró el token. Redirigiendo al login.");
-        setTimeout(() => navigate("/login"), 2000);
-        return;
-      }
-
+  const getDataTeam = async (token, uuid, navigate, setTeamDetails, setFormData, setError, setIsLoading) => {
+    const getuuidTeam = async () => {
       try {
-        const data = await GetEquipobyID(token, uuid);
-        setTeamDetails(data);
-        setFormData({
-          nameTeam: data.nameTeam,
-          descriptionTeam: data.descriptionTeam,
-        });
-      } catch {
-        setError("No se pudieron cargar los detalles del equipo.");
-      } finally {
-        setIsLoading(false);
+        const uuid = await GetIdEquipo(token);
+        if (uuid) {
+          sessionStorage.setItem("teamID", uuid);
+          return uuid;
+        } else {
+          console.error("UUID del equipo no proporcionado. Redirigiendo a equipos.");
+          setError("No se pudo identificar el equipo.");
+          navigate("/dashboard");
+          return null;
+        }
+      } catch (error) {
+        console.error("Error al obtener los equipos:", error);
+        return null;
       }
     };
 
-    fetchTeamDetails();
+    if (!token) {
+      setError("No se encontró el token. Redirigiendo al login.");
+      setTimeout(() => navigate("/login"), 2000);
+      return;
+    }
+
+    setIsLoading(true);
+
+    try {
+      const uuidToUse = uuid || await getuuidTeam();
+      if (!uuidToUse) return;
+
+      const data = await GetEquipobyID(token, uuidToUse);
+      setTeamDetails(data);
+      setFormData({
+        nameTeam: data.nameTeam,
+        descriptionTeam: data.descriptionTeam,
+      });
+    } catch (error) {
+      console.error("Error al cargar los detalles del equipo:", error);
+      setError("No se pudieron cargar los detalles del equipo.");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    getDataTeam(token, uuid, navigate, setTeamDetails, setFormData, setError, setIsLoading);
   }, [uuid, navigate]);
 
   const handleUpdateTeam = async (event) => {
