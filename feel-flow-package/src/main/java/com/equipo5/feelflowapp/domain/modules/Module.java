@@ -5,6 +5,7 @@ import com.equipo5.feelflowapp.domain.enumerations.modules.ModuleState;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
@@ -26,9 +27,11 @@ public class Module {
 
     private LocalDate moduleClosedDate;
 
-    private LocalDateTime dateAndTimeToPublish;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Timestamp dateAndTimeToPublish;
 
-    private LocalDateTime dateAndTimeToClose;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Timestamp dateAndTimeToClose;
 
     @Enumerated(EnumType.STRING)
     private ModuleState moduleState;

@@ -69,10 +69,10 @@ public class NikoNikoSurveyServiceImpl extends SurveyServiceImpl implements Niko
 
                 ActivityDto activityDto;
                 int numberOfActivity;
-                if( isTimeOfActivityOne( nikoNikoModule.getTimeToToResponseStartDay(), nikoNikoModule.getTimeToToResponseEndDay() ) ){
+                if( isTimeOfActivityOne( nikoNikoModule.getTimeToToResponseStartDay().toLocalTime(), nikoNikoModule.getTimeToToResponseEndDay().toLocalTime() ) ){
                     activityDto = super.activityMapper.activityToActivityDto(activity1);
                     numberOfActivity = 1;
-                }else if ( isTimeOfActivityTwo( nikoNikoModule.getTimeToToResponseEndDay() ) ){
+                }else if ( isTimeOfActivityTwo( nikoNikoModule.getTimeToToResponseEndDay().toLocalTime() ) ){
                     activityDto = super.activityMapper.activityToActivityDto(activity2);
                     numberOfActivity = 2;
                 }else{

@@ -8,6 +8,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.sql.Time;
 import java.time.LocalTime;
 import java.util.List;
 @Entity
@@ -16,13 +17,13 @@ import java.util.List;
 @PrimaryKeyJoinColumn(name = "niko_niko_module")
 public class NikoNikoModule extends SurveyModule {
 
-    private LocalTime timeToToResponseStartDay;
+    private Time timeToToResponseStartDay;
 
-    private LocalTime timeToToResponseEndDay;
+    private Time timeToToResponseEndDay;
 
 
     @Builder
-    public NikoNikoModule(List<Survey> surveys, LocalTime timeToToResponseStartDay, LocalTime timeToToResponseEndDay) {
+    public NikoNikoModule(List<Survey> surveys, Time timeToToResponseStartDay, Time timeToToResponseEndDay) {
         super(surveys);
         this.timeToToResponseStartDay = timeToToResponseStartDay;
         this.timeToToResponseEndDay = timeToToResponseEndDay;

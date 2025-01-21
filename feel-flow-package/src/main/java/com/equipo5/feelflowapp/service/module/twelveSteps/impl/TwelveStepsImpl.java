@@ -18,6 +18,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.Optional;
 
 import static com.equipo5.feelflowapp.domain.enumerations.modules.ModuleNames.TWELVE_STEPS;
@@ -56,8 +58,8 @@ public class TwelveStepsImpl implements TwelveStepsService {
                 throw new ModuleAlreadyActiveException("Actualmente se tiene un modulo de 12 pasos de la felicidad activo");
             }
 
-            if( creationTwelveStepsModuleDto.dateAndTimeToClose().isBefore( creationTwelveStepsModuleDto.dateAndTimeToPublish() )
-                || creationTwelveStepsModuleDto.dateAndTimeToClose().isEqual( creationTwelveStepsModuleDto.dateAndTimeToPublish() )
+            if( creationTwelveStepsModuleDto.dateAndTimeToClose().toLocalDateTime().isBefore( creationTwelveStepsModuleDto.dateAndTimeToClose().toLocalDateTime() )
+                || creationTwelveStepsModuleDto.dateAndTimeToClose().toLocalDateTime().isEqual( creationTwelveStepsModuleDto.dateAndTimeToPublish().toLocalDateTime() )
             ){
                 throw new ModuleException("La fecha de cierre es igual o antes que la fecha de creacion");
             }
@@ -67,7 +69,8 @@ public class TwelveStepsImpl implements TwelveStepsService {
             twelveStepsModule.setModuleState(ModuleState.ACTIVE);
             twelveStepsModule.setName(TWELVE_STEPS.toString());
             twelveStepsModule.setTeam(currentTeam);
-            twelveStepsModule.setDateAndTimeToClose(creationTwelveStepsModuleDto.dateAndTimeToClose());
+            twelveStepsModule.setDateAndTimeToClose( creationTwelveStepsModuleDto.dateAndTimeToClose() );
+            twelveStepsModule.setDateAndTimeToPublish( creationTwelveStepsModuleDto.dateAndTimeToPublish() );
             twelveStepsModule.setDateAndTimeToPublish( creationTwelveStepsModuleDto.dateAndTimeToPublish() );
 
             //Crear las N encuestas para cada integrante del equipo

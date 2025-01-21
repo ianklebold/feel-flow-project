@@ -14,10 +14,12 @@ import com.equipo5.feelflowapp.repository.module.ModuleNikoNikoRepository;
 import com.equipo5.feelflowapp.repository.survey.SurveyRepository;
 import com.equipo5.feelflowapp.repository.team.TeamRepository;
 import com.equipo5.feelflowapp.service.survey.nikoniko.NikoNikoSurveyService;
+import com.equipo5.feelflowapp.service.utils.dateservice.DateUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
@@ -68,7 +70,7 @@ public class NikoNikoSurveyScheduledTaskImpl implements SurveyScheduledTask{
                                         nikoNikoSurveyService.createSurveis(team.getRegularUsers(), module);
                                         nikoNikoRepository.save( module );
                                         log.info(String.format("Niko surveis created: For User of the team %s", team.getName() ));
-                                    }else if (module.getDateAndTimeToClose().isBefore(LocalDateTime.now())){
+                                    }else if ( DateUtils.isBeforeToOtherDate( module.getDateAndTimeToClose(), null  )){
                                         log.error(" Module is not enabled - Closing Module ");
                                         this.closeModule( module );
                                     }
@@ -95,7 +97,7 @@ public class NikoNikoSurveyScheduledTaskImpl implements SurveyScheduledTask{
                                         if (
                                                 !ActivityState.FINISHED.toString().equals(activity.getActivityState().toString())
                                                 && activity.getAnswer() == null
-                                                && isEqualOrMoreThanOneDayAgo(nikoNikoModule.getDateAndTimeToPublish())
+                                                && DateUtils.isEqualOrMoreThanOneDayAgo(nikoNikoModule.getDateAndTimeToPublish())
                                         ){
                                             activity.setActivityState(ActivityState.FINISHED);
                                             activityRepository.save(activity);
@@ -122,15 +124,9 @@ public class NikoNikoSurveyScheduledTaskImpl implements SurveyScheduledTask{
         nikoNikoRepository.save(nikoNikoModule);
     }
 
-    private boolean isModuleEnabled(LocalDateTime dateAndTimeToPublish,LocalDateTime dateAndTimeToClose) {
-        return LocalDateTime.now().isAfter(dateAndTimeToPublish) || LocalDateTime.now().isEqual(dateAndTimeToPublish)
-                && LocalDateTime.now().isBefore(dateAndTimeToClose) || LocalDateTime.now().isEqual(dateAndTimeToClose);
-    }
-
-    public static boolean isEqualOrMoreThanOneDayAgo(LocalDateTime dateTime) {
-        LocalDateTime now = LocalDateTime.now();
-        long daysBetween = ChronoUnit.DAYS.between(dateTime, now);
-        return daysBetween >= 1;
+    private boolean isModuleEnabled(Timestamp dateAndTimeToPublish, Timestamp dateAndTimeToClose) {
+        return DateUtils.isAfterToToday(dateAndTimeToPublish) || DateUtils.isEqualToToday(dateAndTimeToPublish)
+                && DateUtils.isBeforeToToday(dateAndTimeToClose) || DateUtils.isEqualToToday(dateAndTimeToPublish);
     }
 
 }

@@ -55,7 +55,7 @@ public class NikoNikoServiceImpl implements NikoNikoService {
             }
 
             //Controlar que el tiempo timeToToResponseEndDay no sea antes que timeToToResponseStartDay
-            if(creationNikoNikoModule.timeToToResponseEndDay().isBefore(creationNikoNikoModule.timeToToResponseStartDay())){
+            if(creationNikoNikoModule.timeToToResponseEndDay().toLocalTime().isBefore(creationNikoNikoModule.timeToToResponseStartDay().toLocalTime())){
                 throw new ModuleException("El tiempo de la habilitacion para la actividad al finalizar la jornada es antes que el del comienzo de jornada");
             }
 
