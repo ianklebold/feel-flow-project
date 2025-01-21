@@ -1,12 +1,16 @@
 package com.equipo5.feelflowapp.service.module.twelveSteps.impl;
 
 import com.equipo5.feelflowapp.domain.Team;
+import com.equipo5.feelflowapp.domain.enumerations.modules.ModuleNames;
 import com.equipo5.feelflowapp.domain.enumerations.modules.ModuleState;
+import com.equipo5.feelflowapp.domain.enumerations.modules.SurveyStateEnum;
+import com.equipo5.feelflowapp.domain.modules.SurveyModule;
 import com.equipo5.feelflowapp.domain.modules.twelvesteps.TwelveStepsModule;
 import com.equipo5.feelflowapp.dto.modules.CreationTwelveStepsModuleDto;
 import com.equipo5.feelflowapp.exception.badrequest.module.ModuleAlreadyActiveException;
 import com.equipo5.feelflowapp.exception.badrequest.module.ModuleException;
 import com.equipo5.feelflowapp.exception.notfound.NotFoundTeamException;
+import com.equipo5.feelflowapp.repository.module.ModuleRepository;
 import com.equipo5.feelflowapp.repository.module.ModuleTwelveStepsRepository;
 import com.equipo5.feelflowapp.repository.team.TeamRepository;
 import com.equipo5.feelflowapp.service.module.ModuleService;
@@ -21,6 +25,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.Optional;
+import java.util.UUID;
 
 import static com.equipo5.feelflowapp.domain.enumerations.modules.ModuleNames.TWELVE_STEPS;
 
@@ -39,7 +44,8 @@ public class TwelveStepsImpl implements TwelveStepsService {
     @Autowired
     @Qualifier("TwelveStepsSurveyService")
     private  SurveyService surveyService;
-
+    @Autowired
+    private ModuleRepository moduleRepository;
 
 
     @Override
@@ -83,4 +89,6 @@ public class TwelveStepsImpl implements TwelveStepsService {
         }
 
     }
+
+
 }

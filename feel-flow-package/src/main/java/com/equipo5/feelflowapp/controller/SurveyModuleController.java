@@ -1,6 +1,7 @@
 package com.equipo5.feelflowapp.controller;
 
 import com.equipo5.feelflowapp.constants.response.HttpResponses;
+import com.equipo5.feelflowapp.domain.enumerations.modules.ModuleNames;
 import com.equipo5.feelflowapp.domain.enumerations.modules.SurveyStateEnum;
 import com.equipo5.feelflowapp.dto.modules.SurveyAvailableNikoNikoReponseDto;
 import com.equipo5.feelflowapp.dto.modules.SurveyDto;
@@ -9,6 +10,8 @@ import com.equipo5.feelflowapp.dto.modules.SurveyTwelveStepsResponseDto;
 import com.equipo5.feelflowapp.dto.response.ErrorResponseDto;
 import com.equipo5.feelflowapp.dto.response.ResponseDto;
 import com.equipo5.feelflowapp.jobs.module.surveys.SurveyScheduledTask;
+import com.equipo5.feelflowapp.service.module.ModuleService;
+import com.equipo5.feelflowapp.service.module.twelveSteps.TwelveStepsService;
 import com.equipo5.feelflowapp.service.survey.SurveyService;
 import com.equipo5.feelflowapp.service.survey.nikoniko.NikoNikoSurveyService;
 import com.equipo5.feelflowapp.service.survey.twelvesteps.TwelveStepsSurveyService;
@@ -52,12 +55,15 @@ public class SurveyModuleController {
 
     private final SurveyScheduledTask surveyScheduledTask;
 
+    private final ModuleService moduleService;
+
     @Autowired
-    public SurveyModuleController(@Qualifier("SurveyService") SurveyService surveyService, @Qualifier("TwelveStepsSurveyService") TwelveStepsSurveyService twelveStepsSurveyService, @Qualifier("NikoNikoSurveyServiceImpl") NikoNikoSurveyService nikoNikoSurveyService, SurveyScheduledTask surveyScheduledTask) {
+    public SurveyModuleController(@Qualifier("SurveyService") SurveyService surveyService, @Qualifier("TwelveStepsSurveyService") TwelveStepsSurveyService twelveStepsSurveyService, @Qualifier("NikoNikoSurveyServiceImpl") NikoNikoSurveyService nikoNikoSurveyService, SurveyScheduledTask surveyScheduledTask, ModuleService moduleService) {
         this.surveyService = surveyService;
         this.twelveStepsSurveyService = twelveStepsSurveyService;
         this.nikoNikoSurveyService = nikoNikoSurveyService;
         this.surveyScheduledTask = surveyScheduledTask;
+        this.moduleService = moduleService;
     }
 
     @Operation(
@@ -117,6 +123,7 @@ public class SurveyModuleController {
     @SecurityRequirement(name = "Bearer Authentication")
     public ResponseEntity<ResponseDto> completeTwelveStepsSurvey(@Valid @RequestBody SurveyTwelveStepsResponseDto surveyResponse) throws JsonProcessingException {
             twelveStepsSurveyService.completeSurvey(surveyResponse);
+            moduleService.closeModule(ModuleNames.TWELVE_STEPS);
 
         return ResponseEntity
                 .status(HttpStatus.OK)
@@ -145,7 +152,7 @@ public class SurveyModuleController {
     public ResponseEntity<ResponseDto> completeNikoNikoSurvey(@Valid @RequestBody SurveyAvailableNikoNikoReponseDto surveyResponse){
 
         nikoNikoSurveyService.completeSurvey( surveyResponse );
-
+        moduleService.closeModule(ModuleNames.NIKO_NIKO);
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(new ResponseDto(HttpResponses.STATUS_200,HttpResponses.MESSAGE_200));
