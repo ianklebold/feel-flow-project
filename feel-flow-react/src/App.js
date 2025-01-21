@@ -29,6 +29,7 @@ import TeamDetails from "./pages/TeamDetails"; // Asegúrate de que esta página
 import UserManagement from "./pages/UserManagement";
 import Users from "./pages/Users";
 import Sign_up from "./pages/Auth/Sign_up";
+import Resultados from "./pages/DashboardDetalleModulos"; // Nueva página
 
 // Styles
 import './App.css';
@@ -65,6 +66,10 @@ function App() {
 
               {canAccess("Dashboard", authority) && (
                 <Route path="/dashboard" element={<Dashboard />} />
+              )}
+
+              {canAccess("Resultados", authority) && ( // Nueva ruta protegida
+                <Route path="/resultados" element={<Resultados />} />
               )}
 
               {/* Ruta accesible solo para ADMIN */}
