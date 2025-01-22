@@ -11,8 +11,8 @@ import java.time.LocalDate;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 @Entity(name = "activity")
+@Builder
 @Inheritance(strategy = InheritanceType.JOINED)
 public class Activity {
     @Id
