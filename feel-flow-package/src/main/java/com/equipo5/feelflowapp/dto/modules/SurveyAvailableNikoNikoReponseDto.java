@@ -12,6 +12,6 @@ public record SurveyAvailableNikoNikoReponseDto(
         @Schema(description = "Number of activity")
         int numberOfActivity,
         @Schema(description = "Activity available")
-        ActivityDto activityAvailable
+        ActivityNikoNikoDto activityAvailable
 ) {
 }

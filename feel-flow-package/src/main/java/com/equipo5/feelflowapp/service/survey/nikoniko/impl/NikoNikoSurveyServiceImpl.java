@@ -1,14 +1,17 @@
 package com.equipo5.feelflowapp.service.survey.nikoniko.impl;
 
 
+import com.equipo5.feelflowapp.domain.enumerations.modules.ActivityState;
 import com.equipo5.feelflowapp.domain.enumerations.modules.ModuleNames;
 import com.equipo5.feelflowapp.domain.enumerations.modules.SurveyStateEnum;
 import com.equipo5.feelflowapp.domain.modules.Activity;
+import com.equipo5.feelflowapp.domain.modules.ActivityNikoNiko;
 import com.equipo5.feelflowapp.domain.modules.Survey;
 import com.equipo5.feelflowapp.domain.modules.SurveyModule;
 import com.equipo5.feelflowapp.domain.modules.nikoniko.NikoNikoModule;
 import com.equipo5.feelflowapp.domain.users.RegularUser;
 import com.equipo5.feelflowapp.dto.modules.ActivityDto;
+import com.equipo5.feelflowapp.dto.modules.ActivityNikoNikoDto;
 import com.equipo5.feelflowapp.dto.modules.SurveyAvailableNikoNikoReponseDto;
 import com.equipo5.feelflowapp.dto.modules.SurveyNikoNikoResponseDto;
 import com.equipo5.feelflowapp.dto.response.ResponseDto;
@@ -61,19 +64,19 @@ public class NikoNikoSurveyServiceImpl extends SurveyServiceImpl implements Niko
             Optional<Survey> nikoNikoSurvey = getSurveyNikoNikoAvailableByRegularUser(regularUser.get());
 
             if(nikoNikoSurvey.isPresent() && nikoNikoSurvey.get().getActivities().size()  == 2){
-                Activity activity1 = nikoNikoSurvey.get().getActivities().get(0);
-                Activity activity2 = nikoNikoSurvey.get().getActivities().get(1);
+                ActivityNikoNiko activity1 = (ActivityNikoNiko) nikoNikoSurvey.get().getActivities().get(0);
+                ActivityNikoNiko activity2 = (ActivityNikoNiko) nikoNikoSurvey.get().getActivities().get(1);
 
                 NikoNikoModule nikoNikoModule = (NikoNikoModule) nikoNikoSurvey.get().getSurveyModule();
                 long idSurvey = nikoNikoSurvey.get().getId();
 
-                ActivityDto activityDto;
+                ActivityNikoNikoDto activityDto;
                 int numberOfActivity;
                 if( isTimeOfActivityOne( nikoNikoModule.getTimeToToResponseStartDay().toLocalTime(), nikoNikoModule.getTimeToToResponseEndDay().toLocalTime() ) ){
-                    activityDto = super.activityMapper.activityToActivityDto(activity1);
+                    activityDto = super.activityMapper.activityToActivityNikoDto(activity1);
                     numberOfActivity = 1;
                 }else if ( isTimeOfActivityTwo( nikoNikoModule.getTimeToToResponseEndDay().toLocalTime() ) ){
-                    activityDto = super.activityMapper.activityToActivityDto(activity2);
+                    activityDto = super.activityMapper.activityToActivityNikoDto(activity2);
                     numberOfActivity = 2;
                 }else{
                     return null;
@@ -93,14 +96,17 @@ public class NikoNikoSurveyServiceImpl extends SurveyServiceImpl implements Niko
         Optional<Survey> survey = super.surveyRepository.findById(surveyResponse.idSurvey());
 
         if(survey.isPresent() && SurveyStateEnum.ACTIVE.equals( survey.get().getSurveyStateEnum() ) ) {
-            Optional<Activity> activity = survey.get().getActivities()
+            Optional<ActivityNikoNiko> activity = survey.get().getActivities()
                     .stream()
                     .filter(activityAvailable ->  activityAvailable.getQuestion().equals( surveyResponse.activityAvailable().question() ))
+                    .map(activityFounded -> (ActivityNikoNiko) activityFounded)
                     .findFirst();
 
             if(activity.isPresent()){
 
                 activity.get().setAnswer(surveyResponse.activityAvailable().answer());
+                activity.get().setDescriptionFeeling( surveyResponse.activityAvailable().descriptionFeeling() );
+                activity.get().setActivityState( ActivityState.FINISHED );
                 super.surveyRepository.save( survey.get() );
 
             }

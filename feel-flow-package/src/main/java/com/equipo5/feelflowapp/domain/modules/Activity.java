@@ -13,6 +13,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @Builder
 @Entity(name = "activity")
+@Inheritance(strategy = InheritanceType.JOINED)
 public class Activity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -4,6 +4,7 @@ import com.equipo5.feelflowapp.constants.module.nikoniko.QuestionsConstantsNikoN
 import com.equipo5.feelflowapp.constants.module.twelvesteps.QuestionsConstantsTwelveSteps;
 import com.equipo5.feelflowapp.domain.enumerations.modules.ActivityState;
 import com.equipo5.feelflowapp.domain.modules.Activity;
+import com.equipo5.feelflowapp.domain.modules.ActivityNikoNiko;
 import com.equipo5.feelflowapp.domain.modules.Survey;
 import com.equipo5.feelflowapp.mappers.modules.ActivityMapper;
 import com.equipo5.feelflowapp.repository.activity.ActivityRepository;
@@ -28,20 +29,22 @@ public class ActivityServiceImpl implements ActivityService {
 
         var activities = new ArrayList<Activity>();
         activities.add(
-                Activity
+                ActivityNikoNiko
                         .builder()
                         .question(QuestionsConstantsNikoNiko.ANSWERS_1_POOL_NIKO_NIKO)
                         .activityState(ActivityState.ACTIVE)
                         .answer(null)
+                        .descriptionFeeling(null)
                         .build()
         );
 
         activities.add(
-                Activity
+                ActivityNikoNiko
                         .builder()
                         .question(QuestionsConstantsNikoNiko.ANSWERS_2_POOL_NIKO_NIKO)
                         .activityState(ActivityState.ACTIVE)
                         .answer(null)
+                        .descriptionFeeling(null)
                         .build()
         );
 
