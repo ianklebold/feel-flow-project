@@ -622,33 +622,6 @@ function Modules() {
                                 )}
                             </div>
                         </div>
-                        {/* Configuración de límites de reconocimientos */}            
-                        <div>
-                            <label htmlFor="limiteKudos" className="block text-gray-700 font-bold mb-2">
-                                Límite de reconocimientos diarios para dar por persona
-                            </label>
-                            <input
-                                id="limiteKudos"
-                                type="number"
-                                min="1"
-                                value={kudosDailyLimit}
-                                onChange={(e) => {
-                                    const newValue = parseInt(e.target.value);
-                                    // Si el valor es mayor o igual a 1 y el nuevo valor es mayor o igual a 1
-                                    if (newValue >= 1) {
-                                        if (newValue === 1 && kudosDailyLimit > 1) {
-                                            setKudosDailyLimit(1); // Limita a 1 si el valor original era mayor
-                                        } else {
-                                            setKudosDailyLimit(newValue); // Permite incrementar o decrementar
-                                        }
-                                    }
-                                }}
-                                className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500"
-                            />
-                            {kudosErrors.kudosDailyLimit && (
-                                <p className="text-red-500 text-sm mt-1">{kudosErrors.kudosDailyLimit}</p>
-                            )}
-                        </div>
                     </div>
                 </Popup>
             )}
