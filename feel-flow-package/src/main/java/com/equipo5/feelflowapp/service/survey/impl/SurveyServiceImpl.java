@@ -126,13 +126,13 @@ public class SurveyServiceImpl implements SurveyService{
             if (team.isPresent()){
                 List<Module> modules =  this.moduleRepository.findModulesByTeamOrderByIdDescCreationDateDesc(team.get());
 
-                Survey survey = this.surveyRepository.getSurveyByRegularUserAndSurveyModule(
-                        (RegularUser) regularUser.get(),
-                        (SurveyModule) modules.stream().findFirst().get()
-                );
-
-                return surveyMapper.surveyToSurveyDto(survey);
-
+                if(!modules.isEmpty()){
+                    Survey survey = this.surveyRepository.getSurveyByRegularUserAndSurveyModule(
+                            (RegularUser) regularUser.get(),
+                            (SurveyModule) modules.stream().findFirst().get()
+                    );
+                    return surveyMapper.surveyToSurveyDto(survey);
+                }
             }
 
         }

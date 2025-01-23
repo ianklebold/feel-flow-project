@@ -1,6 +1,7 @@
 package com.equipo5.feelflowapp.service.survey.nikoniko.impl;
 
 
+import com.equipo5.feelflowapp.constants.module.nikoniko.QuestionsConstantsNikoNiko;
 import com.equipo5.feelflowapp.domain.enumerations.modules.ActivityState;
 import com.equipo5.feelflowapp.domain.enumerations.modules.ModuleNames;
 import com.equipo5.feelflowapp.domain.enumerations.modules.SurveyStateEnum;
@@ -64,8 +65,12 @@ public class NikoNikoSurveyServiceImpl extends SurveyServiceImpl implements Niko
             Optional<Survey> nikoNikoSurvey = getSurveyNikoNikoAvailableByRegularUser(regularUser.get());
 
             if(nikoNikoSurvey.isPresent() && nikoNikoSurvey.get().getActivities().size()  == 2){
-                ActivityNikoNiko activity1 = (ActivityNikoNiko) nikoNikoSurvey.get().getActivities().get(0);
-                ActivityNikoNiko activity2 = (ActivityNikoNiko) nikoNikoSurvey.get().getActivities().get(1);
+
+                ActivityNikoNiko activity1 = new ActivityNikoNiko();
+                setNikoNikoActivityByActivity(getActivityByQuestion(QuestionsConstantsNikoNiko.ANSWERS_1_POOL_NIKO_NIKO, nikoNikoSurvey.get().getActivities()), activity1);
+
+                ActivityNikoNiko activity2 = new ActivityNikoNiko();
+                setNikoNikoActivityByActivity(getActivityByQuestion(QuestionsConstantsNikoNiko.ANSWERS_2_POOL_NIKO_NIKO, nikoNikoSurvey.get().getActivities()), activity2);
 
                 NikoNikoModule nikoNikoModule = (NikoNikoModule) nikoNikoSurvey.get().getSurveyModule();
                 long idSurvey = nikoNikoSurvey.get().getId();
@@ -89,6 +94,24 @@ public class NikoNikoSurveyServiceImpl extends SurveyServiceImpl implements Niko
         return null;
     }
 
+    private void setNikoNikoActivityByActivity(Activity activity, ActivityNikoNiko activityNikoNiko){
+        activityNikoNiko.setId( activity.getId() );
+        activityNikoNiko.setActivityState( activity.getActivityState() );
+        activityNikoNiko.setQuestion( activity.getQuestion() );
+        activityNikoNiko.setAnswer( activity.getAnswer() );
+        activityNikoNiko.setCloseDate(activity.getCloseDate() );
+        activityNikoNiko.setDescriptionFeeling( null );
+    }
+
+    private Activity getActivityByQuestion(String question, List<Activity> activities){
+        Optional<Activity> activityOptional =  activities
+                .stream()
+                .filter(activity -> question.equals(activity.getQuestion()))
+                .findFirst();
+
+        return activityOptional.orElse(null);
+    }
+
     @Override
     public void completeSurvey(SurveyAvailableNikoNikoReponseDto surveyResponse) {
 
@@ -96,17 +119,20 @@ public class NikoNikoSurveyServiceImpl extends SurveyServiceImpl implements Niko
         Optional<Survey> survey = super.surveyRepository.findById(surveyResponse.idSurvey());
 
         if(survey.isPresent() && SurveyStateEnum.ACTIVE.equals( survey.get().getSurveyStateEnum() ) ) {
-            Optional<ActivityNikoNiko> activity = survey.get().getActivities()
+            Optional<Activity> activity = survey.get().getActivities()
                     .stream()
                     .filter(activityAvailable ->  activityAvailable.getQuestion().equals( surveyResponse.activityAvailable().question() ))
-                    .map(activityFounded -> (ActivityNikoNiko) activityFounded)
                     .findFirst();
 
             if(activity.isPresent()){
-
-                activity.get().setAnswer(surveyResponse.activityAvailable().answer());
-                activity.get().setDescriptionFeeling( surveyResponse.activityAvailable().descriptionFeeling() );
-                activity.get().setActivityState( ActivityState.FINISHED );
+                ActivityNikoNiko activityNikoNiko = new ActivityNikoNiko();
+                setNikoNikoActivityByActivity(activity.get(), activityNikoNiko);
+                activityNikoNiko.setAnswer(surveyResponse.activityAvailable().answer());
+                activityNikoNiko.setDescriptionFeeling( surveyResponse.activityAvailable().descriptionFeeling() );
+                activityNikoNiko.setActivityState( ActivityState.FINISHED );
+                activityNikoNiko.setCloseDate( activity.get().getCloseDate() );
+                survey.get().getActivities().remove(activity.get());
+                survey.get().getActivities().add(activityNikoNiko);
                 super.surveyRepository.save( survey.get() );
 
             }
