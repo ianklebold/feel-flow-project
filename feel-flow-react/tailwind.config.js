@@ -1,6 +1,7 @@
-/** @type {import('tailwindcss').Config} */
-module.exports = {
-  content: ['./src/**/*.{js,jsx,ts,tsx}'], // Asegúrate de que apunta al código fuente
+const withMT = require("@material-tailwind/react/utils/withMT");
+
+module.exports = withMT({
+  content: ["./src/**/*.{js,jsx,ts,tsx}"],
   theme: {
     extend: {
       colors: {
@@ -18,7 +19,7 @@ module.exports = {
         Primary: 'rgba(69, 130, 158)',
         bgBluePrimary: '#3b82f6', //bg-blue-500
         bgBlueSecondary: '#2563eb', //bg-blue-600
-      }, 
+      },
       fontFamily: {
         sans: ['Inter', 'ui-sans-serif', 'system-ui'], // Fuentes predeterminadas
         display: ['Roboto', 'inherit', 'Poppins', 'ui-sans-serif'], // Fuentes para títulos
@@ -26,4 +27,4 @@ module.exports = {
     },
   },
   plugins: [],
-};
+});

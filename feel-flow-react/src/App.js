@@ -1,6 +1,7 @@
 // Functions
 import { useEffect, useState } from "react";
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+
 import { canAccess } from "./hooks/auth/authorization";
 
 // Components

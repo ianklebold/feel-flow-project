@@ -1,5 +1,7 @@
 import React from "react";
 import { Helmet } from 'react-helmet';
+import { Button } from "@material-tailwind/react";
+
 
 function Settings() {
     return (
@@ -11,6 +13,7 @@ function Settings() {
 
             <div className="p-6">
                 <h1>Settings</h1>
+                <Button>Button</Button>
             </div>
         </div>
 
