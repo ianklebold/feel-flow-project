@@ -1,55 +1,49 @@
-import React from 'react';
-// Elements
+import React, { useState, useEffect } from 'react';
 import Banner from '../assets/img/banner.jpg';
-// import Profile from '../assets/img/profile.jpg';
 
 const ProfileBanner = () => {
+  const [inView, setInView] = useState(false);
+
+  // Detecta cuando el banner entra en la vista (para la animación)
+  useEffect(() => {
+    const handleScroll = () => {
+      const bannerPosition = document.getElementById('banner').getBoundingClientRect().top;
+      const screenPosition = window.innerHeight / 1.5;
+
+      if (bannerPosition < screenPosition) {
+        setInView(true);
+      } else {
+        setInView(false);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    handleScroll(); // Para comprobar al cargar la página.
+
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   return (
-    <div style={styles.bannerContainer}>
-      <img
-        src={Banner}
-        alt="Banner"
-        style={styles.bannerImage}
-      />
+    <div className="relative w-full h-72 overflow-hidden rounded-xl shadow-lg">
+      {/* Fondo con Parallax */}
+      <div
+        id="banner"
+        className={`absolute inset-0 overflow-hidden transition-all duration-1000 ease-in-out transform ${
+          inView ? 'scale-100' : 'scale-110'
+        }`}
+      >
+        <img
+          src={Banner}
+          alt="Banner"
+          className="w-full h-full object-cover"
+        />
+      </div>
+
+      {/* Superposición Oscura */}
+      <div className="absolute inset-0 bg-black opacity-40"></div>
 
     </div>
   );
-};
-
-const styles = {
-  bannerContainer: {
-    position: 'relative',
-    borderRadius: '10px',
-    overflow: 'hidden',
-  },
-  bannerImage: {
-    width: '1000%',
-    height: '300px',
-    objectFit: 'cover',
-  },
-  profileDetails: {
-    position: 'absolute',
-    bottom: '-30px',
-    left: '20px',
-    display: 'flex',
-    alignItems: 'center',
-  },
-  avatar: {
-    width: '80px',
-    height: '80px',
-    borderRadius: '50%',
-    border: '3px solid white',
-    
-  },
-  editButton: {
-    marginLeft: '15px',
-    padding: '10px 20px',
-    backgroundColor: '#007bff',
-    color: 'white',
-    border: 'none',
-    borderRadius: '5px',
-    cursor: 'pointer',
-  },
 };
 
 export default ProfileBanner;
