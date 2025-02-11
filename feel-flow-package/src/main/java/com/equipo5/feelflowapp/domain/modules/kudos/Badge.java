@@ -1,0 +1,35 @@
+package com.equipo5.feelflowapp.domain.modules.kudos;
+
+import com.equipo5.feelflowapp.domain.enumerations.modules.BadgeName;
+import com.equipo5.feelflowapp.domain.users.RegularUser;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.Builder;
+
+
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+@Entity(name = "badge")
+public class Badge {
+
+    @Id
+    private Long id;
+
+    @NotNull
+    @NotEmpty
+    private BadgeName badgeName;
+
+    @ManyToOne
+    private RegularUser badgeOwner;
+
+}
