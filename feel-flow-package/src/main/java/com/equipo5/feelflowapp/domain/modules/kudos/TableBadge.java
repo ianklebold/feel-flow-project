@@ -15,7 +15,9 @@ import java.util.List;
 @Builder
 @Entity(name = "table_badge")
 public class TableBadge {
+
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @OneToMany
