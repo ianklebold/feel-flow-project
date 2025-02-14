@@ -18,4 +18,6 @@ public interface RegularUserRepository extends JpaRepository<RegularUser, UUID> 
     String findTeamByUsername(@Param("username") String username);
 
     Optional<RegularUser> findByUsername(String username);
+
+    Optional<RegularUser> findByUuid(UUID uuid);
 }

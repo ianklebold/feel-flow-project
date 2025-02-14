@@ -11,6 +11,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.Builder;
 
+import java.time.LocalDate;
+
 
 @Getter
 @Setter
@@ -27,6 +29,8 @@ public class Badge {
     @NotNull
     @NotEmpty
     private BadgeName badgeName;
+
+    private LocalDate awardedDate;
 
     @ManyToOne
     private RegularUser badgeOwner;
