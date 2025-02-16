@@ -249,7 +249,7 @@ public class BootstrapData implements CommandLineRunner {
         }
     }
 
-    private void loadTeamsAndTeamLeader(){
+    private void loadTeamsAndTeamLeader() throws IOException {
         if (teamLeaderRepository.count() < 3){
             TeamLeader teamLeader1 = TeamLeader.builder()
                     .uuid(UUID.randomUUID())
@@ -258,6 +258,15 @@ public class BootstrapData implements CommandLineRunner {
                     .username("tlteam1@gmail.com")
                     .password(passwordEncoder.encode(PASSWORD_TEMPLATE))
                     .authorities(List.of(authorityRepository.findAuthorityByTeamRoles(TeamRoles.TEAM_LEADER).get()))
+                    .mediaImage(
+                            MediaImage.builder()
+                                    .name("teamleader1_image")
+                                    .fileType("image/jpg")
+                                    .fileData(
+                                            convertToBase64( Files.readAllBytes(Paths.get("src/main/resources/images/profile/teamleader/team_leader1.jpg")) )
+                                    )
+                                    .build()
+                    )
                     .build();
 
             Team team1 = Team.builder()
@@ -278,6 +287,15 @@ public class BootstrapData implements CommandLineRunner {
                     .username("tlteam2@gmail.com")
                     .password(passwordEncoder.encode(PASSWORD_TEMPLATE))
                     .authorities(List.of(authorityRepository.findAuthorityByTeamRoles(TeamRoles.TEAM_LEADER).get()))
+                    .mediaImage(
+                            MediaImage.builder()
+                                    .name("teamleader2_image")
+                                    .fileType("image/jpg")
+                                    .fileData(
+                                            convertToBase64( Files.readAllBytes(Paths.get("src/main/resources/images/profile/teamleader/team_leader2.jpg")) )
+                                    )
+                                    .build()
+                    )
                     .build();
 
             Team team2 = Team.builder()
@@ -298,6 +316,15 @@ public class BootstrapData implements CommandLineRunner {
                     .username("tlteam3@gmail.com")
                     .password(passwordEncoder.encode(PASSWORD_TEMPLATE))
                     .authorities(List.of(authorityRepository.findAuthorityByTeamRoles(TeamRoles.TEAM_LEADER).get()))
+                    .mediaImage(
+                            MediaImage.builder()
+                                    .name("teamleader3_image")
+                                    .fileType("image/jpg")
+                                    .fileData(
+                                            convertToBase64( Files.readAllBytes(Paths.get("src/main/resources/images/profile/teamleader/team_leader3.jpg")) )
+                                    )
+                                    .build()
+                    )
                     .build();
 
             Team team3 = Team.builder()
@@ -313,7 +340,7 @@ public class BootstrapData implements CommandLineRunner {
         }
     }
 
-    private void loadAdminAndEnterprises(){
+    private void loadAdminAndEnterprises() throws IOException {
         if(adminRepository.count() < 3){
             Admin admin1 = Admin.builder()
                     .uuid(UUID.randomUUID())
@@ -322,6 +349,15 @@ public class BootstrapData implements CommandLineRunner {
                     .username("admin1@gmail.com")
                     .password(passwordEncoder.encode(PASSWORD_TEMPLATE))
                     .authorities(List.of(authorityRepository.findAuthorityByTeamRoles(TeamRoles.ADMIN).get()))
+                    .mediaImage(
+                            MediaImage.builder()
+                                    .name("admin1_image")
+                                    .fileType("image/jpg")
+                                    .fileData(
+                                            convertToBase64( Files.readAllBytes(Paths.get("src/main/resources/images/profile/admin/admin1.jpg")) )
+                                    )
+                                    .build()
+                    )
                     .build();
 
             EnterPrise enterPrise1 = EnterPrise.builder()
@@ -341,6 +377,15 @@ public class BootstrapData implements CommandLineRunner {
                     .username("admin2@gmail.com")
                     .password(passwordEncoder.encode(PASSWORD_TEMPLATE))
                     .authorities(List.of(authorityRepository.findAuthorityByTeamRoles(TeamRoles.ADMIN).get()))
+                    .mediaImage(
+                            MediaImage.builder()
+                                    .name("admin2_image")
+                                    .fileType("image/jpg")
+                                    .fileData(
+                                            convertToBase64( Files.readAllBytes(Paths.get("src/main/resources/images/profile/admin/admin2.jpg")) )
+                                    )
+                                    .build()
+                    )
                     .build();
 
             EnterPrise enterPrise2 = EnterPrise.builder()
@@ -360,6 +405,15 @@ public class BootstrapData implements CommandLineRunner {
                     .username("admin3@gmail.com")
                     .password(passwordEncoder.encode(PASSWORD_TEMPLATE))
                     .authorities(List.of(authorityRepository.findAuthorityByTeamRoles(TeamRoles.ADMIN).get()))
+                    .mediaImage(
+                            MediaImage.builder()
+                                    .name("admin3_image")
+                                    .fileType("image/jpg")
+                                    .fileData(
+                                            convertToBase64( Files.readAllBytes(Paths.get("src/main/resources/images/profile/admin/admin3.jpg")) )
+                                    )
+                                    .build()
+                    )
                     .build();
 
             EnterPrise enterPrise3 = EnterPrise.builder()

@@ -1,7 +1,9 @@
 package com.equipo5.feelflowapp.controller;
 
 
+import com.equipo5.feelflowapp.constants.response.HttpResponses;
 import com.equipo5.feelflowapp.dto.images.ImagesDto;
+import com.equipo5.feelflowapp.dto.response.ResponseDto;
 import com.equipo5.feelflowapp.service.images.ImagesService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -10,10 +12,14 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
+import java.util.UUID;
 
 
 @Tag(
@@ -43,6 +49,108 @@ public class ImagesController {
     @SecurityRequirement(name = "Bearer Authentication")
     public ImagesDto getImageOfTheCurrentUser(){
         return imagesService.getImageOfTheCurrentUser();
+    }
+
+    @Operation(
+            summary = "Get logo image of the enterprise",
+            description = "REST API to get enterprise image"
+    )
+    @ApiResponses({
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "HTTP Request Success"
+            )
+    })
+    @GetMapping("/enterprise/current_enterprise")
+    @SecurityRequirement(name = "Bearer Authentication")
+    public ImagesDto getImageOfTheCurrentEnterprise(){
+        return imagesService.getImageOfTheCurrentEnterprise();
+    }
+
+    @Operation(
+            summary = "Load user image of the current user",
+            description = "REST API to load or update an user image"
+    )
+    @ApiResponses({
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "HTTP Request Success"
+            )
+    })
+    @PostMapping("/user/current_user")
+    @SecurityRequirement(name = "Bearer Authentication")
+    public ResponseEntity<ResponseDto> saveImageOfTheCurrentUser(@RequestParam("imageFile") MultipartFile imageFile) throws IOException {
+         imagesService.saveImageOfTheUser(imageFile);
+
+         return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(new ResponseDto(HttpResponses.STATUS_200,HttpResponses.MESSAGE_200));
+    }
+
+    @Operation(
+            summary = "Load user image of the current user by UUID",
+            description = "REST API to load or update an user image by UUIDd"
+    )
+    @ApiResponses({
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "HTTP Request Success"
+            )
+    })
+    @PostMapping("/user/{user_id}")
+    @SecurityRequirement(name = "Bearer Authentication")
+    public ResponseEntity<ResponseDto> saveImageOfTheCurrentUser(
+            @PathVariable(name = "user_id") UUID userId,
+            @RequestParam("imageFile") MultipartFile imageFile
+    ) throws IOException {
+        imagesService.saveImageOfTheUser(userId, imageFile);
+
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(new ResponseDto(HttpResponses.STATUS_200,HttpResponses.MESSAGE_200));
+    }
+
+    @Operation(
+            summary = "Load logo image of the enterprise",
+            description = "REST API to load or update enterprise image"
+    )
+    @ApiResponses({
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "HTTP Request Success"
+            )
+    })
+    @PostMapping("/enterprise/current_enterprise")
+    @SecurityRequirement(name = "Bearer Authentication")
+    public ResponseEntity<ResponseDto> saveImageOfTheEnterprise(@RequestParam("imageFile") MultipartFile imageFile) throws IOException {
+        imagesService.saveImageOfTheEnterprise(imageFile);
+
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(new ResponseDto(HttpResponses.STATUS_200,HttpResponses.MESSAGE_200));
+    }
+
+    @Operation(
+            summary = "Load logo image of the enterprise by UUID",
+            description = "REST API to load or update enterprise image by UUID"
+    )
+    @ApiResponses({
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "HTTP Request Success"
+            )
+    })
+    @PostMapping("/enterprise/{enterprise_id}")
+    @SecurityRequirement(name = "Bearer Authentication")
+    public ResponseEntity<ResponseDto> saveImageOfTheEnterprise(
+            @PathVariable(name = "enterprise_id") UUID enterpriseId,
+            @RequestParam("imageFile") MultipartFile imageFile
+    ) throws IOException {
+        imagesService.saveImageOfTheEnterprise(enterpriseId, imageFile);
+
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(new ResponseDto(HttpResponses.STATUS_200,HttpResponses.MESSAGE_200));
     }
 
 }

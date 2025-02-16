@@ -1,5 +1,6 @@
 package com.equipo5.feelflowapp.domain;
 
+import com.equipo5.feelflowapp.domain.images.MediaImage;
 import com.equipo5.feelflowapp.domain.users.Admin;
 import jakarta.persistence.*;
 import lombok.*;
@@ -33,4 +34,7 @@ public class EnterPrise {
     @Builder.Default
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "enterPrise")
     private List<Team> team = new ArrayList<>();
+
+    @OneToOne(cascade = CascadeType.ALL)
+    private MediaImage logo;
 }
