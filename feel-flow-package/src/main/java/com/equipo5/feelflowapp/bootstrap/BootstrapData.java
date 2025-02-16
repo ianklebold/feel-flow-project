@@ -3,6 +3,7 @@ package com.equipo5.feelflowapp.bootstrap;
 import com.equipo5.feelflowapp.domain.EnterPrise;
 import com.equipo5.feelflowapp.domain.Team;
 import com.equipo5.feelflowapp.domain.enumerations.teamRoles.TeamRoles;
+import com.equipo5.feelflowapp.domain.images.MediaImage;
 import com.equipo5.feelflowapp.domain.users.Admin;
 import com.equipo5.feelflowapp.domain.users.Authority;
 import com.equipo5.feelflowapp.domain.users.RegularUser;
@@ -16,12 +17,15 @@ import com.equipo5.feelflowapp.repository.users.teamleader.TeamLeaderRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
+import org.springframework.web.multipart.MultipartFile;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.UUID;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.*;
 
 @Component
 @RequiredArgsConstructor
@@ -43,15 +47,20 @@ public class BootstrapData implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         log.info("Corriendo datos");
-
         loadAuthorityData();
         loadAdminAndEnterprises();
         loadTeamsAndTeamLeader();
         loadMembers();
     }
 
-    private void loadMembers(){
+
+    private String convertToBase64(byte[] bytes) {
+        return Base64.getEncoder().encodeToString(bytes);
+    }
+
+    private void loadMembers() throws IOException {
         if(regularUserRepository.count() < 3){
+
 
             String uuidTeam = teamLeaderRepository.findTeamByUsername("tlteam1@gmail.com");
             Team team1 = teamRepository.findById(UUID.fromString(uuidTeam)).get();
@@ -63,6 +72,15 @@ public class BootstrapData implements CommandLineRunner {
                     .password(passwordEncoder.encode(PASSWORD_TEMPLATE))
                     .authorities(List.of(authorityRepository.findAuthorityByTeamRoles(TeamRoles.USER_REGULAR).get()))
                     .team(team1)
+                    .mediaImage(
+                            MediaImage.builder()
+                                    .name("member1_image")
+                                    .fileType("image/jpeg")
+                                    .fileData(
+                                            convertToBase64(Files.readAllBytes(Paths.get("src/main/resources/images/profile/regularuser/regular_user_1.jpeg")))
+                                    )
+                                    .build()
+                    )
                     .build();
 
             RegularUser regularUser2 = RegularUser.builder()
@@ -73,6 +91,15 @@ public class BootstrapData implements CommandLineRunner {
                     .password(passwordEncoder.encode(PASSWORD_TEMPLATE))
                     .authorities(List.of(authorityRepository.findAuthorityByTeamRoles(TeamRoles.USER_REGULAR).get()))
                     .team(team1)
+                    .mediaImage(
+                            MediaImage.builder()
+                                    .name("member2_image")
+                                    .fileType("image/jpeg")
+                                    .fileData(
+                                            convertToBase64(Files.readAllBytes(Paths.get("src/main/resources/images/profile/regularuser/regular_user_2.jpeg")))
+                                    )
+                                    .build()
+                    )
                     .build();
 
             RegularUser regularUser3 = RegularUser.builder()
@@ -83,6 +110,15 @@ public class BootstrapData implements CommandLineRunner {
                     .password(passwordEncoder.encode(PASSWORD_TEMPLATE))
                     .authorities(List.of(authorityRepository.findAuthorityByTeamRoles(TeamRoles.USER_REGULAR).get()))
                     .team(team1)
+                    .mediaImage(
+                            MediaImage.builder()
+                                    .name("member3_image")
+                                    .fileType("image/jpeg")
+                                    .fileData(
+                                            convertToBase64(Files.readAllBytes(Paths.get("src/main/resources/images/profile/regularuser/regular_user_3.jpeg")))
+                                    )
+                                    .build()
+                    )
                     .build();
 
             regularUserRepository.saveAll(List.of(regularUser,regularUser2,regularUser3));
@@ -98,6 +134,15 @@ public class BootstrapData implements CommandLineRunner {
                     .password(passwordEncoder.encode(PASSWORD_TEMPLATE))
                     .authorities(List.of(authorityRepository.findAuthorityByTeamRoles(TeamRoles.USER_REGULAR).get()))
                     .team(team2)
+                    .mediaImage(
+                            MediaImage.builder()
+                                    .name("member4_image")
+                                    .fileType("image/jpeg")
+                                    .fileData(
+                                            convertToBase64(Files.readAllBytes(Paths.get("src/main/resources/images/profile/regularuser/regular_user_4.jpeg")))
+                                    )
+                                    .build()
+                    )
                     .build();
 
             RegularUser regularUser5 = RegularUser.builder()
@@ -108,6 +153,15 @@ public class BootstrapData implements CommandLineRunner {
                     .password(passwordEncoder.encode(PASSWORD_TEMPLATE))
                     .authorities(List.of(authorityRepository.findAuthorityByTeamRoles(TeamRoles.USER_REGULAR).get()))
                     .team(team2)
+                    .mediaImage(
+                            MediaImage.builder()
+                                    .name("member5_image")
+                                    .fileType("image/jpeg")
+                                    .fileData(
+                                            convertToBase64( Files.readAllBytes(Paths.get("src/main/resources/images/profile/regularuser/regular_user_5.jpeg")) )
+                                    )
+                                    .build()
+                    )
                     .build();
 
             RegularUser regularUser6 = RegularUser.builder()
@@ -118,6 +172,15 @@ public class BootstrapData implements CommandLineRunner {
                     .password(passwordEncoder.encode(PASSWORD_TEMPLATE))
                     .authorities(List.of(authorityRepository.findAuthorityByTeamRoles(TeamRoles.USER_REGULAR).get()))
                     .team(team2)
+                    .mediaImage(
+                            MediaImage.builder()
+                                    .name("member6_image")
+                                    .fileType("image/jpeg")
+                                    .fileData(
+                                            convertToBase64( Files.readAllBytes(Paths.get("src/main/resources/images/profile/regularuser/regular_user_6.jpeg")) )
+                                    )
+                                    .build()
+                    )
                     .build();
 
             regularUserRepository.saveAll(List.of(regularUser4,regularUser5,regularUser6));
@@ -133,6 +196,15 @@ public class BootstrapData implements CommandLineRunner {
                     .password(passwordEncoder.encode(PASSWORD_TEMPLATE))
                     .authorities(List.of(authorityRepository.findAuthorityByTeamRoles(TeamRoles.USER_REGULAR).get()))
                     .team(team3)
+                    .mediaImage(
+                            MediaImage.builder()
+                                    .name("member7_image")
+                                    .fileType("image/jpeg")
+                                    .fileData(
+                                           convertToBase64( Files.readAllBytes(Paths.get("src/main/resources/images/profile/regularuser/regular_user_7.jpeg")) )
+                                    )
+                                    .build()
+                    )
                     .build();
 
             RegularUser regularUser8 = RegularUser.builder()
@@ -143,6 +215,15 @@ public class BootstrapData implements CommandLineRunner {
                     .password(passwordEncoder.encode(PASSWORD_TEMPLATE))
                     .authorities(List.of(authorityRepository.findAuthorityByTeamRoles(TeamRoles.USER_REGULAR).get()))
                     .team(team3)
+                    .mediaImage(
+                            MediaImage.builder()
+                                    .name("member8_image")
+                                    .fileType("image/jpeg")
+                                    .fileData(
+                                            convertToBase64( Files.readAllBytes(Paths.get("src/main/resources/images/profile/regularuser/regular_user_8.jpeg")) )
+                                    )
+                                    .build()
+                    )
                     .build();
 
             RegularUser regularUser9 = RegularUser.builder()
@@ -153,6 +234,15 @@ public class BootstrapData implements CommandLineRunner {
                     .password(passwordEncoder.encode(PASSWORD_TEMPLATE))
                     .authorities(List.of(authorityRepository.findAuthorityByTeamRoles(TeamRoles.USER_REGULAR).get()))
                     .team(team3)
+                    .mediaImage(
+                            MediaImage.builder()
+                                    .name("member9_image")
+                                    .fileType("image/jpeg")
+                                    .fileData(
+                                            convertToBase64( Files.readAllBytes(Paths.get("src/main/resources/images/profile/regularuser/regular_user_9.jpeg")) )
+                                    )
+                                    .build()
+                    )
                     .build();
 
             regularUserRepository.saveAll(List.of(regularUser7,regularUser8,regularUser9));

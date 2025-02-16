@@ -1,6 +1,7 @@
 package com.equipo5.feelflowapp.domain.users;
 
 import com.equipo5.feelflowapp.domain.EnterPrise;
+import com.equipo5.feelflowapp.domain.images.MediaImage;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToOne;
@@ -23,8 +24,8 @@ public class Admin extends User{
     private EnterPrise enterPrise;
 
     @Builder
-    public Admin(UUID uuid, String name,String surname, String username, String password, List<Authority> authorities, EnterPrise enterPrise) {
-        super(uuid, name,surname, username, password, authorities);
+    public Admin(UUID uuid, String name,String surname, String username, String password, List<Authority> authorities, EnterPrise enterPrise, MediaImage mediaImage) {
+        super(uuid, name,surname, username, password, authorities, mediaImage);
         this.enterPrise = enterPrise;
     }
 }

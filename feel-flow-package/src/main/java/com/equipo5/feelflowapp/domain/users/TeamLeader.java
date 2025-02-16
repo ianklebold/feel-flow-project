@@ -1,6 +1,7 @@
 package com.equipo5.feelflowapp.domain.users;
 
 import com.equipo5.feelflowapp.domain.Team;
+import com.equipo5.feelflowapp.domain.images.MediaImage;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.PrimaryKeyJoinColumn;
@@ -21,8 +22,8 @@ public class TeamLeader extends User{
     private Team team;
 
     @Builder
-    public TeamLeader(UUID uuid, String name,String surname, String username, String password, List<Authority> authorities, Team team) {
-        super(uuid, name,surname, username, password, authorities);
+    public TeamLeader(UUID uuid, String name,String surname, String username, String password, List<Authority> authorities, Team team, MediaImage mediaImage) {
+        super(uuid, name,surname, username, password, authorities, mediaImage);
         this.team = team;
     }
 }
