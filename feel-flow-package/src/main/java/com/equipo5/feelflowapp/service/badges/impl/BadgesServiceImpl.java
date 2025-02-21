@@ -8,6 +8,7 @@ import com.equipo5.feelflowapp.domain.modules.kudos.KudosModule;
 import com.equipo5.feelflowapp.domain.modules.kudos.TableBadge;
 import com.equipo5.feelflowapp.domain.users.RegularUser;
 import com.equipo5.feelflowapp.dto.badges.BadgeDto;
+import com.equipo5.feelflowapp.dto.badges.BadgeTeamDto;
 import com.equipo5.feelflowapp.dto.badges.BadgesAvailableDto;
 import com.equipo5.feelflowapp.dto.badges.BadgesAwardedDto;
 import com.equipo5.feelflowapp.exception.badrequest.badge.BadgeIsNotPossibleAssignException;
@@ -53,6 +54,12 @@ public class BadgesServiceImpl implements BadgesService {
     protected final BadgeAvailableMapper badgeAvailableMapper;
 
     protected final BadgesDtoMapper badgesDtoMapper;
+
+    private final List<BadgeName> BAGES_NAMES_LIST = List.of(
+            BadgeName.MAESTRO_DEL_DETALLE,
+            BadgeName.ENERGIA_POSITIVA,
+            BadgeName.MANOS_AMIGAS,
+            BadgeName.RESOLUTOR_ESTRELLA);
 
     @Override
     public void sendBadge(BadgesAwardedDto badgesAwardedDto) {
@@ -142,6 +149,39 @@ public class BadgesServiceImpl implements BadgesService {
                     .toList();
         }
         return List.of();
+    }
+
+    @Override
+    public List<BadgeTeamDto> getBadgeTeams() {
+        var username = userService.getUsernameByCurrentUser();
+
+        var regularUser = userRepository.findByUsername(username);
+        if (regularUser.isPresent()) {
+            var nameTeam = regularUserRepository.findTeamByUsername(username);
+            Optional<Team> team = teamRepository.findById(UUID.fromString(nameTeam));
+
+            if (team.isEmpty()) {
+                throw new NotFoundException("Equipo no encontrado");
+            }
+            List<Badge> badges = new ArrayList<>();
+
+            team.get().getRegularUsers()
+                    .forEach(
+                            member -> badges.addAll( this.badgeRepository.findAllByBadgeOwner( (RegularUser) member) )
+                    );
+
+            return BAGES_NAMES_LIST.stream()
+                    .map(badgeName -> new BadgeTeamDto(badgeName, getNumberOfBadgesAwarded(badges, badgeName) ))
+                    .toList();
+
+        }
+        return List.of();
+    }
+
+    private long getNumberOfBadgesAwarded(List<Badge> badges, BadgeName badgeName) {
+        return badges.stream()
+                .filter( badge -> badgeName.equals(badge.getBadgeName()) )
+                .count();
     }
 
     private Badge createBadge(BadgeName badgeName, UUID idUser) {
