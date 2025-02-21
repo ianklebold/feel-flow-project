@@ -1,6 +1,7 @@
 package com.equipo5.feelflowapp.controller;
 
 import com.equipo5.feelflowapp.constants.response.HttpResponses;
+import com.equipo5.feelflowapp.dto.badges.BadgesAvailableDto;
 import com.equipo5.feelflowapp.dto.badges.BadgesAwardedDto;
 import com.equipo5.feelflowapp.dto.response.ErrorResponseDto;
 import com.equipo5.feelflowapp.dto.response.ResponseDto;
@@ -17,10 +18,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Tag(
         name = "Module Kudos REST APIs",
@@ -70,4 +70,26 @@ public class BadgesController {
 
     }
 
+    @Operation(
+            summary = "Get Badge availables to sent REST API",
+            description = "REST API to get the badges availables to send"
+    )
+    @ApiResponses({
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "HTTP Status OK"
+            ),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "HTTP Status NOT FOUND",
+                    content = @Content(
+                            schema = @Schema(implementation = ErrorResponseDto.class)
+                    )
+            )
+    })
+    @SecurityRequirement(name = "Bearer Authentication")
+    @GetMapping("/available")
+    public List<BadgesAvailableDto> getBadgesAvailableToSend() {
+        return badgesService.getBadgesAvailableToSend();
+    }
 }
