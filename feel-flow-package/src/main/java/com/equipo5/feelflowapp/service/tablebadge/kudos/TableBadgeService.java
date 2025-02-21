@@ -17,4 +17,5 @@ public interface TableBadgeService {
 
     void assignBadgeToTable(TableBadge tableBadge, Badge badge);
 
+    void closeBadgeTable(TableBadge tableBadge);
 }

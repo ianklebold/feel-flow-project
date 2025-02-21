@@ -97,6 +97,7 @@ public class BadgesServiceImpl implements BadgesService {
             if( isPossibleAssignBadge ){
                 Badge badge = this.createBadge( badgesAwardedDto.badgeName(), badgesAwardedDto.idMember() );
                 tableBadgeService.assignBadgeToTable(tableBadgeEntity, badge);
+                tableBadgeService.closeBadgeTable(tableBadgeEntity);
             }else{
                 throw new BadgeIsNotPossibleAssignException("No es posible asignar el badge a la tabla debido a que ya fue asignado");
             }

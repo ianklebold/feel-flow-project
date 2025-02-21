@@ -8,6 +8,7 @@ import com.equipo5.feelflowapp.dto.badges.BadgesAwardedDto;
 import com.equipo5.feelflowapp.dto.response.ErrorResponseDto;
 import com.equipo5.feelflowapp.dto.response.ResponseDto;
 import com.equipo5.feelflowapp.service.badges.BadgesService;
+import com.equipo5.feelflowapp.service.module.kudos.KudosService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -37,6 +38,8 @@ public class BadgesController {
 
     private final BadgesService badgesService;
 
+    private final KudosService kudosService;
+
     @Operation(
             summary = "Send Badge REST API",
             description = "REST API to send badge to other member of team"
@@ -65,7 +68,7 @@ public class BadgesController {
     @PostMapping()
     public ResponseEntity<ResponseDto> sendBadge(@RequestBody BadgesAwardedDto badgesAwardedDto) {
         badgesService.sendBadge(badgesAwardedDto);
-
+        kudosService.closeModule();
         return ResponseEntity
                     .status(HttpStatus.CREATED)
                     .body(new ResponseDto(HttpResponses.STATUS_201,String.format(HttpResponses.MESSAGE_201,badgesAwardedDto.badgeName())));

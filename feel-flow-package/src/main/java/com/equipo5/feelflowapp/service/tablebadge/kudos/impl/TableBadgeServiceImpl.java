@@ -14,6 +14,7 @@ import com.equipo5.feelflowapp.service.users.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -106,6 +107,30 @@ public class TableBadgeServiceImpl implements TableBadgeService {
 
         tableBadgeRepository.save( tableBadge );
 
+    }
+
+    @Override
+    public void closeBadgeTable(TableBadge tableBadge) {
+
+        var username = userService.getUsernameByCurrentUser();
+        var regularUser = userRepository.findByUsername(username);
+        if (regularUser.isPresent()) {
+            var nameTeam = regularUserRepository.findTeamByUsername(username);
+            Optional<Team> team = teamRepository.findById(UUID.fromString(nameTeam));
+            if (team.isPresent()) {
+                if ( tableBadge.getTableBadgeClosedDate() != null &&
+                     tableBadge.getBadgeFriendHands().size() == team.get().getRegularUsers().size() &&
+                     tableBadge.getBadgeResolutorStar() != null &&
+                     tableBadge.getMasterOfDetail() != null &&
+                     tableBadge.getBadgePositiveEnergy() != null
+                ) {
+
+                    tableBadge.setTableBadgeClosedDate(LocalDate.now() );
+
+                }
+
+            }
+        }
     }
 
 

@@ -6,20 +6,24 @@ import com.equipo5.feelflowapp.domain.modules.kudos.KudosModule;
 import com.equipo5.feelflowapp.dto.modules.CreationKudosModuleDto;
 import com.equipo5.feelflowapp.exception.badrequest.module.ModuleAlreadyActiveException;
 import com.equipo5.feelflowapp.exception.badrequest.module.ModuleException;
+import com.equipo5.feelflowapp.exception.notfound.NotFoundException;
 import com.equipo5.feelflowapp.exception.notfound.NotFoundTeamException;
 import com.equipo5.feelflowapp.repository.module.KudosRepository;
 import com.equipo5.feelflowapp.repository.team.TeamRepository;
+import com.equipo5.feelflowapp.repository.users.UserRepository;
+import com.equipo5.feelflowapp.repository.users.regularuser.RegularUserRepository;
 import com.equipo5.feelflowapp.service.module.ModuleService;
 import com.equipo5.feelflowapp.service.module.kudos.KudosService;
 import com.equipo5.feelflowapp.service.tablebadge.kudos.TableBadgeService;
+import com.equipo5.feelflowapp.service.users.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.Optional;
+import java.util.UUID;
 
 import static com.equipo5.feelflowapp.domain.enumerations.modules.ModuleNames.KUDOS;
-import static com.equipo5.feelflowapp.domain.enumerations.modules.ModuleNames.NIKO_NIKO;
 
 @Service
 @RequiredArgsConstructor
@@ -32,6 +36,12 @@ public class KudosServiceImpl implements KudosService {
     private final ModuleService moduleService;
 
     private final TableBadgeService tableBadgeService;
+
+    protected final UserService userService;
+
+    protected final UserRepository userRepository;
+
+    protected final RegularUserRepository regularUserRepository;
 
 
     @Override
@@ -68,6 +78,40 @@ public class KudosServiceImpl implements KudosService {
             kudosRepository.save(kudosModule);
         }else {
             throw new NotFoundTeamException("Equipo no encontrado");
+        }
+
+    }
+
+    @Override
+    public void closeModule() {
+
+        var username = userService.getUsernameByCurrentUser();
+
+        var regularUser = userRepository.findByUsername(username);
+        if (regularUser.isPresent()) {
+            var nameTeam = regularUserRepository.findTeamByUsername(username);
+            Optional<Team> team = teamRepository.findById(UUID.fromString(nameTeam));
+
+            if (team.isEmpty()) {
+                throw new NotFoundException("Equipo no encontrado");
+            }
+
+            Optional<KudosModule> kudosModule = this.kudosRepository.findByModuleStateAndTeam(ModuleState.ACTIVE, team.get());
+            //Controlar que modulo este abierto
+            if (kudosModule.isEmpty()) {
+                throw new ModuleException("No existe modulo de kudos activo");
+            }
+
+            boolean isReadyToClose = kudosModule.get().getTableBadge()
+                    .stream()
+                    .allMatch( tableBadge -> tableBadge.getTableBadgeClosedDate() != null );
+
+            if (isReadyToClose){
+                kudosModule.get().setModuleClosedDate(LocalDate.now());
+                kudosModule.get().setModuleState(ModuleState.FINISHED);
+                kudosRepository.save(kudosModule.get());
+            }
+
         }
 
     }
