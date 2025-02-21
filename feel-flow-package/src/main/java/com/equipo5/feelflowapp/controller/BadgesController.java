@@ -1,6 +1,7 @@
 package com.equipo5.feelflowapp.controller;
 
 import com.equipo5.feelflowapp.constants.response.HttpResponses;
+import com.equipo5.feelflowapp.dto.badges.BadgeDto;
 import com.equipo5.feelflowapp.dto.badges.BadgesAvailableDto;
 import com.equipo5.feelflowapp.dto.badges.BadgesAwardedDto;
 import com.equipo5.feelflowapp.dto.response.ErrorResponseDto;
@@ -91,5 +92,28 @@ public class BadgesController {
     @GetMapping("/available")
     public List<BadgesAvailableDto> getBadgesAvailableToSend() {
         return badgesService.getBadgesAvailableToSend();
+    }
+
+    @Operation(
+            summary = "Get Badges REST API",
+            description = "REST API to get the badges"
+    )
+    @ApiResponses({
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "HTTP Status OK"
+            ),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "HTTP Status NOT FOUND",
+                    content = @Content(
+                            schema = @Schema(implementation = ErrorResponseDto.class)
+                    )
+            )
+    })
+    @SecurityRequirement(name = "Bearer Authentication")
+    @GetMapping()
+    public List<BadgeDto> getBadges() {
+        return badgesService.getBadgesAwarded();
     }
 }
