@@ -116,7 +116,7 @@ public class BadgesController {
             )
     })
     @SecurityRequirement(name = "Bearer Authentication")
-    @GetMapping()
+    @GetMapping("/awarded")
     public List<BadgeDto> getBadges() {
         return badgesService.getBadgesAwarded();
     }
