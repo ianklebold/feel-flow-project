@@ -1,8 +1,9 @@
 import React from "react";
 import Swal from "sweetalert2";
 import { invite } from "../services/invite";
+import Banner from '../assets/img/banner.jpg';
 
-const TeamBanner = ({ bannerUrl = "https://via.placeholder.com/1200x300", name, uuid, onEdit }) => {
+const TeamBanner = ({ bannerUrl = Banner, name, uuid, onEdit }) => {
   const handleInviteMember = async () => {
     const token = sessionStorage.getItem("token");
 

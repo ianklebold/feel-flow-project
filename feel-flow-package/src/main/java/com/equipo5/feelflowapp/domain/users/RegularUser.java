@@ -1,6 +1,7 @@
 package com.equipo5.feelflowapp.domain.users;
 
 import com.equipo5.feelflowapp.domain.Team;
+import com.equipo5.feelflowapp.domain.images.MediaImage;
 import com.equipo5.feelflowapp.domain.modules.Survey;
 import jakarta.persistence.*;
 import lombok.*;
@@ -23,8 +24,8 @@ public class RegularUser extends User{
     List<Survey> surveys = new ArrayList<>();
 
     @Builder
-    public RegularUser(UUID uuid, String name,String surname, String username, String password, List<Authority> authorities, Team team,List<Survey> surveys) {
-        super(uuid, name, surname, username, password, authorities);
+    public RegularUser(UUID uuid, String name, String surname, String username, String password, List<Authority> authorities, Team team, List<Survey> surveys, MediaImage mediaImage) {
+        super(uuid, name, surname, username, password, authorities,mediaImage);
         this.team = team;
         this.surveys = surveys;
     }

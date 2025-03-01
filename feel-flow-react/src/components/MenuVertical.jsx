@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import modulosData from '../assets/data/modulos.json';
 import FeelFlow from "../assets/img/FeelFlow.png";
-import { FaHome, FaChartPie, FaUserCircle, FaUsers, FaPuzzlePiece, FaIdCard, FaCog } from "react-icons/fa";
+import { FaHome, FaChartPie, FaUserCircle, FaUsers, FaPuzzlePiece, FaIdCard, FaCog, FaTrophy} from "react-icons/fa";
 
 import { canAccess } from "../hooks/auth/authorization";
 import { getUserData } from "../services/session";
@@ -22,11 +22,12 @@ function VerticalMenu() {
     const iconMapping = {
         "fa-home": <FaHome className="text-gray-500" />, // Home
         "fa-pie-chart": <FaChartPie className="text-gray-500" />, // Dashboard
+        "fa-trophy": <FaTrophy className="text-gray-500" />, // Resultados
         "fa-user-circle": <FaUserCircle className="text-gray-500" />, // Lideres, Usuarios
         "fa-users": <FaUsers className="text-gray-500" />, // Equipos
         "fa-puzzle-piece": <FaPuzzlePiece className="text-gray-500" />, // Modulos
         "fa-id-card": <FaIdCard className="text-gray-500" />, // Perfil
-        "fa-cog": <FaCog className="text-gray-500" />, // Configuración
+        "fa-cog": <FaCog className="text-gray-500" /> // Configuración
     };
 
     console.log(canAccess("dashboard", authority));

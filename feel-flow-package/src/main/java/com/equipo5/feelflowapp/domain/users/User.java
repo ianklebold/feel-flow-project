@@ -2,6 +2,7 @@ package com.equipo5.feelflowapp.domain.users;
 
 
 import com.equipo5.feelflowapp.domain.enumerations.teamRoles.TeamRoles;
+import com.equipo5.feelflowapp.domain.images.MediaImage;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
@@ -36,4 +37,6 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "AUTHORITY_ID", referencedColumnName = "id"))
     private List<Authority> authorities;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    private MediaImage mediaImage;
 }
