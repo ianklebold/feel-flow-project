@@ -8,8 +8,6 @@ import jakarta.validation.constraints.NotEmpty;
         description = "Schema to hold notification information"
 )
 public record NotificationDto(
-        @NotEmpty
         @Schema(description = "Title of notification", example = "Hello sam is me")  String title,
-        @NotEmpty
         @Schema(description = "Body of notification", example = "The present message is going to...")  String body
 ) {}

@@ -70,6 +70,7 @@ public class SpringSecurityConfig {
                                 .requestMatchers(HttpMethod.GET, QuestionsAnswersModuleController.QUESTION_AND_ANSWERS_PATH+QuestionsAnswersModuleController.ANSWERS_MODULE).hasAnyAuthority("USER_REGULAR")
                                 .requestMatchers(HttpMethod.GET,QuestionsAnswersModuleController.QUESTION_AND_ANSWERS_PATH+QuestionsAnswersModuleController.QUESTIONS_MODULE).hasAnyAuthority("USER_REGULAR")
                                 .requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
+                                .requestMatchers("/ws/**").permitAll()
                                 .requestMatchers("/api/v1/regular_user/**").permitAll()
                                 .anyRequest()
                                 .authenticated()

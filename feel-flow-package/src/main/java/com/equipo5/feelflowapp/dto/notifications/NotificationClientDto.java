@@ -10,10 +10,7 @@ import java.util.UUID;
         description = "Schema to hold the client notification information"
 )
 public record NotificationClientDto(
-        @NotEmpty
         @Schema(description = "Title of notification", example = "Hello sam is me")  String title,
-        @NotEmpty
         @Schema(description = "Body of notification", example = "The present message is going to...")  String body,
-        @NotEmpty
         @Schema(description = "UUID of team", example = "UUID of team")UUID uuidTeam
 ) {}

@@ -19,6 +19,7 @@ import com.equipo5.feelflowapp.service.users.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.util.Optional;
 import java.util.UUID;
@@ -69,8 +70,8 @@ public class KudosServiceImpl implements KudosService {
             kudosModule.setModuleState( ModuleState.ACTIVE );
             kudosModule.setName( KUDOS.toString() );
             kudosModule.setTeam( team.get() );
-            kudosModule.setDateAndTimeToPublish( creationKudosModule.dateAndTimeToPublish() );
-            kudosModule.setDateAndTimeToClose( creationKudosModule.dateAndTimeToClose() );
+            kudosModule.setDateAndTimeToPublish(Timestamp.valueOf(creationKudosModule.dateAndTimeToPublish()));
+            kudosModule.setDateAndTimeToClose(Timestamp.valueOf(creationKudosModule.dateAndTimeToClose()));
 
             //Crear N Tablas de Badges.
             tableBadgeService.createTableBadge(kudosModule);
