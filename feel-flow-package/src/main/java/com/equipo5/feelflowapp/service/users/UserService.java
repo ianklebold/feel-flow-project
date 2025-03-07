@@ -12,6 +12,8 @@ public interface UserService {
 
     Optional<UserDTO> getUserById(UUID uuid);
 
+    Optional<UserDTO> getSessionUser();
+
     Optional<? extends GrantedAuthority> getRoleByCurrentUser();
 
     String getUsernameByCurrentUser();

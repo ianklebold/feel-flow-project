@@ -1,8 +1,10 @@
 package com.equipo5.feelflowapp.controller;
 
 import com.equipo5.feelflowapp.constants.response.HttpResponses;
+import com.equipo5.feelflowapp.dto.badges.BadgesAvailableDto;
 import com.equipo5.feelflowapp.dto.notifications.NotificationClientDto;
 import com.equipo5.feelflowapp.dto.notifications.NotificationDto;
+import com.equipo5.feelflowapp.dto.notifications.NotificationSessionUserDto;
 import com.equipo5.feelflowapp.dto.response.ErrorResponseDto;
 import com.equipo5.feelflowapp.dto.response.ResponseDto;
 import com.equipo5.feelflowapp.service.notification.NotificationService;
@@ -19,10 +21,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.time.LocalDateTime;
+import java.util.List;
 
 @Tag(
         name = "Notification REST APIs",
@@ -56,4 +58,25 @@ public class NotificationController {
                 .status(HttpStatus.CREATED)
                 .body(new ResponseDto(HttpResponses.STATUS_201,String.format(HttpResponses.MESSAGE_201,"Notification sended")));
     }
+
+    @Operation(
+            summary = "Get Session User Notifications REST API",
+            description = "REST API to get Session User Notifications"
+    )
+    @ApiResponses({
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "HTTP Status OK"
+            )
+    })
+    @SecurityRequirement(name = "Bearer Authentication")
+    @GetMapping("/notifications")
+    public List<NotificationSessionUserDto> getBadgesAvailableToSend(
+            @RequestParam(required = false) LocalDateTime from,
+            @RequestParam(required = false) LocalDateTime to,
+            @RequestParam(required = false) int max
+            ) {
+        return notificationService.getBadgesAvailableToSend(from, to, max);
+    }
+
 }

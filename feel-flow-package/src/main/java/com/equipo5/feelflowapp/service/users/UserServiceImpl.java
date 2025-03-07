@@ -98,6 +98,19 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
+    public Optional<UserDTO> getSessionUser() {
+        String username = this.getUsernameByCurrentUser();
+
+        Optional<User> user = userRepository.findByUsername(username);
+
+        if( user.isPresent() ){
+            UserDTO userDTO = userMapper.userToUserDto(user.get());
+            return Optional.of(userDTO);
+        }
+        return Optional.empty();
+    }
+
+    @Override
     public Optional<? extends GrantedAuthority> getRoleByCurrentUser(){
         return SecurityContextHolder.getContext()
                 .getAuthentication()
