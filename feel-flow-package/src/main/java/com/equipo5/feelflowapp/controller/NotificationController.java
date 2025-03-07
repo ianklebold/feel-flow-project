@@ -74,7 +74,7 @@ public class NotificationController {
     public List<NotificationSessionUserDto> getBadgesAvailableToSend(
             @RequestParam(required = false) LocalDateTime from,
             @RequestParam(required = false) LocalDateTime to,
-            @RequestParam(required = false) int max
+            @RequestParam(required = false) Integer max
             ) {
         return notificationService.getBadgesAvailableToSend(from, to, max);
     }

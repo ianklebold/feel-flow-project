@@ -59,7 +59,7 @@ public class NotificationServiceImpl implements NotificationService {
     }
 
     @Override
-    public List<NotificationSessionUserDto> getBadgesAvailableToSend(LocalDateTime from, LocalDateTime to, int max) {
+    public List<NotificationSessionUserDto> getBadgesAvailableToSend(LocalDateTime from, LocalDateTime to, Integer max) {
 
         Optional<UserDTO> optionalUserDTO = userService.getSessionUser();
         if(optionalUserDTO.isPresent()) {
@@ -78,7 +78,7 @@ public class NotificationServiceImpl implements NotificationService {
                 );
             }
 
-            if(max <= 0){
+            if(max == null || max <= 0){
                 max = 10;
             }
 

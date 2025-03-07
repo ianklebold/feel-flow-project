@@ -9,5 +9,5 @@ import java.util.List;
 public interface NotificationService {
     void sendNotification(NotificationClientDto notificationDto);
 
-    List<NotificationSessionUserDto> getBadgesAvailableToSend(LocalDateTime from, LocalDateTime to, int max);
+    List<NotificationSessionUserDto> getBadgesAvailableToSend(LocalDateTime from, LocalDateTime to, Integer max);
 }
