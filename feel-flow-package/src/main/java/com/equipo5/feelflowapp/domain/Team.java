@@ -1,5 +1,6 @@
 package com.equipo5.feelflowapp.domain;
 
+import com.equipo5.feelflowapp.domain.images.MediaImage;
 import com.equipo5.feelflowapp.domain.modules.Module;
 import com.equipo5.feelflowapp.domain.users.RegularUser;
 import com.equipo5.feelflowapp.domain.users.TeamLeader;
@@ -43,4 +44,6 @@ public class Team {
     @OneToMany(cascade = CascadeType.ALL , mappedBy = "team")
     private List<Module> modules = new ArrayList<>();
 
+    @OneToOne(cascade = CascadeType.ALL)
+    private MediaImage logo;
 }

@@ -11,6 +11,9 @@ public interface ImagesService {
 
     ImagesDto getImageOfTheCurrentEnterprise();
 
+    ImagesDto getImageOfTheCurrentTeam();
+
+
     void saveImageOfTheUser(MultipartFile imageFile) throws IOException;
 
     void saveImageOfTheUser(UUID id, MultipartFile imageFile) throws IOException;
@@ -18,5 +21,7 @@ public interface ImagesService {
     void saveImageOfTheEnterprise(MultipartFile imageFile) throws IOException;
 
     void saveImageOfTheEnterprise(UUID id, MultipartFile imageFile) throws IOException;
+
+    void saveImageOfTheTeam(UUID id, MultipartFile imageFile) throws IOException;
 
 }

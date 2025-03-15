@@ -52,7 +52,23 @@ public class ImagesController {
     }
 
     @Operation(
-            summary = "Get logo image of the enterprise",
+            summary = "Get logo image of the team",
+            description = "REST API to get team image"
+    )
+    @ApiResponses({
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "HTTP Request Success"
+            )
+    })
+    @GetMapping("/team/current_team")
+    @SecurityRequirement(name = "Bearer Authentication")
+        public ImagesDto getImageOfTheCurrentTeam(){
+        return imagesService.getImageOfTheCurrentTeam();
+    }
+
+    @Operation(
+            summary = "Get logo image of the team",
             description = "REST API to get enterprise image"
     )
     @ApiResponses({
@@ -147,6 +163,29 @@ public class ImagesController {
             @RequestParam("imageFile") MultipartFile imageFile
     ) throws IOException {
         imagesService.saveImageOfTheEnterprise(enterpriseId, imageFile);
+
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(new ResponseDto(HttpResponses.STATUS_200,HttpResponses.MESSAGE_200));
+    }
+
+    @Operation(
+            summary = "Load logo image of the team by UUID",
+            description = "REST API to load or update team image by UUID"
+    )
+    @ApiResponses({
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "HTTP Request Success"
+            )
+    })
+    @PostMapping("/team/{team_id}")
+    @SecurityRequirement(name = "Bearer Authentication")
+    public ResponseEntity<ResponseDto> saveImageOfTheTeam(
+            @PathVariable(name = "team_id") UUID team_id,
+            @RequestParam("imageFile") MultipartFile imageFile
+    ) throws IOException {
+        imagesService.saveImageOfTheTeam(team_id, imageFile);
 
         return ResponseEntity
                 .status(HttpStatus.OK)

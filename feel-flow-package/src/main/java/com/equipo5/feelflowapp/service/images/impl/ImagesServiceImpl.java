@@ -1,12 +1,16 @@
 package com.equipo5.feelflowapp.service.images.impl;
 
 import com.equipo5.feelflowapp.domain.EnterPrise;
+import com.equipo5.feelflowapp.domain.Team;
+import com.equipo5.feelflowapp.domain.enumerations.teamRoles.TeamRoles;
 import com.equipo5.feelflowapp.domain.images.MediaImage;
 import com.equipo5.feelflowapp.domain.users.User;
 import com.equipo5.feelflowapp.dto.images.ImagesDto;
+import com.equipo5.feelflowapp.dto.users.UserDTO;
 import com.equipo5.feelflowapp.exception.notfound.NotFoundException;
 import com.equipo5.feelflowapp.mappers.images.ImagesMapper;
 import com.equipo5.feelflowapp.repository.enterprise.EnterpriseRepository;
+import com.equipo5.feelflowapp.repository.team.TeamRepository;
 import com.equipo5.feelflowapp.repository.users.UserRepository;
 import com.equipo5.feelflowapp.service.enterprise.EnterpriseService;
 import com.equipo5.feelflowapp.service.images.ImagesService;
@@ -34,6 +38,8 @@ public class ImagesServiceImpl implements ImagesService {
 
     private final EnterpriseService enterpriseService;
 
+    private final TeamRepository teamRepository;
+
     @Override
     public ImagesDto getImageOfTheCurrentUser() {
         String username = userService.getUsernameByCurrentUser();
@@ -60,6 +66,23 @@ public class ImagesServiceImpl implements ImagesService {
 
             if( enterprise.get().getLogo() != null ){
                 return imagesMapper.mediaImageToImageDto( enterprise.get().getLogo() );
+            }
+
+        }
+
+        return null;
+    }
+
+    @Override
+    public ImagesDto getImageOfTheCurrentTeam() {
+        String username = userService.getUsernameByCurrentUser();
+        Optional<User> user = userRepository.findByUsername(username);
+
+        if(user.isPresent()){
+            Team team = teamRepository.findTeamByUUIDUser(user.get().getUuid().toString());
+
+            if( team != null ){
+                return imagesMapper.mediaImageToImageDto( team.getLogo() );
             }
 
         }
@@ -121,6 +144,17 @@ public class ImagesServiceImpl implements ImagesService {
 
     }
 
+    @Override
+    public void saveImageOfTheTeam(UUID id, MultipartFile imageFile) throws IOException {
+        Optional<Team> team = teamRepository.findById(id);
+        if (team.isPresent()) {
+            saveImageForTeam(team.get(), imageFile);
+        }else{
+            throw new NotFoundException("Team not found");
+        }
+
+    }
+
     private void saveImageForEnterprise(EnterPrise enterPrise, MultipartFile imageFile) throws IOException {
         MediaImage mediaImage = MediaImage.builder()
                 .name(imageFile.getOriginalFilename())
@@ -130,6 +164,17 @@ public class ImagesServiceImpl implements ImagesService {
 
         enterPrise.setLogo( mediaImage );
         enterpriseRepository.save( enterPrise );
+    }
+
+    private void saveImageForTeam(Team team, MultipartFile imageFile) throws IOException {
+        MediaImage mediaImage = MediaImage.builder()
+                .name(imageFile.getOriginalFilename())
+                .fileType(imageFile.getContentType())
+                .fileType(Base64.getEncoder().encodeToString(imageFile.getBytes()))
+                .build();
+
+        team.setLogo( mediaImage );
+        teamRepository.save( team );
     }
 
 
