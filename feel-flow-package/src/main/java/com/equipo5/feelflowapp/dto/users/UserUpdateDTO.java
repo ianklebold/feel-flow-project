@@ -5,6 +5,7 @@ import com.equipo5.feelflowapp.constants.validation.user.ValidationUserMessages;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 import lombok.*;
 
 @Builder
@@ -26,4 +27,15 @@ public class UserUpdateDTO {
     @NotBlank(message = ValidationUserMessages.VALIDATION_MESSAGE_NOT_BLANK_EMAIL)
     @Email(message = ValidationAdminMessages.VALIDATION_MESSAGE_NOT_WELL_FORMED_EMAIL)
     private String username;
+
+    @NotNull(message = ValidationUserMessages.VALIDATION_MESSAGE_NOT_NULL_COUNTRY)
+    @NotBlank(message = ValidationUserMessages.VALIDATION_MESSAGE_NOT_BLANK_CUNTRY)
+    private String country;
+
+    @Pattern(regexp = "^\\\\+[1-9]\\\\d{1,14}$", message = ValidationUserMessages.VALIDATION_PHONE_NUMBER)
+    private String phoneNumber;
+
+    @NotNull(message = ValidationUserMessages.VALIDATION_MESSAGE_NOT_NULL_COUNTRY)
+    @NotBlank(message = ValidationUserMessages.VALIDATION_MESSAGE_NOT_BLANK_CUNTRY)
+    private String description;
 }

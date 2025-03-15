@@ -16,4 +16,7 @@ public class UserDTO {
     private String surname;
     private String username;
     private EnterpriseInfoHomeDTO enterpriseInfoHomeDTO;
+    private String country;
+    private String phoneNumber;
+    private String description;
 }

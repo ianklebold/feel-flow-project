@@ -24,8 +24,9 @@ public class RegularUser extends User{
     List<Survey> surveys = new ArrayList<>();
 
     @Builder
-    public RegularUser(UUID uuid, String name, String surname, String username, String password, List<Authority> authorities, Team team, List<Survey> surveys, MediaImage mediaImage) {
-        super(uuid, name, surname, username, password, authorities,mediaImage);
+    public RegularUser(UUID uuid, String name, String surname, String username, String password, List<Authority> authorities, Team team, List<Survey> surveys, MediaImage mediaImage, String description, String phoneNumber, String country) {
+        super(uuid, name, surname, username, password, country, phoneNumber, description, authorities, mediaImage);
+
         this.team = team;
         this.surveys = surveys;
     }

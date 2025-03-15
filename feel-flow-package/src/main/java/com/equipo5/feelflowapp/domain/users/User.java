@@ -31,6 +31,10 @@ public class User {
     private String username;
     private String password;
 
+    private String country;
+    private String phoneNumber;
+    private String description;
+
     @ManyToMany(cascade = CascadeType.MERGE)
     @JoinTable(name = "user_authority",
             joinColumns = @JoinColumn(name = "USER_ID", referencedColumnName = "uuid"),

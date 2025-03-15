@@ -50,6 +50,9 @@ public class UserServiceImpl implements UserService{
             user.setName(userUpdateDTO.getName());
             user.setSurname(userUpdateDTO.getSurname());
             user.setUsername(userUpdateDTO.getUsername());
+            user.setDescription(userUpdateDTO.getDescription());
+            user.setCountry(userUpdateDTO.getCountry());
+            user.setPhoneNumber(userUpdateDTO.getPhoneNumber());
 
 
             userRepository.save(user);
