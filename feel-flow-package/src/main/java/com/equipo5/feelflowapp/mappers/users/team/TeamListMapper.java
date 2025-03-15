@@ -1,14 +1,13 @@
 package com.equipo5.feelflowapp.mappers.users.team;
 
 import com.equipo5.feelflowapp.domain.Team;
+import com.equipo5.feelflowapp.domain.users.User;
 import com.equipo5.feelflowapp.dto.team.TeamListDTO;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
-@Mapper
+@Mapper(uses = {User.class})
 public interface TeamListMapper {
-
-
 
     @Mapping(source = "uuid",target = "uuid")
     @Mapping(source = "name",target = "nameTeam")

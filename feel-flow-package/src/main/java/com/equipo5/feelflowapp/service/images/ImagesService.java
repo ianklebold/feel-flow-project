@@ -9,6 +9,10 @@ import java.util.UUID;
 public interface ImagesService {
     ImagesDto getImageOfTheCurrentUser();
 
+    ImagesDto getImageByUserId(UUID uuid);
+
+    ImagesDto getImageByTeamId(UUID uuid);
+
     ImagesDto getImageOfTheCurrentEnterprise();
 
     ImagesDto getImageOfTheCurrentTeam();

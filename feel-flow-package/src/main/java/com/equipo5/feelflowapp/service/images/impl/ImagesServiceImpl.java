@@ -58,6 +58,18 @@ public class ImagesServiceImpl implements ImagesService {
     }
 
     @Override
+    public ImagesDto getImageByUserId(UUID uuid) {
+        Optional<User> user = userRepository.findById(uuid);
+        return user.map(value -> imagesMapper.mediaImageToImageDto(value.getMediaImage())).orElse(null);
+    }
+
+    @Override
+    public ImagesDto getImageByTeamId(UUID uuid) {
+        Optional<Team> team = teamRepository.findById(uuid);
+        return team.map(value -> imagesMapper.mediaImageToImageDto(value.getLogo())).orElse(null);
+    }
+
+    @Override
     public ImagesDto getImageOfTheCurrentEnterprise() {
 
         Optional<EnterPrise> enterprise = enterpriseService.getEnterpriseByCurrentUser();

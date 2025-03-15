@@ -52,6 +52,39 @@ public class ImagesController {
     }
 
     @Operation(
+            summary = "Get user image by id",
+            description = "REST API to get user image"
+    )
+    @ApiResponses({
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "HTTP Request Success"
+            )
+    })
+    @GetMapping("/user/{userId}")
+    @SecurityRequirement(name = "Bearer Authentication")
+    public ImagesDto getImageOfUserById(@PathVariable UUID userId){
+        return imagesService.getImageByUserId(userId);
+    }
+
+
+    @Operation(
+            summary = "Get team image by id",
+            description = "REST API to get user image"
+    )
+    @ApiResponses({
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "HTTP Request Success"
+            )
+    })
+    @GetMapping("/user/{teamId}")
+    @SecurityRequirement(name = "Bearer Authentication")
+    public ImagesDto getImageOfTeamById(@PathVariable UUID teamId){
+        return imagesService.getImageByTeamId(teamId);
+    }
+
+    @Operation(
             summary = "Get logo image of the team",
             description = "REST API to get team image"
     )
