@@ -11,6 +11,7 @@ import com.equipo5.feelflowapp.repository.module.ModuleRepository;
 import com.equipo5.feelflowapp.repository.module.specification.ModuleSpecification;
 import com.equipo5.feelflowapp.repository.users.regularuser.RegularUserRepository;
 import com.equipo5.feelflowapp.service.module.ModuleService;
+import com.equipo5.feelflowapp.service.notification.NotificationService;
 import com.equipo5.feelflowapp.service.team.TeamService;
 import com.equipo5.feelflowapp.service.users.UserService;
 import lombok.RequiredArgsConstructor;
@@ -32,6 +33,8 @@ public class ModuleServiceImpl implements ModuleService {
     private final RegularUserRepository regularUserRepository;
 
     private final UserService userService;
+
+    private final NotificationService notificationService;
 
     @Override
     public boolean isAnyModuleActive(final String name,final List<Module> modules) {
@@ -89,13 +92,24 @@ public class ModuleServiceImpl implements ModuleService {
 
             if(isAllSurveysSolved && ModuleNames.NIKO_NIKO.equals(moduleNames) ){
                 boolean isModuleCloseToday = surveyModule.get().getModuleClosedDate().equals( LocalDate.now() );
+
                 if(isModuleCloseToday){
                     surveyModule.get().setModuleState(ModuleState.FINISHED);
                     moduleRepository.save(surveyModule.get());
+                    notificationService.sendNotificationModule(
+                            surveyModule.get().getTeam().getRegularUsers(),
+                            notificationService.generateBodyForCloseModule("Niko Niko"),
+                            "Cierre de modulo"
+                    );
                 }
             }else if(TWELVE_STEPS.equals(moduleNames)){
                 surveyModule.get().setModuleState(ModuleState.FINISHED);
                 moduleRepository.save(surveyModule.get());
+                notificationService.sendNotificationModule(
+                        surveyModule.get().getTeam().getRegularUsers(),
+                        notificationService.generateBodyForCloseModule("12 pasos de la felicidad"),
+                        "Cierre de modulo"
+                );
             }
 
         }

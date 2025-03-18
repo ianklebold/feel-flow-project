@@ -4,7 +4,7 @@ import com.equipo5.feelflowapp.domain.modules.kudos.KudosModule;
 import com.equipo5.feelflowapp.dto.modules.CreationKudosModuleDto;
 
 public interface KudosService {
-    void publishingModule (CreationKudosModuleDto creationKudosModule);
+    KudosModule publishingModule (CreationKudosModuleDto creationKudosModule);
 
     void closeModule();
 }

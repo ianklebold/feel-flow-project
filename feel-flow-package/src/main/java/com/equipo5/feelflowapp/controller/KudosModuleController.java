@@ -1,10 +1,12 @@
 package com.equipo5.feelflowapp.controller;
 
 import com.equipo5.feelflowapp.constants.response.HttpResponses;
+import com.equipo5.feelflowapp.domain.modules.kudos.KudosModule;
 import com.equipo5.feelflowapp.dto.modules.CreationKudosModuleDto;
 import com.equipo5.feelflowapp.dto.response.ErrorResponseDto;
 import com.equipo5.feelflowapp.dto.response.ResponseDto;
 import com.equipo5.feelflowapp.service.module.kudos.KudosService;
+import com.equipo5.feelflowapp.service.notification.NotificationService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -38,6 +40,8 @@ public class KudosModuleController {
 
     private final KudosService kudosService;
 
+    private final NotificationService notificationService;
+
 
     @Operation(
             summary = "Create Module Kudos REST API",
@@ -68,7 +72,13 @@ public class KudosModuleController {
     public ResponseEntity<ResponseDto> publishingModule(
             @RequestBody CreationKudosModuleDto creationKudosModuleDto
     ){
-        this.kudosService.publishingModule(creationKudosModuleDto);
+        KudosModule kudosModule = this.kudosService.publishingModule(creationKudosModuleDto);
+        // Notificar a miembros
+        notificationService.sendNotificationModule(
+                kudosModule.getTeam().getRegularUsers(),
+                notificationService.generateBodyForOpenedModule("Kudos", kudosModule.getDateAndTimeToPublish(), kudosModule.getDateAndTimeToClose()),
+                "Apertura de nuevo modulo"
+        );
 
         return ResponseEntity
                 .status(HttpStatus.CREATED)

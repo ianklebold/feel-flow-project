@@ -1,10 +1,12 @@
 package com.equipo5.feelflowapp.controller;
 
 import com.equipo5.feelflowapp.constants.response.HttpResponses;
+import com.equipo5.feelflowapp.domain.modules.twelvesteps.TwelveStepsModule;
 import com.equipo5.feelflowapp.dto.modules.CreationTwelveStepsModuleDto;
 import com.equipo5.feelflowapp.dto.response.ErrorResponseDto;
 import com.equipo5.feelflowapp.dto.response.ResponseDto;
 import com.equipo5.feelflowapp.service.module.twelveSteps.TwelveStepsService;
+import com.equipo5.feelflowapp.service.notification.NotificationService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -18,8 +20,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.UUID;
 
 @Tag(
         name = "Module Twelve Steps REST APIs",
@@ -35,6 +35,7 @@ public class TwelveStepsModuleController {
     public static final String PATH_TEAM_ID = "/{idTeam}";
     private final String MODULE = "Module";
     private final TwelveStepsService twelveStepsService;
+    private final NotificationService notificationService;
 
 
     @Operation(
@@ -67,8 +68,12 @@ public class TwelveStepsModuleController {
             @RequestBody CreationTwelveStepsModuleDto creationTwelveStepsModuleDto
             ){
 
-        twelveStepsService.publishingModule(creationTwelveStepsModuleDto);
-
+        TwelveStepsModule twelveStepsModule = twelveStepsService.publishingModule(creationTwelveStepsModuleDto);
+        notificationService.sendNotificationModule(
+                twelveStepsModule.getTeam().getRegularUsers(),
+                notificationService.generateBodyForOpenedModule("12 pasos de la felicidad", twelveStepsModule.getDateAndTimeToPublish(), twelveStepsModule.getDateAndTimeToClose()),
+                "Apertura de nuevo modulo"
+        );
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(new ResponseDto(HttpResponses.STATUS_201,String.format(HttpResponses.MESSAGE_201,MODULE)));

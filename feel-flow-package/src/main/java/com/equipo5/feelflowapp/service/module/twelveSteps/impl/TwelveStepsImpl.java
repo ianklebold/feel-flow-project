@@ -50,7 +50,7 @@ public class TwelveStepsImpl implements TwelveStepsService {
 
     @Override
     @Transactional
-    public void publishingModule(final CreationTwelveStepsModuleDto creationTwelveStepsModuleDto){
+    public TwelveStepsModule publishingModule(final CreationTwelveStepsModuleDto creationTwelveStepsModuleDto){
         //Verificar si existe encuesta activa para modulo
         Optional<Team> team = teamRepository.findById(creationTwelveStepsModuleDto.idTeam());
 
@@ -83,7 +83,7 @@ public class TwelveStepsImpl implements TwelveStepsService {
             // Parametros : Lista de miembros y modulo
             surveyService.createSurveis(currentTeam.getRegularUsers(),twelveStepsModule);
 
-            moduleTwelveStepsRepository.save(twelveStepsModule);
+            return moduleTwelveStepsRepository.save(twelveStepsModule);
         }else {
             throw new NotFoundTeamException("Equipo no encontrado");
         }

@@ -1,10 +1,12 @@
 package com.equipo5.feelflowapp.controller;
 
 import com.equipo5.feelflowapp.constants.response.HttpResponses;
+import com.equipo5.feelflowapp.domain.modules.nikoniko.NikoNikoModule;
 import com.equipo5.feelflowapp.dto.modules.CreationNikoNikoModule;
 import com.equipo5.feelflowapp.dto.response.ErrorResponseDto;
 import com.equipo5.feelflowapp.dto.response.ResponseDto;
 import com.equipo5.feelflowapp.service.module.nikoniko.NikoNikoService;
+import com.equipo5.feelflowapp.service.notification.NotificationService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -37,6 +39,8 @@ public class NikoNikoModuleController {
 
     private final NikoNikoService nikoNikoService;
 
+    private final NotificationService notificationService;
+
     @Operation(
             summary = "Create Module Niko Niko REST API",
             description = "REST API to create/open new module"
@@ -67,8 +71,12 @@ public class NikoNikoModuleController {
             @RequestBody CreationNikoNikoModule creationNikoNikoModule
             ){
 
-        this.nikoNikoService.publishingModule(creationNikoNikoModule);
-
+        NikoNikoModule nikoNikoModule = this.nikoNikoService.publishingModule(creationNikoNikoModule);
+        notificationService.sendNotificationModule(
+                nikoNikoModule.getTeam().getRegularUsers(),
+                notificationService.generateBodyForOpenedModule("Niko Niko", nikoNikoModule.getDateAndTimeToPublish(), nikoNikoModule.getDateAndTimeToClose()),
+                "Apertura de nuevo modulo"
+        );
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(new ResponseDto(HttpResponses.STATUS_201,String.format(HttpResponses.MESSAGE_201,MODULE)));

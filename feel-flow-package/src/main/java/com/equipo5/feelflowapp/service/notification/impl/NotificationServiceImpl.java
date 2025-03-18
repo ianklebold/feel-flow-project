@@ -1,6 +1,7 @@
 package com.equipo5.feelflowapp.service.notification.impl;
 
 import com.equipo5.feelflowapp.domain.notifications.Notification;
+import com.equipo5.feelflowapp.domain.users.RegularUser;
 import com.equipo5.feelflowapp.dto.notifications.NotificationClientDto;
 import com.equipo5.feelflowapp.dto.notifications.NotificationDto;
 import com.equipo5.feelflowapp.dto.notifications.NotificationSessionUserDto;
@@ -15,6 +16,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -53,13 +55,42 @@ public class NotificationServiceImpl implements NotificationService {
 
 
             NotificationDto notification = notificationMapper.notificationClientDtoToNotificationDto( notificationDto );
-            messagingTemplate.convertAndSend("/topic/" + notificationDto.uuidTeam().toString(), notification );
+            messagingTemplate.convertAndSend("/topic/" + notificationDto.uuid().toString(), notification );
         }
 
     }
 
     @Override
-    public List<NotificationSessionUserDto> getBadgesAvailableToSend(LocalDateTime from, LocalDateTime to, Integer max) {
+    public void sendNotificationModule(List<RegularUser> users, String body, String title) {
+        users.forEach(regularUser -> {
+            Notification notificationEntity = new Notification();
+            notificationEntity.setTitle(title);
+            notificationEntity.setBody(body);
+            notificationEntity.setWasRead( Boolean.FALSE );
+            notificationEntity.setWasSeen( Boolean.FALSE );
+            notificationEntity.setCreatedAt( LocalDateTime.now() );
+
+            notificationEntity.setNotificationOwner( regularUser  );
+            Notification notificationCreated = this.notificationRepository.save(notificationEntity);
+
+            NotificationDto notification = notificationMapper.notificationToNotificationDto( notificationEntity );
+
+            messagingTemplate.convertAndSend("/topic/" + notificationCreated.getId().toString(), notification );
+        });
+    }
+
+    @Override
+    public String generateBodyForOpenedModule(String nameModule, Timestamp dateAndTimeToPublish, Timestamp dateAndTimeToClose) {
+        return "El modulo " + nameModule + "Se encuentra abierto y disponible " + "desde las " + dateAndTimeToPublish + " y las " + dateAndTimeToClose;
+    }
+
+    @Override
+    public String generateBodyForCloseModule(String nameModule) {
+        return "El modulo" + nameModule + "se cerro con exito";
+    }
+
+    @Override
+    public List<NotificationSessionUserDto> getNotificationsAvailableToSend(LocalDateTime from, LocalDateTime to, Integer max) {
 
         Optional<UserDTO> optionalUserDTO = userService.getSessionUser();
         if(optionalUserDTO.isPresent()) {

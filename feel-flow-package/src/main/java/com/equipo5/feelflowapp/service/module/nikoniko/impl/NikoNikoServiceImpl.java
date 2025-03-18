@@ -41,7 +41,7 @@ public class NikoNikoServiceImpl implements NikoNikoService {
 
 
     @Override
-    public void publishingModule(CreationNikoNikoModule creationNikoNikoModule) {
+    public NikoNikoModule publishingModule(CreationNikoNikoModule creationNikoNikoModule) {
 
         Optional<Team> team = teamRepository.findById(creationNikoNikoModule.idTeam());
 
@@ -69,7 +69,7 @@ public class NikoNikoServiceImpl implements NikoNikoService {
             nikoNikoModule.setTimeToToResponseStartDay(creationNikoNikoModule.timeToToResponseStartDay());
             nikoNikoModule.setTimeToToResponseEndDay(creationNikoNikoModule.timeToToResponseEndDay());
 
-            moduleNikoNikoRepository.save((nikoNikoModule));
+            return moduleNikoNikoRepository.save((nikoNikoModule));
         }else {
             throw new NotFoundTeamException("Equipo no encontrado");
         }

@@ -1,16 +1,11 @@
 package com.equipo5.feelflowapp.controller;
 
 import com.equipo5.feelflowapp.constants.response.HttpResponses;
-import com.equipo5.feelflowapp.dto.badges.BadgesAvailableDto;
 import com.equipo5.feelflowapp.dto.notifications.NotificationClientDto;
-import com.equipo5.feelflowapp.dto.notifications.NotificationDto;
 import com.equipo5.feelflowapp.dto.notifications.NotificationSessionUserDto;
-import com.equipo5.feelflowapp.dto.response.ErrorResponseDto;
 import com.equipo5.feelflowapp.dto.response.ResponseDto;
 import com.equipo5.feelflowapp.service.notification.NotificationService;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -71,12 +66,12 @@ public class NotificationController {
     })
     @SecurityRequirement(name = "Bearer Authentication")
     @GetMapping("/notifications")
-    public List<NotificationSessionUserDto> getBadgesAvailableToSend(
+    public List<NotificationSessionUserDto> getNotificationsAvailableToSend(
             @RequestParam(required = false) LocalDateTime from,
             @RequestParam(required = false) LocalDateTime to,
             @RequestParam(required = false) Integer max
             ) {
-        return notificationService.getBadgesAvailableToSend(from, to, max);
+        return notificationService.getNotificationsAvailableToSend(from, to, max);
     }
 
 }

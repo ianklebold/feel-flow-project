@@ -13,6 +13,10 @@ public interface NotificationMapper {
     @Mapping(source = "body", target = "body")
     NotificationDto notificationClientDtoToNotificationDto(NotificationClientDto notification);
 
+    @Mapping(source = "title", target = "title")
+    @Mapping(source = "body", target = "body")
+    NotificationDto notificationToNotificationDto(Notification notification);
+
     Notification notificationClientDtoToNotification(NotificationClientDto notificationClientDto);
 
 }

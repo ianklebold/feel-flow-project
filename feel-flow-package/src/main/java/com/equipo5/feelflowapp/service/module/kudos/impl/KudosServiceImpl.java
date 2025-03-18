@@ -46,7 +46,7 @@ public class KudosServiceImpl implements KudosService {
 
 
     @Override
-    public void publishingModule(CreationKudosModuleDto creationKudosModule) {
+    public KudosModule publishingModule(CreationKudosModuleDto creationKudosModule) {
         Optional<Team> team = teamRepository.findById(creationKudosModule.idTeam());
 
         if( team.isPresent() ) {
@@ -76,11 +76,10 @@ public class KudosServiceImpl implements KudosService {
             //Crear N Tablas de Badges.
             tableBadgeService.createTableBadge(kudosModule);
 
-            kudosRepository.save(kudosModule);
+            return kudosRepository.save(kudosModule);
         }else {
             throw new NotFoundTeamException("Equipo no encontrado");
         }
-
     }
 
     @Override
