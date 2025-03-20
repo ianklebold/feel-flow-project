@@ -113,7 +113,7 @@ public class NikoNikoSurveyServiceImpl extends SurveyServiceImpl implements Niko
     }
 
     @Override
-    public void completeSurvey(SurveyAvailableNikoNikoReponseDto surveyResponse) {
+    public Survey completeSurvey(SurveyAvailableNikoNikoReponseDto surveyResponse) {
 
         //Buscar el survey, si existe y esta activa entonces completar la actividad.
         Optional<Survey> survey = super.surveyRepository.findById(surveyResponse.idSurvey());
@@ -133,11 +133,12 @@ public class NikoNikoSurveyServiceImpl extends SurveyServiceImpl implements Niko
                 activityNikoNiko.setCloseDate( activity.get().getCloseDate() );
                 survey.get().getActivities().remove(activity.get());
                 survey.get().getActivities().add(activityNikoNiko);
-                super.surveyRepository.save( survey.get() );
-
+                Survey surveySaved = super.surveyRepository.save( survey.get() );
+                return surveySaved;
             }
 
         }
+        return null;
     }
 
     private boolean isTimeOfActivityOne(LocalTime timeToResponseStartDay, LocalTime timeToResponseEndDay){

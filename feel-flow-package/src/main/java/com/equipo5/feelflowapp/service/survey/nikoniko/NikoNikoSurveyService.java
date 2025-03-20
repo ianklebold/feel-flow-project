@@ -1,5 +1,6 @@
 package com.equipo5.feelflowapp.service.survey.nikoniko;
 
+import com.equipo5.feelflowapp.domain.modules.Survey;
 import com.equipo5.feelflowapp.domain.modules.SurveyModule;
 import com.equipo5.feelflowapp.domain.users.RegularUser;
 import com.equipo5.feelflowapp.dto.modules.SurveyAvailableNikoNikoReponseDto;
@@ -12,6 +13,6 @@ public interface NikoNikoSurveyService {
 
     SurveyAvailableNikoNikoReponseDto getSurveyAvailable();
 
-    void completeSurvey(SurveyAvailableNikoNikoReponseDto surveyResponse);
+    Survey completeSurvey(SurveyAvailableNikoNikoReponseDto surveyResponse);
 
 }

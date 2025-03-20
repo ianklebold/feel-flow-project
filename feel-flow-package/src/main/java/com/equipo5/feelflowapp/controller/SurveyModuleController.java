@@ -3,6 +3,7 @@ package com.equipo5.feelflowapp.controller;
 import com.equipo5.feelflowapp.constants.response.HttpResponses;
 import com.equipo5.feelflowapp.domain.enumerations.modules.ModuleNames;
 import com.equipo5.feelflowapp.domain.enumerations.modules.SurveyStateEnum;
+import com.equipo5.feelflowapp.domain.modules.Survey;
 import com.equipo5.feelflowapp.dto.modules.SurveyAvailableNikoNikoReponseDto;
 import com.equipo5.feelflowapp.dto.modules.SurveyDto;
 import com.equipo5.feelflowapp.dto.modules.SurveyNikoNikoResponseDto;
@@ -12,6 +13,7 @@ import com.equipo5.feelflowapp.dto.response.ResponseDto;
 import com.equipo5.feelflowapp.jobs.module.surveys.SurveyScheduledTask;
 import com.equipo5.feelflowapp.service.module.ModuleService;
 import com.equipo5.feelflowapp.service.module.twelveSteps.TwelveStepsService;
+import com.equipo5.feelflowapp.service.notification.nikoniko.NikoNikoNotificationService;
 import com.equipo5.feelflowapp.service.survey.SurveyService;
 import com.equipo5.feelflowapp.service.survey.nikoniko.NikoNikoSurveyService;
 import com.equipo5.feelflowapp.service.survey.twelvesteps.TwelveStepsSurveyService;
@@ -57,13 +59,16 @@ public class SurveyModuleController {
 
     private final ModuleService moduleService;
 
+    private final NikoNikoNotificationService nikoNikoNotificationService;
+
     @Autowired
-    public SurveyModuleController(@Qualifier("SurveyService") SurveyService surveyService, @Qualifier("TwelveStepsSurveyService") TwelveStepsSurveyService twelveStepsSurveyService, @Qualifier("NikoNikoSurveyServiceImpl") NikoNikoSurveyService nikoNikoSurveyService, SurveyScheduledTask surveyScheduledTask, ModuleService moduleService) {
+    public SurveyModuleController(@Qualifier("SurveyService") SurveyService surveyService, @Qualifier("TwelveStepsSurveyService") TwelveStepsSurveyService twelveStepsSurveyService, @Qualifier("NikoNikoSurveyServiceImpl") NikoNikoSurveyService nikoNikoSurveyService, SurveyScheduledTask surveyScheduledTask, ModuleService moduleService, NikoNikoNotificationService nikoNikoNotificationService) {
         this.surveyService = surveyService;
         this.twelveStepsSurveyService = twelveStepsSurveyService;
         this.nikoNikoSurveyService = nikoNikoSurveyService;
         this.surveyScheduledTask = surveyScheduledTask;
         this.moduleService = moduleService;
+        this.nikoNikoNotificationService = nikoNikoNotificationService;
     }
 
     @Operation(
@@ -150,8 +155,10 @@ public class SurveyModuleController {
     @PostMapping("/niko_niko_module")
     @SecurityRequirement(name = "Bearer Authentication")
     public ResponseEntity<ResponseDto> completeNikoNikoSurvey(@Valid @RequestBody SurveyAvailableNikoNikoReponseDto surveyResponse){
-
-        nikoNikoSurveyService.completeSurvey( surveyResponse );
+        Survey survey = nikoNikoSurveyService.completeSurvey( surveyResponse );
+        if (survey != null) {
+            nikoNikoNotificationService.sendNikoNikoNote(surveyResponse.activityAvailable().descriptionFeeling(), survey);
+        }
         moduleService.closeModule(ModuleNames.NIKO_NIKO);
         return ResponseEntity
                 .status(HttpStatus.OK)
