@@ -5,6 +5,7 @@ import com.equipo5.feelflowapp.domain.enumerations.modules.ModuleNames;
 import com.equipo5.feelflowapp.domain.modules.Module;
 import com.equipo5.feelflowapp.domain.modules.Survey;
 import com.equipo5.feelflowapp.domain.modules.SurveyModule;
+import com.equipo5.feelflowapp.dto.modules.ModuleSurveyDto;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -24,4 +25,8 @@ public interface ModuleService {
     Optional<SurveyModule> getSurveyModuleActiveForCurrentUserByModuleName(ModuleNames moduleNames);
 
     void closeModule(ModuleNames moduleNames);
+
+    List<Module> getModulesByTeamIdAndModuleName(ModuleNames moduleNames, UUID teamId );
+
+    List<ModuleSurveyDto> getModulesSurveysByTeamIdAndModuleName(ModuleNames moduleNames, UUID teamId );
 }

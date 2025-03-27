@@ -103,6 +103,24 @@ public class TeamServiceImpl implements TeamService {
     }
 
     @Override
+    public List<TeamDTO> getTeamsByRole(boolean isAdmin) {
+        String username = userService.getUsernameByCurrentUser();
+
+        if(isAdmin){
+            Optional<Admin> admin = adminRepository.findByUsername(username);
+
+            return admin.map(value -> value.getEnterPrise().getTeam()
+                    .stream()
+                    .map(teamMapper::teamToTeamDto)
+                    .toList()).orElse(Collections.emptyList());
+        }else{
+            String teamId = teamLeaderRepository.findTeamByUsername(username);
+            Optional<Team> team = teamRepository.findById(UUID.fromString(teamId));
+            return team.map(value -> List.of(teamMapper.teamToTeamDto(value))).orElse(Collections.emptyList());
+        }
+    }
+
+    @Override
     public Optional<TeamListDTO> getTeamById(UUID uuid){
         Optional<Team> team = teamRepository.findById(uuid);
         Optional<? extends GrantedAuthority> role = userService.getRoleByCurrentUser();

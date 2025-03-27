@@ -4,10 +4,14 @@ import com.equipo5.feelflowapp.constants.module.twelvesteps.QuestionsConstantsTw
 import com.equipo5.feelflowapp.domain.Team;
 import com.equipo5.feelflowapp.domain.enumerations.modules.ModuleNames;
 import com.equipo5.feelflowapp.domain.modules.Survey;
+import com.equipo5.feelflowapp.dto.dashboard.TeamAndModulesDto;
+import com.equipo5.feelflowapp.dto.modules.ModuleDto;
 import com.equipo5.feelflowapp.dto.modules.TwelveStepsResponseAvgDto;
+import com.equipo5.feelflowapp.dto.team.TeamDTO;
 import com.equipo5.feelflowapp.dto.team.TeamListDTO;
 import com.equipo5.feelflowapp.repository.team.TeamRepository;
 import com.equipo5.feelflowapp.service.dashboard.DashboardService;
+import com.equipo5.feelflowapp.service.module.ModuleService;
 import com.equipo5.feelflowapp.service.module.twelveSteps.TwelveStepsService;
 import com.equipo5.feelflowapp.service.survey.SurveyService;
 import com.equipo5.feelflowapp.service.team.TeamService;
@@ -26,13 +30,15 @@ public class DashboardServiceImpl implements DashboardService {
     private final TeamService teamService;
     private final TeamRepository teamRepository;
     private final TwelveStepsService twelveStepsService;
+    private final ModuleService moduleService;
 
     @Autowired
-    public DashboardServiceImpl(@Qualifier("SurveyService") SurveyService surveyService, TeamService teamService, TeamRepository teamRepository, TwelveStepsService twelveStepsService) {
+    public DashboardServiceImpl(@Qualifier("SurveyService") SurveyService surveyService, TeamService teamService, TeamRepository teamRepository, TwelveStepsService twelveStepsService, ModuleService moduleService) {
         this.surveyService = surveyService;
         this.teamService = teamService;
         this.teamRepository = teamRepository;
         this.twelveStepsService = twelveStepsService;
+        this.moduleService = moduleService;
     }
 
     @Override
@@ -57,6 +63,22 @@ public class DashboardServiceImpl implements DashboardService {
 
 
         return List.of();
+    }
+
+    @Override
+    public List<TeamAndModulesDto> getTeamsAndModulesData(boolean isAdmin,ModuleNames nameModule) {
+        List<TeamAndModulesDto> teamAndModulesDtos = new ArrayList<>();
+        List<TeamDTO> teamDto = this.teamService.getTeamsByRole(isAdmin);
+        teamDto.forEach(team ->
+            teamAndModulesDtos.add(
+                    new TeamAndModulesDto(
+                            team,
+                            moduleService.getModulesSurveysByTeamIdAndModuleName(ModuleNames.TWELVE_STEPS, team.getUuid())
+                    )
+            )
+        );
+
+        return teamAndModulesDtos;
     }
 
     private List<TwelveStepsResponseAvgDto> getTwelveStepsResponseAvgDto(List<Survey> surveys) {
