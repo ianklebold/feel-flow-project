@@ -5,18 +5,33 @@ import java.util.List;
 
 public class QuestionsConstantsTwelveSteps {
     public static final List<String> QUESTIONS_POOL_CLASSIC_TWELVE_STEPS = List.of(
-        "¿En qué medida expresamos gratitud y aprecio entre colegas cada día?",
-            "¿Fomentamos la posibilidad de dar y recibir regalos, así como ayudarnos mutuamente en el equipo?",
-            "¿Promovemos activamente la alimentación saludable y facilitamos opciones saludables para todos?",
-            "¿Apoyamos el ejercicio regular y facilitamos que cada uno cuide de su cuerpo?",
-            "¿Promovemos el descanso adecuado, aseguramos un sueño suficiente y permitimos que los demás refresquen sus mentes?",
-            "¿Fomentamos la exploración y experimentación, permitiendo que los miembros del equipo prueben cosas nuevas?",
-            "¿Estimulamos la participación en actividades al aire libre, el disfrute de la naturaleza y permitimos escapar de la rutina de trabajo?",
-            "¿Ofrecemos apoyo para la meditación y fomentamos la adopción de prácticas de atención plena?",
-            "¿Hacemos que sea fácil para los colegas conectarse socialmente y desarrollar relaciones en el equipo?",
-            "¿Buscamos comprender y realizar los propósitos individuales de cada miembro del equipo?",
-            "¿Sonreímos siempre que podemos, apreciamos el humor y participamos en actividades divertidas como equipo?",
-            "¿Trabajamos juntos para crear y mantener un ambiente positivo en el equipo?"
+        "¿Sientes que el propósito del equipo está claramente definido y que entiendes cómo contribuye tu trabajo a ese propósito?",
+            "¿Sientes que tienes suficiente libertad para tomar decisiones importantes sobre tu trabajo diario?",
+            "¿Sientes que el equipo te da las herramientas y el apoyo necesarios para mejorar tus habilidades y crecer profesionalmente?",
+            "¿Sientes que existe un ambiente de conexión y apoyo entre los miembros del equipo?",
+            "¿Sientes que tus contribuciones y logros son reconocidos y valorados dentro del equipo?",
+            "¿Sientes que el trabajo que realizas tiene un impacto significativo en los resultados del equipo o la organización?",
+            "¿Sientes que puedes expresar tus ideas, preocupaciones o errores sin temor a ser juzgado?",
+            "¿Sientes que hay espacio para momentos de diversión y relajación en el equipo?",
+            "¿Sientes que el equipo te apoya en tu crecimiento personal y profesional?",
+            "¿Sientes que el equipo fomenta un ambiente de concentración y atención plena en las tareas?",
+            "¿Sientes que la gratitud se expresa regularmente en el equipo?",
+            "¿Sientes que tus valores y objetivos personales están alineados con los del equipo?"
+    );
+
+    public static final List<String> QUESTIONS_CATEGORY_TWELVE_STEPS = List.of(
+            "Claridad de Propósito",
+            "Autonomía",
+            "Maestría",
+            "Conexión Social",
+            "Reconocimiento",
+            "Impacto",
+            "Confianza",
+            "Diversión",
+            "Crecimiento Personal",
+            "Mindfulness",
+            "Gratitud",
+            "Propósito Compartido"
     );
 
     public static final String[] ANSWERS_1_POOL_CLASSIC = {
