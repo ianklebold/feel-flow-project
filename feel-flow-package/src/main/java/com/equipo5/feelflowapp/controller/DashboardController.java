@@ -45,7 +45,7 @@ public class DashboardController {
                     description = "HTTP Request Success"
             )
     })
-    @GetMapping()
+    @GetMapping("/twelve_steps_avg")
     @SecurityRequirement(name = "Bearer Authentication")
     public List<TwelveStepsResponseAvgDto> getTwelveStepsSurveysAveragedData(
             @RequestParam(name = "idModuleTwelveSteps", required = false) Long idModuleTwelveSteps
@@ -63,7 +63,7 @@ public class DashboardController {
                     description = "HTTP Request Success"
             )
     })
-    @GetMapping()
+    @GetMapping("/twelve_steps_avg_admin")
     @SecurityRequirement(name = "Bearer Authentication")
     public List<TwelveStepsResponseAvgDto> getTwelveStepsSurveysAveragedData(
             @RequestParam(name = "idTeam", required = false) UUID idTeam,
