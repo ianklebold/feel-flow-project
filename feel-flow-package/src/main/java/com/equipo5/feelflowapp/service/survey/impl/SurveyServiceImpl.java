@@ -171,14 +171,32 @@ public class SurveyServiceImpl implements SurveyService{
     }
 
     @Override
-    public List<Survey> getSurveysByModule(Long id, Team team) {
+    public List<Survey> getSurveysByModule(Long id) {
 
-        Optional<SurveyModule> surveyModule =  this.moduleService.getSurveyModuleById(id, team);
+        Optional<SurveyModule> surveyModule =  this.moduleService.getSurveyModuleById(id);
 
         if (surveyModule.isPresent()){
             return surveyModule.get().getSurveys();
         }
 
         return List.of();
+    }
+
+    @Override
+    public List<Survey> getSurveysByModule(Long id, UUID teamId) {
+        Optional<SurveyModule> surveyModule =  this.moduleService.getSurveyModuleById(id, teamId);
+        if (surveyModule.isPresent()){
+            return surveyModule.get().getSurveys();
+        }
+        return List.of();
+    }
+
+    @Override
+    public List<Survey> getSurveysByModule(String moduleName, UUID teamId) {
+        List<SurveyModule> surveyModules = this.moduleService.getSurveyModuleByNameAndIdTeam(moduleName, teamId);
+
+        return surveyModules.stream()
+                .flatMap(module -> module.getSurveys().stream())
+                .toList();
     }
 }

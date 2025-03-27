@@ -82,17 +82,32 @@ public class ModuleServiceImpl implements ModuleService {
     }
 
     @Override
-    public Optional<SurveyModule> getSurveyModuleById(Long id, Team team) {
+    public Optional<SurveyModule> getSurveyModuleById(Long id) {
 
         Optional<Module> surveyModule = moduleRepository.findById(id);
 
-        if(surveyModule.isPresent()) {
-            if(surveyModule.get().getTeam().getUuid().equals(team.getUuid())) {
-                return Optional.of((SurveyModule) surveyModule.get());
-            }
-        }
+        return surveyModule.map(module -> (SurveyModule) module);
 
-        return Optional.empty();
+    }
+
+    @Override
+    public Optional<SurveyModule> getSurveyModuleById(Long id, UUID idTeam) {
+        Optional<Team> team = teamRepository.findById(idTeam);
+
+        return team.flatMap(value -> value.getModules()
+                .stream()
+                .filter(module -> module.getId().equals(id))
+                .map(module -> (SurveyModule) module)
+                .findFirst());
+    }
+
+    @Override
+    public List<SurveyModule> getSurveyModuleByNameAndIdTeam(String name, UUID idTeam) {
+        Optional<Team> team = teamRepository.findById(idTeam);
+        if (team.isPresent()) {
+            return getSurveyModule(name, team.get());
+        }
+        return List.of();
     }
 
     @Override

@@ -6,8 +6,10 @@ import com.equipo5.feelflowapp.dto.modules.ModuleDto;
 import com.equipo5.feelflowapp.dto.modules.TwelveStepsResponseAvgDto;
 
 import java.util.List;
+import java.util.UUID;
 
 public interface DashboardService {
     List<TwelveStepsResponseAvgDto> getTwelveStepsSurveysAveragedData(Long id);
+    List<TwelveStepsResponseAvgDto> getTwelveStepsSurveysAveragedData(Long idModule, UUID idTeam);
     List<TeamAndModulesDto> getTeamsAndModulesData(boolean isAdmin, ModuleNames nameModule);
 }

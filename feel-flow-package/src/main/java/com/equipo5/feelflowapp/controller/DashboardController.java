@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.UUID;
 
 @Tag(
         name = "Dashboard REST APIs",
@@ -52,7 +53,24 @@ public class DashboardController {
         return dashboardService.getTwelveStepsSurveysAveragedData(idModuleTwelveSteps);
     }
 
-    //Endpoint para admin similar a getTwelveStepsSurveysAveragedData en donde se pase id del equipo y id de modulo. (opcionales)
+    @Operation(
+            summary = "Get averaged data of 12 steps surveys (Only for admin)",
+            description = "REST API to get data 12 steps surveys (Only for admin)"
+    )
+    @ApiResponses({
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "HTTP Request Success"
+            )
+    })
+    @GetMapping()
+    @SecurityRequirement(name = "Bearer Authentication")
+    public List<TwelveStepsResponseAvgDto> getTwelveStepsSurveysAveragedData(
+            @RequestParam(name = "idTeam", required = false) UUID idTeam,
+            @RequestParam(name = "idModuleTwelveSteps", required = false) Long idModuleTwelveSteps
+    ){
+        return dashboardService.getTwelveStepsSurveysAveragedData(idModuleTwelveSteps, idTeam);
+    }
 
     @Operation(
             summary = "Get data of teams and modules for 12 steps",

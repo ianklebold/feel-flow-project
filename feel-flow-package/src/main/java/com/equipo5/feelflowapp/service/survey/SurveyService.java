@@ -41,5 +41,9 @@ public interface SurveyService{
 
     List<Survey> getSurveysByModule(String moduleName, Team team);
 
-    List<Survey> getSurveysByModule(Long id, Team team);
+    List<Survey> getSurveysByModule(Long id);
+
+    List<Survey> getSurveysByModule(Long id, UUID teamId);
+
+    List<Survey> getSurveysByModule(String moduleName, UUID teamId);
 }

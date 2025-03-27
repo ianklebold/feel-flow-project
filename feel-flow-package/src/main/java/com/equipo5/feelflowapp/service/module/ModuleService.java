@@ -20,7 +20,11 @@ public interface ModuleService {
 
     List<SurveyModule> getSurveyModule(String name, Team team);
 
-    Optional<SurveyModule> getSurveyModuleById(Long id, Team team);
+    Optional<SurveyModule> getSurveyModuleById(Long id);
+
+    Optional<SurveyModule> getSurveyModuleById(Long id, UUID idTeam);
+
+    List<SurveyModule> getSurveyModuleByNameAndIdTeam(String name, UUID idTeam);
 
     Optional<SurveyModule> getSurveyModuleActiveForCurrentUserByModuleName(ModuleNames moduleNames);
 

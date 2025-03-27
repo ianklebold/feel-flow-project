@@ -5,7 +5,6 @@ import com.equipo5.feelflowapp.domain.Team;
 import com.equipo5.feelflowapp.domain.enumerations.modules.ModuleNames;
 import com.equipo5.feelflowapp.domain.modules.Survey;
 import com.equipo5.feelflowapp.dto.dashboard.TeamAndModulesDto;
-import com.equipo5.feelflowapp.dto.modules.ModuleDto;
 import com.equipo5.feelflowapp.dto.modules.TwelveStepsResponseAvgDto;
 import com.equipo5.feelflowapp.dto.team.TeamDTO;
 import com.equipo5.feelflowapp.dto.team.TeamListDTO;
@@ -54,7 +53,7 @@ public class DashboardServiceImpl implements DashboardService {
             if(id == null){
                 surveys = this.surveyService.getSurveysByModule(ModuleNames.TWELVE_STEPS.toString(), team);
             }else{
-                surveys = this.surveyService.getSurveysByModule(id, team);
+                surveys = this.surveyService.getSurveysByModule(id);
             }
 
             return getTwelveStepsResponseAvgDto(surveys);
@@ -63,6 +62,24 @@ public class DashboardServiceImpl implements DashboardService {
 
 
         return List.of();
+    }
+
+    @Override
+    public List<TwelveStepsResponseAvgDto> getTwelveStepsSurveysAveragedData(Long idModule, UUID idTeam) {
+        List<Survey> surveys = new ArrayList<>();
+        if( idTeam != null ){
+            if(idModule != null ){
+                surveys = this.surveyService.getSurveysByModule(idModule, idTeam);
+            }else{
+                surveys = this.surveyService.getSurveysByModule(ModuleNames.TWELVE_STEPS.toString(), idTeam);
+            }
+        }else {
+            surveys = this.teamService.getAllTeams()
+                    .stream()
+                    .flatMap(team -> this.surveyService.getSurveysByModule(ModuleNames.TWELVE_STEPS.toString(), team.getUuid()).stream())
+                    .toList();
+        }
+        return getTwelveStepsResponseAvgDto(surveys);
     }
 
     @Override
