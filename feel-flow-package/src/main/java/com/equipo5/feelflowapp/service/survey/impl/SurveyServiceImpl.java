@@ -154,4 +154,31 @@ public class SurveyServiceImpl implements SurveyService{
         }
         return survey.get();
     }
+
+    @Override
+    public List<Survey> getSurveysByModule(String moduleName, Team team) {
+
+        if( ModuleNames.TWELVE_STEPS.toString().equals(moduleName) || ModuleNames.NIKO_NIKO.toString().equals(moduleName) ){
+
+            List<SurveyModule> surveyModuleList =  this.moduleService.getSurveyModule(moduleName , team);
+
+            return surveyModuleList.stream()
+                    .flatMap(module -> module.getSurveys().stream())
+                    .toList();
+
+        }
+        return Collections.emptyList();
+    }
+
+    @Override
+    public List<Survey> getSurveysByModule(Long id, Team team) {
+
+        Optional<SurveyModule> surveyModule =  this.moduleService.getSurveyModuleById(id, team);
+
+        if (surveyModule.isPresent()){
+            return surveyModule.get().getSurveys();
+        }
+
+        return List.of();
+    }
 }

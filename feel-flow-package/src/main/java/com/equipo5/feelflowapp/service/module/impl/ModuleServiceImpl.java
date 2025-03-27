@@ -5,10 +5,12 @@ import com.equipo5.feelflowapp.domain.enumerations.modules.ModuleNames;
 import com.equipo5.feelflowapp.domain.enumerations.modules.ModuleState;
 import com.equipo5.feelflowapp.domain.enumerations.modules.SurveyStateEnum;
 import com.equipo5.feelflowapp.domain.modules.Module;
+import com.equipo5.feelflowapp.domain.modules.Survey;
 import com.equipo5.feelflowapp.domain.modules.SurveyModule;
 import com.equipo5.feelflowapp.domain.users.RegularUser;
 import com.equipo5.feelflowapp.repository.module.ModuleRepository;
 import com.equipo5.feelflowapp.repository.module.specification.ModuleSpecification;
+import com.equipo5.feelflowapp.repository.survey.SurveyRepository;
 import com.equipo5.feelflowapp.repository.users.regularuser.RegularUserRepository;
 import com.equipo5.feelflowapp.service.module.ModuleService;
 import com.equipo5.feelflowapp.service.notification.NotificationService;
@@ -21,6 +23,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 import static com.equipo5.feelflowapp.domain.enumerations.modules.ModuleNames.TWELVE_STEPS;
 
@@ -35,6 +38,7 @@ public class ModuleServiceImpl implements ModuleService {
     private final UserService userService;
 
     private final NotificationService notificationService;
+    private final SurveyRepository surveyRepository;
 
     @Override
     public boolean isAnyModuleActive(final String name,final List<Module> modules) {
@@ -56,6 +60,33 @@ public class ModuleServiceImpl implements ModuleService {
                 .stream()
                 .map(survey -> (SurveyModule) survey )
                 .toList();
+    }
+
+    @Override
+    public List<SurveyModule> getSurveyModule(String name, Team team) {
+        Specification<Module> spec = Specification.where(
+                ModuleSpecification.withName(name)
+                .and(ModuleSpecification.withTeam(team))
+        );
+
+        return moduleRepository.findAll(spec)
+                .stream()
+                .map(survey -> (SurveyModule) survey )
+                .toList();
+    }
+
+    @Override
+    public Optional<SurveyModule> getSurveyModuleById(Long id, Team team) {
+
+        Optional<Module> surveyModule = moduleRepository.findById(id);
+
+        if(surveyModule.isPresent()) {
+            if(surveyModule.get().getTeam().getUuid().equals(team.getUuid())) {
+                return Optional.of((SurveyModule) surveyModule.get());
+            }
+        }
+
+        return Optional.empty();
     }
 
     @Override

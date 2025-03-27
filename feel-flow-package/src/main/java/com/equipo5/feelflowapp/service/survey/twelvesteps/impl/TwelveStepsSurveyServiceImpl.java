@@ -1,5 +1,6 @@
 package com.equipo5.feelflowapp.service.survey.twelvesteps.impl;
 
+import com.equipo5.feelflowapp.domain.Team;
 import com.equipo5.feelflowapp.domain.enumerations.modules.ModuleNames;
 import com.equipo5.feelflowapp.domain.enumerations.modules.SurveyStateEnum;
 import com.equipo5.feelflowapp.domain.modules.Survey;

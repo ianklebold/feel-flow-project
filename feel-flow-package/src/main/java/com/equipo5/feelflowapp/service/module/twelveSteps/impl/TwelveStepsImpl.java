@@ -90,5 +90,23 @@ public class TwelveStepsImpl implements TwelveStepsService {
 
     }
 
+    @Override
+    public double getValueForAnswer(String answer) {
+
+        if(answer.startsWith("1")){
+            return 1d;
+        } else if (answer.startsWith("2")) {
+            return 2d;
+        }else if (answer.startsWith("3")) {
+            return 3d;
+        } else if (answer.startsWith("4")) {
+            return 4d;
+        } else if (answer.startsWith("5")) {
+            return 5d;
+        }
+
+        return 0;
+    }
+
 
 }

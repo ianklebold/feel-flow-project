@@ -1,5 +1,6 @@
 package com.equipo5.feelflowapp.service.survey;
 
+import com.equipo5.feelflowapp.domain.Team;
 import com.equipo5.feelflowapp.domain.enumerations.modules.ModuleNames;
 import com.equipo5.feelflowapp.domain.enumerations.modules.SurveyStateEnum;
 import com.equipo5.feelflowapp.domain.modules.Survey;
@@ -10,6 +11,7 @@ import com.equipo5.feelflowapp.dto.modules.SurveyDto;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 public interface SurveyService{
 
@@ -37,4 +39,7 @@ public interface SurveyService{
 
     Survey getSurveyById(Long id);
 
+    List<Survey> getSurveysByModule(String moduleName, Team team);
+
+    List<Survey> getSurveysByModule(Long id, Team team);
 }

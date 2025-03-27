@@ -8,4 +8,6 @@ import com.equipo5.feelflowapp.dto.modules.CreationTwelveStepsModuleDto;
 public interface TwelveStepsService {
 
     TwelveStepsModule publishingModule(final CreationTwelveStepsModuleDto creationTwelveStepsModuleDto);
+
+    double getValueForAnswer(String answer);
 }
