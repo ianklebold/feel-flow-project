@@ -1,5 +1,6 @@
 package com.equipo5.feelflowapp.service.module.nikoniko.impl;
 
+import com.equipo5.feelflowapp.constants.module.nikoniko.ResponseConstantsNikoNiko;
 import com.equipo5.feelflowapp.domain.Team;
 import com.equipo5.feelflowapp.domain.enumerations.modules.ModuleState;
 import com.equipo5.feelflowapp.domain.modules.nikoniko.NikoNikoModule;
@@ -74,5 +75,16 @@ public class NikoNikoServiceImpl implements NikoNikoService {
             throw new NotFoundTeamException("Equipo no encontrado");
         }
 
+    }
+
+    @Override
+    public double getValueByAnswer(String answer) {
+        return switch (answer) {
+            case ResponseConstantsNikoNiko.ANSWERS_1_POOL_NIKO_NIKO -> 2d;
+            case ResponseConstantsNikoNiko.ANSWERS_2_POOL_NIKO_NIKO -> 1d;
+            case ResponseConstantsNikoNiko.ANSWERS_4_POOL_NIKO_NIKO -> -1d;
+            case ResponseConstantsNikoNiko.ANSWERS_5_POOL_NIKO_NIKO -> -2d;
+            default -> 0d;
+        };
     }
 }

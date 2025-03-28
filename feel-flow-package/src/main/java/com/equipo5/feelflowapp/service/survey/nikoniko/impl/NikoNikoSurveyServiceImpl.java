@@ -11,11 +11,8 @@ import com.equipo5.feelflowapp.domain.modules.Survey;
 import com.equipo5.feelflowapp.domain.modules.SurveyModule;
 import com.equipo5.feelflowapp.domain.modules.nikoniko.NikoNikoModule;
 import com.equipo5.feelflowapp.domain.users.RegularUser;
-import com.equipo5.feelflowapp.dto.modules.ActivityDto;
 import com.equipo5.feelflowapp.dto.modules.ActivityNikoNikoDto;
 import com.equipo5.feelflowapp.dto.modules.SurveyAvailableNikoNikoReponseDto;
-import com.equipo5.feelflowapp.dto.modules.SurveyNikoNikoResponseDto;
-import com.equipo5.feelflowapp.dto.response.ResponseDto;
 import com.equipo5.feelflowapp.mappers.modules.ActivityMapper;
 import com.equipo5.feelflowapp.mappers.modules.SurveyMapper;
 import com.equipo5.feelflowapp.repository.module.ModuleRepository;
@@ -67,10 +64,10 @@ public class NikoNikoSurveyServiceImpl extends SurveyServiceImpl implements Niko
             if(nikoNikoSurvey.isPresent() && nikoNikoSurvey.get().getActivities().size()  == 2){
 
                 ActivityNikoNiko activity1 = new ActivityNikoNiko();
-                setNikoNikoActivityByActivity(getActivityByQuestion(QuestionsConstantsNikoNiko.ANSWERS_1_POOL_NIKO_NIKO, nikoNikoSurvey.get().getActivities()), activity1);
+                setNikoNikoActivityByActivity(getActivityByQuestion(QuestionsConstantsNikoNiko.QUESTIONS_1_POOL_NIKO_NIKO, nikoNikoSurvey.get().getActivities()), activity1);
 
                 ActivityNikoNiko activity2 = new ActivityNikoNiko();
-                setNikoNikoActivityByActivity(getActivityByQuestion(QuestionsConstantsNikoNiko.ANSWERS_2_POOL_NIKO_NIKO, nikoNikoSurvey.get().getActivities()), activity2);
+                setNikoNikoActivityByActivity(getActivityByQuestion(QuestionsConstantsNikoNiko.QUESTIONS_2_POOL_NIKO_NIKO, nikoNikoSurvey.get().getActivities()), activity2);
 
                 NikoNikoModule nikoNikoModule = (NikoNikoModule) nikoNikoSurvey.get().getSurveyModule();
                 long idSurvey = nikoNikoSurvey.get().getId();
@@ -131,6 +128,7 @@ public class NikoNikoSurveyServiceImpl extends SurveyServiceImpl implements Niko
                 activityNikoNiko.setDescriptionFeeling( surveyResponse.activityAvailable().descriptionFeeling() );
                 activityNikoNiko.setActivityState( ActivityState.FINISHED );
                 activityNikoNiko.setCloseDate( activity.get().getCloseDate() );
+                activityNikoNiko.setDayOfWeek( LocalDate.now().getDayOfWeek() );
                 survey.get().getActivities().remove(activity.get());
                 survey.get().getActivities().add(activityNikoNiko);
                 Survey surveySaved = super.surveyRepository.save( survey.get() );

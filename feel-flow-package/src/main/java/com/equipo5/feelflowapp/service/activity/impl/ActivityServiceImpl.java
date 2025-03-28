@@ -31,7 +31,7 @@ public class ActivityServiceImpl implements ActivityService {
         activities.add(
                 ActivityNikoNiko
                         .builder()
-                        .question(QuestionsConstantsNikoNiko.ANSWERS_1_POOL_NIKO_NIKO)
+                        .question(QuestionsConstantsNikoNiko.QUESTIONS_1_POOL_NIKO_NIKO)
                         .activityState(ActivityState.ACTIVE)
                         .answer(null)
                         .build()
@@ -40,7 +40,7 @@ public class ActivityServiceImpl implements ActivityService {
         activities.add(
                 ActivityNikoNiko
                         .builder()
-                        .question(QuestionsConstantsNikoNiko.ANSWERS_2_POOL_NIKO_NIKO)
+                        .question(QuestionsConstantsNikoNiko.QUESTIONS_2_POOL_NIKO_NIKO)
                         .activityState(ActivityState.ACTIVE)
                         .answer(null)
                         .build()

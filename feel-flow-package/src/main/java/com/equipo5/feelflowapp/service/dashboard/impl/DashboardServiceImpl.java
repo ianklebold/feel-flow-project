@@ -3,20 +3,23 @@ package com.equipo5.feelflowapp.service.dashboard.impl;
 import com.equipo5.feelflowapp.constants.module.twelvesteps.QuestionsConstantsTwelveSteps;
 import com.equipo5.feelflowapp.domain.Team;
 import com.equipo5.feelflowapp.domain.enumerations.modules.ModuleNames;
+import com.equipo5.feelflowapp.domain.modules.ActivityNikoNiko;
 import com.equipo5.feelflowapp.domain.modules.Module;
 import com.equipo5.feelflowapp.domain.modules.Survey;
 import com.equipo5.feelflowapp.domain.modules.SurveyModule;
+import com.equipo5.feelflowapp.dto.dashboard.nikoniko.NikoNikoAvgData;
 import com.equipo5.feelflowapp.dto.dashboard.TeamAndModulesDto;
+import com.equipo5.feelflowapp.dto.dashboard.nikoniko.NikoNikoSummaryData;
 import com.equipo5.feelflowapp.dto.modules.ModuleAndUsersDto;
 import com.equipo5.feelflowapp.dto.modules.TwelveStepsResponseAvgDto;
 import com.equipo5.feelflowapp.dto.team.TeamDTO;
 import com.equipo5.feelflowapp.dto.team.TeamListDTO;
 import com.equipo5.feelflowapp.mappers.modules.ModuleMapper;
-import com.equipo5.feelflowapp.mappers.modules.SurveyMapper;
 import com.equipo5.feelflowapp.mappers.users.UserMapper;
 import com.equipo5.feelflowapp.repository.team.TeamRepository;
 import com.equipo5.feelflowapp.service.dashboard.DashboardService;
 import com.equipo5.feelflowapp.service.module.ModuleService;
+import com.equipo5.feelflowapp.service.module.nikoniko.NikoNikoService;
 import com.equipo5.feelflowapp.service.module.twelveSteps.TwelveStepsService;
 import com.equipo5.feelflowapp.service.survey.SurveyService;
 import com.equipo5.feelflowapp.service.team.TeamService;
@@ -24,6 +27,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import java.time.DayOfWeek;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -41,9 +45,10 @@ public class DashboardServiceImpl implements DashboardService {
 
     private final ModuleMapper moduleMapper;
     private final UserMapper userMapper;
+    private final NikoNikoService nikoNikoService;
 
     @Autowired
-    public DashboardServiceImpl(@Qualifier("SurveyService") SurveyService surveyService, TeamService teamService, TeamRepository teamRepository, TwelveStepsService twelveStepsService, ModuleService moduleService, ModuleMapper moduleMapper, UserMapper userMapper) {
+    public DashboardServiceImpl(@Qualifier("SurveyService") SurveyService surveyService, TeamService teamService, TeamRepository teamRepository, TwelveStepsService twelveStepsService, ModuleService moduleService, ModuleMapper moduleMapper, UserMapper userMapper, NikoNikoService nikoNikoService) {
         this.surveyService = surveyService;
         this.teamService = teamService;
         this.teamRepository = teamRepository;
@@ -51,6 +56,7 @@ public class DashboardServiceImpl implements DashboardService {
         this.moduleService = moduleService;
         this.moduleMapper = moduleMapper;
         this.userMapper = userMapper;
+        this.nikoNikoService = nikoNikoService;
     }
 
     @Override
@@ -152,6 +158,124 @@ public class DashboardServiceImpl implements DashboardService {
             }
         }
         return List.of();
+    }
+
+    @Override
+    public NikoNikoSummaryData getEmotionalTrendDataAvg() {
+        List<TeamListDTO> teamListDTOS = this.teamService.getAllTeams();
+        int[] countOfResponseStartDay = {1,1,1,1,1};
+        int[] countOfResponseEndDay = {1,1,1,1,1};
+        List<ActivityNikoNiko> activityStartOfDayNikoNiko = new ArrayList<>();
+        List<ActivityNikoNiko> activityEndOfDayNikoNiko = new ArrayList<>();
+        List<Survey> surveys = new ArrayList<>();
+
+        if (teamListDTOS.size() == 1){
+            Team team = teamRepository.getReferenceById(teamListDTOS.getFirst().getUuid());
+            surveys = this.surveyService.getSurveysByModule(ModuleNames.NIKO_NIKO.toString(), team);
+
+        } else if (teamListDTOS.size() > 1) {
+            List<Team> teams = teamRepository.findAllById(
+                    teamListDTOS.stream().map(TeamListDTO::getUuid).collect(Collectors.toList())
+            );
+
+            surveys = teams.stream().flatMap(team ->
+                 this.surveyService.getSurveysByModule(ModuleNames.NIKO_NIKO.toString(), team).stream()
+            ).toList();
+        }
+
+        activityStartOfDayNikoNiko = surveys
+                .stream()
+                .map(survey -> (ActivityNikoNiko) survey.getActivities().getFirst() )
+                .toList();
+
+        activityEndOfDayNikoNiko = surveys
+                .stream()
+                .map(survey -> (ActivityNikoNiko) survey.getActivities().get(1) )
+                .toList();
+
+        return new NikoNikoSummaryData(
+                getNikoNikoResponseAvgDto(activityStartOfDayNikoNiko, countOfResponseStartDay),
+                getNikoNikoResponseAvgDto(activityEndOfDayNikoNiko, countOfResponseEndDay)
+        );
+    }
+
+    private List<NikoNikoAvgData> getNikoNikoResponseAvgDto(List<ActivityNikoNiko> activityNikoNikos, int[] countOfResponse) {
+
+        List<NikoNikoAvgData> nikoNikoAvgDataList = initializeNikoNikoResponseAvgDto();
+
+        activityNikoNikos.stream()
+                .filter(activityNikoNiko -> activityNikoNiko.getAnswer() != null)
+                .forEach(activityNikoNiko -> {
+                    NikoNikoAvgData nikoNikoAvgData = getNikoNikoAvgByDayOfWeek(nikoNikoAvgDataList, activityNikoNiko.getDayOfWeek());
+                    nikoNikoAvgData.setAvg( nikoNikoAvgData.getAvg() +  nikoNikoService.getValueByAnswer(activityNikoNiko.getAnswer()));
+                    sumByDayOfWeek(countOfResponse, activityNikoNiko.getDayOfWeek());
+                });
+
+        calculateAverageOfValues(nikoNikoAvgDataList, countOfResponse);
+
+        return nikoNikoAvgDataList;
+
+    }
+
+    private List<NikoNikoAvgData> initializeNikoNikoResponseAvgDto(){
+        List<NikoNikoAvgData> nikoNikoAvgDataList = new ArrayList<>();
+        nikoNikoAvgDataList.add(new NikoNikoAvgData(DayOfWeek.MONDAY, 0d));
+        nikoNikoAvgDataList.add(new NikoNikoAvgData(DayOfWeek.TUESDAY, 0d));
+        nikoNikoAvgDataList.add(new NikoNikoAvgData(DayOfWeek.WEDNESDAY, 0d));
+        nikoNikoAvgDataList.add(new NikoNikoAvgData(DayOfWeek.THURSDAY, 0d));
+        nikoNikoAvgDataList.add(new NikoNikoAvgData(DayOfWeek.FRIDAY, 0d));
+        return nikoNikoAvgDataList;
+    }
+
+    private void sumByDayOfWeek(int[] countOfResponse, DayOfWeek dayOfWeek){
+        switch (dayOfWeek){
+            case MONDAY:
+                countOfResponse[0] = countOfResponse[0] + 1;
+                break;
+            case TUESDAY:
+                countOfResponse[1] = countOfResponse[1] + 1;
+                break;
+            case WEDNESDAY:
+                countOfResponse[2] = countOfResponse[2] + 1;
+                break;
+            case THURSDAY:
+                countOfResponse[3] = countOfResponse[3] + 1;
+                break;
+            case FRIDAY:
+                countOfResponse[4] = countOfResponse[4] + 1;
+                break;
+        }
+    }
+
+    private void calculateAverageOfValues(List<NikoNikoAvgData> nikoNikoAvgDataList, int[] countOfResponse){
+        nikoNikoAvgDataList.forEach(
+                        nikoNikoAvgData -> {
+                            switch (nikoNikoAvgData.getDayOfWeek()){
+                                case MONDAY:
+                                    nikoNikoAvgData.setAvg( nikoNikoAvgData.getAvg() / countOfResponse[0] );
+                                    break;
+                                case TUESDAY:
+                                    nikoNikoAvgData.setAvg( nikoNikoAvgData.getAvg() / countOfResponse[1] );
+                                    break;
+                                case WEDNESDAY:
+                                    nikoNikoAvgData.setAvg( nikoNikoAvgData.getAvg() / countOfResponse[2] );
+                                    break;
+                                case THURSDAY:
+                                    nikoNikoAvgData.setAvg( nikoNikoAvgData.getAvg() / countOfResponse[3] );
+                                    break;
+                                case FRIDAY:
+                                    nikoNikoAvgData.setAvg( nikoNikoAvgData.getAvg() / countOfResponse[4] );
+                                    break;
+                            }
+                        }
+                );
+    }
+
+    private NikoNikoAvgData getNikoNikoAvgByDayOfWeek(List<NikoNikoAvgData> nikoNikoAvgDataList, DayOfWeek dayOfWeek){
+        return nikoNikoAvgDataList.stream()
+                .filter( nikoNikoAvgData -> nikoNikoAvgData.getDayOfWeek().equals(dayOfWeek) )
+                .findFirst()
+                .get();
     }
 
     private List<TwelveStepsResponseAvgDto> getTwelveStepsResponseAvgDto(List<Survey> surveys) {

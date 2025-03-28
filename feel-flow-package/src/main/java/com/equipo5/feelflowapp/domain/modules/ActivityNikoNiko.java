@@ -4,6 +4,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.PrimaryKeyJoinColumn;
 import lombok.*;
 
+import java.time.DayOfWeek;
+
 @Getter
 @Setter
 @Entity
@@ -13,7 +15,7 @@ import lombok.*;
 public class ActivityNikoNiko extends Activity{
 
     private String descriptionFeeling;
-
+    private DayOfWeek dayOfWeek;
 
 
 }

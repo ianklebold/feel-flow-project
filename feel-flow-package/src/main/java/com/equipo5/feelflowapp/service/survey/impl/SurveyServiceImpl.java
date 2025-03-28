@@ -162,6 +162,13 @@ public class SurveyServiceImpl implements SurveyService{
 
             List<SurveyModule> surveyModuleList =  this.moduleService.getSurveyModule(moduleName , team);
 
+            if(ModuleNames.NIKO_NIKO.toString().equals(moduleName)){
+                return surveyModuleList.stream()
+                        .filter(surveyModule -> surveyModule.getSurveys() != null)
+                        .flatMap(module -> module.getSurveys().stream())
+                        .toList();
+            }
+
             return surveyModuleList.stream()
                     .flatMap(module -> module.getSurveys().stream())
                     .toList();
