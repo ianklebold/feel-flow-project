@@ -48,29 +48,8 @@ public class DashboardController {
     })
     @GetMapping("/twelve_steps_avg")
     @SecurityRequirement(name = "Bearer Authentication")
-    public List<TwelveStepsResponseAvgDto> getTwelveStepsSurveysAveragedData(
-            @RequestParam(name = "idModuleTwelveSteps", required = false) Long idModuleTwelveSteps
-            ){
-        return dashboardService.getTwelveStepsSurveysAveragedData(idModuleTwelveSteps);
-    }
-
-    @Operation(
-            summary = "Get averaged data of 12 steps surveys (Only for admin)",
-            description = "REST API to get data 12 steps surveys (Only for admin)"
-    )
-    @ApiResponses({
-            @ApiResponse(
-                    responseCode = "200",
-                    description = "HTTP Request Success"
-            )
-    })
-    @GetMapping("/twelve_steps_avg_admin")
-    @SecurityRequirement(name = "Bearer Authentication")
-    public List<TwelveStepsResponseAvgDto> getTwelveStepsSurveysAveragedData(
-            @RequestParam(name = "idTeam", required = false) UUID idTeam,
-            @RequestParam(name = "idModuleTwelveSteps", required = false) Long idModuleTwelveSteps
-    ){
-        return dashboardService.getTwelveStepsSurveysAveragedData(idModuleTwelveSteps, idTeam);
+    public List<TwelveStepsResponseAvgDto> getTwelveStepsSurveysAveragedData(){
+        return dashboardService.getTwelveStepsSurveysAveragedData();
     }
 
     @Operation(

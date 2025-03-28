@@ -9,8 +9,7 @@ import java.util.List;
 import java.util.UUID;
 
 public interface DashboardService {
-    List<TwelveStepsResponseAvgDto> getTwelveStepsSurveysAveragedData(Long id);
-    List<TwelveStepsResponseAvgDto> getTwelveStepsSurveysAveragedData(Long idModule, UUID idTeam);
+    List<TwelveStepsResponseAvgDto> getTwelveStepsSurveysAveragedData();
     List<TeamAndModulesDto> getTeamsAndModulesData(boolean isAdmin, ModuleNames nameModule);
     List<ModuleAndUsersDto> getModuleAndUsersData(ModuleNames nameModule, Boolean isAdmin);
     List<TwelveStepsResponseAvgDto> getTwelveStepsSurveysSummaryData(Long idModule, UUID idUser);

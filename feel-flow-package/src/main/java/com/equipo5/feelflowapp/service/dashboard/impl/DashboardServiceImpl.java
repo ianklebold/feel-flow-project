@@ -28,6 +28,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class DashboardServiceImpl implements DashboardService {
@@ -53,7 +54,7 @@ public class DashboardServiceImpl implements DashboardService {
     }
 
     @Override
-    public List<TwelveStepsResponseAvgDto> getTwelveStepsSurveysAveragedData(Long id) {
+    public List<TwelveStepsResponseAvgDto> getTwelveStepsSurveysAveragedData() {
 
         //Si no es admin --> Debe ver su propio equipo
         List<TeamListDTO> teamListDTOS = this.teamService.getAllTeams();
@@ -62,36 +63,22 @@ public class DashboardServiceImpl implements DashboardService {
             Team team = teamRepository.getReferenceById(teamListDTOS.getFirst().getUuid());
             List<Survey> surveys = new ArrayList<>();
 
-            if(id == null){
-                surveys = this.surveyService.getSurveysByModule(ModuleNames.TWELVE_STEPS.toString(), team);
-            }else{
-                surveys = this.surveyService.getSurveysByModule(id);
-            }
+            surveys = this.surveyService.getSurveysByModule(ModuleNames.TWELVE_STEPS.toString(), team);
 
+            return getTwelveStepsResponseAvgDto(surveys);
+        } else if (teamListDTOS.size() > 1) {
+
+            List<Team> teams = teamRepository.findAllById(
+                    teamListDTOS.stream().map(TeamListDTO::getUuid).collect(Collectors.toList())
+            );
+            List<Survey> surveys = new ArrayList<>();
+            teams.forEach(team -> {
+                        surveys.addAll(this.surveyService.getSurveysByModule(ModuleNames.TWELVE_STEPS.toString(), team));
+                    });
             return getTwelveStepsResponseAvgDto(surveys);
         }
 
-
-
         return List.of();
-    }
-
-    @Override
-    public List<TwelveStepsResponseAvgDto> getTwelveStepsSurveysAveragedData(Long idModule, UUID idTeam) {
-        List<Survey> surveys = new ArrayList<>();
-        if( idTeam != null ){
-            if(idModule != null ){
-                surveys = this.surveyService.getSurveysByModule(idModule, idTeam);
-            }else{
-                surveys = this.surveyService.getSurveysByModule(ModuleNames.TWELVE_STEPS.toString(), idTeam);
-            }
-        }else {
-            surveys = this.teamService.getAllTeams()
-                    .stream()
-                    .flatMap(team -> this.surveyService.getSurveysByModule(ModuleNames.TWELVE_STEPS.toString(), team.getUuid()).stream())
-                    .toList();
-        }
-        return getTwelveStepsResponseAvgDto(surveys);
     }
 
     @Override

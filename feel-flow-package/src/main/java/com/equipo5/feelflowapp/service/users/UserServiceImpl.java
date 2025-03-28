@@ -39,8 +39,6 @@ public class UserServiceImpl implements UserService{
 
     private final RegularUserRepository regularUserRepository;
 
-    private final ModuleService moduleService;
-
     @Override
     @Transactional
     public Optional<UserDTO> updateUser(UUID uuidUser, UserUpdateDTO userUpdateDTO) {
