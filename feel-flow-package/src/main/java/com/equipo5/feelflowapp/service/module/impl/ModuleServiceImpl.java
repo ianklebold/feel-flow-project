@@ -1,5 +1,6 @@
 package com.equipo5.feelflowapp.service.module.impl;
 
+import com.equipo5.feelflowapp.domain.EnterPrise;
 import com.equipo5.feelflowapp.domain.Team;
 import com.equipo5.feelflowapp.domain.enumerations.modules.ModuleNames;
 import com.equipo5.feelflowapp.domain.enumerations.modules.ModuleState;
@@ -15,6 +16,7 @@ import com.equipo5.feelflowapp.repository.module.specification.ModuleSpecificati
 import com.equipo5.feelflowapp.repository.survey.SurveyRepository;
 import com.equipo5.feelflowapp.repository.team.TeamRepository;
 import com.equipo5.feelflowapp.repository.users.regularuser.RegularUserRepository;
+import com.equipo5.feelflowapp.service.enterprise.EnterpriseService;
 import com.equipo5.feelflowapp.service.module.ModuleService;
 import com.equipo5.feelflowapp.service.notification.NotificationService;
 import com.equipo5.feelflowapp.service.team.TeamService;
@@ -24,10 +26,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 import static com.equipo5.feelflowapp.domain.enumerations.modules.ModuleNames.TWELVE_STEPS;
 
@@ -45,6 +44,8 @@ public class ModuleServiceImpl implements ModuleService {
     private final SurveyRepository surveyRepository;
     private final TeamRepository teamRepository;
     private final ModuleSurveyMapper moduleSurveyMapper;
+    private final EnterpriseService enterpriseService;
+    private final TeamService teamService;
 
     @Override
     public boolean isAnyModuleActive(final String name,final List<Module> modules) {
@@ -174,6 +175,33 @@ public class ModuleServiceImpl implements ModuleService {
                 .stream()
                 .map(moduleSurveyMapper::moduleToModuleDto)
                 .toList();
+    }
+
+    @Override
+    public List<Module> getAllModules(ModuleNames moduleNames, Boolean isAdmin) {
+
+        if(isAdmin){
+            Optional<EnterPrise> enterPrise = enterpriseService.getEnterpriseByCurrentUser();
+            if (enterPrise.isPresent()){
+                List<Team> teams = enterPrise.get().getTeam();
+                return teams.stream()
+                        .flatMap(team -> team.getModules().stream())
+                        .filter(module -> moduleNames.toString().equals(module.getName()) )
+                        .sorted( Comparator.comparing( Module::getDateAndTimeToPublish ))
+                        .toList();
+            }
+        }else{
+            Optional<Team> team = teamService.getTeamByCurrentUser();
+            if (team.isPresent()){
+                 return team.get().getModules()
+                         .stream()
+                         .filter((module) -> moduleNames.toString().equals(module.getName()) )
+                         .sorted( Comparator.comparing( Module::getDateAndTimeToPublish ))
+                         .toList();
+            }
+        }
+
+        return List.of();
     }
 
 

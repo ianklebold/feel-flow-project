@@ -3,11 +3,17 @@ package com.equipo5.feelflowapp.service.dashboard.impl;
 import com.equipo5.feelflowapp.constants.module.twelvesteps.QuestionsConstantsTwelveSteps;
 import com.equipo5.feelflowapp.domain.Team;
 import com.equipo5.feelflowapp.domain.enumerations.modules.ModuleNames;
+import com.equipo5.feelflowapp.domain.modules.Module;
 import com.equipo5.feelflowapp.domain.modules.Survey;
+import com.equipo5.feelflowapp.domain.modules.SurveyModule;
 import com.equipo5.feelflowapp.dto.dashboard.TeamAndModulesDto;
+import com.equipo5.feelflowapp.dto.modules.ModuleAndUsersDto;
 import com.equipo5.feelflowapp.dto.modules.TwelveStepsResponseAvgDto;
 import com.equipo5.feelflowapp.dto.team.TeamDTO;
 import com.equipo5.feelflowapp.dto.team.TeamListDTO;
+import com.equipo5.feelflowapp.mappers.modules.ModuleMapper;
+import com.equipo5.feelflowapp.mappers.modules.SurveyMapper;
+import com.equipo5.feelflowapp.mappers.users.UserMapper;
 import com.equipo5.feelflowapp.repository.team.TeamRepository;
 import com.equipo5.feelflowapp.service.dashboard.DashboardService;
 import com.equipo5.feelflowapp.service.module.ModuleService;
@@ -20,6 +26,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -31,13 +38,18 @@ public class DashboardServiceImpl implements DashboardService {
     private final TwelveStepsService twelveStepsService;
     private final ModuleService moduleService;
 
+    private final ModuleMapper moduleMapper;
+    private final UserMapper userMapper;
+
     @Autowired
-    public DashboardServiceImpl(@Qualifier("SurveyService") SurveyService surveyService, TeamService teamService, TeamRepository teamRepository, TwelveStepsService twelveStepsService, ModuleService moduleService) {
+    public DashboardServiceImpl(@Qualifier("SurveyService") SurveyService surveyService, TeamService teamService, TeamRepository teamRepository, TwelveStepsService twelveStepsService, ModuleService moduleService, ModuleMapper moduleMapper, UserMapper userMapper) {
         this.surveyService = surveyService;
         this.teamService = teamService;
         this.teamRepository = teamRepository;
         this.twelveStepsService = twelveStepsService;
         this.moduleService = moduleService;
+        this.moduleMapper = moduleMapper;
+        this.userMapper = userMapper;
     }
 
     @Override
@@ -96,6 +108,63 @@ public class DashboardServiceImpl implements DashboardService {
         );
 
         return teamAndModulesDtos;
+    }
+
+    @Override
+    public List<ModuleAndUsersDto> getModuleAndUsersData(ModuleNames nameModule, Boolean isAdmin) {
+
+        //Si es admin entonces devolver todos los modulos de toda la empresa con todos sus usuarios.
+        List<Module> modules = moduleService.getAllModules(ModuleNames.TWELVE_STEPS, isAdmin);
+        //Si no es admin entonces devolver todos los modulos del equipo
+        if ( !modules.isEmpty() ){
+            return modules.stream()
+                    .map( module ->
+                            new ModuleAndUsersDto(
+                                    moduleMapper.moduleToSimpleModuleDto(module),
+                                    module.getTeam().getRegularUsers().stream().map(userMapper::userToUserDto).toList()
+                            )
+                    )
+                    .toList();
+        }
+
+
+        return List.of();
+    }
+
+    @Override
+    public List<TwelveStepsResponseAvgDto> getTwelveStepsSurveysSummaryData(Long idModule, UUID idUser) {
+        List<TwelveStepsResponseAvgDto> twelveStepsResponseAvgDtos = new ArrayList<>();
+        if(idModule != null ){
+            if(idUser != null ){
+                // Devolver resultados de un usuario
+                Optional<SurveyModule> surveyModule = moduleService.getSurveyModuleById(idModule);
+                if (surveyModule.isPresent()){
+                     Optional<Survey> surveyOptional = surveyModule.get().getSurveys()
+                             .stream()
+                             .filter(survey -> survey.getRegularUser().getUuid().equals(idUser))
+                             .findFirst();
+
+                     if (surveyOptional.isPresent()){
+                         for (int i = 0; i < 12; i++){
+                             twelveStepsResponseAvgDtos.add(
+                                     new TwelveStepsResponseAvgDto(
+                                             QuestionsConstantsTwelveSteps.QUESTIONS_CATEGORY_TWELVE_STEPS.get(i),
+                                             twelveStepsService.getValueForAnswer(surveyOptional.get().getActivities().get(i).getAnswer())
+                                     )
+                             );
+                         }
+                     }
+
+                }
+                return twelveStepsResponseAvgDtos;
+            }else{
+                Optional<SurveyModule> surveyModule = moduleService.getSurveyModuleById(idModule);
+                if (surveyModule.isPresent()){
+                    return getTwelveStepsResponseAvgDto(surveyModule.get().getSurveys());
+                }
+            }
+        }
+        return List.of();
     }
 
     private List<TwelveStepsResponseAvgDto> getTwelveStepsResponseAvgDto(List<Survey> surveys) {

@@ -159,6 +159,28 @@ public class TeamServiceImpl implements TeamService {
         return Optional.empty();
     }
 
+    @Override
+    public Optional<Team> getTeamByCurrentUser() throws NotFoundException {
+        Optional<? extends GrantedAuthority> role = userService.getRoleByCurrentUser();
+
+        if(role.isPresent()){
+            if (TeamRoles.ADMIN.toString().equals(role.get().getAuthority())){
+                return Optional.empty();
+            }else{
+                String username = userService.getUsernameByCurrentUser();
+                String teamId = "";
+                if (TeamRoles.TEAM_LEADER.name().equals(role.get().getAuthority())){
+                    teamId = teamLeaderRepository.findTeamByUsername(username);
+                }else {
+                    teamId = regularUserRepository.findTeamByUsername(username);
+                }
+                return teamRepository.findById(UUID.fromString(teamId));
+            }
+        }
+
+        return Optional.empty();
+    }
+
     private void setTeamLeader(Team teamToCreate,TeamDTO teamDTO){
         TeamLeader teamLeader =  teamLeaderService.createTeamLeader(teamDTO.getTeamLeaderDTO());
         teamToCreate.setTeamLeader(teamLeader);

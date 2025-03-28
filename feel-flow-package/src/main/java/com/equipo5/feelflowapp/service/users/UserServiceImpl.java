@@ -14,6 +14,7 @@ import com.equipo5.feelflowapp.repository.users.UserRepository;
 import com.equipo5.feelflowapp.repository.users.admin.AdminRepository;
 import com.equipo5.feelflowapp.repository.users.regularuser.RegularUserRepository;
 import com.equipo5.feelflowapp.repository.users.teamleader.TeamLeaderRepository;
+import com.equipo5.feelflowapp.service.module.ModuleService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.GrantedAuthority;
@@ -21,6 +22,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -36,6 +38,8 @@ public class UserServiceImpl implements UserService{
     private final TeamLeaderRepository teamLeaderRepository;
 
     private final RegularUserRepository regularUserRepository;
+
+    private final ModuleService moduleService;
 
     @Override
     @Transactional

@@ -2,6 +2,7 @@ package com.equipo5.feelflowapp.mappers.modules;
 
 import com.equipo5.feelflowapp.domain.modules.Module;
 import com.equipo5.feelflowapp.dto.modules.ModuleDto;
+import com.equipo5.feelflowapp.dto.modules.SimpleModuleDto;
 import com.equipo5.feelflowapp.mappers.users.UserMapper;
 import com.equipo5.feelflowapp.mappers.users.team.TeamMapper;
 import org.mapstruct.Mapper;
@@ -17,4 +18,11 @@ public interface ModuleMapper {
     @Mapping(source = "dateAndTimeToPublish",target = "dateAndTimeToPublish")
     @Mapping(source = "dateAndTimeToClose",target = "dateAndTimeToClose")
     ModuleDto moduleToModuleDto(Module module);
+
+    @Mapping(source = "name",target = "name")
+    @Mapping(source = "creationDate",target = "creationDate")
+    @Mapping(source = "moduleState",target = "moduleState")
+    @Mapping(source = "dateAndTimeToPublish",target = "dateAndTimeToPublish")
+    @Mapping(source = "dateAndTimeToClose",target = "dateAndTimeToClose")
+    SimpleModuleDto moduleToSimpleModuleDto(Module module);
 }

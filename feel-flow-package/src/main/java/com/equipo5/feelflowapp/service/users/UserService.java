@@ -4,6 +4,7 @@ import com.equipo5.feelflowapp.dto.users.UserDTO;
 import com.equipo5.feelflowapp.dto.users.UserUpdateDTO;
 import org.springframework.security.core.GrantedAuthority;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 

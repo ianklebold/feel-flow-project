@@ -1,5 +1,6 @@
 package com.equipo5.feelflowapp.service.team;
 
+import com.equipo5.feelflowapp.domain.Team;
 import com.equipo5.feelflowapp.dto.team.TeamDTO;
 import com.equipo5.feelflowapp.dto.team.TeamListDTO;
 import com.equipo5.feelflowapp.dto.team.TeamUpdateDTO;
@@ -22,4 +23,6 @@ public interface TeamService {
     Optional<TeamListDTO> getTeamById(UUID uuid) throws NotFoundException;
 
     Optional<TeamListDTO> updateTeam(UUID uuid, TeamUpdateDTO teamDTO) throws NotFoundException;
+
+    Optional<Team> getTeamByCurrentUser() throws NotFoundException;
 }

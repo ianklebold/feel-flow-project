@@ -3,6 +3,7 @@ package com.equipo5.feelflowapp.controller;
 import com.equipo5.feelflowapp.domain.enumerations.modules.ModuleNames;
 import com.equipo5.feelflowapp.dto.dashboard.TeamAndModulesDto;
 import com.equipo5.feelflowapp.dto.images.ImagesDto;
+import com.equipo5.feelflowapp.dto.modules.ModuleAndUsersDto;
 import com.equipo5.feelflowapp.dto.modules.ModuleDto;
 import com.equipo5.feelflowapp.dto.modules.TwelveStepsResponseAvgDto;
 import com.equipo5.feelflowapp.service.dashboard.DashboardService;
@@ -73,8 +74,27 @@ public class DashboardController {
     }
 
     @Operation(
+            summary = "Get summary averaged data of 12 steps surveys",
+            description = "REST API to get data 12 steps surveys"
+    )
+    @ApiResponses({
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "HTTP Request Success"
+            )
+    })
+    @GetMapping("/twelve_steps_summary")
+    @SecurityRequirement(name = "Bearer Authentication")
+    public List<TwelveStepsResponseAvgDto> getTwelveStepsSurveysSummaryData(
+            @RequestParam(name = "idTeam", required = false) Long idModule,
+            @RequestParam(name = "idModuleTwelveSteps", required = false) UUID idRegularUser
+    ){
+        return dashboardService.getTwelveStepsSurveysSummaryData(idModule, idRegularUser);
+    }
+
+    @Operation(
             summary = "Get data of teams and modules for 12 steps",
-            description = "REST API to get data 12 steps surveys. If the current user is admin the response will be" +
+            description = "REST API to get data of the surveys. If the current user is admin the response will be" +
                     "a list of modules and its team, otherwise if the current user is tl the response will be a list" +
                     "of modules an one team"
     )
@@ -91,5 +111,24 @@ public class DashboardController {
             @RequestParam(name = "isAdmin", defaultValue = "false") Boolean isAdmin
             ){
         return dashboardService.getTeamsAndModulesData(isAdmin,nameModule);
+    }
+
+    @Operation(
+            summary = "Get data of module and users",
+            description = "REST API to get data of module and users."
+    )
+    @ApiResponses({
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "HTTP Request Success"
+            )
+    })
+    @GetMapping("/modules-and-users")
+    @SecurityRequirement(name = "Bearer Authentication")
+    public List<ModuleAndUsersDto> getModuleAndUsersData(
+            @RequestParam(name = "nameModule") ModuleNames nameModule,
+            @RequestParam(name = "isAdmin", defaultValue = "false") Boolean isAdmin
+    ){
+        return dashboardService.getModuleAndUsersData(nameModule, isAdmin);
     }
 }
