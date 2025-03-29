@@ -2,6 +2,7 @@ package com.equipo5.feelflowapp.repository.module.specification;
 
 import com.equipo5.feelflowapp.domain.Team;
 import com.equipo5.feelflowapp.domain.modules.Module;
+import jakarta.persistence.criteria.Predicate;
 import org.springframework.data.jpa.domain.Specification;
 
 import java.sql.Timestamp;
@@ -22,19 +23,31 @@ public class ModuleSpecification {
         };
     }
 
-    public static Specification<Module> withPublishDate(final LocalDate publishDate) {
+    public static Specification<Module> withPublishDate(final int mes) {
 
         return (root, query, criteriaBuilder) -> {
-                ZoneId zonaBuenosAires = ZoneId.of("America/Argentina/Buenos_Aires");
-                ZonedDateTime zonedDate = publishDate.atStartOfDay(zonaBuenosAires);
+            ZoneId zonaBuenosAires = ZoneId.of("America/Argentina/Buenos_Aires");
+            int anio = LocalDate.now(zonaBuenosAires).getYear();
 
-                LocalDate endDate = LocalDate.of(LocalDate.now().getYear(), publishDate.getMonth(), 1)
-                        .with(TemporalAdjusters.lastDayOfMonth());
-                ZonedDateTime zonedEndDate = endDate.atStartOfDay(zonaBuenosAires);
+            LocalDate primerDia = LocalDate.of(anio, mes, 1);
+            LocalDate ultimoDia = primerDia.with(TemporalAdjusters.lastDayOfMonth());
 
-            return criteriaBuilder.between(root.get("dateAndTimeToPublish"),
-                        Timestamp.from(zonedDate.toInstant()),
-                        Timestamp.from(zonedEndDate.toInstant()));
+            ZonedDateTime inicioDelMes = primerDia.atStartOfDay(zonaBuenosAires);
+            ZonedDateTime finDelMes = ultimoDia.atTime(23, 59, 59, 999000000)
+                    .atZone(zonaBuenosAires);
+
+            Timestamp inicioTimestamp = Timestamp.from(inicioDelMes.toInstant());
+            Timestamp finTimestamp = Timestamp.from(finDelMes.toInstant());
+
+            Predicate publicacionAntesFinMes = criteriaBuilder.lessThanOrEqualTo(
+                    root.get("dateAndTimeToPublish"), finTimestamp);
+
+            Predicate cierreDespuesInicioMes = criteriaBuilder.or(
+                    criteriaBuilder.isNull(root.get("dateAndTimeToClose")),
+                    criteriaBuilder.greaterThanOrEqualTo(root.get("dateAndTimeToClose"), inicioTimestamp)
+            );
+
+            return criteriaBuilder.and(publicacionAntesFinMes, cierreDespuesInicioMes);
         };
     }
 

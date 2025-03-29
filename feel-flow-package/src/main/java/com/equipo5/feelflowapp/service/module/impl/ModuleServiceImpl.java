@@ -70,9 +70,9 @@ public class ModuleServiceImpl implements ModuleService {
     }
 
     @Override
-    public List<SurveyModule> getSurveyModuleByPublishDate(LocalDate publishDate, String name, Team team) {
+    public List<SurveyModule> getSurveyModuleByPublishDate(int mes, String name, Team team) {
         Specification<Module> spec = Specification.where(
-                        ModuleSpecification.withPublishDate(publishDate))
+                        ModuleSpecification.withPublishDate(mes))
                 .and(ModuleSpecification.withName(name))
                 .and(ModuleSpecification.withTeam(team));
 

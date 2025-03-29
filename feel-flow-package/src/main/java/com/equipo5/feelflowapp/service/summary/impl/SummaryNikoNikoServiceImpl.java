@@ -1,5 +1,6 @@
 package com.equipo5.feelflowapp.service.summary.impl;
 
+import com.equipo5.feelflowapp.domain.Team;
 import com.equipo5.feelflowapp.domain.enumerations.modules.ModuleNames;
 import com.equipo5.feelflowapp.domain.modules.Activity;
 import com.equipo5.feelflowapp.domain.modules.SurveyModule;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @AllArgsConstructor
@@ -25,16 +27,12 @@ public class SummaryNikoNikoServiceImpl implements SummaryNikoNikoService {
     @Override
     public List<SummaryNikoNikoDto> getSummary(UUID idTeam, Integer numberOfMouth) {
         List<SummaryNikoNikoDto> summaries = new ArrayList<>();
-        teamRepository.findById(idTeam).ifPresent(team -> {
-            LocalDate date;
-            if(numberOfMouth == null){
-                 date = LocalDate.of(LocalDate.now().getYear(), LocalDate.now().getMonth(), 1);
-
-            }else{
-                 date = LocalDate.of(LocalDate.now().getYear(), numberOfMouth, 1);
-
-            }
-            List<SurveyModule> surveyModules = moduleService.getSurveyModuleByPublishDate(date, ModuleNames.NIKO_NIKO.toString(),team);
+        if(numberOfMouth == null){
+            numberOfMouth = LocalDate.now().getMonth().getValue();
+        }
+        Optional<Team> team = teamRepository.findById(idTeam);
+        if(team.isPresent()){
+            List<SurveyModule> surveyModules = moduleService.getSurveyModuleByPublishDate(numberOfMouth, ModuleNames.NIKO_NIKO.toString(),team.get());
 
             if (!surveyModules.isEmpty()) {
                 SurveyModule surveyModule = surveyModules.get(0);
@@ -51,8 +49,7 @@ public class SummaryNikoNikoServiceImpl implements SummaryNikoNikoService {
                     });
                 }
             }
-        });
-
+        }
         return summaries;
     }
 
