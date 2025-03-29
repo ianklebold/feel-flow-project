@@ -37,7 +37,7 @@ public class SummaryNikoNikoServiceImpl implements SummaryNikoNikoService {
             List<SurveyModule> surveyModules = moduleService.getSurveyModuleByPublishDate(date, ModuleNames.NIKO_NIKO.toString(),team);
 
             if (!surveyModules.isEmpty()) {
-                SurveyModule surveyModule = surveyModules.getFirst();
+                SurveyModule surveyModule = surveyModules.get(0);
                 if(surveyModule.getSurveys() != null){
                     surveyModule.getSurveys().forEach(survey -> {
                         summaries.add(new SummaryNikoNikoDto(

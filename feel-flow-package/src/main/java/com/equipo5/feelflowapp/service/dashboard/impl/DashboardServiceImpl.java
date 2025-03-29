@@ -66,7 +66,7 @@ public class DashboardServiceImpl implements DashboardService {
         List<TeamListDTO> teamListDTOS = this.teamService.getAllTeams();
 
         if (teamListDTOS.size() == 1){
-            Team team = teamRepository.getReferenceById(teamListDTOS.getFirst().getUuid());
+            Team team = teamRepository.getReferenceById(teamListDTOS.get(0).getUuid());
             List<Survey> surveys = new ArrayList<>();
 
             surveys = this.surveyService.getSurveysByModule(ModuleNames.TWELVE_STEPS.toString(), team);
@@ -170,7 +170,7 @@ public class DashboardServiceImpl implements DashboardService {
         List<Survey> surveys = new ArrayList<>();
 
         if (teamListDTOS.size() == 1){
-            Team team = teamRepository.getReferenceById(teamListDTOS.getFirst().getUuid());
+            Team team = teamRepository.getReferenceById(teamListDTOS.get(0).getUuid());
             surveys = this.surveyService.getSurveysByModule(ModuleNames.NIKO_NIKO.toString(), team);
 
         } else if (teamListDTOS.size() > 1) {
@@ -185,7 +185,7 @@ public class DashboardServiceImpl implements DashboardService {
 
         activityStartOfDayNikoNiko = surveys
                 .stream()
-                .map(survey -> (ActivityNikoNiko) survey.getActivities().getFirst() )
+                .map(survey -> (ActivityNikoNiko) survey.getActivities().get(0) )
                 .toList();
 
         activityEndOfDayNikoNiko = surveys
