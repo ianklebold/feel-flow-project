@@ -4,7 +4,11 @@ import com.equipo5.feelflowapp.domain.Team;
 import com.equipo5.feelflowapp.domain.modules.Module;
 import org.springframework.data.jpa.domain.Specification;
 
+import java.sql.Timestamp;
 import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.temporal.TemporalAdjusters;
 
 public class ModuleSpecification {
 
@@ -15,6 +19,22 @@ public class ModuleSpecification {
             }else {
                 return criteriaBuilder.lessThan(root.get("creationDate"), LocalDate.now());
             }
+        };
+    }
+
+    public static Specification<Module> withPublishDate(final LocalDate publishDate) {
+
+        return (root, query, criteriaBuilder) -> {
+                ZoneId zonaBuenosAires = ZoneId.of("America/Argentina/Buenos_Aires");
+                ZonedDateTime zonedDate = publishDate.atStartOfDay(zonaBuenosAires);
+
+                LocalDate endDate = LocalDate.of(LocalDate.now().getYear(), publishDate.getMonth(), 1)
+                        .with(TemporalAdjusters.lastDayOfMonth());
+                ZonedDateTime zonedEndDate = endDate.atStartOfDay(zonaBuenosAires);
+
+            return criteriaBuilder.between(root.get("dateAndTimeToPublish"),
+                        Timestamp.from(zonedDate.toInstant()),
+                        Timestamp.from(zonedEndDate.toInstant()));
         };
     }
 

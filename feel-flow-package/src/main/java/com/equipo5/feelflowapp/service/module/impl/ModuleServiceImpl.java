@@ -70,6 +70,20 @@ public class ModuleServiceImpl implements ModuleService {
     }
 
     @Override
+    public List<SurveyModule> getSurveyModuleByPublishDate(LocalDate publishDate, String name, Team team) {
+        Specification<Module> spec = Specification.where(
+                        ModuleSpecification.withPublishDate(publishDate))
+                .and(ModuleSpecification.withName(name))
+                .and(ModuleSpecification.withTeam(team));
+
+
+        return moduleRepository.findAll(spec)
+                .stream()
+                .map(survey -> (SurveyModule) survey )
+                .toList();
+    }
+
+    @Override
     public List<SurveyModule> getSurveyModule(String name, Team team) {
         Specification<Module> spec = Specification.where(
                 ModuleSpecification.withName(name)

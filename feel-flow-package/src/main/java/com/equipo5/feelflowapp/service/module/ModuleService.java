@@ -18,6 +18,8 @@ public interface ModuleService {
 
     List<SurveyModule> getSurveyModule(LocalDate creationDate, String name, Team team);
 
+    List<SurveyModule> getSurveyModuleByPublishDate(LocalDate publishDate, String name, Team team);
+
     List<SurveyModule> getSurveyModule(String name, Team team);
 
     Optional<SurveyModule> getSurveyModuleById(Long id);
