@@ -127,7 +127,7 @@ public class NikoNikoSurveyServiceImpl extends SurveyServiceImpl implements Niko
                 activityNikoNiko.setAnswer(surveyResponse.activityAvailable().answer());
                 activityNikoNiko.setDescriptionFeeling( surveyResponse.activityAvailable().descriptionFeeling() );
                 activityNikoNiko.setActivityState( ActivityState.FINISHED );
-                activityNikoNiko.setCloseDate( activity.get().getCloseDate() );
+                activityNikoNiko.setCloseDate( LocalDate.now() );
                 activityNikoNiko.setDayOfWeek( LocalDate.now().getDayOfWeek() );
                 survey.get().getActivities().remove(activity.get());
                 survey.get().getActivities().add(activityNikoNiko);
