@@ -13,9 +13,11 @@ import com.equipo5.feelflowapp.dto.dashboard.TeamAndModulesDto;
 import com.equipo5.feelflowapp.dto.dashboard.nikoniko.NikoNikoSummaryData;
 import com.equipo5.feelflowapp.dto.modules.ModuleAndUsersDto;
 import com.equipo5.feelflowapp.dto.modules.TwelveStepsResponseAvgDto;
+import com.equipo5.feelflowapp.dto.tablebadge.TableBadgeAwardedDto;
 import com.equipo5.feelflowapp.dto.team.TeamDTO;
 import com.equipo5.feelflowapp.dto.team.TeamListDTO;
 import com.equipo5.feelflowapp.mappers.modules.ModuleMapper;
+import com.equipo5.feelflowapp.mappers.modules.kudos.KudosSummaryDataMapper;
 import com.equipo5.feelflowapp.mappers.users.UserMapper;
 import com.equipo5.feelflowapp.repository.team.TeamRepository;
 import com.equipo5.feelflowapp.service.dashboard.DashboardService;
@@ -23,6 +25,7 @@ import com.equipo5.feelflowapp.service.module.ModuleService;
 import com.equipo5.feelflowapp.service.module.nikoniko.NikoNikoService;
 import com.equipo5.feelflowapp.service.module.twelveSteps.TwelveStepsService;
 import com.equipo5.feelflowapp.service.survey.SurveyService;
+import com.equipo5.feelflowapp.service.tablebadge.kudos.TableBadgeService;
 import com.equipo5.feelflowapp.service.team.TeamService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -48,8 +51,11 @@ public class DashboardServiceImpl implements DashboardService {
     private final UserMapper userMapper;
     private final NikoNikoService nikoNikoService;
 
+    private final TableBadgeService tableBadgeService;
+    private final KudosSummaryDataMapper kudosSummaryDataMapper;
+
     @Autowired
-    public DashboardServiceImpl(@Qualifier("SurveyService") SurveyService surveyService, TeamService teamService, TeamRepository teamRepository, TwelveStepsService twelveStepsService, ModuleService moduleService, ModuleMapper moduleMapper, UserMapper userMapper, NikoNikoService nikoNikoService) {
+    public DashboardServiceImpl(@Qualifier("SurveyService") SurveyService surveyService, TeamService teamService, TeamRepository teamRepository, TwelveStepsService twelveStepsService, ModuleService moduleService, ModuleMapper moduleMapper, UserMapper userMapper, NikoNikoService nikoNikoService, TableBadgeService tableBadgeService, KudosSummaryDataMapper kudosSummaryDataMapper) {
         this.surveyService = surveyService;
         this.teamService = teamService;
         this.teamRepository = teamRepository;
@@ -58,6 +64,8 @@ public class DashboardServiceImpl implements DashboardService {
         this.moduleMapper = moduleMapper;
         this.userMapper = userMapper;
         this.nikoNikoService = nikoNikoService;
+        this.tableBadgeService = tableBadgeService;
+        this.kudosSummaryDataMapper = kudosSummaryDataMapper;
     }
 
     @Override
@@ -204,17 +212,27 @@ public class DashboardServiceImpl implements DashboardService {
     public List<KudosSummaryData> getKudosData() {
         List<TeamListDTO> teamListDTOS = this.teamService.getAllTeams();
         List<Survey> surveys = new ArrayList<>();
-
+        List<TableBadgeAwardedDto> tableBadgeAwardedDtos = List.of();
         if (teamListDTOS.size() == 1){
             Team team = teamRepository.getReferenceById(teamListDTOS.get(0).getUuid());
-            surveys = this.surveyService.getSurveysByModule(ModuleNames.KUDOS.toString(), team);
+            tableBadgeAwardedDtos = this.tableBadgeService.getTableBadgeDto(team);
+
 
         } else if (teamListDTOS.size() > 1) {
-
+            List<Team> teams = teamRepository.findAllById(
+                    teamListDTOS.stream().map(TeamListDTO::getUuid).collect(Collectors.toList())
+            );
+            tableBadgeAwardedDtos = teams.stream()
+                    .flatMap(team -> this.tableBadgeService.getTableBadgeDto(team).stream())
+                    .toList();
         }
-
-
-        return List.of();
+        return tableBadgeAwardedDtos.stream()
+                .map(tableBadgeAwardedDto -> {
+                        KudosSummaryData kudosSummaryData = kudosSummaryDataMapper.tableBadgeAwardedDtoToKudosSummaryData(tableBadgeAwardedDto);
+                        kudosSummaryData.setCantBadges( this.tableBadgeService.getNumberTotalOfBadgesBy(tableBadgeAwardedDto) );
+                        return kudosSummaryData;
+                })
+                .toList();
     }
 
     private List<NikoNikoAvgData> getNikoNikoResponseAvgDto(List<ActivityNikoNiko> activityNikoNikos, int[] countOfResponse) {

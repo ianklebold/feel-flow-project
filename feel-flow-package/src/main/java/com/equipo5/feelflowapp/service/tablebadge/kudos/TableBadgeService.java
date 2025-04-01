@@ -23,4 +23,6 @@ public interface TableBadgeService {
     void closeBadgeTable(TableBadge tableBadge);
 
     List<TableBadgeAwardedDto> getTableBadgeDto(Team team);
+
+    int getNumberTotalOfBadgesBy(TableBadgeAwardedDto tableBadgeAwardedDto);
 }

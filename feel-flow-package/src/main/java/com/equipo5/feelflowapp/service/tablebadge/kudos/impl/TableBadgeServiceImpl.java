@@ -190,6 +190,27 @@ public class TableBadgeServiceImpl implements TableBadgeService {
         return tableBadgeAwardedDtos;
     }
 
+    @Override
+    public int getNumberTotalOfBadgesBy(TableBadgeAwardedDto tableBadgeAwardedDto) {
+
+        int total = 0;
+
+        total = total + getNumberTotalOfBadgesBy(tableBadgeAwardedDto.getEnergiaPositivaBadge());
+        total = total + getNumberTotalOfBadgesBy(tableBadgeAwardedDto.getMaestroDetalleBadge());
+        total = total + getNumberTotalOfBadgesBy(tableBadgeAwardedDto.getManosAmigasBadge());
+        total = total + getNumberTotalOfBadgesBy(tableBadgeAwardedDto.getResolutorEstrellaBadge());
+
+        return total;
+    }
+
+    private int getNumberTotalOfBadgesBy(CountBadgeAwardedDto countBadgeAwardedDto){
+        if(countBadgeAwardedDto == null){
+            return 0;
+        }else{
+            return countBadgeAwardedDto.getCountAwarded();
+        }
+    }
+
     private void createOrIncrement(TableBadgeAwardedDto tableBadgeAwardedDto, Badge badge){
         switch (badge.getBadgeName().toString()){
             case "MANOS_AMIGAS":
