@@ -2,6 +2,7 @@ package com.equipo5.feelflowapp.controller;
 
 import com.equipo5.feelflowapp.domain.enumerations.modules.ModuleNames;
 import com.equipo5.feelflowapp.dto.dashboard.TeamAndModulesDto;
+import com.equipo5.feelflowapp.dto.dashboard.kudos.KudosSummaryData;
 import com.equipo5.feelflowapp.dto.dashboard.nikoniko.NikoNikoSummaryData;
 import com.equipo5.feelflowapp.dto.modules.ModuleAndUsersDto;
 import com.equipo5.feelflowapp.dto.modules.TwelveStepsResponseAvgDto;
@@ -120,10 +121,26 @@ public class DashboardController {
                     description = "HTTP Request Success"
             )
     })
-    @GetMapping("/niko-niko_avg")
+    @GetMapping("/niko_niko_avg")
     @SecurityRequirement(name = "Bearer Authentication")
     public NikoNikoSummaryData getEmotionalTrendData(){
         return dashboardService.getEmotionalTrendDataAvg();
+    }
+
+    @Operation(
+            summary = "Get data for emotional trend dashboard",
+            description = "REST API to get data of the surveys for dashboard"
+    )
+    @ApiResponses({
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "HTTP Request Success"
+            )
+    })
+    @GetMapping("/kudos_summary")
+    @SecurityRequirement(name = "Bearer Authentication")
+    public List<KudosSummaryData> getKudosData(){
+        return dashboardService.getKudosData();
     }
 
 }

@@ -7,6 +7,7 @@ import com.equipo5.feelflowapp.domain.modules.ActivityNikoNiko;
 import com.equipo5.feelflowapp.domain.modules.Module;
 import com.equipo5.feelflowapp.domain.modules.Survey;
 import com.equipo5.feelflowapp.domain.modules.SurveyModule;
+import com.equipo5.feelflowapp.dto.dashboard.kudos.KudosSummaryData;
 import com.equipo5.feelflowapp.dto.dashboard.nikoniko.NikoNikoAvgData;
 import com.equipo5.feelflowapp.dto.dashboard.TeamAndModulesDto;
 import com.equipo5.feelflowapp.dto.dashboard.nikoniko.NikoNikoSummaryData;
@@ -197,6 +198,23 @@ public class DashboardServiceImpl implements DashboardService {
                 getNikoNikoResponseAvgDto(activityStartOfDayNikoNiko, countOfResponseStartDay),
                 getNikoNikoResponseAvgDto(activityEndOfDayNikoNiko, countOfResponseEndDay)
         );
+    }
+
+    @Override
+    public List<KudosSummaryData> getKudosData() {
+        List<TeamListDTO> teamListDTOS = this.teamService.getAllTeams();
+        List<Survey> surveys = new ArrayList<>();
+
+        if (teamListDTOS.size() == 1){
+            Team team = teamRepository.getReferenceById(teamListDTOS.get(0).getUuid());
+            surveys = this.surveyService.getSurveysByModule(ModuleNames.KUDOS.toString(), team);
+
+        } else if (teamListDTOS.size() > 1) {
+
+        }
+
+
+        return List.of();
     }
 
     private List<NikoNikoAvgData> getNikoNikoResponseAvgDto(List<ActivityNikoNiko> activityNikoNikos, int[] countOfResponse) {

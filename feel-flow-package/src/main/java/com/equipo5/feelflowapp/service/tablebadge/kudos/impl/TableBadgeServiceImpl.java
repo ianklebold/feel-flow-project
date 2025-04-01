@@ -2,21 +2,29 @@ package com.equipo5.feelflowapp.service.tablebadge.kudos.impl;
 
 import com.equipo5.feelflowapp.domain.Team;
 import com.equipo5.feelflowapp.domain.enumerations.modules.BadgeName;
+import com.equipo5.feelflowapp.domain.enumerations.modules.ModuleNames;
+import com.equipo5.feelflowapp.domain.modules.Module;
+import com.equipo5.feelflowapp.domain.modules.SurveyModule;
 import com.equipo5.feelflowapp.domain.modules.kudos.Badge;
 import com.equipo5.feelflowapp.domain.modules.kudos.KudosModule;
 import com.equipo5.feelflowapp.domain.modules.kudos.TableBadge;
+import com.equipo5.feelflowapp.domain.users.RegularUser;
+import com.equipo5.feelflowapp.dto.tablebadge.CountBadgeAwardedDto;
+import com.equipo5.feelflowapp.dto.tablebadge.TableBadgeAwardedDto;
+import com.equipo5.feelflowapp.mappers.tablebadge.BadgeAwardedMapper;
 import com.equipo5.feelflowapp.repository.tablebadge.TableBadgeRepository;
 import com.equipo5.feelflowapp.repository.team.TeamRepository;
 import com.equipo5.feelflowapp.repository.users.UserRepository;
 import com.equipo5.feelflowapp.repository.users.regularuser.RegularUserRepository;
+import com.equipo5.feelflowapp.service.module.ModuleService;
+import com.equipo5.feelflowapp.service.module.kudos.KudosService;
 import com.equipo5.feelflowapp.service.tablebadge.kudos.TableBadgeService;
 import com.equipo5.feelflowapp.service.users.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -28,6 +36,9 @@ public class TableBadgeServiceImpl implements TableBadgeService {
     protected final UserRepository userRepository;
     protected final RegularUserRepository regularUserRepository;
     protected final TeamRepository teamRepository;
+    protected final KudosService kudosService;
+
+    protected final BadgeAwardedMapper badgeAwardedMapper;
 
 
     @Override
@@ -133,5 +144,80 @@ public class TableBadgeServiceImpl implements TableBadgeService {
         }
     }
 
+    @Override
+    public List<TableBadgeAwardedDto> getTableBadgeDto(Team team) {
+        List<KudosModule> moduleList =  this.kudosService.getModulesBy(ModuleNames.KUDOS.toString(), team);
+        List<TableBadgeAwardedDto> tableBadgeAwardedDtos = new ArrayList<>();
+        if(!moduleList.isEmpty()) {
+            //1. Obtener todos los usuarios del equipo perteneciente al modulo
+            List<RegularUser> regularUsers = moduleList.get(0).getTeam().getRegularUsers();
+            List<Badge> badges = new ArrayList<>();
+            moduleList.stream()
+                    .flatMap(module -> module.getTableBadge().stream() )
+                    .forEach( tableBadges ->{
+                        //2. Obtener todos los badges dados en un modulo.
+                        if (tableBadges.getBadgePositiveEnergy() != null) badges.add(tableBadges.getBadgePositiveEnergy());
+                        if (tableBadges.getMasterOfDetail() != null) badges.add(tableBadges.getMasterOfDetail());
+                        if (tableBadges.getBadgeResolutorStar() != null) badges.add(tableBadges.getBadgeResolutorStar());
+                        if (!tableBadges.getBadgeFriendHands().isEmpty()) badges.addAll(tableBadges.getBadgeFriendHands());
+                        }
+                    );
 
+            if (!badges.isEmpty()) {
+                tableBadgeAwardedDtos = regularUsers.stream()
+                        .map(regularUser ->
+                                TableBadgeAwardedDto.builder()
+                                        .idUser(regularUser.getUuid())
+                                        .username(regularUser.getUsername())
+                                        .build()
+                        )
+                        .peek(tableBadgeAwardedDto -> {
+                            List<Badge> badgesList = badges.stream()
+                                    .filter( badge -> badge.getBadgeOwner().getUuid().equals(tableBadgeAwardedDto.getIdUser()) )
+                                    .toList();
+
+                            if (!badgesList.isEmpty()) {
+                                badgesList.forEach(
+                                        badge -> {createOrIncrement(tableBadgeAwardedDto, badge);}
+                                );
+                            }
+                        })
+                        .toList();
+            }
+
+        }
+
+        return tableBadgeAwardedDtos;
+    }
+
+    private void createOrIncrement(TableBadgeAwardedDto tableBadgeAwardedDto, Badge badge){
+        switch (badge.getBadgeName().toString()){
+            case "MANOS_AMIGAS":
+                if (tableBadgeAwardedDto.getManosAmigasBadge() == null) {
+                    tableBadgeAwardedDto.setManosAmigasBadge( badgeAwardedMapper.badgeToCountBadgeAwardedDto(badge) );
+                }else{
+                    tableBadgeAwardedDto.getManosAmigasBadge().incrementCountAwarded();
+                }
+            case "RESOLUTOR_ESTRELLA":
+                if (tableBadgeAwardedDto.getResolutorEstrellaBadge() == null) {
+                    tableBadgeAwardedDto.setResolutorEstrellaBadge( badgeAwardedMapper.badgeToCountBadgeAwardedDto(badge) );
+                }else{
+                    tableBadgeAwardedDto.getResolutorEstrellaBadge().incrementCountAwarded();
+                }
+            case "ENERGIA_POSITIVA":
+                if (tableBadgeAwardedDto.getEnergiaPositivaBadge() == null) {
+                    tableBadgeAwardedDto.setEnergiaPositivaBadge( badgeAwardedMapper.badgeToCountBadgeAwardedDto(badge) );
+                }else{
+                    tableBadgeAwardedDto.getEnergiaPositivaBadge().incrementCountAwarded();
+                }
+            case "MAESTRO_DEL_DETALLE":
+                if (tableBadgeAwardedDto.getMaestroDetalleBadge() == null) {
+                    tableBadgeAwardedDto.setMaestroDetalleBadge( badgeAwardedMapper.badgeToCountBadgeAwardedDto(badge) );
+                }else{
+                    tableBadgeAwardedDto.getMaestroDetalleBadge().incrementCountAwarded();
+                }
+            default:
+                break;
+        }
+    }
 }
