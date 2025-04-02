@@ -36,7 +36,7 @@ public class TableBadgeServiceImpl implements TableBadgeService {
     protected final UserRepository userRepository;
     protected final RegularUserRepository regularUserRepository;
     protected final TeamRepository teamRepository;
-    protected final KudosService kudosService;
+    protected final ModuleService moduleService;
 
     protected final BadgeAwardedMapper badgeAwardedMapper;
 
@@ -146,7 +146,7 @@ public class TableBadgeServiceImpl implements TableBadgeService {
 
     @Override
     public List<TableBadgeAwardedDto> getTableBadgeDto(Team team) {
-        List<KudosModule> moduleList =  this.kudosService.getModulesBy(ModuleNames.KUDOS.toString(), team);
+        List<KudosModule> moduleList =  this.moduleService.getModulesBy(ModuleNames.KUDOS.toString(), team);
         List<TableBadgeAwardedDto> tableBadgeAwardedDtos = new ArrayList<>();
         if(!moduleList.isEmpty()) {
             //1. Obtener todos los usuarios del equipo perteneciente al modulo

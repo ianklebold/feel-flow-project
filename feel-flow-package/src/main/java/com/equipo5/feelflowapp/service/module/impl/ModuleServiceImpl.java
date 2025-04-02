@@ -8,6 +8,7 @@ import com.equipo5.feelflowapp.domain.enumerations.modules.SurveyStateEnum;
 import com.equipo5.feelflowapp.domain.modules.Module;
 import com.equipo5.feelflowapp.domain.modules.Survey;
 import com.equipo5.feelflowapp.domain.modules.SurveyModule;
+import com.equipo5.feelflowapp.domain.modules.kudos.KudosModule;
 import com.equipo5.feelflowapp.domain.users.RegularUser;
 import com.equipo5.feelflowapp.dto.modules.ModuleSurveyDto;
 import com.equipo5.feelflowapp.mappers.modules.ModuleSurveyMapper;
@@ -233,5 +234,18 @@ public class ModuleServiceImpl implements ModuleService {
         }else{
             return Collections.emptyList();
         }
+    }
+
+    @Override
+    public List<KudosModule> getModulesBy(String name, Team team) {
+        Specification<Module> spec = Specification.where(
+                ModuleSpecification.withName(name)
+                        .and(ModuleSpecification.withTeam(team))
+        );
+
+        return moduleRepository.findAll(spec)
+                .stream()
+                .map(kudosModule -> (KudosModule) kudosModule )
+                .toList();
     }
 }

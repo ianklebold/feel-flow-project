@@ -2,8 +2,6 @@ package com.equipo5.feelflowapp.service.module.kudos.impl;
 
 import com.equipo5.feelflowapp.domain.Team;
 import com.equipo5.feelflowapp.domain.enumerations.modules.ModuleState;
-import com.equipo5.feelflowapp.domain.modules.Module;
-import com.equipo5.feelflowapp.domain.modules.SurveyModule;
 import com.equipo5.feelflowapp.domain.modules.kudos.KudosModule;
 import com.equipo5.feelflowapp.dto.modules.CreationKudosModuleDto;
 import com.equipo5.feelflowapp.exception.badrequest.module.ModuleAlreadyActiveException;
@@ -11,8 +9,6 @@ import com.equipo5.feelflowapp.exception.badrequest.module.ModuleException;
 import com.equipo5.feelflowapp.exception.notfound.NotFoundException;
 import com.equipo5.feelflowapp.exception.notfound.NotFoundTeamException;
 import com.equipo5.feelflowapp.repository.module.KudosRepository;
-import com.equipo5.feelflowapp.repository.module.ModuleRepository;
-import com.equipo5.feelflowapp.repository.module.specification.ModuleSpecification;
 import com.equipo5.feelflowapp.repository.team.TeamRepository;
 import com.equipo5.feelflowapp.repository.users.UserRepository;
 import com.equipo5.feelflowapp.repository.users.regularuser.RegularUserRepository;
@@ -21,12 +17,10 @@ import com.equipo5.feelflowapp.service.module.kudos.KudosService;
 import com.equipo5.feelflowapp.service.tablebadge.kudos.TableBadgeService;
 import com.equipo5.feelflowapp.service.users.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
 import java.time.LocalDate;
-import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -49,9 +43,6 @@ public class KudosServiceImpl implements KudosService {
     protected final UserRepository userRepository;
 
     protected final RegularUserRepository regularUserRepository;
-
-    protected final ModuleRepository moduleRepository;
-
 
     @Override
     public KudosModule publishingModule(CreationKudosModuleDto creationKudosModule) {
@@ -122,18 +113,5 @@ public class KudosServiceImpl implements KudosService {
 
         }
 
-    }
-
-    @Override
-    public List<KudosModule> getModulesBy(String name, Team team) {
-        Specification<Module> spec = Specification.where(
-                ModuleSpecification.withName(name)
-                        .and(ModuleSpecification.withTeam(team))
-        );
-
-        return moduleRepository.findAll(spec)
-                .stream()
-                .map(kudosModule -> (KudosModule) kudosModule )
-                .toList();
     }
 }

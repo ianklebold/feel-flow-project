@@ -38,4 +38,6 @@ public interface ModuleService {
     List<ModuleSurveyDto> getModulesSurveysByTeamIdAndModuleName(ModuleNames moduleNames, UUID teamId );
 
     List<Module> getAllModules(ModuleNames moduleNames, Boolean isAdmin);
+
+    List<KudosModule> getModulesBy(String name, Team team);
 }
