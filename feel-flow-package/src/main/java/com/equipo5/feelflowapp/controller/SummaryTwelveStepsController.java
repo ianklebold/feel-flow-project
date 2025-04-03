@@ -1,0 +1,57 @@
+package com.equipo5.feelflowapp.controller;
+
+import com.equipo5.feelflowapp.dto.modules.TwelveStepsResponseAvgDto;
+import com.equipo5.feelflowapp.service.summary.twelvesteps.SummaryTwelveStepsService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
+import java.util.UUID;
+
+@Tag(
+        name = "Summary Twelve Steps REST APIs",
+        description = "REST APIs in Project to POST AND GET Summary of twelve steps surveys"
+)
+@Slf4j
+@RestController
+@RequestMapping(path = SummaryTwelveStepsController.TWELVE_STEPS_NIKO_NIKO_PATH,produces = {MediaType.APPLICATION_JSON_VALUE})
+public class SummaryTwelveStepsController {
+    public  static final String TWELVE_STEPS_NIKO_NIKO_PATH = "/api/v1/summary/twelve-steps";
+
+    private final SummaryTwelveStepsService summaryTwelveStepsService;
+
+    @Autowired
+    public SummaryTwelveStepsController(SummaryTwelveStepsService summaryTwelveStepsService) {
+        this.summaryTwelveStepsService = summaryTwelveStepsService;
+    }
+
+    @Operation(
+            summary = "Get summary averaged data of 12 steps surveys",
+            description = "REST API to get data 12 steps surveys"
+    )
+    @ApiResponses({
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "HTTP Request Success"
+            )
+    })
+    @GetMapping("/twelve_steps_summary")
+    @SecurityRequirement(name = "Bearer Authentication")
+    public List<TwelveStepsResponseAvgDto> getTwelveStepsSurveysSummaryData(
+            @RequestParam(name = "idModule", required = false) Long idModule,
+            @RequestParam(name = "idRegularUser", required = false) UUID idRegularUser
+    ){
+        return summaryTwelveStepsService.getTwelveStepsSurveysSummaryData(idModule, idRegularUser);
+    }
+
+}

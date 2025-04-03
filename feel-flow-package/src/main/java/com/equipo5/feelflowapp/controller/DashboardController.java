@@ -53,25 +53,6 @@ public class DashboardController {
     }
 
     @Operation(
-            summary = "Get summary averaged data of 12 steps surveys",
-            description = "REST API to get data 12 steps surveys"
-    )
-    @ApiResponses({
-            @ApiResponse(
-                    responseCode = "200",
-                    description = "HTTP Request Success"
-            )
-    })
-    @GetMapping("/twelve_steps_summary")
-    @SecurityRequirement(name = "Bearer Authentication")
-    public List<TwelveStepsResponseAvgDto> getTwelveStepsSurveysSummaryData(
-            @RequestParam(name = "idModule", required = false) Long idModule,
-            @RequestParam(name = "idRegularUser", required = false) UUID idRegularUser
-    ){
-        return dashboardService.getTwelveStepsSurveysSummaryData(idModule, idRegularUser);
-    }
-
-    @Operation(
             summary = "Get data of teams and modules for 12 steps",
             description = "REST API to get data of the surveys. If the current user is admin the response will be" +
                     "a list of modules and its team, otherwise if the current user is tl the response will be a list" +

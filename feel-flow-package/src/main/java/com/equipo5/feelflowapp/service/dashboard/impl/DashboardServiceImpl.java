@@ -34,8 +34,6 @@ import org.springframework.stereotype.Service;
 import java.time.DayOfWeek;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -134,41 +132,6 @@ public class DashboardServiceImpl implements DashboardService {
         return List.of();
     }
 
-    @Override
-    public List<TwelveStepsResponseAvgDto> getTwelveStepsSurveysSummaryData(Long idModule, UUID idUser) {
-        List<TwelveStepsResponseAvgDto> twelveStepsResponseAvgDtos = new ArrayList<>();
-        if(idModule != null ){
-            if(idUser != null ){
-                // Devolver resultados de un usuario
-                Optional<SurveyModule> surveyModule = moduleService.getSurveyModuleById(idModule);
-                if (surveyModule.isPresent()){
-                     Optional<Survey> surveyOptional = surveyModule.get().getSurveys()
-                             .stream()
-                             .filter(survey -> survey.getRegularUser().getUuid().equals(idUser))
-                             .findFirst();
-
-                     if (surveyOptional.isPresent()){
-                         for (int i = 0; i < 12; i++){
-                             twelveStepsResponseAvgDtos.add(
-                                     new TwelveStepsResponseAvgDto(
-                                             QuestionsConstantsTwelveSteps.QUESTIONS_CATEGORY_TWELVE_STEPS.get(i),
-                                             twelveStepsService.getValueForAnswer(surveyOptional.get().getActivities().get(i).getAnswer())
-                                     )
-                             );
-                         }
-                     }
-
-                }
-                return twelveStepsResponseAvgDtos;
-            }else{
-                Optional<SurveyModule> surveyModule = moduleService.getSurveyModuleById(idModule);
-                if (surveyModule.isPresent()){
-                    return getTwelveStepsResponseAvgDto(surveyModule.get().getSurveys());
-                }
-            }
-        }
-        return List.of();
-    }
 
     @Override
     public NikoNikoSummaryData getEmotionalTrendDataAvg() {
@@ -315,7 +278,8 @@ public class DashboardServiceImpl implements DashboardService {
                 .get();
     }
 
-    private List<TwelveStepsResponseAvgDto> getTwelveStepsResponseAvgDto(List<Survey> surveys) {
+    @Override
+    public List<TwelveStepsResponseAvgDto> getTwelveStepsResponseAvgDto(List<Survey> surveys) {
 
         List<TwelveStepsResponseAvgDto> twelveStepsResponseAvgDtos = new ArrayList<>();
 
