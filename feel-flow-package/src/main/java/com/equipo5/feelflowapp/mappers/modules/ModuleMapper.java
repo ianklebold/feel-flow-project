@@ -19,6 +19,8 @@ public interface ModuleMapper {
     @Mapping(source = "dateAndTimeToClose",target = "dateAndTimeToClose")
     ModuleDto moduleToModuleDto(Module module);
 
+
+    @Mapping(source = "id",target = "id")
     @Mapping(source = "name",target = "name")
     @Mapping(source = "creationDate",target = "creationDate")
     @Mapping(source = "moduleState",target = "moduleState")

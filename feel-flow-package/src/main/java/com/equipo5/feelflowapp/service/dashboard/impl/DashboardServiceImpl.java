@@ -73,14 +73,13 @@ public class DashboardServiceImpl implements DashboardService {
 
         //Si no es admin --> Debe ver su propio equipo
         List<TeamListDTO> teamListDTOS = this.teamService.getAllTeams();
-
+        List<TwelveStepsResponseAvgDto> twelveStepsResponseAvgDtos = new ArrayList<>();
         if (teamListDTOS.size() == 1){
             Team team = teamRepository.getReferenceById(teamListDTOS.get(0).getUuid());
             List<Survey> surveys = new ArrayList<>();
 
             surveys = this.surveyService.getSurveysByModule(ModuleNames.TWELVE_STEPS.toString(), team);
-
-            return getTwelveStepsResponseAvgDto(surveys);
+            twelveStepsResponseAvgDtos = getTwelveStepsResponseAvgDto(surveys);
         } else if (teamListDTOS.size() > 1) {
 
             List<Team> teams = teamRepository.findAllById(
@@ -90,10 +89,12 @@ public class DashboardServiceImpl implements DashboardService {
             teams.forEach(team -> {
                         surveys.addAll(this.surveyService.getSurveysByModule(ModuleNames.TWELVE_STEPS.toString(), team));
                     });
-            return getTwelveStepsResponseAvgDto(surveys);
+            twelveStepsResponseAvgDtos = getTwelveStepsResponseAvgDto(surveys);
         }
 
-        return List.of();
+
+        twelveStepsResponseAvgDtos.forEach( result -> result.setAverage( getPercentByScale(result.getAverage(), 5d) ) );
+        return twelveStepsResponseAvgDtos;
     }
 
     @Override
@@ -333,23 +334,27 @@ public class DashboardServiceImpl implements DashboardService {
             }
         });
 
-        surveys.forEach(survey -> {
-            for (int i = 0; i < 12; i++) {
-                twelveStepsResponseAvgDtos.get(i).setAverage(
-                        twelveStepsResponseAvgDtos.get(i).getAverage()/ getNumberOfSurveysWithActivitiesCompleted(surveys, i)
-                );
-            }
-        });
+        for (int i = 0; i < 12; i++) {
+            twelveStepsResponseAvgDtos.get(i).setAverage(
+                    twelveStepsResponseAvgDtos.get(i).getAverage()/ getNumberOfActivitiesWithPointsDistinctOfZero(surveys, i)
+            );
+        }
 
         return twelveStepsResponseAvgDtos;
     }
 
-    private double getNumberOfSurveysWithActivitiesCompleted(List<Survey> surveys, int activityNumber) {
+    private double getNumberOfActivitiesWithPointsDistinctOfZero(List<Survey> surveys, int activityNumber) {
+
         return (double) surveys.stream()
-                .filter(survey -> !survey.getActivities().get(activityNumber).getAnswer().isEmpty())
+                .map(survey -> survey.getActivities().get(activityNumber))
+                .filter( activity ->  activity.getAnswer() != null)
                 .count();
     }
 
     //Si es admin --> Debe ver el de todos los equipos con las posibilidad de ver el de uno en especifico.
+
+    private double getPercentByScale(double point, double scale) {
+        return ( ((point - 1d) / scale - 1d) * 100 ) * -1;
+    }
 
 }

@@ -11,6 +11,7 @@ import java.time.LocalDate;
         description = "Schema to hold module information"
 )
 public record SimpleModuleDto(
+        @Schema(description = "Module id", example = "15") Long id,
         @Schema(description = "Name of module", example = "NIKO NIKO") String name,
         @Schema(description = "Date of creation module", example = "2024-12-31") LocalDate creationDate,
         @Schema(description = "State of module", examples = {"ACTIVE","FINISHED"}) ModuleState moduleState,

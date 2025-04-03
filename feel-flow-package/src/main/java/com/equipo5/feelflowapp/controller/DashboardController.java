@@ -65,8 +65,8 @@ public class DashboardController {
     @GetMapping("/twelve_steps_summary")
     @SecurityRequirement(name = "Bearer Authentication")
     public List<TwelveStepsResponseAvgDto> getTwelveStepsSurveysSummaryData(
-            @RequestParam(name = "idTeam", required = false) Long idModule,
-            @RequestParam(name = "idModuleTwelveSteps", required = false) UUID idRegularUser
+            @RequestParam(name = "idModule", required = false) Long idModule,
+            @RequestParam(name = "idRegularUser", required = false) UUID idRegularUser
     ){
         return dashboardService.getTwelveStepsSurveysSummaryData(idModule, idRegularUser);
     }
