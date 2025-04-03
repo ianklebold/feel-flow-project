@@ -1,14 +1,15 @@
 package com.equipo5.feelflowapp.controller;
 
+import com.equipo5.feelflowapp.dto.badges.BadgeTeamDto;
 import com.equipo5.feelflowapp.dto.modules.TwelveStepsResponseAvgDto;
-import com.equipo5.feelflowapp.service.summary.twelvesteps.SummaryTwelveStepsService;
+import com.equipo5.feelflowapp.service.module.kudos.KudosService;
+import com.equipo5.feelflowapp.service.summary.kudos.SummaryKudosService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,20 +25,19 @@ import java.util.UUID;
 )
 @Slf4j
 @RestController
-@RequestMapping(path = SummaryTwelveStepsController.TWELVE_STEPS_SUMMARY_PATH,produces = {MediaType.APPLICATION_JSON_VALUE})
-public class SummaryTwelveStepsController {
-    public  static final String TWELVE_STEPS_SUMMARY_PATH = "/api/v1/summary/twelve-steps";
+@RequestMapping(path = SummaryKudosController.KUDOS_SUMMARY_PATH,produces = {MediaType.APPLICATION_JSON_VALUE})
+public class SummaryKudosController {
+    public  static final String KUDOS_SUMMARY_PATH = "/api/v1/summary/kudos";
 
-    private final SummaryTwelveStepsService summaryTwelveStepsService;
+    private final SummaryKudosService summaryKudosService;
 
-    @Autowired
-    public SummaryTwelveStepsController(SummaryTwelveStepsService summaryTwelveStepsService) {
-        this.summaryTwelveStepsService = summaryTwelveStepsService;
+    public SummaryKudosController(SummaryKudosService summaryKudosService) {
+        this.summaryKudosService = summaryKudosService;
     }
 
     @Operation(
-            summary = "Get summary averaged data of 12 steps surveys",
-            description = "REST API to get data 12 steps surveys"
+            summary = "Get summary averaged data of Kudos surveys",
+            description = "REST API to get data Kudos surveys"
     )
     @ApiResponses({
             @ApiResponse(
@@ -47,11 +47,11 @@ public class SummaryTwelveStepsController {
     })
     @GetMapping("/summary")
     @SecurityRequirement(name = "Bearer Authentication")
-    public List<TwelveStepsResponseAvgDto> getTwelveStepsSurveysSummaryData(
+    public List<BadgeTeamDto> getSummary(
             @RequestParam(name = "idModule", required = false) Long idModule,
             @RequestParam(name = "idRegularUser", required = false) UUID idRegularUser
     ){
-        return summaryTwelveStepsService.getTwelveStepsSurveysSummaryData(idModule, idRegularUser);
+        return summaryKudosService.getSummary(idModule, idRegularUser);
     }
 
 }
