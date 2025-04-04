@@ -118,7 +118,7 @@ public class DashboardServiceImpl implements DashboardService {
     public List<ModuleAndUsersDto> getModuleAndUsersData(ModuleNames nameModule, Boolean isAdmin) {
 
         //Si es admin entonces devolver todos los modulos de toda la empresa con todos sus usuarios.
-        List<Module> modules = moduleService.getAllModules(ModuleNames.TWELVE_STEPS, isAdmin);
+        List<Module> modules = moduleService.getAllModules(nameModule, isAdmin);
         //Si no es admin entonces devolver todos los modulos del equipo
         if ( !modules.isEmpty() ){
             return modules.stream()
