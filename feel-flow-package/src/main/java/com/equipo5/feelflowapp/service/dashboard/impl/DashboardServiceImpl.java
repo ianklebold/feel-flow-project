@@ -34,7 +34,10 @@ import org.springframework.stereotype.Service;
 import java.time.DayOfWeek;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
+
+import static com.equipo5.feelflowapp.constants.module.nikoniko.QuestionsConstantsNikoNiko.QUESTIONS_1_POOL_NIKO_NIKO;
 
 @Service
 public class DashboardServiceImpl implements DashboardService {
@@ -156,20 +159,31 @@ public class DashboardServiceImpl implements DashboardService {
             ).toList();
         }
 
-        activityStartOfDayNikoNiko = surveys
-                .stream()
-                .map(survey -> (ActivityNikoNiko) survey.getActivities().get(0) )
-                .toList();
-
-        activityEndOfDayNikoNiko = surveys
-                .stream()
-                .map(survey -> (ActivityNikoNiko) survey.getActivities().get(1) )
-                .toList();
+        surveys
+                .forEach(survey -> {
+                    var activity = survey.getActivities().get(0);
+                    var activity2 = survey.getActivities().get(1);
+                    if (activity instanceof ActivityNikoNiko){
+                        addToActivityNikoNikoList((ActivityNikoNiko) activity, activityStartOfDayNikoNiko, activityEndOfDayNikoNiko);
+                    }
+                    if (activity2 instanceof ActivityNikoNiko){
+                        addToActivityNikoNikoList((ActivityNikoNiko) activity2, activityStartOfDayNikoNiko, activityEndOfDayNikoNiko);
+                    }
+                }
+                );
 
         return new NikoNikoSummaryData(
                 getNikoNikoResponseAvgDto(activityStartOfDayNikoNiko, countOfResponseStartDay),
                 getNikoNikoResponseAvgDto(activityEndOfDayNikoNiko, countOfResponseEndDay)
         );
+    }
+
+    private void addToActivityNikoNikoList(ActivityNikoNiko activityNikoNiko, List<ActivityNikoNiko> activityStartOfDayNikoNiko, List<ActivityNikoNiko> activityEndOfDayNikoNiko){
+        if (activityNikoNiko.getQuestion().equals(QUESTIONS_1_POOL_NIKO_NIKO)){
+            activityStartOfDayNikoNiko.add(activityNikoNiko);
+        }else {
+            activityEndOfDayNikoNiko.add(activityNikoNiko);
+        }
     }
 
     @Override
@@ -205,6 +219,7 @@ public class DashboardServiceImpl implements DashboardService {
 
         activityNikoNikos.stream()
                 .filter(activityNikoNiko -> activityNikoNiko.getAnswer() != null)
+                .filter( activityNikoNiko -> !DayOfWeek.SATURDAY.toString().equals(activityNikoNiko.getDayOfWeek().toString()) && !DayOfWeek.SUNDAY.toString().equals(activityNikoNiko.getDayOfWeek().toString()) )
                 .forEach(activityNikoNiko -> {
                     NikoNikoAvgData nikoNikoAvgData = getNikoNikoAvgByDayOfWeek(nikoNikoAvgDataList, activityNikoNiko.getDayOfWeek());
                     nikoNikoAvgData.setAvg( nikoNikoAvgData.getAvg() +  nikoNikoService.getValueByAnswer(activityNikoNiko.getAnswer()));
