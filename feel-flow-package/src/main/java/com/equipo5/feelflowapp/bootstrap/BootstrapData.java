@@ -59,7 +59,7 @@ public class BootstrapData implements CommandLineRunner {
     }
 
     private void loadMembers() throws IOException {
-        if(regularUserRepository.count() < 3){
+        if(regularUserRepository.count() < 12){
 
 
             String uuidTeam = teamLeaderRepository.findTeamByUsername("tlteam1@gmail.com");
@@ -246,11 +246,73 @@ public class BootstrapData implements CommandLineRunner {
                     .build();
 
             regularUserRepository.saveAll(List.of(regularUser7,regularUser8,regularUser9));
+
+            String uuidTeam4 = teamLeaderRepository.findTeamByUsername("tlteam4@gmail.com");
+            Team team4 = teamRepository.findById(UUID.fromString(uuidTeam4)).get();
+
+            RegularUser regularUser10 = RegularUser.builder()
+                    .uuid(UUID.randomUUID())
+                    .name("member10")
+                    .surname("member10")
+                    .username("member10@gmail.com")
+                    .password(passwordEncoder.encode(PASSWORD_TEMPLATE))
+                    .authorities(List.of(authorityRepository.findAuthorityByTeamRoles(TeamRoles.USER_REGULAR).get()))
+                    .team(team4)
+                    .mediaImage(
+                            MediaImage.builder()
+                                    .name("member10_image")
+                                    .fileType("image/jpeg")
+                                    .fileData(
+                                           convertToBase64( Files.readAllBytes(Paths.get("src/main/resources/images/profile/regularuser/regular_user_7.jpeg")) )
+                                    )
+                                    .build()
+                    )
+                    .build();
+
+            RegularUser regularUser11 = RegularUser.builder()
+                    .uuid(UUID.randomUUID())
+                    .name("member11")
+                    .surname("member11")
+                    .username("member11@gmail.com")
+                    .password(passwordEncoder.encode(PASSWORD_TEMPLATE))
+                    .authorities(List.of(authorityRepository.findAuthorityByTeamRoles(TeamRoles.USER_REGULAR).get()))
+                    .team(team4)
+                    .mediaImage(
+                            MediaImage.builder()
+                                    .name("member11_image")
+                                    .fileType("image/jpeg")
+                                    .fileData(
+                                            convertToBase64( Files.readAllBytes(Paths.get("src/main/resources/images/profile/regularuser/regular_user_8.jpeg")) )
+                                    )
+                                    .build()
+                    )
+                    .build();
+
+            RegularUser regularUser12 = RegularUser.builder()
+                    .uuid(UUID.randomUUID())
+                    .name("member12")
+                    .surname("member12")
+                    .username("member12@gmail.com")
+                    .password(passwordEncoder.encode(PASSWORD_TEMPLATE))
+                    .authorities(List.of(authorityRepository.findAuthorityByTeamRoles(TeamRoles.USER_REGULAR).get()))
+                    .team(team4)
+                    .mediaImage(
+                            MediaImage.builder()
+                                    .name("member12_image")
+                                    .fileType("image/jpeg")
+                                    .fileData(
+                                            convertToBase64( Files.readAllBytes(Paths.get("src/main/resources/images/profile/regularuser/regular_user_9.jpeg")) )
+                                    )
+                                    .build()
+                    )
+                    .build();
+
+            regularUserRepository.saveAll(List.of(regularUser10,regularUser11,regularUser12));
         }
     }
 
     private void loadTeamsAndTeamLeader() throws IOException {
-        if (teamLeaderRepository.count() < 3){
+        if (teamLeaderRepository.count() < 4){
             TeamLeader teamLeader1 = TeamLeader.builder()
                     .uuid(UUID.randomUUID())
                     .name("tlteam1")
@@ -337,11 +399,40 @@ public class BootstrapData implements CommandLineRunner {
                     .build();
 
             teamRepository.save(team3);
+
+            TeamLeader teamLeader4 = TeamLeader.builder()
+                    .uuid(UUID.randomUUID())
+                    .name("tlteam4")
+                    .surname("tlteam4")
+                    .username("tlteam4@gmail.com")
+                    .password(passwordEncoder.encode(PASSWORD_TEMPLATE))
+                    .authorities(List.of(authorityRepository.findAuthorityByTeamRoles(TeamRoles.TEAM_LEADER).get()))
+                    .mediaImage(
+                            MediaImage.builder()
+                                    .name("teamleader4_image")
+                                    .fileType("image/jpg")
+                                    .fileData(
+                                            convertToBase64( Files.readAllBytes(Paths.get("src/main/resources/images/profile/teamleader/team_leader3.jpg")) )
+                                    )
+                                    .build()
+                    )
+                    .build();
+
+            Team team4 = Team.builder()
+                    .uuid(UUID.randomUUID())
+                    .name("team4")
+                    .teamLeader(teamLeader4)
+                    .descriptionProject("descripcion4")
+                    .regularUsers(Collections.emptyList())
+                    .enterPrise(adminRepository.findByUsername("admin4@gmail.com").get().getEnterPrise())
+                    .build();
+
+            teamRepository.save(team4);
         }
     }
 
     private void loadAdminAndEnterprises() throws IOException {
-        if(adminRepository.count() < 3){
+        if(adminRepository.count() < 4){
             Admin admin1 = Admin.builder()
                     .uuid(UUID.randomUUID())
                     .name("admin1")
@@ -426,6 +517,33 @@ public class BootstrapData implements CommandLineRunner {
             admin3.setEnterPrise(enterPrise3);
             adminRepository.save(admin3);
 
+            Admin admin4 = Admin.builder()
+                    .uuid(UUID.randomUUID())
+                    .name("admin4")
+                    .surname("admin4")
+                    .username("admin4@gmail.com")
+                    .password(passwordEncoder.encode(PASSWORD_TEMPLATE))
+                    .authorities(List.of(authorityRepository.findAuthorityByTeamRoles(TeamRoles.ADMIN).get()))
+                    .mediaImage(
+                            MediaImage.builder()
+                                    .name("admin4_image")
+                                    .fileType("image/jpg")
+                                    .fileData(
+                                            convertToBase64( Files.readAllBytes(Paths.get("src/main/resources/images/profile/admin/admin3.jpg")) )
+                                    )
+                                    .build()
+                    )
+                    .build();
+
+            EnterPrise enterPrise4 = EnterPrise.builder()
+                    .uuid(UUID.randomUUID())
+                    .name("EmpresaAdmin4")
+                    .team(Collections.emptyList())
+                    .admin(admin3)
+                    .build();
+
+            admin4.setEnterPrise(enterPrise4);
+            adminRepository.save(admin4);
         }
     }
 
