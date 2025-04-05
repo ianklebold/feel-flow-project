@@ -109,7 +109,7 @@ public class DashboardController {
     }
 
     @Operation(
-            summary = "Get data for emotional trend dashboard",
+            summary = "Get data for kudos badges",
             description = "REST API to get data of the surveys for dashboard"
     )
     @ApiResponses({

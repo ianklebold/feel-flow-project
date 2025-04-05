@@ -20,8 +20,8 @@ import java.util.List;
 import java.util.UUID;
 
 @Tag(
-        name = "Summary Twelve Steps REST APIs",
-        description = "REST APIs in Project to POST AND GET Summary of twelve steps surveys"
+        name = "Summary Kudos REST APIs",
+        description = "REST APIs in Project to POST AND GET Summary of Kudos surveys"
 )
 @Slf4j
 @RestController
@@ -48,7 +48,7 @@ public class SummaryKudosController {
     @GetMapping("/summary")
     @SecurityRequirement(name = "Bearer Authentication")
     public List<BadgeTeamDto> getSummary(
-            @RequestParam(name = "idModule", required = false) Long idModule,
+            @RequestParam(name = "idModule", required = true) Long idModule,
             @RequestParam(name = "idRegularUser", required = false) UUID idRegularUser
     ){
         return summaryKudosService.getSummary(idModule, idRegularUser);

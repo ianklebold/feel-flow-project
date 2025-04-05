@@ -22,8 +22,8 @@ import java.util.List;
 import java.util.UUID;
 
 @Tag(
-        name = "Survey REST APIs",
-        description = "REST APIs in Project to POST AND GET Surveys"
+        name = "Summary Niko Niko REST APIs",
+        description = "REST APIs in Project to POST AND GET Summary of Niko Niko surveys"
 )
 @Slf4j
 @RestController
