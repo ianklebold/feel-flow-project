@@ -91,28 +91,28 @@ WHERE team_uuid = (SELECT uuid FROM team WHERE name = 'team3');
 -- TEAM1, módulo 30, para el tablero de member1:
 -- Insertar badges únicos para el recipient member2:
 INSERT INTO badge (awarded_date, badge_name, badge_owner_regularuser_persona)
-VALUES ('2025-07-31', 2, (SELECT regularuser_persona FROM regular_user WHERE username = 'member2@gmail.com'));
+VALUES ('2025-07-31', 2, (SELECT uuid FROM user_model WHERE username = 'member2@gmail.com'));
 SET @b1 = LAST_INSERT_ID();
 INSERT INTO badge (awarded_date, badge_name, badge_owner_regularuser_persona)
-VALUES ('2025-07-31', 1, (SELECT regularuser_persona FROM regular_user WHERE username = 'member2@gmail.com'));
+VALUES ('2025-07-31', 1, (SELECT uuid FROM user_model WHERE username = 'member2@gmail.com'));
 SET @b2 = LAST_INSERT_ID();
 INSERT INTO badge (awarded_date, badge_name, badge_owner_regularuser_persona)
-VALUES ('2025-07-31', 3, (SELECT regularuser_persona FROM regular_user WHERE username = 'member2@gmail.com'));
+VALUES ('2025-07-31', 3, (SELECT uuid FROM user_model WHERE username = 'member2@gmail.com'));
 SET @b3 = LAST_INSERT_ID();
 UPDATE table_badge
 SET badge_positive_energy_id = @b1,
     badge_resolutor_star_id = @b2,
     master_of_detail_id = @b3
-WHERE table_badge_owner_regularuser_persona = (SELECT regularuser_persona FROM regular_user WHERE username = 'member1@gmail.com')
+WHERE table_badge_owner_regularuser_persona = (SELECT uuid FROM user_model WHERE username = 'member1@gmail.com')
   AND kudos_module_kudosmodule_module = 30;
 -- Asignar 1 badge de MANOS_AMIGAS (tipo 0) desde el tablero de member1 al recipient member3:
 INSERT INTO badge (awarded_date, badge_name, badge_owner_regularuser_persona)
-VALUES ('2025-07-31', 0, (SELECT regularuser_persona FROM regular_user WHERE username = 'member3@gmail.com'));
+VALUES ('2025-07-31', 0, (SELECT uuid FROM user_model WHERE username = 'member3@gmail.com'));
 SET @bf1 = LAST_INSERT_ID();
 INSERT INTO table_badge_badge_friend_hands (table_badge_id, badge_friend_hands_id)
 VALUES (
            (SELECT id FROM table_badge
-            WHERE table_badge_owner_regularuser_persona = (SELECT regularuser_persona FROM regular_user WHERE username = 'member1@gmail.com')
+            WHERE table_badge_owner_regularuser_persona = (SELECT uuid FROM user_model WHERE username = 'member1@gmail.com')
               AND kudos_module_kudosmodule_module = 30),
            @bf1
        );
@@ -120,11 +120,11 @@ VALUES (
 -- TEAM1, módulo 30, para el tablero de member2:
 -- Otorgar ENERGIA_POSITIVA a recipient member3:
 INSERT INTO badge (awarded_date, badge_name, badge_owner_regularuser_persona)
-VALUES ('2025-07-31', 2, (SELECT regularuser_persona FROM regular_user WHERE username = 'member3@gmail.com'));
+VALUES ('2025-07-31', 2, (SELECT uuid FROM user_model WHERE username = 'member3@gmail.com'));
 SET @b4 = LAST_INSERT_ID();
 UPDATE table_badge
 SET badge_positive_energy_id = @b4
-WHERE table_badge_owner_regularuser_persona = (SELECT regularuser_persona FROM regular_user WHERE username = 'member2@gmail.com')
+WHERE table_badge_owner_regularuser_persona = (SELECT uuid FROM user_model WHERE username = 'member2@gmail.com')
   AND kudos_module_kudosmodule_module = 30;
 
 -- El tablero de member3 no otorga ningún badge.
@@ -143,30 +143,30 @@ WHERE table_badge_owner_regularuser_persona = (SELECT regularuser_persona FROM r
 */
 -- TEAM2, módulo 31, tablero de member4:
 INSERT INTO badge (awarded_date, badge_name, badge_owner_regularuser_persona)
-VALUES ('2025-02-28', 3, (SELECT regularuser_persona FROM regular_user WHERE username = 'member5@gmail.com'));
+VALUES ('2025-02-28', 3, (SELECT uuid FROM user_model WHERE username = 'member5@gmail.com'));
 SET @b5 = LAST_INSERT_ID();
 UPDATE table_badge
 SET master_of_detail_id = @b5
-WHERE table_badge_owner_regularuser_persona = (SELECT regularuser_persona FROM regular_user WHERE username = 'member4@gmail.com')
+WHERE table_badge_owner_regularuser_persona = (SELECT uuid FROM user_model WHERE username = 'member4@gmail.com')
   AND kudos_module_kudosmodule_module = 31;
 INSERT INTO badge (awarded_date, badge_name, badge_owner_regularuser_persona)
-VALUES ('2025-02-28', 0, (SELECT regularuser_persona FROM regular_user WHERE username = 'member6@gmail.com'));
+VALUES ('2025-02-28', 0, (SELECT uuid FROM user_model WHERE username = 'member6@gmail.com'));
 SET @bf2 = LAST_INSERT_ID();
 INSERT INTO table_badge_badge_friend_hands (table_badge_id, badge_friend_hands_id)
 VALUES (
            (SELECT id FROM table_badge
-            WHERE table_badge_owner_regularuser_persona = (SELECT regularuser_persona FROM regular_user WHERE username = 'member4@gmail.com')
+            WHERE table_badge_owner_regularuser_persona = (SELECT uuid FROM user_model WHERE username = 'member4@gmail.com')
               AND kudos_module_kudosmodule_module = 31),
            @bf2
        );
 
 -- TEAM2, módulo 31, tablero de member5:
 INSERT INTO badge (awarded_date, badge_name, badge_owner_regularuser_persona)
-VALUES ('2025-02-28', 2, (SELECT regularuser_persona FROM regular_user WHERE username = 'member4@gmail.com'));
+VALUES ('2025-02-28', 2, (SELECT uuid FROM user_model WHERE username = 'member4@gmail.com'));
 SET @b6 = LAST_INSERT_ID();
 UPDATE table_badge
 SET badge_positive_energy_id = @b6
-WHERE table_badge_owner_regularuser_persona = (SELECT regularuser_persona FROM regular_user WHERE username = 'member5@gmail.com')
+WHERE table_badge_owner_regularuser_persona = (SELECT uuid FROM user_model WHERE username = 'member5@gmail.com')
   AND kudos_module_kudosmodule_module = 31;
 
 -- El tablero de member6 no otorga badges.
@@ -183,48 +183,48 @@ WHERE table_badge_owner_regularuser_persona = (SELECT regularuser_persona FROM r
 */
 -- TEAM2, módulo 32, tablero de member4:
 INSERT INTO badge (awarded_date, badge_name, badge_owner_regularuser_persona)
-VALUES ('2025-08-31', 1, (SELECT regularuser_persona FROM regular_user WHERE username = 'member5@gmail.com'));
+VALUES ('2025-08-31', 1, (SELECT uuid FROM user_model WHERE username = 'member5@gmail.com'));
 SET @b7 = LAST_INSERT_ID();
 UPDATE table_badge
 SET badge_resolutor_star_id = @b7
-WHERE table_badge_owner_regularuser_persona = (SELECT regularuser_persona FROM regular_user WHERE username = 'member4@gmail.com')
+WHERE table_badge_owner_regularuser_persona = (SELECT uuid FROM user_model WHERE username = 'member4@gmail.com')
   AND kudos_module_kudosmodule_module = 32;
 INSERT INTO badge (awarded_date, badge_name, badge_owner_regularuser_persona)
-VALUES ('2025-08-31', 0, (SELECT regularuser_persona FROM regular_user WHERE username = 'member5@gmail.com'));
+VALUES ('2025-08-31', 0, (SELECT uuid FROM user_model WHERE username = 'member5@gmail.com'));
 SET @bf3 = LAST_INSERT_ID();
 INSERT INTO table_badge_badge_friend_hands (table_badge_id, badge_friend_hands_id)
 VALUES (
            (SELECT id FROM table_badge
-            WHERE table_badge_owner_regularuser_persona = (SELECT regularuser_persona FROM regular_user WHERE username = 'member4@gmail.com')
+            WHERE table_badge_owner_regularuser_persona = (SELECT uuid FROM user_model WHERE username = 'member4@gmail.com')
               AND kudos_module_kudosmodule_module = 32),
            @bf3
        );
 INSERT INTO badge (awarded_date, badge_name, badge_owner_regularuser_persona)
-VALUES ('2025-08-31', 0, (SELECT regularuser_persona FROM regular_user WHERE username = 'member5@gmail.com'));
+VALUES ('2025-08-31', 0, (SELECT uuid FROM user_model WHERE username = 'member5@gmail.com'));
 SET @bf4 = LAST_INSERT_ID();
 INSERT INTO table_badge_badge_friend_hands (table_badge_id, badge_friend_hands_id)
 VALUES (
            (SELECT id FROM table_badge
-            WHERE table_badge_owner_regularuser_persona = (SELECT regularuser_persona FROM regular_user WHERE username = 'member4@gmail.com')
+            WHERE table_badge_owner_regularuser_persona = (SELECT uuid FROM user_model WHERE username = 'member4@gmail.com')
               AND kudos_module_kudosmodule_module = 32),
            @bf4
        );
 
 -- TEAM2, módulo 32, tablero de member5:
 INSERT INTO badge (awarded_date, badge_name, badge_owner_regularuser_persona)
-VALUES ('2025-08-31', 2, (SELECT regularuser_persona FROM regular_user WHERE username = 'member4@gmail.com'));
+VALUES ('2025-08-31', 2, (SELECT uuid FROM user_model WHERE username = 'member4@gmail.com'));
 SET @b8 = LAST_INSERT_ID();
 UPDATE table_badge
 SET badge_positive_energy_id = @b8
-WHERE table_badge_owner_regularuser_persona = (SELECT regularuser_persona FROM regular_user WHERE username = 'member5@gmail.com')
+WHERE table_badge_owner_regularuser_persona = (SELECT uuid FROM user_model WHERE username = 'member5@gmail.com')
   AND kudos_module_kudosmodule_module = 32;
 INSERT INTO badge (awarded_date, badge_name, badge_owner_regularuser_persona)
-VALUES ('2025-08-31', 0, (SELECT regularuser_persona FROM regular_user WHERE username = 'member4@gmail.com'));
+VALUES ('2025-08-31', 0, (SELECT uuid FROM user_model WHERE username = 'member4@gmail.com'));
 SET @bf5 = LAST_INSERT_ID();
 INSERT INTO table_badge_badge_friend_hands (table_badge_id, badge_friend_hands_id)
 VALUES (
            (SELECT id FROM table_badge
-            WHERE table_badge_owner_regularuser_persona = (SELECT regularuser_persona FROM regular_user WHERE username = 'member5@gmail.com')
+            WHERE table_badge_owner_regularuser_persona = (SELECT uuid FROM user_model WHERE username = 'member5@gmail.com')
               AND kudos_module_kudosmodule_module = 32),
            @bf5
        );
@@ -232,38 +232,38 @@ VALUES (
 -- TEAM2, módulo 32, tablero de member6:
 -- Otorgar todos los badges a recipient member4 y 2 de MANOS_AMIGAS al recipient member5.
 INSERT INTO badge (awarded_date, badge_name, badge_owner_regularuser_persona)
-VALUES ('2025-08-31', 3, (SELECT regularuser_persona FROM regular_user WHERE username = 'member4@gmail.com'));
+VALUES ('2025-08-31', 3, (SELECT uuid FROM user_model WHERE username = 'member4@gmail.com'));
 SET @b9 = LAST_INSERT_ID();
 INSERT INTO badge (awarded_date, badge_name, badge_owner_regularuser_persona)
-VALUES ('2025-08-31', 1, (SELECT regularuser_persona FROM regular_user WHERE username = 'member4@gmail.com'));
+VALUES ('2025-08-31', 1, (SELECT uuid FROM user_model WHERE username = 'member4@gmail.com'));
 SET @b10 = LAST_INSERT_ID();
 INSERT INTO badge (awarded_date, badge_name, badge_owner_regularuser_persona)
-VALUES ('2025-08-31', 2, (SELECT regularuser_persona FROM regular_user WHERE username = 'member4@gmail.com'));
+VALUES ('2025-08-31', 2, (SELECT uuid FROM user_model WHERE username = 'member4@gmail.com'));
 SET @b11 = LAST_INSERT_ID();
 UPDATE table_badge
 SET master_of_detail_id = @b9,
     badge_resolutor_star_id = @b10,
     badge_positive_energy_id = @b11
-WHERE table_badge_owner_regularuser_persona = (SELECT regularuser_persona FROM regular_user WHERE username = 'member6@gmail.com')
+WHERE table_badge_owner_regularuser_persona = (SELECT uuid FROM user_model WHERE username = 'member6@gmail.com')
   AND kudos_module_kudosmodule_module = 32;
 -- Asignar 2 badges de MANOS_AMIGAS para member6:
 INSERT INTO badge (awarded_date, badge_name, badge_owner_regularuser_persona)
-VALUES ('2025-08-31', 0, (SELECT regularuser_persona FROM regular_user WHERE username = 'member4@gmail.com'));
+VALUES ('2025-08-31', 0, (SELECT uuid FROM user_model WHERE username = 'member4@gmail.com'));
 SET @bf6 = LAST_INSERT_ID();
 INSERT INTO table_badge_badge_friend_hands (table_badge_id, badge_friend_hands_id)
 VALUES (
            (SELECT id FROM table_badge
-            WHERE table_badge_owner_regularuser_persona = (SELECT regularuser_persona FROM regular_user WHERE username = 'member6@gmail.com')
+            WHERE table_badge_owner_regularuser_persona = (SELECT uuid FROM user_model WHERE username = 'member6@gmail.com')
               AND kudos_module_kudosmodule_module = 32),
            @bf6
        );
 INSERT INTO badge (awarded_date, badge_name, badge_owner_regularuser_persona)
-VALUES ('2025-08-31', 0, (SELECT regularuser_persona FROM regular_user WHERE username = 'member4@gmail.com'));
+VALUES ('2025-08-31', 0, (SELECT uuid FROM user_model WHERE username = 'member4@gmail.com'));
 SET @bf7 = LAST_INSERT_ID();
 INSERT INTO table_badge_badge_friend_hands (table_badge_id, badge_friend_hands_id)
 VALUES (
            (SELECT id FROM table_badge
-            WHERE table_badge_owner_regularuser_persona = (SELECT regularuser_persona FROM regular_user WHERE username = 'member6@gmail.com')
+            WHERE table_badge_owner_regularuser_persona = (SELECT uuid FROM user_model WHERE username = 'member6@gmail.com')
               AND kudos_module_kudosmodule_module = 32),
            @bf7
        );
@@ -277,23 +277,23 @@ VALUES (
 */
 -- TEAM2, módulo 13, tablero de member5:
 INSERT INTO badge (awarded_date, badge_name, badge_owner_regularuser_persona)
-VALUES ('2025-04-30', 3, (SELECT regularuser_persona FROM regular_user WHERE username = 'member6@gmail.com'));
+VALUES ('2025-04-30', 3, (SELECT uuid FROM user_model WHERE username = 'member6@gmail.com'));
 SET @b12 = LAST_INSERT_ID();
 INSERT INTO badge (awarded_date, badge_name, badge_owner_regularuser_persona)
-VALUES ('2025-04-30', 2, (SELECT regularuser_persona FROM regular_user WHERE username = 'member6@gmail.com'));
+VALUES ('2025-04-30', 2, (SELECT uuid FROM user_model WHERE username = 'member6@gmail.com'));
 SET @b13 = LAST_INSERT_ID();
 UPDATE table_badge
 SET master_of_detail_id = @b12,
     badge_positive_energy_id = @b13
-WHERE table_badge_owner_regularuser_persona = (SELECT regularuser_persona FROM regular_user WHERE username = 'member5@gmail.com')
+WHERE table_badge_owner_regularuser_persona = (SELECT uuid FROM user_model WHERE username = 'member5@gmail.com')
   AND kudos_module_kudosmodule_module = 13;
 -- TEAM2, módulo 13, tablero de member6:
 INSERT INTO badge (awarded_date, badge_name, badge_owner_regularuser_persona)
-VALUES ('2025-04-30', 1, (SELECT regularuser_persona FROM regular_user WHERE username = 'member5@gmail.com'));
+VALUES ('2025-04-30', 1, (SELECT uuid FROM user_model WHERE username = 'member5@gmail.com'));
 SET @b14 = LAST_INSERT_ID();
 UPDATE table_badge
 SET badge_resolutor_star_id = @b14
-WHERE table_badge_owner_regularuser_persona = (SELECT regularuser_persona FROM regular_user WHERE username = 'member6@gmail.com')
+WHERE table_badge_owner_regularuser_persona = (SELECT uuid FROM user_model WHERE username = 'member6@gmail.com')
   AND kudos_module_kudosmodule_module = 13;
 
 -------------------------------------------------------------
@@ -305,49 +305,49 @@ WHERE table_badge_owner_regularuser_persona = (SELECT regularuser_persona FROM r
 */
 -- TEAM3, módulo 33, tablero de member7:
 INSERT INTO badge (awarded_date, badge_name, badge_owner_regularuser_persona)
-VALUES ('2025-09-30', 2, (SELECT regularuser_persona FROM regular_user WHERE username = 'member8@gmail.com'));
+VALUES ('2025-09-30', 2, (SELECT uuid FROM user_model WHERE username = 'member8@gmail.com'));
 SET @b15 = LAST_INSERT_ID();
 INSERT INTO badge (awarded_date, badge_name, badge_owner_regularuser_persona)
-VALUES ('2025-09-30', 1, (SELECT regularuser_persona FROM regular_user WHERE username = 'member8@gmail.com'));
+VALUES ('2025-09-30', 1, (SELECT uuid FROM user_model WHERE username = 'member8@gmail.com'));
 SET @b16 = LAST_INSERT_ID();
 INSERT INTO badge (awarded_date, badge_name, badge_owner_regularuser_persona)
-VALUES ('2025-09-30', 3, (SELECT regularuser_persona FROM regular_user WHERE username = 'member8@gmail.com'));
+VALUES ('2025-09-30', 3, (SELECT uuid FROM user_model WHERE username = 'member8@gmail.com'));
 SET @b17 = LAST_INSERT_ID();
 UPDATE table_badge
 SET badge_positive_energy_id = @b15,
     badge_resolutor_star_id = @b16,
     master_of_detail_id = @b17
-WHERE table_badge_owner_regularuser_persona = (SELECT regularuser_persona FROM regular_user WHERE username = 'member7@gmail.com')
+WHERE table_badge_owner_regularuser_persona = (SELECT uuid FROM user_model WHERE username = 'member7@gmail.com')
   AND kudos_module_kudosmodule_module = 33;
 -- Asignar 2 badges de MANOS_AMIGAS para el tablero de member7, otorgados a member9:
 INSERT INTO badge (awarded_date, badge_name, badge_owner_regularuser_persona)
-VALUES ('2025-09-30', 0, (SELECT regularuser_persona FROM regular_user WHERE username = 'member9@gmail.com'));
+VALUES ('2025-09-30', 0, (SELECT uuid FROM user_model WHERE username = 'member9@gmail.com'));
 SET @bf8 = LAST_INSERT_ID();
 INSERT INTO table_badge_badge_friend_hands (table_badge_id, badge_friend_hands_id)
 VALUES (
            (SELECT id FROM table_badge
-            WHERE table_badge_owner_regularuser_persona = (SELECT regularuser_persona FROM regular_user WHERE username = 'member7@gmail.com')
+            WHERE table_badge_owner_regularuser_persona = (SELECT uuid FROM user_model WHERE username = 'member7@gmail.com')
               AND kudos_module_kudosmodule_module = 33),
            @bf8
        );
 INSERT INTO badge (awarded_date, badge_name, badge_owner_regularuser_persona)
-VALUES ('2025-09-30', 0, (SELECT regularuser_persona FROM regular_user WHERE username = 'member9@gmail.com'));
+VALUES ('2025-09-30', 0, (SELECT uuid FROM user_model WHERE username = 'member9@gmail.com'));
 SET @bf9 = LAST_INSERT_ID();
 INSERT INTO table_badge_badge_friend_hands (table_badge_id, badge_friend_hands_id)
 VALUES (
            (SELECT id FROM table_badge
-            WHERE table_badge_owner_regularuser_persona = (SELECT regularuser_persona FROM regular_user WHERE username = 'member7@gmail.com')
+            WHERE table_badge_owner_regularuser_persona = (SELECT uuid FROM user_model WHERE username = 'member7@gmail.com')
               AND kudos_module_kudosmodule_module = 33),
            @bf9
        );
 
 -- TEAM3, módulo 33, tablero de member8:
 INSERT INTO badge (awarded_date, badge_name, badge_owner_regularuser_persona)
-VALUES ('2025-09-30', 2, (SELECT regularuser_persona FROM regular_user WHERE username = 'member7@gmail.com'));
+VALUES ('2025-09-30', 2, (SELECT uuid FROM user_model WHERE username = 'member7@gmail.com'));
 SET @b18 = LAST_INSERT_ID();
 UPDATE table_badge
 SET badge_positive_energy_id = @b18
-WHERE table_badge_owner_regularuser_persona = (SELECT regularuser_persona FROM regular_user WHERE username = 'member8@gmail.com')
+WHERE table_badge_owner_regularuser_persona = (SELECT uuid FROM user_model WHERE username = 'member8@gmail.com')
   AND kudos_module_kudosmodule_module = 33;
 
 -- El tablero de member9 no otorga badges.

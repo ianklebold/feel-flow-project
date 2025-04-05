@@ -539,7 +539,7 @@ public class BootstrapData implements CommandLineRunner {
                     .uuid(UUID.randomUUID())
                     .name("EmpresaAdmin4")
                     .team(Collections.emptyList())
-                    .admin(admin3)
+                    .admin(admin4)
                     .build();
 
             admin4.setEnterPrise(enterPrise4);
