@@ -6,5 +6,5 @@ import java.util.List;
 import java.util.UUID;
 
 public interface SummaryNikoNikoService {
-    List<SummaryNikoNikoDto> getSummary(UUID idTeam, Integer numberOfMouth);
+    List<SummaryNikoNikoDto> getSummary(UUID idTeam, Integer numberOfMonth);
 }

@@ -45,7 +45,7 @@ public class SummaryKudosController {
                     description = "HTTP Request Success"
             )
     })
-    @GetMapping("/summary")
+    @GetMapping()
     @SecurityRequirement(name = "Bearer Authentication")
     public List<BadgeTeamDto> getSummary(
             @RequestParam(name = "idModule", required = true) Long idModule,

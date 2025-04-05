@@ -25,14 +25,14 @@ public class SummaryNikoNikoServiceImpl implements SummaryNikoNikoService {
     private final ModuleService moduleService;
 
     @Override
-    public List<SummaryNikoNikoDto> getSummary(UUID idTeam, Integer numberOfMouth) {
+    public List<SummaryNikoNikoDto> getSummary(UUID idTeam, Integer numberOfMonth) {
         List<SummaryNikoNikoDto> summaries = new ArrayList<>();
-        if(numberOfMouth == null){
-            numberOfMouth = LocalDate.now().getMonth().getValue();
+        if(numberOfMonth == null){
+            numberOfMonth = LocalDate.now().getMonth().getValue();
         }
         Optional<Team> team = teamRepository.findById(idTeam);
         if(team.isPresent()){
-            List<SurveyModule> surveyModules = moduleService.getSurveyModuleByPublishDate(numberOfMouth, ModuleNames.NIKO_NIKO.toString(),team.get());
+            List<SurveyModule> surveyModules = moduleService.getSurveyModuleByPublishDate(numberOfMonth, ModuleNames.NIKO_NIKO.toString(),team.get());
 
             if (!surveyModules.isEmpty()) {
                 SurveyModule surveyModule = surveyModules.get(0);

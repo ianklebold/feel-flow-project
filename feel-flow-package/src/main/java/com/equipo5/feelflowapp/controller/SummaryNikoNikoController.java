@@ -1,7 +1,5 @@
 package com.equipo5.feelflowapp.controller;
 
-import com.equipo5.feelflowapp.domain.enumerations.modules.SurveyStateEnum;
-import com.equipo5.feelflowapp.dto.modules.SurveyDto;
 import com.equipo5.feelflowapp.dto.summary.SummaryNikoNikoDto;
 import com.equipo5.feelflowapp.service.summary.SummaryNikoNikoService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -17,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
@@ -53,9 +50,9 @@ public class SummaryNikoNikoController {
     @SecurityRequirement(name = "Bearer Authentication")
     public List<SummaryNikoNikoDto> getSummary(
             @RequestParam(required = true, name = "idTeam") UUID idTeam,
-            @RequestParam(required = false, name = "numberOfMouth") Integer numberOfMouth
+            @RequestParam(required = false, name = "numberOfMonth") Integer numberOfMonth
     ){
-        return summaryNikoNikoService.getSummary(idTeam, numberOfMouth);
+        return summaryNikoNikoService.getSummary(idTeam, numberOfMonth);
     }
 
 }

@@ -45,7 +45,7 @@ public class SummaryTwelveStepsController {
                     description = "HTTP Request Success"
             )
     })
-    @GetMapping("/summary")
+    @GetMapping()
     @SecurityRequirement(name = "Bearer Authentication")
     public List<TwelveStepsResponseAvgDto> getTwelveStepsSurveysSummaryData(
             @RequestParam(name = "idModule", required = false) Long idModule,
