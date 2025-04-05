@@ -14,5 +14,5 @@ public class ImagesDto {
 
     private String fileType;
 
-    byte[] fileData;
+    private String fileData;
 }

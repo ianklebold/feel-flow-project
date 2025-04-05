@@ -12,7 +12,7 @@ public interface ImagesMapper {
     @Mapping(source = "id",target = "id")
     @Mapping(source = "name",target = "name")
     @Mapping(source = "fileType",target = "fileType")
-    @Mapping(source = "fileData",target = "fileData", qualifiedByName = "convertBase64ToBytes")
+    @Mapping(source = "fileData",target = "fileData")
     ImagesDto mediaImageToImageDto(MediaImage image);
 
 
