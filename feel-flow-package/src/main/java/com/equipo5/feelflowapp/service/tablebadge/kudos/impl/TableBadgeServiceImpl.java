@@ -216,27 +216,27 @@ public class TableBadgeServiceImpl implements TableBadgeService {
             case "MANOS_AMIGAS":
                 if (tableBadgeAwardedDto.getManosAmigasBadge() == null) {
                     tableBadgeAwardedDto.setManosAmigasBadge( badgeAwardedMapper.badgeToCountBadgeAwardedDto(badge) );
-                }else{
-                    tableBadgeAwardedDto.getManosAmigasBadge().incrementCountAwarded();
                 }
+                tableBadgeAwardedDto.getManosAmigasBadge().incrementCountAwarded();
+                break;
             case "RESOLUTOR_ESTRELLA":
                 if (tableBadgeAwardedDto.getResolutorEstrellaBadge() == null) {
                     tableBadgeAwardedDto.setResolutorEstrellaBadge( badgeAwardedMapper.badgeToCountBadgeAwardedDto(badge) );
-                }else{
-                    tableBadgeAwardedDto.getResolutorEstrellaBadge().incrementCountAwarded();
                 }
+                tableBadgeAwardedDto.getResolutorEstrellaBadge().incrementCountAwarded();
+                break;
             case "ENERGIA_POSITIVA":
                 if (tableBadgeAwardedDto.getEnergiaPositivaBadge() == null) {
                     tableBadgeAwardedDto.setEnergiaPositivaBadge( badgeAwardedMapper.badgeToCountBadgeAwardedDto(badge) );
-                }else{
-                    tableBadgeAwardedDto.getEnergiaPositivaBadge().incrementCountAwarded();
                 }
+                tableBadgeAwardedDto.getEnergiaPositivaBadge().incrementCountAwarded();
+                break;
             case "MAESTRO_DEL_DETALLE":
                 if (tableBadgeAwardedDto.getMaestroDetalleBadge() == null) {
                     tableBadgeAwardedDto.setMaestroDetalleBadge( badgeAwardedMapper.badgeToCountBadgeAwardedDto(badge) );
-                }else{
-                    tableBadgeAwardedDto.getMaestroDetalleBadge().incrementCountAwarded();
                 }
+                tableBadgeAwardedDto.getMaestroDetalleBadge().incrementCountAwarded();
+                break;
             default:
                 break;
         }

@@ -118,7 +118,7 @@ public class DashboardController {
                     description = "HTTP Request Success"
             )
     })
-    @GetMapping("/kudos_summary")
+    @GetMapping("/kudos_dashboard")
     @SecurityRequirement(name = "Bearer Authentication")
     public List<KudosSummaryData> getKudosData(){
         return dashboardService.getKudosData();
