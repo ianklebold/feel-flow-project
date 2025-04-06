@@ -30,7 +30,7 @@ public class UserController {
 
 
     @PutMapping(PATH_ID)
-    public ResponseEntity updateUser(@PathVariable(value = "idUser")UUID idUser, @Validated @RequestBody UserUpdateDTO userUpdateDTO, @RequestHeader (name="Authorization") String token, @AuthenticationPrincipal Jwts jwts) throws NotFoundException {
+    public ResponseEntity updateUser(@PathVariable(value = "idUser")UUID idUser, @Validated @RequestBody UserUpdateDTO userUpdateDTO) throws NotFoundException {
         Optional<UserDTO> userUpdated = userService.updateUser(idUser,userUpdateDTO);
 
         if (userUpdated.isEmpty()){
