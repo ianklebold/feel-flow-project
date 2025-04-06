@@ -20,19 +20,19 @@ public class QuestionsConstantsTwelveSteps {
     );
 
     public static final List<String> QUESTIONS_CATEGORY_TWELVE_STEPS = List.of(
-            "Claridad de Propósito",
-            "Autonomía",
-            "Maestría",
-            "Conexión Social",
-            "Reconocimiento",
-            "Impacto",
-            "Confianza",
-            "Diversión",
-            "Crecimiento Personal",
-            "Mindfulness",
-            "Gratitud",
-            "Propósito Compartido"
-    );
+        "Propósito",
+        "Autonomía",
+        "Maestría",
+        "Social",
+        "Descanso",
+        "Disfrute",
+        "Ejercicio",
+        "Resiliencia",
+        "Alegria",
+        "Mindfulness",
+        "Gratitud",
+        "Servicial"
+);
 
     public static final String[] ANSWERS_1_POOL_CLASSIC = {
 
