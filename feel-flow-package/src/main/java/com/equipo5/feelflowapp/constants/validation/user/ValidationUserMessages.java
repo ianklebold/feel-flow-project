@@ -15,6 +15,9 @@ public class ValidationUserMessages {
     public static final String VALIDATION_MESSAGE_NOT_NULL_COUNTRY = "El pais no puede ser nulo";
     public static final String VALIDATION_MESSAGE_NOT_BLANK_CUNTRY = "El pais no puede ser vacio";
 
+    public static final String VALIDATION_MESSAGE_NOT_NULL_DESCRIPTION = "La descripcion no puede ser nulo";
+    public static final String VALIDATION_MESSAGE_NOT_BLANK_DESCRIPTION = "La descripcion no puede ser vacio";
+
     public static final String VALIDATION_PHONE_NUMBER = "El numero de telefono no es valido";
 
 }
