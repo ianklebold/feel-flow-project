@@ -9,6 +9,7 @@ import com.equipo5.feelflowapp.domain.users.User;
 import com.equipo5.feelflowapp.dto.enterprise.EnterpriseInfoHomeDTO;
 import com.equipo5.feelflowapp.dto.users.UserDTO;
 import com.equipo5.feelflowapp.dto.users.UserUpdateDTO;
+import com.equipo5.feelflowapp.exception.badrequest.user.UserException;
 import com.equipo5.feelflowapp.mappers.users.UserMapper;
 import com.equipo5.feelflowapp.repository.users.UserRepository;
 import com.equipo5.feelflowapp.repository.users.admin.AdminRepository;
@@ -47,19 +48,27 @@ public class UserServiceImpl implements UserService{
 
         if (userDTO.isPresent()){
 
-            User user = userDTO.get();
+            boolean isValidUsername = this.isAnUsernameAvailable(userUpdateDTO.getUsername(), uuidUser);
 
-            user.setName(userUpdateDTO.getName());
-            user.setSurname(userUpdateDTO.getSurname());
-            user.setUsername(userUpdateDTO.getUsername());
-            user.setDescription(userUpdateDTO.getDescription());
-            user.setCountry(userUpdateDTO.getCountry());
-            user.setPhoneNumber(userUpdateDTO.getPhoneNumber());
+            if (isValidUsername){
+                User user = userDTO.get();
+
+                user.setName(userUpdateDTO.getName());
+                user.setSurname(userUpdateDTO.getSurname());
+                user.setUsername(userUpdateDTO.getUsername());
+                user.setDescription(userUpdateDTO.getDescription());
+                user.setCountry(userUpdateDTO.getCountry());
+                user.setPhoneNumber(userUpdateDTO.getPhoneNumber());
 
 
-            userRepository.save(user);
+                userRepository.save(user);
 
-            return Optional.of(userMapper.userToUserDto(user));
+
+                return Optional.of(userMapper.userToUserDto(user));
+            }else{
+                throw new UserException("Nombre de usuario no disponible");
+            }
+
         }
         return Optional.empty();
     }
@@ -143,6 +152,16 @@ public class UserServiceImpl implements UserService{
                 .name(team.getEnterPrise().getName())
                 .build()
         );
+    }
+
+    private boolean isAnUsernameAvailable(String username, UUID uuidUser){
+        Optional<User> user = userRepository.findByUsername(username);
+
+        if(user.isPresent()){
+            return user.get().getUuid() == uuidUser;
+        }else{
+            return true;
+        }
     }
 
 

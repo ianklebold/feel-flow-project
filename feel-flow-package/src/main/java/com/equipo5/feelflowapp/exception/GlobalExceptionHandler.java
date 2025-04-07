@@ -3,6 +3,7 @@ package com.equipo5.feelflowapp.exception;
 import com.equipo5.feelflowapp.dto.response.ErrorResponseDto;
 import com.equipo5.feelflowapp.exception.badrequest.invitation.InvitationException;
 import com.equipo5.feelflowapp.exception.badrequest.module.ModuleException;
+import com.equipo5.feelflowapp.exception.badrequest.user.UserException;
 import com.equipo5.feelflowapp.exception.notfound.NotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -62,6 +63,14 @@ public class GlobalExceptionHandler{
         ErrorResponseDto errorResponseDto = new ErrorResponseDto(exception,webRequest.getDescription(false),HttpStatus.INTERNAL_SERVER_ERROR);
 
         return new ResponseEntity<>(errorResponseDto,HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @ExceptionHandler(UserException.class)
+    public ResponseEntity<ErrorResponseDto> handleGlobalException(UserException exception, WebRequest webRequest){
+
+        ErrorResponseDto errorResponseDto = new ErrorResponseDto(exception,webRequest.getDescription(false),HttpStatus.BAD_REQUEST);
+
+        return new ResponseEntity<>(errorResponseDto,HttpStatus.BAD_REQUEST);
     }
 
 }

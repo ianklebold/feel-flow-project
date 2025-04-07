@@ -128,7 +128,7 @@ public class ImagesServiceImpl implements ImagesService {
         MediaImage mediaImage = MediaImage.builder()
                 .name(imageFile.getOriginalFilename())
                 .fileType(imageFile.getContentType())
-                .fileType(Base64.getEncoder().encodeToString(imageFile.getBytes()))
+                .fileData(Base64.getEncoder().encodeToString(imageFile.getBytes()))
                 .build();
 
         user.setMediaImage( mediaImage );
@@ -171,7 +171,7 @@ public class ImagesServiceImpl implements ImagesService {
         MediaImage mediaImage = MediaImage.builder()
                 .name(imageFile.getOriginalFilename())
                 .fileType(imageFile.getContentType())
-                .fileType(Base64.getEncoder().encodeToString(imageFile.getBytes()))
+                .fileData(Base64.getEncoder().encodeToString(imageFile.getBytes()))
                 .build();
 
         enterPrise.setLogo( mediaImage );
