@@ -158,28 +158,29 @@ public class ModuleServiceImpl implements ModuleService {
                     .stream()
                     .allMatch(survey -> SurveyStateEnum.FINISHED.equals(survey.getSurveyStateEnum()) || SurveyStateEnum.CLOSED.equals(survey.getSurveyStateEnum()) );
 
-            if(isAllSurveysSolved && ModuleNames.NIKO_NIKO.equals(moduleNames) ){
-                boolean isModuleCloseToday = surveyModule.get().getModuleClosedDate().equals( LocalDate.now() );
+            if(isAllSurveysSolved){
+                if(ModuleNames.NIKO_NIKO.equals(moduleNames) ){
+                    boolean isModuleCloseToday = surveyModule.get().getModuleClosedDate().equals( LocalDate.now() );
 
-                if(isModuleCloseToday){
+                    if(isModuleCloseToday){
+                        surveyModule.get().setModuleState(ModuleState.FINISHED);
+                        moduleRepository.save(surveyModule.get());
+                        notificationService.sendNotificationModule(
+                                surveyModule.get().getTeam().getRegularUsers(),
+                                notificationService.generateBodyForCloseModule("Niko Niko"),
+                                "Cierre de modulo"
+                        );
+                    }
+                }else if(TWELVE_STEPS.equals(moduleNames)){
                     surveyModule.get().setModuleState(ModuleState.FINISHED);
                     moduleRepository.save(surveyModule.get());
                     notificationService.sendNotificationModule(
                             surveyModule.get().getTeam().getRegularUsers(),
-                            notificationService.generateBodyForCloseModule("Niko Niko"),
+                            notificationService.generateBodyForCloseModule("12 pasos de la felicidad"),
                             "Cierre de modulo"
                     );
                 }
-            }else if(TWELVE_STEPS.equals(moduleNames)){
-                surveyModule.get().setModuleState(ModuleState.FINISHED);
-                moduleRepository.save(surveyModule.get());
-                notificationService.sendNotificationModule(
-                        surveyModule.get().getTeam().getRegularUsers(),
-                        notificationService.generateBodyForCloseModule("12 pasos de la felicidad"),
-                        "Cierre de modulo"
-                );
             }
-
         }
 
     }
