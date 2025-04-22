@@ -78,7 +78,7 @@ public class ImagesController {
                     description = "HTTP Request Success"
             )
     })
-    @GetMapping("/user/{teamId}")
+    @GetMapping("/team/{teamId}")
     @SecurityRequirement(name = "Bearer Authentication")
     public ImagesDto getImageOfTeamById(@PathVariable UUID teamId){
         return imagesService.getImageByTeamId(teamId);

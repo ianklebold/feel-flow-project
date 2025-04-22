@@ -96,6 +96,18 @@ public class TeamServiceImpl implements TeamService {
                 teamId = teamLeaderRepository.findTeamByUsername(username);
             }else {
                 teamId = regularUserRepository.findTeamByUsername(username);
+                Optional<Team> team = teamRepository.findById(UUID.fromString(teamId));
+                if (team.isEmpty()){
+                    return List.of();
+                }else{
+                    team.get().setRegularUsers(
+                            team.get().getRegularUsers().stream().filter( members -> !members.getUsername().equals(username)  ).toList()
+                    );
+                }
+
+                return team.map(value -> List.of(
+                        teamListMapper.teamToTeamListDto(value)
+                )).orElse(Collections.emptyList());
             }
         }
         Optional<Team> team = teamRepository.findById(UUID.fromString(teamId));
