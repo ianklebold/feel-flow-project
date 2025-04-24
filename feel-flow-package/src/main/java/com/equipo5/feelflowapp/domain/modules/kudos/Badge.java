@@ -3,8 +3,6 @@ package com.equipo5.feelflowapp.domain.modules.kudos;
 import com.equipo5.feelflowapp.domain.enumerations.modules.BadgeName;
 import com.equipo5.feelflowapp.domain.users.RegularUser;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -26,8 +24,6 @@ public class Badge {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotNull
-    @NotEmpty
     private BadgeName badgeName;
 
     private LocalDate awardedDate;

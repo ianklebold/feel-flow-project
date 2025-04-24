@@ -46,21 +46,22 @@ public class BadgeAvailableMapperImpl implements BadgeAvailableMapper {
     }
 
     private BadgesAvailableDto badgeToBadgeAvailableDto(Badge badge, BadgeName badgeName) {
-
         if(badge == null) {
             return new BadgesAvailableDto(badgeName, 1);
+        }else{
+            return new BadgesAvailableDto(badgeName, 0);
         }
-        return null;
     }
 
     private BadgesAvailableDto badgeToBadgeAvailableDto(List<Badge> badge, int teamNumber, BadgeName badgeName) {
-        int numberOfMembers = (badge.isEmpty() ? 0 : teamNumber - badge.size()) ;
+        int numberOfBadges = (teamNumber - 1) - badge.size() ;
 
-        if(numberOfMembers > 0) {
-            return new BadgesAvailableDto(badgeName, numberOfMembers);
+        if(numberOfBadges > 0) {
+            return new BadgesAvailableDto(badgeName, numberOfBadges);
+        }else{
+            return new BadgesAvailableDto(badgeName, 0);
         }
 
-        return null;
     }
 
 

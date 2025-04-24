@@ -49,7 +49,7 @@ public class TableBadgeServiceImpl implements TableBadgeService {
                         TableBadge tableBadge = new TableBadge();
                         tableBadge.setKudosModule( kudosModule );
                         tableBadge.setTableBadgeOwner( regularUser );
-                        tableBadgeRepository.save( tableBadge );
+                        //tableBadgeRepository.save( tableBadge );
 
                         kudosModule.getTableBadge().add(tableBadge);
                     });
@@ -89,7 +89,7 @@ public class TableBadgeServiceImpl implements TableBadgeService {
                 Optional<Team> team = teamRepository.findById(UUID.fromString(nameTeam));
 
                 if(team.isPresent()) {
-                    return tableBadge.getBadgeFriendHands().size() < team.get().getRegularUsers().size();
+                    return tableBadge.getBadgeFriendHands().size() < (team.get().getRegularUsers().size() - 1);
                 }
             }
         }
