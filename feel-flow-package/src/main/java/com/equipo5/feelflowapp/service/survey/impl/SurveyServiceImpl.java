@@ -178,6 +178,18 @@ public class SurveyServiceImpl implements SurveyService{
     }
 
     @Override
+    public List<Survey> getSurveysByModuleAndUserId(ModuleNames moduleName, UUID idUser) {
+
+        List<SurveyModule> surveyModuleList = this.moduleService.getSurveyModuleForCurrentUserByModuleName(moduleName, idUser);
+
+        return surveyModuleList.stream()
+                .flatMap(module -> module.getSurveys().stream())
+                .filter( survey -> survey.getRegularUser().getUuid().equals(idUser) )
+                .toList();
+
+    }
+
+    @Override
     public List<Survey> getSurveysByModule(Long id) {
 
         Optional<SurveyModule> surveyModule =  this.moduleService.getSurveyModuleById(id);

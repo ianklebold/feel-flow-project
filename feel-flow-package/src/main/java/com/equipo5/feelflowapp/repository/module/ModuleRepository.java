@@ -15,4 +15,6 @@ public interface ModuleRepository extends JpaRepository<Module, Long>, JpaSpecif
 
     Optional<Module> findModuleByTeamAndModuleStateAndName(Team team, ModuleState state, String moduleNames);
 
+    List<Module> findAllByTeamAndName(Team team, String moduleNames);
+
 }

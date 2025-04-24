@@ -13,6 +13,7 @@ import java.util.UUID;
 
 public interface DashboardService {
     List<TwelveStepsResponseAvgDto> getTwelveStepsSurveysAveragedData();
+    List<TwelveStepsResponseAvgDto> getTwelveStepsSurveysAveragedDataForCurrentUser();
     List<TeamAndModulesDto> getTeamsAndModulesData(boolean isAdmin, ModuleNames nameModule);
     List<ModuleAndUsersDto> getModuleAndUsersData(ModuleNames nameModule, Boolean isAdmin);
     NikoNikoSummaryData getEmotionalTrendDataAvg();

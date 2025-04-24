@@ -148,6 +148,26 @@ public class ModuleServiceImpl implements ModuleService {
     }
 
     @Override
+    public List<SurveyModule> getSurveyModuleForCurrentUserByModuleName(ModuleNames moduleNames, UUID idUser) {
+
+        Optional<RegularUser> regularUser = regularUserRepository.findByUuid( idUser );
+
+        if(regularUser.isPresent()) {
+            List<Module> modules = this.moduleRepository.findAllByTeamAndName(regularUser.get().getTeam(), moduleNames.toString());
+
+            if (!modules.isEmpty()){
+
+                return modules.stream()
+                        .map(module -> (SurveyModule) module).toList();
+
+            }
+
+        }
+
+        return List.of();
+    }
+
+    @Override
     public void closeModule(ModuleNames moduleNames) {
         Optional<SurveyModule> surveyModule = this.getSurveyModuleActiveForCurrentUserByModuleName(moduleNames);
 

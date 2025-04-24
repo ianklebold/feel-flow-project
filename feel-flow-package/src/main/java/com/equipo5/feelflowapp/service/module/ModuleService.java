@@ -31,6 +31,8 @@ public interface ModuleService {
 
     Optional<SurveyModule> getSurveyModuleActiveForCurrentUserByModuleName(ModuleNames moduleNames);
 
+    List<SurveyModule> getSurveyModuleForCurrentUserByModuleName(ModuleNames moduleNames, UUID idUser);
+
     void closeModule(ModuleNames moduleNames);
 
     List<Module> getModulesByTeamIdAndModuleName(ModuleNames moduleNames, UUID teamId );

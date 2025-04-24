@@ -20,6 +20,7 @@ import com.equipo5.feelflowapp.mappers.modules.ModuleMapper;
 import com.equipo5.feelflowapp.mappers.modules.kudos.KudosSummaryDataMapper;
 import com.equipo5.feelflowapp.mappers.users.UserMapper;
 import com.equipo5.feelflowapp.repository.team.TeamRepository;
+import com.equipo5.feelflowapp.repository.users.UserRepository;
 import com.equipo5.feelflowapp.service.dashboard.DashboardService;
 import com.equipo5.feelflowapp.service.module.ModuleService;
 import com.equipo5.feelflowapp.service.module.nikoniko.NikoNikoService;
@@ -27,6 +28,7 @@ import com.equipo5.feelflowapp.service.module.twelveSteps.TwelveStepsService;
 import com.equipo5.feelflowapp.service.survey.SurveyService;
 import com.equipo5.feelflowapp.service.tablebadge.kudos.TableBadgeService;
 import com.equipo5.feelflowapp.service.team.TeamService;
+import com.equipo5.feelflowapp.service.users.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -55,8 +57,12 @@ public class DashboardServiceImpl implements DashboardService {
     private final TableBadgeService tableBadgeService;
     private final KudosSummaryDataMapper kudosSummaryDataMapper;
 
+    private final UserService userService;
+
+    private final UserRepository userRepository;
+
     @Autowired
-    public DashboardServiceImpl(@Qualifier("SurveyService") SurveyService surveyService, TeamService teamService, TeamRepository teamRepository, TwelveStepsService twelveStepsService, ModuleService moduleService, ModuleMapper moduleMapper, UserMapper userMapper, NikoNikoService nikoNikoService, TableBadgeService tableBadgeService, KudosSummaryDataMapper kudosSummaryDataMapper) {
+    public DashboardServiceImpl(@Qualifier("SurveyService") SurveyService surveyService, TeamService teamService, TeamRepository teamRepository, TwelveStepsService twelveStepsService, ModuleService moduleService, ModuleMapper moduleMapper, UserMapper userMapper, NikoNikoService nikoNikoService, TableBadgeService tableBadgeService, KudosSummaryDataMapper kudosSummaryDataMapper, UserService userService, UserRepository userRepository) {
         this.surveyService = surveyService;
         this.teamService = teamService;
         this.teamRepository = teamRepository;
@@ -67,6 +73,8 @@ public class DashboardServiceImpl implements DashboardService {
         this.nikoNikoService = nikoNikoService;
         this.tableBadgeService = tableBadgeService;
         this.kudosSummaryDataMapper = kudosSummaryDataMapper;
+        this.userService = userService;
+        this.userRepository = userRepository;
     }
 
     @Override
@@ -96,6 +104,39 @@ public class DashboardServiceImpl implements DashboardService {
 
         twelveStepsResponseAvgDtos.forEach( result -> result.setAverage( getPercentByScale(result.getAverage(), 5d) ) );
         return twelveStepsResponseAvgDtos;
+    }
+
+    @Override
+    public List<TwelveStepsResponseAvgDto> getTwelveStepsSurveysAveragedDataForCurrentUser() {
+        var username = userService.getUsernameByCurrentUser();
+        var regularUser = userRepository.findByUsername(username);
+        List<TwelveStepsResponseAvgDto> twelveStepsResponseAvgDtos;
+
+        if(regularUser.isPresent()){
+            List<Survey> surveys;
+
+            surveys = this.surveyService.getSurveysByModuleAndUserId(ModuleNames.TWELVE_STEPS, regularUser.get().getUuid());
+
+            if (!surveys.isEmpty()) {
+                twelveStepsResponseAvgDtos = getTwelveStepsResponseAvgDto(surveys);
+            }else{
+                twelveStepsResponseAvgDtos = getTwelveStepsResponseWithAvgZero();
+            }
+
+        }else{
+            twelveStepsResponseAvgDtos = getTwelveStepsResponseWithAvgZero();
+        }
+        return twelveStepsResponseAvgDtos;
+    }
+
+    private List<TwelveStepsResponseAvgDto> getTwelveStepsResponseWithAvgZero(){
+        return QuestionsConstantsTwelveSteps.QUESTIONS_CATEGORY_TWELVE_STEPS
+                .stream()
+                .map( category -> TwelveStepsResponseAvgDto.builder()
+                        .categoryName(category)
+                        .average(0)
+                        .build()
+                ).toList();
     }
 
     @Override
