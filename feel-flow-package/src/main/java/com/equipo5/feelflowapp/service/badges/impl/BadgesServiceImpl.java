@@ -7,10 +7,7 @@ import com.equipo5.feelflowapp.domain.modules.kudos.Badge;
 import com.equipo5.feelflowapp.domain.modules.kudos.KudosModule;
 import com.equipo5.feelflowapp.domain.modules.kudos.TableBadge;
 import com.equipo5.feelflowapp.domain.users.RegularUser;
-import com.equipo5.feelflowapp.dto.badges.BadgeDto;
-import com.equipo5.feelflowapp.dto.badges.BadgeTeamDto;
-import com.equipo5.feelflowapp.dto.badges.BadgesAvailableDto;
-import com.equipo5.feelflowapp.dto.badges.BadgesAwardedDto;
+import com.equipo5.feelflowapp.dto.badges.*;
 import com.equipo5.feelflowapp.exception.badrequest.badge.BadgeIsNotPossibleAssignException;
 import com.equipo5.feelflowapp.exception.badrequest.module.ModuleException;
 import com.equipo5.feelflowapp.exception.notfound.NotFoundException;
@@ -139,15 +136,24 @@ public class BadgesServiceImpl implements BadgesService {
     }
 
     @Override
-    public List<BadgeDto> getBadgesAwarded() {
+    public List<BadgeWithNumberOfBadgesDto> getBadgesAwarded() {
+        List<BadgeName> badgeNames = List.of(BadgeName.MAESTRO_DEL_DETALLE,BadgeName.ENERGIA_POSITIVA, BadgeName.RESOLUTOR_ESTRELLA, BadgeName.MANOS_AMIGAS);
         var username = userService.getUsernameByCurrentUser();
 
         var regularUser = userRepository.findByUsername(username);
         if (regularUser.isPresent()) {
             List<Badge> badges = this.badgeRepository.findAllByBadgeOwner( (RegularUser) regularUser.get() );
-            return badges.stream()
-                    .map(this.badgesDtoMapper::badgeToBadgeDto)
-                    .toList();
+
+            if( !badges.isEmpty() ){
+                return badgeNames.stream()
+                        .map(
+                                badgeName -> new BadgeWithNumberOfBadgesDto(
+                                        badgeName,
+                                        badges.stream().filter(badge -> badgeName.equals(badge.getBadgeName()) ).toList().size()
+                                )
+                        )
+                        .toList();
+            }
         }
         return List.of();
     }

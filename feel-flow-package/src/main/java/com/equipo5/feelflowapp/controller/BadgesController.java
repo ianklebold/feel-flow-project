@@ -1,10 +1,7 @@
 package com.equipo5.feelflowapp.controller;
 
 import com.equipo5.feelflowapp.constants.response.HttpResponses;
-import com.equipo5.feelflowapp.dto.badges.BadgeDto;
-import com.equipo5.feelflowapp.dto.badges.BadgeTeamDto;
-import com.equipo5.feelflowapp.dto.badges.BadgesAvailableDto;
-import com.equipo5.feelflowapp.dto.badges.BadgesAwardedDto;
+import com.equipo5.feelflowapp.dto.badges.*;
 import com.equipo5.feelflowapp.dto.response.ErrorResponseDto;
 import com.equipo5.feelflowapp.dto.response.ResponseDto;
 import com.equipo5.feelflowapp.service.badges.BadgesService;
@@ -117,7 +114,7 @@ public class BadgesController {
     })
     @SecurityRequirement(name = "Bearer Authentication")
     @GetMapping("/awarded")
-    public List<BadgeDto> getBadges() {
+    public List<BadgeWithNumberOfBadgesDto> getBadges() {
         return badgesService.getBadgesAwarded();
     }
 
