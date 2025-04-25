@@ -19,10 +19,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @Tag(
         name = "Module Kudos REST APIs",
@@ -84,5 +81,36 @@ public class KudosModuleController {
                 .status(HttpStatus.CREATED)
                 .body(new ResponseDto(HttpResponses.STATUS_201,String.format(HttpResponses.MESSAGE_201,MODULE)));
     }
+
+    @Operation(
+            summary = "Create Module Kudos REST API",
+            description = "REST API to create/open new module"
+    )
+    @ApiResponses({
+            @ApiResponse(
+                    responseCode = "201",
+                    description = "HTTP Status CREATED"
+            ),
+            @ApiResponse(
+                    responseCode = "400",
+                    description = "HTTP Status BAD REQUEST",
+                    content = @Content(
+                            schema = @Schema(implementation = ErrorResponseDto.class)
+                    )
+            ),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "HTTP Status NOT FOUND",
+                    content = @Content(
+                            schema = @Schema(implementation = ErrorResponseDto.class)
+                    )
+            )
+    })
+    @SecurityRequirement(name = "Bearer Authentication")
+    @GetMapping("/available_module")
+    public boolean isModuleKudosAvailable() {
+        return this.kudosService.isModuleKudosAvailable();
+    }
+
 
 }

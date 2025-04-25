@@ -9,4 +9,5 @@ public interface KudosService {
 
     void closeModule();
 
+    boolean isModuleKudosAvailable();
 }

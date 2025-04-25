@@ -114,4 +114,22 @@ public class KudosServiceImpl implements KudosService {
         }
 
     }
+
+    @Override
+    public boolean isModuleKudosAvailable() {
+        var username = userService.getUsernameByCurrentUser();
+        var regularUser = userRepository.findByUsername(username);
+        if (regularUser.isPresent()) {
+            var nameTeam = regularUserRepository.findTeamByUsername(username);
+            Optional<Team> team = teamRepository.findById(UUID.fromString(nameTeam));
+
+            if (team.isEmpty()) {
+                throw new NotFoundException("Equipo no encontrado");
+            }
+
+            Optional<KudosModule> kudosModule = this.kudosRepository.findByModuleStateAndTeam(ModuleState.ACTIVE, team.get());
+            return kudosModule.isPresent();
+        }
+        return false;
+    }
 }
