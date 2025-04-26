@@ -11,7 +11,7 @@ import java.util.Optional;
 
 public interface ModuleRepository extends JpaRepository<Module, Long>, JpaSpecificationExecutor<Module> {
 
-    List<Module> findModulesByTeamOrderByIdDescCreationDateDesc(Team team);
+    List<Module> findModulesByNameAndTeamOrderByIdDescCreationDateDesc(String name, Team team);
 
     Optional<Module> findModuleByTeamAndModuleStateAndName(Team team, ModuleState state, String moduleNames);
 

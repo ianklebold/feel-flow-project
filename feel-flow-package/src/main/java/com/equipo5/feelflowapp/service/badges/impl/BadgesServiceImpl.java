@@ -7,6 +7,7 @@ import com.equipo5.feelflowapp.domain.modules.kudos.Badge;
 import com.equipo5.feelflowapp.domain.modules.kudos.KudosModule;
 import com.equipo5.feelflowapp.domain.modules.kudos.TableBadge;
 import com.equipo5.feelflowapp.domain.users.RegularUser;
+import com.equipo5.feelflowapp.domain.users.User;
 import com.equipo5.feelflowapp.dto.badges.*;
 import com.equipo5.feelflowapp.exception.badrequest.badge.BadgeIsNotPossibleAssignException;
 import com.equipo5.feelflowapp.exception.badrequest.module.ModuleException;
@@ -137,10 +138,19 @@ public class BadgesServiceImpl implements BadgesService {
 
     @Override
     public List<BadgeWithNumberOfBadgesDto> getBadgesAwarded() {
-        List<BadgeName> badgeNames = List.of(BadgeName.MAESTRO_DEL_DETALLE,BadgeName.ENERGIA_POSITIVA, BadgeName.RESOLUTOR_ESTRELLA, BadgeName.MANOS_AMIGAS);
         var username = userService.getUsernameByCurrentUser();
-
         var regularUser = userRepository.findByUsername(username);
+        return getBadgesAwardedByUser(regularUser);
+    }
+
+    @Override
+    public List<BadgeWithNumberOfBadgesDto> getBadgesAwarded(UUID userId) {
+        Optional<User> regularUser = userRepository.findById(userId);
+        return getBadgesAwardedByUser(regularUser);
+    }
+
+    private List<BadgeWithNumberOfBadgesDto> getBadgesAwardedByUser(Optional<User> regularUser){
+        List<BadgeName> badgeNames = List.of(BadgeName.MAESTRO_DEL_DETALLE,BadgeName.ENERGIA_POSITIVA, BadgeName.RESOLUTOR_ESTRELLA, BadgeName.MANOS_AMIGAS);
         if (regularUser.isPresent()) {
             List<Badge> badges = this.badgeRepository.findAllByBadgeOwner( (RegularUser) regularUser.get() );
 
@@ -153,9 +163,25 @@ public class BadgesServiceImpl implements BadgesService {
                                 )
                         )
                         .toList();
+            }else{
+                return badgeNames.stream()
+                        .map(
+                                badgeName -> new BadgeWithNumberOfBadgesDto(
+                                        badgeName,
+                                        0
+                                )
+                        )
+                        .toList();
             }
         }
-        return List.of();
+        return badgeNames.stream()
+                .map(
+                        badgeName -> new BadgeWithNumberOfBadgesDto(
+                                badgeName,
+                                0
+                        )
+                )
+                .toList();
     }
 
     @Override

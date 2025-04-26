@@ -124,7 +124,7 @@ public class SurveyServiceImpl implements SurveyService{
             Optional<Team> team = teamRepository.findById(UUID.fromString(nameTeam));
 
             if (team.isPresent()){
-                List<Module> modules =  this.moduleRepository.findModulesByTeamOrderByIdDescCreationDateDesc(team.get());
+                List<Module> modules =  this.moduleRepository.findModulesByNameAndTeamOrderByIdDescCreationDateDesc(ModuleNames.TWELVE_STEPS.toString(),team.get());
 
                 if(!modules.isEmpty()){
                     Survey survey = this.surveyRepository.getSurveyByRegularUserAndSurveyModule(

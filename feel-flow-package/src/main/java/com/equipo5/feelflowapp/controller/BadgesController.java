@@ -21,6 +21,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @Tag(
         name = "Module Kudos REST APIs",
@@ -67,9 +68,8 @@ public class BadgesController {
         badgesService.sendBadge(badgesAwardedDto);
         kudosService.closeModule();
         return ResponseEntity
-                    .status(HttpStatus.CREATED)
-                    .body(new ResponseDto(HttpResponses.STATUS_201,String.format(HttpResponses.MESSAGE_201,badgesAwardedDto.badgeName())));
-
+                .status(HttpStatus.OK)
+                .body(new ResponseDto(HttpResponses.STATUS_200,HttpResponses.MESSAGE_200));
     }
 
     @Operation(
@@ -116,6 +116,29 @@ public class BadgesController {
     @GetMapping("/awarded")
     public List<BadgeWithNumberOfBadgesDto> getBadges() {
         return badgesService.getBadgesAwarded();
+    }
+
+    @Operation(
+            summary = "Get Badges REST API awarded by user id",
+            description = "REST API to get the badges"
+    )
+    @ApiResponses({
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "HTTP Status OK"
+            ),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "HTTP Status NOT FOUND",
+                    content = @Content(
+                            schema = @Schema(implementation = ErrorResponseDto.class)
+                    )
+            )
+    })
+    @SecurityRequirement(name = "Bearer Authentication")
+    @GetMapping("/awarded/user/{user_id}")
+    public List<BadgeWithNumberOfBadgesDto> getBadges(@PathVariable(value = "user_id") UUID userId ) {
+        return badgesService.getBadgesAwarded(userId);
     }
 
     @Operation(
