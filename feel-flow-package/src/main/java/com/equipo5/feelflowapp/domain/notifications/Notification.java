@@ -1,5 +1,6 @@
 package com.equipo5.feelflowapp.domain.notifications;
 
+import com.equipo5.feelflowapp.domain.enumerations.notification.NotificationTypeEnum;
 import com.equipo5.feelflowapp.domain.users.User;
 import jakarta.persistence.*;
 
@@ -38,4 +39,7 @@ public class Notification {
 
     @Column(nullable = false)
     private LocalDateTime createdAt;
+
+    @Enumerated(EnumType.STRING)
+    private NotificationTypeEnum notificationTypeEnum;
 }

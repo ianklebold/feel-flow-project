@@ -74,7 +74,7 @@ public class KudosModuleController {
         notificationService.sendNotificationModule(
                 kudosModule.getTeam().getRegularUsers(),
                 notificationService.generateBodyForOpenedModule("Kudos", kudosModule.getDateAndTimeToPublish(), kudosModule.getDateAndTimeToClose()),
-                "Apertura de nuevo modulo"
+                "Apertura de modulo Kudos!"
         );
 
         return ResponseEntity

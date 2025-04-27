@@ -1,5 +1,6 @@
 package com.equipo5.feelflowapp.service.notification.impl;
 
+import com.equipo5.feelflowapp.domain.enumerations.notification.NotificationTypeEnum;
 import com.equipo5.feelflowapp.domain.notifications.Notification;
 import com.equipo5.feelflowapp.domain.users.RegularUser;
 import com.equipo5.feelflowapp.dto.notifications.NotificationClientDto;
@@ -17,6 +18,7 @@ import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -69,6 +71,7 @@ public class NotificationServiceImpl implements NotificationService {
             notificationEntity.setWasRead( Boolean.FALSE );
             notificationEntity.setWasSeen( Boolean.FALSE );
             notificationEntity.setCreatedAt( LocalDateTime.now() );
+            notificationEntity.setNotificationTypeEnum(NotificationTypeEnum.KUDOS);
 
             notificationEntity.setNotificationOwner( regularUser  );
             Notification notificationCreated = this.notificationRepository.save(notificationEntity);
@@ -81,7 +84,10 @@ public class NotificationServiceImpl implements NotificationService {
 
     @Override
     public String generateBodyForOpenedModule(String nameModule, Timestamp dateAndTimeToPublish, Timestamp dateAndTimeToClose) {
-        return "El modulo " + nameModule + "Se encuentra abierto y disponible " + "desde las " + dateAndTimeToPublish + " y las " + dateAndTimeToClose;
+        return "El modulo " + nameModule + "Se encuentra abierto y disponible " + "desde las " +
+                LocalDateTime.of(dateAndTimeToPublish.getYear(),dateAndTimeToPublish.getMonth(),dateAndTimeToPublish.getDay(),dateAndTimeToPublish.getHours(),dateAndTimeToPublish.getMinutes())
+                + " y las " +
+                LocalDateTime.of(dateAndTimeToClose.getYear(),dateAndTimeToClose.getMonth(),dateAndTimeToClose.getDay(),dateAndTimeToClose.getHours(),dateAndTimeToClose.getMinutes());
     }
 
     @Override
@@ -120,6 +126,24 @@ public class NotificationServiceImpl implements NotificationService {
             return notifications.stream()
                     .map( notificationSessionUserMapper::notificationToNotificationSessionUserDto)
                     .toList();
+        }
+
+        return List.of();
+    }
+
+    @Override
+    public List<NotificationDto> getNotificationsByUser(NotificationTypeEnum notificationType) {
+        Optional<UserDTO> optionalUserDTO = userService.getSessionUser();
+        if(optionalUserDTO.isPresent()) {
+            List<Notification> notifications;
+            if (notificationType == null) {
+                notificationType = NotificationTypeEnum.GENERAL;
+            }
+            notifications = notificationRepository.findAllByNotificationOwnerAndNotificationTypeEnumOrderByCreatedAtDesc(
+                    this.userMapper.userDtoToUser( optionalUserDTO.get() ),
+                    notificationType
+            );
+            return notifications.stream().map(notificationMapper::notificationToNotificationDto).toList();
         }
 
         return List.of();

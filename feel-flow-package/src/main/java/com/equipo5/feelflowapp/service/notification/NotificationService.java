@@ -1,7 +1,9 @@
 package com.equipo5.feelflowapp.service.notification;
 
+import com.equipo5.feelflowapp.domain.enumerations.notification.NotificationTypeEnum;
 import com.equipo5.feelflowapp.domain.users.RegularUser;
 import com.equipo5.feelflowapp.dto.notifications.NotificationClientDto;
+import com.equipo5.feelflowapp.dto.notifications.NotificationDto;
 import com.equipo5.feelflowapp.dto.notifications.NotificationSessionUserDto;
 
 import java.sql.Timestamp;
@@ -16,4 +18,5 @@ public interface NotificationService {
     String generateBodyForCloseModule(String nameModule);
 
     List<NotificationSessionUserDto> getNotificationsAvailableToSend(LocalDateTime from, LocalDateTime to, Integer max);
+    List<NotificationDto> getNotificationsByUser(NotificationTypeEnum notificationType);
 }

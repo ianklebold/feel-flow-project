@@ -1,7 +1,9 @@
 package com.equipo5.feelflowapp.controller;
 
 import com.equipo5.feelflowapp.constants.response.HttpResponses;
+import com.equipo5.feelflowapp.domain.enumerations.notification.NotificationTypeEnum;
 import com.equipo5.feelflowapp.dto.notifications.NotificationClientDto;
+import com.equipo5.feelflowapp.dto.notifications.NotificationDto;
 import com.equipo5.feelflowapp.dto.notifications.NotificationSessionUserDto;
 import com.equipo5.feelflowapp.dto.response.ResponseDto;
 import com.equipo5.feelflowapp.service.notification.NotificationService;
@@ -72,6 +74,24 @@ public class NotificationController {
             @RequestParam(required = false) Integer max
             ) {
         return notificationService.getNotificationsAvailableToSend(from, to, max);
+    }
+
+    @Operation(
+            summary = "Get Notifications REST API for current user",
+            description = "REST API for get Notifications for current user"
+    )
+    @ApiResponses({
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "HTTP Status OK"
+            )
+    })
+    @SecurityRequirement(name = "Bearer Authentication")
+    @GetMapping("/current_user")
+    public List<NotificationDto> getNotificationsByUser(
+            @RequestParam(required = false, name = "notificationType") NotificationTypeEnum notificationType
+    ) {
+        return notificationService.getNotificationsByUser(notificationType);
     }
 
 }

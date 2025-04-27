@@ -15,6 +15,8 @@ public interface NotificationMapper {
 
     @Mapping(source = "title", target = "title")
     @Mapping(source = "body", target = "body")
+    @Mapping(source = "notificationTypeEnum", target = "notificationType")
+    @Mapping(source = "createdAt", target = "creationDate")
     NotificationDto notificationToNotificationDto(Notification notification);
 
     Notification notificationClientDtoToNotification(NotificationClientDto notificationClientDto);
