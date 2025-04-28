@@ -338,6 +338,15 @@ public class BootstrapData implements CommandLineRunner {
                     .descriptionProject("descripcion1")
                     .regularUsers(Collections.emptyList())
                     .enterPrise(adminRepository.findByUsername("admin1@gmail.com").get().getEnterPrise())
+                    .logo(
+                            MediaImage.builder()
+                                    .name("team1_image")
+                                    .fileType("image/jpg")
+                                    .fileData(
+                                            convertToBase64( Files.readAllBytes(Paths.get("src/main/resources/images/team/team1.jpg")) )
+                                    )
+                                    .build()
+                    )
                     .build();
 
             teamRepository.save(team1);
@@ -367,6 +376,15 @@ public class BootstrapData implements CommandLineRunner {
                     .descriptionProject("descripcion2")
                     .regularUsers(Collections.emptyList())
                     .enterPrise(adminRepository.findByUsername("admin2@gmail.com").get().getEnterPrise())
+                    .logo(
+                            MediaImage.builder()
+                                    .name("team2_image")
+                                    .fileType("image/jpg")
+                                    .fileData(
+                                            convertToBase64( Files.readAllBytes(Paths.get("src/main/resources/images/team/team2.jpg")) )
+                                    )
+                                    .build()
+                    )
                     .build();
 
             teamRepository.save(team2);
@@ -396,6 +414,15 @@ public class BootstrapData implements CommandLineRunner {
                     .descriptionProject("descripcion3")
                     .regularUsers(Collections.emptyList())
                     .enterPrise(adminRepository.findByUsername("admin3@gmail.com").get().getEnterPrise())
+                    .logo(
+                            MediaImage.builder()
+                                    .name("team3_image")
+                                    .fileType("image/jpg")
+                                    .fileData(
+                                            convertToBase64( Files.readAllBytes(Paths.get("src/main/resources/images/team/team3.jpg")) )
+                                    )
+                                    .build()
+                    )
                     .build();
 
             teamRepository.save(team3);
@@ -425,6 +452,15 @@ public class BootstrapData implements CommandLineRunner {
                     .descriptionProject("descripcion4")
                     .regularUsers(Collections.emptyList())
                     .enterPrise(adminRepository.findByUsername("admin4@gmail.com").get().getEnterPrise())
+                    .logo(
+                            MediaImage.builder()
+                                    .name("team4_image")
+                                    .fileType("image/jpg")
+                                    .fileData(
+                                            convertToBase64( Files.readAllBytes(Paths.get("src/main/resources/images/team/team4.jpg")) )
+                                    )
+                                    .build()
+                    )
                     .build();
 
             teamRepository.save(team4);
@@ -456,6 +492,15 @@ public class BootstrapData implements CommandLineRunner {
                     .name("EmpresaAdmin1")
                     .team(Collections.emptyList())
                     .admin(admin1)
+                    .logo(
+                            MediaImage.builder()
+                                    .name("enterprise1_image")
+                                    .fileType("image/jpg")
+                                    .fileData(
+                                            convertToBase64( Files.readAllBytes(Paths.get("src/main/resources/images/enterprise/enterprise1.jpg")) )
+                                    )
+                                    .build()
+                    )
                     .build();
 
             admin1.setEnterPrise(enterPrise1);
@@ -484,6 +529,15 @@ public class BootstrapData implements CommandLineRunner {
                     .name("EmpresaAdmin2")
                     .team(Collections.emptyList())
                     .admin(admin2)
+                    .logo(
+                            MediaImage.builder()
+                                    .name("enterprise2_image")
+                                    .fileType("image/jpg")
+                                    .fileData(
+                                            convertToBase64( Files.readAllBytes(Paths.get("src/main/resources/images/enterprise/enterprise2.jpg")) )
+                                    )
+                                    .build()
+                    )
                     .build();
 
             admin2.setEnterPrise(enterPrise2);
@@ -512,6 +566,15 @@ public class BootstrapData implements CommandLineRunner {
                     .name("EmpresaAdmin3")
                     .team(Collections.emptyList())
                     .admin(admin3)
+                    .logo(
+                            MediaImage.builder()
+                                    .name("enterprise3_image")
+                                    .fileType("image/jpg")
+                                    .fileData(
+                                            convertToBase64( Files.readAllBytes(Paths.get("src/main/resources/images/enterprise/enterprise3.jpg")) )
+                                    )
+                                    .build()
+                    )
                     .build();
 
             admin3.setEnterPrise(enterPrise3);
@@ -540,6 +603,15 @@ public class BootstrapData implements CommandLineRunner {
                     .name("EmpresaAdmin4")
                     .team(Collections.emptyList())
                     .admin(admin4)
+                    .logo(
+                            MediaImage.builder()
+                                    .name("enterprise4_image")
+                                    .fileType("image/jpg")
+                                    .fileData(
+                                            convertToBase64( Files.readAllBytes(Paths.get("src/main/resources/images/enterprise/enterprise4.jpg")) )
+                                    )
+                                    .build()
+                    )
                     .build();
 
             admin4.setEnterPrise(enterPrise4);
