@@ -41,5 +41,7 @@ public interface ModuleService {
 
     List<Module> getAllModules(ModuleNames moduleNames, Boolean isAdmin);
 
+    List<Module> getAllModules();
+
     List<KudosModule> getModulesBy(String name, Team team);
 }

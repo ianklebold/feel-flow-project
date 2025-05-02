@@ -18,6 +18,8 @@ public interface TeamService {
 
     List<TeamListDTO> getAllTeams();
 
+    List<Team> getAllTeamsEntities();
+
     List<TeamDTO> getTeamsByRole(boolean isAdmin);
 
     Optional<TeamListDTO> getTeamById(UUID uuid) throws NotFoundException;

@@ -10,7 +10,9 @@ import com.equipo5.feelflowapp.domain.modules.Survey;
 import com.equipo5.feelflowapp.domain.modules.SurveyModule;
 import com.equipo5.feelflowapp.domain.modules.kudos.KudosModule;
 import com.equipo5.feelflowapp.domain.users.RegularUser;
+import com.equipo5.feelflowapp.dto.dashboard.general.ParticipationOnModulesDto;
 import com.equipo5.feelflowapp.dto.modules.ModuleSurveyDto;
+import com.equipo5.feelflowapp.dto.team.TeamListDTO;
 import com.equipo5.feelflowapp.mappers.modules.ModuleSurveyMapper;
 import com.equipo5.feelflowapp.repository.module.ModuleRepository;
 import com.equipo5.feelflowapp.repository.module.specification.ModuleSpecification;
@@ -235,6 +237,42 @@ public class ModuleServiceImpl implements ModuleService {
                          .sorted( Comparator.comparing( Module::getDateAndTimeToPublish ))
                          .toList();
             }
+        }
+
+        return List.of();
+    }
+
+    public ParticipationOnModulesDto getParticipationOnModulesDto(){
+        ParticipationOnModulesDto dto = new ParticipationOnModulesDto();
+        dto.setName("Participation en Modulos");
+
+        //Todos se refieren a modulos activos.
+
+        //Kudos la cantidad de tableros del modulo en estado cerrado.
+        //Niko Niko la cantidad de usuarios que respondieron al menos una encuesta.
+        //12 Pasos de la felicidad, cantidad de encuestas terminadas.
+
+        return null;
+
+    }
+
+    @Override
+    public List<Module> getAllModules() {
+        List<Team> teams = this.teamService.getAllTeamsEntities();
+
+        if(teams.size() == 1){
+
+            Team team = teams.get(0);
+            return team.getModules()
+                    .stream()
+                    .toList();
+
+        }else if (teams.size() > 1){
+
+            return teams.stream()
+                    .flatMap(team -> team.getModules().stream())
+                    .toList();
+
         }
 
         return List.of();

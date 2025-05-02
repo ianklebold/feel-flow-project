@@ -115,6 +115,41 @@ public class TeamServiceImpl implements TeamService {
     }
 
     @Override
+    public List<Team> getAllTeamsEntities() {
+        Optional<? extends GrantedAuthority> role = userService.getRoleByCurrentUser();
+        String teamId = "";
+        if (role.isPresent()){
+            String username = userService.getUsernameByCurrentUser();
+            if (TeamRoles.ADMIN.name().equals(role.get().getAuthority())){
+
+                Optional<Admin> admin = adminRepository.findByUsername(username);
+
+                return admin.map(value -> value.getEnterPrise().getTeam()
+                        .stream()
+                        .toList()).orElse(Collections.emptyList());
+
+            }else if (TeamRoles.TEAM_LEADER.name().equals(role.get().getAuthority())){
+                teamId = teamLeaderRepository.findTeamByUsername(username);
+            }else {
+                teamId = regularUserRepository.findTeamByUsername(username);
+                Optional<Team> team = teamRepository.findById(UUID.fromString(teamId));
+                if (team.isEmpty()){
+                    return List.of();
+                }else{
+                    team.get().setRegularUsers(
+                            team.get().getRegularUsers().stream().filter( members -> !members.getUsername().equals(username)  ).toList()
+                    );
+                }
+
+                return List.of( team.get() );
+            }
+        }
+        Optional<Team> team = teamRepository.findById(UUID.fromString(teamId));
+        return team.map(List::of).orElseGet(List::of);
+    }
+
+
+    @Override
     public List<TeamDTO> getTeamsByRole(boolean isAdmin) {
         String username = userService.getUsernameByCurrentUser();
 
