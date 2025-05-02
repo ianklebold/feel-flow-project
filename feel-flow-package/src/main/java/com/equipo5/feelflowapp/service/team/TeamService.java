@@ -27,4 +27,6 @@ public interface TeamService {
     Optional<TeamListDTO> updateTeam(UUID uuid, TeamUpdateDTO teamDTO) throws NotFoundException;
 
     Optional<Team> getTeamByCurrentUser() throws NotFoundException;
+
+    int getNumberOfMembersOfTeam(List<Team> teams);
 }

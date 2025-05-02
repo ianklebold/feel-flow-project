@@ -9,6 +9,7 @@ import com.equipo5.feelflowapp.domain.modules.Module;
 import com.equipo5.feelflowapp.domain.modules.Survey;
 import com.equipo5.feelflowapp.domain.modules.SurveyModule;
 import com.equipo5.feelflowapp.domain.modules.kudos.KudosModule;
+import com.equipo5.feelflowapp.domain.modules.nikoniko.NikoNikoModule;
 import com.equipo5.feelflowapp.domain.users.RegularUser;
 import com.equipo5.feelflowapp.dto.dashboard.general.ParticipationOnModulesDto;
 import com.equipo5.feelflowapp.dto.modules.ModuleSurveyDto;
@@ -31,7 +32,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.util.*;
 
-import static com.equipo5.feelflowapp.domain.enumerations.modules.ModuleNames.TWELVE_STEPS;
+import static com.equipo5.feelflowapp.domain.enumerations.modules.ModuleNames.*;
 
 @Service
 @RequiredArgsConstructor
@@ -181,7 +182,7 @@ public class ModuleServiceImpl implements ModuleService {
                     .allMatch(survey -> SurveyStateEnum.FINISHED.equals(survey.getSurveyStateEnum()) || SurveyStateEnum.CLOSED.equals(survey.getSurveyStateEnum()) );
 
             if(isAllSurveysSolved){
-                if(ModuleNames.NIKO_NIKO.equals(moduleNames) ){
+                if(NIKO_NIKO.equals(moduleNames) ){
                     boolean isModuleCloseToday = surveyModule.get().getModuleClosedDate().equals( LocalDate.now() );
 
                     if(isModuleCloseToday){
@@ -212,6 +213,30 @@ public class ModuleServiceImpl implements ModuleService {
         return this.getModulesByTeamIdAndModuleName(moduleNames, teamId)
                 .stream()
                 .map(moduleSurveyMapper::moduleToModuleDto)
+                .toList();
+    }
+
+    @Override
+    public List<ModuleSurveyDto> getModulesSurveysByTeamAndModuleName(ModuleNames moduleNames, Team team ) {
+        return this.getModulesByTeamAndModuleName(moduleNames, team)
+                .stream()
+                .map(moduleSurveyMapper::moduleToModuleDto)
+                .toList();
+    }
+
+    private List<SurveyModule>  getModulesSurveyByTeamAndModuleNameAndModuleState(ModuleNames moduleNames, Team team, ModuleState moduleState) {
+        return this.getModulesByTeamAndModuleName(moduleNames, team)
+                .stream()
+                .filter( module -> moduleState.equals( module.getModuleState() ) )
+                .map( module -> (SurveyModule) module)
+                .toList();
+    }
+
+    private List<KudosModule>  getKudosModuleByTeamAndModuleNameAndModuleState(ModuleNames moduleNames, Team team, ModuleState moduleState) {
+        return this.getModulesByTeamAndModuleName(moduleNames, team)
+                .stream()
+                .filter( module -> moduleState.equals( module.getModuleState() ) )
+                .map( module ->  (KudosModule) module )
                 .toList();
     }
 
@@ -296,6 +321,21 @@ public class ModuleServiceImpl implements ModuleService {
     }
 
     @Override
+    public List<Module> getModulesByTeamAndModuleName( ModuleNames moduleNames, Team team ) {
+
+        if (team != null) {
+            Specification<Module> spec = Specification.where(
+                    ModuleSpecification.withName(moduleNames.toString())
+                            .and(ModuleSpecification.withTeam(team))
+            );
+
+            return moduleRepository.findAll(spec);
+        }else{
+            return Collections.emptyList();
+        }
+    }
+
+    @Override
     public List<KudosModule> getModulesBy(String name, Team team) {
         Specification<Module> spec = Specification.where(
                 ModuleSpecification.withName(name)
@@ -307,4 +347,80 @@ public class ModuleServiceImpl implements ModuleService {
                 .map(kudosModule -> (KudosModule) kudosModule )
                 .toList();
     }
+
+    @Override
+    public double getGeneralPercentOfModulesCompleted() {
+        List<Team> teams = teamService.getAllTeamsEntities();
+
+        int numberTotalOfModulesActives = 0;
+        int numberTotalOfMembers = teamService.getNumberOfMembersOfTeam(teams);
+        List<SurveyModule> modulesTwelveSteps = new ArrayList<>();
+        List<SurveyModule> modulesNikoNiko = new ArrayList<>();
+        List<KudosModule> kudosModules = new ArrayList<>();
+
+
+        teams.forEach(
+                team -> {
+                    modulesTwelveSteps.addAll( getModulesSurveyByTeamAndModuleNameAndModuleState(ModuleNames.TWELVE_STEPS, team, ModuleState.ACTIVE) );
+                    modulesNikoNiko.addAll( getModulesSurveyByTeamAndModuleNameAndModuleState(NIKO_NIKO, team, ModuleState.ACTIVE) );
+                    kudosModules.addAll( getKudosModuleByTeamAndModuleNameAndModuleState( KUDOS, team, ModuleState.ACTIVE ) );
+                }
+        );
+        double percentOfCompletedTwelveStepsModule = getPercentOfCompletedModules( modulesTwelveSteps, numberTotalOfMembers );
+        double percentOfCompletedNikoNikoModule = getPercentOfCompletedModules( modulesNikoNiko, numberTotalOfMembers );
+        double percentOfCompletedKudosModule = getPercentOfCompletedKudosModule( kudosModules, numberTotalOfMembers );
+
+        if ( !modulesTwelveSteps.isEmpty() ){
+            numberTotalOfModulesActives = numberTotalOfModulesActives + 1;
+        }
+        if ( !modulesNikoNiko.isEmpty() ){
+            numberTotalOfModulesActives = numberTotalOfModulesActives + 1;
+        }
+        if ( !kudosModules.isEmpty() ){
+            numberTotalOfModulesActives = numberTotalOfModulesActives + 1;
+        }
+
+        return (percentOfCompletedTwelveStepsModule + percentOfCompletedNikoNikoModule + percentOfCompletedKudosModule) / numberTotalOfModulesActives;
+    }
+
+    private double getPercentOfCompletedModules(List<SurveyModule> modulesTwelveSteps, int numberOfMembers){
+         Optional<Double> percentSurveyCompleted = modulesTwelveSteps.stream().map(
+                module -> {
+                    long countOfSurveysCompleted =  module.getSurveys().stream()
+                            .filter(
+                                    survey -> SurveyStateEnum.CLOSED.equals(survey.getSurveyStateEnum()) || SurveyStateEnum.FINISHED.equals(survey.getSurveyStateEnum())
+                            ).count();
+                    return (double) ( countOfSurveysCompleted / module.getSurveys().size() );
+                }
+         ).reduce(Double::sum);
+
+         if (percentSurveyCompleted.isPresent()){
+             int numberOfTeams = modulesTwelveSteps.size();
+
+             return numberOfTeams * numberOfMembers / percentSurveyCompleted.get() * ( (double) 1 / modulesTwelveSteps.size() );
+         }
+         return 0;
+    }
+
+    private double getPercentOfCompletedKudosModule(List<KudosModule> kudosModules, int numberOfMembers){
+         Optional<Double> percentKudosTableCompleted = kudosModules.stream().map(
+                module -> {
+                    long countOfTablesCompleted =  module.getTableBadge().stream()
+                            .filter(
+                                    table -> table.getTableBadgeClosedDate() != null
+                            ).count();
+                    return (double) ( countOfTablesCompleted / module.getTableBadge().size() );
+                }
+         ).reduce(Double::sum);
+
+         if (percentKudosTableCompleted.isPresent()){
+             int numberOfTeams = kudosModules.size();
+
+             return numberOfTeams * numberOfMembers / percentKudosTableCompleted.get() * ( (double) 1 / kudosModules.size() );
+         }
+         return 0;
+    }
+
+
+
 }

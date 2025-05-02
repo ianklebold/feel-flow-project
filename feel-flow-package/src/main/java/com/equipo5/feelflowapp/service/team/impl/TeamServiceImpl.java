@@ -228,6 +228,15 @@ public class TeamServiceImpl implements TeamService {
         return Optional.empty();
     }
 
+    @Override
+    public int getNumberOfMembersOfTeam(List<Team> teams) {
+        Optional<Integer> numberOfMembers = teams.stream()
+                .map(team -> team.getRegularUsers().size())
+                .reduce(Integer::sum);
+
+        return numberOfMembers.orElse(0);
+    }
+
     private void setTeamLeader(Team teamToCreate,TeamDTO teamDTO){
         TeamLeader teamLeader =  teamLeaderService.createTeamLeader(teamDTO.getTeamLeaderDTO());
         teamToCreate.setTeamLeader(teamLeader);
