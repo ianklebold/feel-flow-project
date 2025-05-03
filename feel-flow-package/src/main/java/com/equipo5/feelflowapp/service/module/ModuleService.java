@@ -37,9 +37,17 @@ public interface ModuleService {
 
     List<Module> getModulesByTeamIdAndModuleName(ModuleNames moduleNames, UUID teamId );
 
+    List<Module> getModulesByTeamAndModuleName( ModuleNames moduleNames, Team team );
+
     List<ModuleSurveyDto> getModulesSurveysByTeamIdAndModuleName(ModuleNames moduleNames, UUID teamId );
+
+    List<ModuleSurveyDto> getModulesSurveysByTeamAndModuleName(ModuleNames moduleNames, Team team );
 
     List<Module> getAllModules(ModuleNames moduleNames, Boolean isAdmin);
 
+    List<Module> getAllModules();
+
     List<KudosModule> getModulesBy(String name, Team team);
+
+    double getGeneralPercentOfModulesCompleted();
 }

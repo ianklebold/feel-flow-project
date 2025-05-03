@@ -43,7 +43,7 @@ public class RegularUserDTO {
     @NotBlank(message = ValidationUserMessages.VALIDATION_MESSAGE_NOT_BLANK_CUNTRY)
     private String country;
 
-    @Pattern(regexp = "^\\\\+[1-9]\\\\d{1,14}$", message = ValidationUserMessages.VALIDATION_PHONE_NUMBER)
+    @Pattern(regexp = "^\\+[1-9]\\d{1,14}$", message = ValidationUserMessages.VALIDATION_PHONE_NUMBER)
     private String phoneNumber;
 
     @NotNull(message = ValidationUserMessages.VALIDATION_MESSAGE_NOT_NULL_COUNTRY)

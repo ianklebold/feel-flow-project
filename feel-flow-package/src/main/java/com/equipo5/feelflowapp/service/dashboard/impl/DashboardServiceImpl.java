@@ -6,6 +6,7 @@ import com.equipo5.feelflowapp.domain.enumerations.modules.ModuleNames;
 import com.equipo5.feelflowapp.domain.modules.ActivityNikoNiko;
 import com.equipo5.feelflowapp.domain.modules.Module;
 import com.equipo5.feelflowapp.domain.modules.Survey;
+import com.equipo5.feelflowapp.dto.dashboard.general.GeneralSummaryDto;
 import com.equipo5.feelflowapp.dto.dashboard.kudos.KudosSummaryData;
 import com.equipo5.feelflowapp.dto.dashboard.nikoniko.NikoNikoAvgData;
 import com.equipo5.feelflowapp.dto.dashboard.TeamAndModulesDto;
@@ -366,6 +367,12 @@ public class DashboardServiceImpl implements DashboardService {
         }
 
         return twelveStepsResponseAvgDtos;
+    }
+
+    @Override
+    public GeneralSummaryDto getGeneralSummaryData() {
+
+        return null;
     }
 
     private double getNumberOfActivitiesWithPointsDistinctOfZero(List<Survey> surveys, int activityNumber) {
