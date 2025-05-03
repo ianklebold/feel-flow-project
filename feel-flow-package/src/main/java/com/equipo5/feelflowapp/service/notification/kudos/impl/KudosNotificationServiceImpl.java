@@ -47,8 +47,8 @@ public class KudosNotificationServiceImpl implements KudosNotificationService {
         NotificationKudosLeader notificationKudosLeader = new NotificationKudosLeader();
         notificationKudosLeader.setTitle("Ultimos Kudos");
         notificationKudosLeader.setBody( getKudosType(badge.getBadgeName()) );
-        notificationKudosLeader.setFrom(regularUser.get().getName()  + " " + regularUser.get().getSurname() );
-        notificationKudosLeader.setTo(badge.getBadgeOwner().getName() + " " + badge.getBadgeOwner().getSurname());
+        notificationKudosLeader.setFromMember(regularUser.get().getName()  + " " + regularUser.get().getSurname() );
+        notificationKudosLeader.setToMember(badge.getBadgeOwner().getName() + " " + badge.getBadgeOwner().getSurname());
         notificationKudosLeader.setCreatedAt(LocalDateTime.now());
         notificationKudosLeader.setWasRead(false);
         notificationKudosLeader.setWasSeen(false);
