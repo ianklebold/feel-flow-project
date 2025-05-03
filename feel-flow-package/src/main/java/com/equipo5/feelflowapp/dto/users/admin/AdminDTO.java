@@ -1,6 +1,7 @@
 package com.equipo5.feelflowapp.dto.users.admin;
 
 import com.equipo5.feelflowapp.constants.validation.admin.ValidationAdminMessages;
+import com.equipo5.feelflowapp.constants.validation.user.ValidationUserMessages;
 import com.equipo5.feelflowapp.dto.enterprise.EnterpriseDTO;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.*;
@@ -36,4 +37,11 @@ public class AdminDTO {
 
     @Valid
     private EnterpriseDTO enterpriseDTO;
+
+    private String country;
+
+    @Pattern(regexp = "^\\+[1-9]\\d{1,14}$", message = ValidationUserMessages.VALIDATION_PHONE_NUMBER)
+    private String phoneNumber;
+
+    private String description;
 }
