@@ -66,7 +66,7 @@ public class TwelveStepsSurveyServiceImpl extends SurveyServiceImpl implements T
 
 
     @Override
-    public void completeSurvey(SurveyTwelveStepsResponseDto surveyResponse) throws JsonProcessingException {
+    public Survey completeSurvey(SurveyTwelveStepsResponseDto surveyResponse) throws JsonProcessingException {
         var twelveSteps = super.getSurveyActiveByModuleName(ModuleNames.TWELVE_STEPS);
 
         if (twelveSteps.isEmpty()){
@@ -92,7 +92,8 @@ public class TwelveStepsSurveyServiceImpl extends SurveyServiceImpl implements T
         }else {
             throw new SurveyException("La encuesta se encuentra cerrada");
         }
-        surveyRepository.save(survey);
+        Survey surveySaved = surveyRepository.save(survey);
+        return surveySaved;
     }
 
 

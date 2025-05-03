@@ -76,6 +76,11 @@ public class KudosModuleController {
                 notificationService.generateBodyForOpenedModule("Kudos", kudosModule.getDateAndTimeToPublish(), kudosModule.getDateAndTimeToClose()),
                 "Apertura de modulo Kudos!"
         );
+        notificationService.sendNotificationModule(
+                kudosModule.getTeam().getTeamLeader(),
+                notificationService.generateBodyForOpenedModule("Kudos", kudosModule.getDateAndTimeToPublish(), kudosModule.getDateAndTimeToClose()),
+                "Apertura de modulo Kudos!"
+        );
 
         return ResponseEntity
                 .status(HttpStatus.CREATED)

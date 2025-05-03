@@ -74,6 +74,11 @@ public class TwelveStepsModuleController {
                 notificationService.generateBodyForOpenedModule("12 pasos de la felicidad", twelveStepsModule.getDateAndTimeToPublish(), twelveStepsModule.getDateAndTimeToClose()),
                 "Apertura de nuevo modulo"
         );
+        notificationService.sendNotificationModule(
+                twelveStepsModule.getTeam().getTeamLeader(),
+                notificationService.generateBodyForOpenedModule("12 pasos de la felicidad", twelveStepsModule.getDateAndTimeToPublish(), twelveStepsModule.getDateAndTimeToClose()),
+                "Apertura de nuevo modulo"
+        );
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(new ResponseDto(HttpResponses.STATUS_201,String.format(HttpResponses.MESSAGE_201,MODULE)));

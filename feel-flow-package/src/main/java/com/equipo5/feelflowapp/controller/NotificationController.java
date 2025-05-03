@@ -69,11 +69,9 @@ public class NotificationController {
     @SecurityRequirement(name = "Bearer Authentication")
     @GetMapping("/notifications")
     public List<NotificationSessionUserDto> getNotificationsAvailableToSend(
-            @RequestParam(required = false) LocalDateTime from,
-            @RequestParam(required = false) LocalDateTime to,
             @RequestParam(required = false) Integer max
             ) {
-        return notificationService.getNotificationsAvailableToSend(from, to, max);
+        return notificationService.getNotificationsAvailableToSend(max);
     }
 
     @Operation(

@@ -9,6 +9,5 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public interface NotificationRepository extends JpaRepository<Notification, Long> {
-    List<Notification> findAllByNotificationOwnerAndCreatedAtBetween(User owner, LocalDateTime from, LocalDateTime to);
     List<Notification> findAllByNotificationOwnerAndNotificationTypeEnumOrderByCreatedAtDesc(User owner, NotificationTypeEnum notificationTypeEnum);
 }

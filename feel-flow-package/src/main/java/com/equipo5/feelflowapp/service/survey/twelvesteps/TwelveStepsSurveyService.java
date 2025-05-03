@@ -9,5 +9,5 @@ import java.util.List;
 
 
 public interface TwelveStepsSurveyService {
-    void completeSurvey(SurveyTwelveStepsResponseDto surveyResponse) throws JsonProcessingException;
+    Survey completeSurvey(SurveyTwelveStepsResponseDto surveyResponse) throws JsonProcessingException;
 }

@@ -1,6 +1,9 @@
 package com.equipo5.feelflowapp.service.notification.impl;
 
+import com.equipo5.feelflowapp.domain.Team;
+import com.equipo5.feelflowapp.domain.enumerations.modules.SurveyStateEnum;
 import com.equipo5.feelflowapp.domain.enumerations.notification.NotificationTypeEnum;
+import com.equipo5.feelflowapp.domain.modules.Survey;
 import com.equipo5.feelflowapp.domain.modules.kudos.Badge;
 import com.equipo5.feelflowapp.domain.notifications.Notification;
 import com.equipo5.feelflowapp.domain.users.Admin;
@@ -10,12 +13,14 @@ import com.equipo5.feelflowapp.dto.notifications.NotificationClientDto;
 import com.equipo5.feelflowapp.dto.notifications.NotificationDto;
 import com.equipo5.feelflowapp.dto.notifications.NotificationKudosPanelDto;
 import com.equipo5.feelflowapp.dto.notifications.NotificationSessionUserDto;
+import com.equipo5.feelflowapp.dto.team.TeamListDTO;
 import com.equipo5.feelflowapp.dto.users.UserDTO;
 import com.equipo5.feelflowapp.mappers.notifications.NotificationMapper;
 import com.equipo5.feelflowapp.mappers.notifications.NotificationSessionUserMapper;
 import com.equipo5.feelflowapp.mappers.users.UserMapper;
 import com.equipo5.feelflowapp.repository.notifications.NotificationRepository;
 import com.equipo5.feelflowapp.service.notification.NotificationService;
+import com.equipo5.feelflowapp.service.team.TeamService;
 import com.equipo5.feelflowapp.service.users.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.cglib.core.Local;
@@ -45,25 +50,8 @@ public class NotificationServiceImpl implements NotificationService {
 
     private final UserMapper userMapper;
 
+    private final TeamService teamService;
 
-    @Override
-    public void sendNotificationToKudosPanel(Badge badge) {
-        Optional<UserDTO> optionalUserDTO = userService.getSessionUser();
-        TeamLeader teamLeader = badge.getBadgeOwner().getTeam().getTeamLeader();
-
-        if(optionalUserDTO.isPresent()) {
-            Notification notificationEntity = Notification.builder()
-                    .title("Envio de Kudos")
-                    .body("Se envio un Kudos por parte la fecha :" + badge.getAwardedDate() + " Al miembro : " + badge.getBadgeOwner().getName())
-                    .wasSeen(false)
-                    .wasRead(false)
-                    .notificationOwner( this.userMapper.userDtoToUser( optionalUserDTO.get() ) )
-                    .notificationTypeEnum(NotificationTypeEnum.KUDOS)
-                    .createdAt(LocalDateTime.now())
-                    .build();
-            this.notificationRepository.save(notificationEntity);
-        }
-    }
 
     @Override
     public void sendNotification(NotificationClientDto notificationDto) {
@@ -95,15 +83,25 @@ public class NotificationServiceImpl implements NotificationService {
             notificationEntity.setWasRead( Boolean.FALSE );
             notificationEntity.setWasSeen( Boolean.FALSE );
             notificationEntity.setCreatedAt( LocalDateTime.now() );
-            notificationEntity.setNotificationTypeEnum(NotificationTypeEnum.KUDOS);
+            notificationEntity.setNotificationTypeEnum(NotificationTypeEnum.GENERAL);
 
             notificationEntity.setNotificationOwner( regularUser  );
             Notification notificationCreated = this.notificationRepository.save(notificationEntity);
-
-            NotificationDto notification = notificationMapper.notificationToNotificationDto( notificationEntity );
-
-            messagingTemplate.convertAndSend("/topic/" + notificationCreated.getId().toString(), notification );
         });
+    }
+
+    @Override
+    public void sendNotificationModule(TeamLeader teamLeader, String body, String title) {
+        Notification notificationEntity = new Notification();
+        notificationEntity.setTitle(title);
+        notificationEntity.setBody(body);
+        notificationEntity.setWasRead( Boolean.FALSE );
+        notificationEntity.setWasSeen( Boolean.FALSE );
+        notificationEntity.setCreatedAt( LocalDateTime.now() );
+        notificationEntity.setNotificationTypeEnum(NotificationTypeEnum.GENERAL);
+
+        notificationEntity.setNotificationOwner( teamLeader  );
+        Notification notificationCreated = this.notificationRepository.save(notificationEntity);
     }
 
     @Override
@@ -120,39 +118,27 @@ public class NotificationServiceImpl implements NotificationService {
     }
 
     @Override
-    public List<NotificationSessionUserDto> getNotificationsAvailableToSend(LocalDateTime from, LocalDateTime to, Integer max) {
+    public List<NotificationSessionUserDto> getNotificationsAvailableToSend(Integer max) {
 
-        Optional<UserDTO> optionalUserDTO = userService.getSessionUser();
-        if(optionalUserDTO.isPresent()) {
-            List<Notification> notifications = new ArrayList<>();
-            if (from != null && to != null && from.isBefore(to)) {
-                notifications = notificationRepository.findAllByNotificationOwnerAndCreatedAtBetween(
-                        this.userMapper.userDtoToUser( optionalUserDTO.get() ),
-                        from,
-                        to);
+        List<Team> teamList = teamService.getAllTeamsEntities();
+        List<Notification> notifications;
 
-            }else {
-                notifications = notificationRepository.findAllByNotificationOwnerAndCreatedAtBetween(
-                        this.userMapper.userDtoToUser( optionalUserDTO.get() ),
-                        LocalDateTime.now().minusDays(7),
-                        LocalDateTime.now()
-                );
-            }
-
-            if(max == null || max <= 0){
-                max = 10;
-            }
-
-            if (notifications.size() > max) {
-                notifications = notifications.subList(0, max);
-            }
-
-            return notifications.stream()
-                    .map( notificationSessionUserMapper::notificationToNotificationSessionUserDto)
-                    .toList();
+        if(max == null || max <= 0){
+            max = 10;
         }
 
-        return List.of();
+        notifications = teamList.stream()
+                        .flatMap(
+                                team -> this.notificationRepository.findAllByNotificationOwnerAndNotificationTypeEnumOrderByCreatedAtDesc(team.getTeamLeader(),NotificationTypeEnum.GENERAL).stream()
+                        ).toList();
+
+        if (notifications.size() > max) {
+               notifications = notifications.subList(0, max);
+        }
+
+        return notifications.stream()
+                .map( notificationSessionUserMapper::notificationToNotificationSessionUserDto)
+                .toList();
     }
 
     @Override
@@ -172,4 +158,22 @@ public class NotificationServiceImpl implements NotificationService {
 
         return List.of();
     }
+
+    @Override
+    public void sendNotificationSurvey(Survey survey) {
+        if (SurveyStateEnum.FINISHED.equals(survey.getSurveyStateEnum()) || SurveyStateEnum.CLOSED.equals(survey.getSurveyStateEnum()) ){
+            Notification notification = new Notification();
+            notification.setTitle("Encuesta 12 pasos de la felicidad cerrada");
+            notification.setBody("El usuario " + survey.getRegularUser().getName() + "Completo la encuesta de 12 pasos de la felicidad");
+            notification.setWasRead( Boolean.FALSE );
+            notification.setWasSeen( Boolean.FALSE );
+            notification.setCreatedAt( LocalDateTime.now() );
+            notification.setNotificationTypeEnum(NotificationTypeEnum.GENERAL);
+            notification.setNotificationOwner(survey.getRegularUser().getTeam().getTeamLeader());
+            Notification notificationCreated = this.notificationRepository.save(notification);
+        }
+    }
+
+
+
 }

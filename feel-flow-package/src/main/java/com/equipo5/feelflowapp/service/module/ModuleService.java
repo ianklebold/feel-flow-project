@@ -33,7 +33,7 @@ public interface ModuleService {
 
     List<SurveyModule> getSurveyModuleForCurrentUserByModuleName(ModuleNames moduleNames, UUID idUser);
 
-    void closeModule(ModuleNames moduleNames);
+    SurveyModule closeModule(ModuleNames moduleNames);
 
     List<Module> getModulesByTeamIdAndModuleName(ModuleNames moduleNames, UUID teamId );
 

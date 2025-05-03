@@ -77,6 +77,11 @@ public class NikoNikoModuleController {
                 notificationService.generateBodyForOpenedModule("Niko Niko", nikoNikoModule.getDateAndTimeToPublish(), nikoNikoModule.getDateAndTimeToClose()),
                 "Apertura de nuevo modulo"
         );
+        notificationService.sendNotificationModule(
+                nikoNikoModule.getTeam().getTeamLeader(),
+                notificationService.generateBodyForOpenedModule("Niko Niko", nikoNikoModule.getDateAndTimeToPublish(), nikoNikoModule.getDateAndTimeToClose()),
+                "Apertura de nuevo modulo"
+        );
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(new ResponseDto(HttpResponses.STATUS_201,String.format(HttpResponses.MESSAGE_201,MODULE)));

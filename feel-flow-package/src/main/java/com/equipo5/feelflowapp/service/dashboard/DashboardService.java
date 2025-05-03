@@ -8,6 +8,8 @@ import com.equipo5.feelflowapp.dto.dashboard.kudos.KudosSummaryData;
 import com.equipo5.feelflowapp.dto.dashboard.nikoniko.NikoNikoSummaryData;
 import com.equipo5.feelflowapp.dto.modules.ModuleAndUsersDto;
 import com.equipo5.feelflowapp.dto.modules.TwelveStepsResponseAvgDto;
+import com.equipo5.feelflowapp.dto.notifications.NotificationKudosPanelDto;
+import com.equipo5.feelflowapp.dto.notifications.NotificationNikoNikoPanelDto;
 
 import java.util.List;
 import java.util.UUID;
@@ -22,4 +24,6 @@ public interface DashboardService {
     List<TwelveStepsResponseAvgDto> getTwelveStepsResponseAvgDto(List<Survey> surveys);
     List<TwelveStepsResponseAvgDto> getTwelveStepsSurveysAveragedDataBySurvey(Survey survey);
     GeneralSummaryDto getGeneralSummaryData();
+    List<NotificationKudosPanelDto> getNotificationKudosPanelDto();
+    List<NotificationNikoNikoPanelDto> getNotificationNikoNikoPanelDto();
 }

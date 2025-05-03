@@ -4,6 +4,7 @@ import com.equipo5.feelflowapp.constants.response.HttpResponses;
 import com.equipo5.feelflowapp.domain.enumerations.modules.ModuleNames;
 import com.equipo5.feelflowapp.domain.enumerations.modules.SurveyStateEnum;
 import com.equipo5.feelflowapp.domain.modules.Survey;
+import com.equipo5.feelflowapp.domain.modules.SurveyModule;
 import com.equipo5.feelflowapp.dto.modules.LastSurveyDto;
 import com.equipo5.feelflowapp.dto.modules.SurveyAvailableNikoNikoReponseDto;
 import com.equipo5.feelflowapp.dto.modules.SurveyDto;
@@ -12,6 +13,7 @@ import com.equipo5.feelflowapp.dto.response.ErrorResponseDto;
 import com.equipo5.feelflowapp.dto.response.ResponseDto;
 import com.equipo5.feelflowapp.jobs.module.surveys.SurveyScheduledTask;
 import com.equipo5.feelflowapp.service.module.ModuleService;
+import com.equipo5.feelflowapp.service.notification.NotificationService;
 import com.equipo5.feelflowapp.service.notification.nikoniko.NikoNikoNotificationService;
 import com.equipo5.feelflowapp.service.survey.impl.SurveyService;
 import com.equipo5.feelflowapp.service.survey.nikoniko.NikoNikoSurveyService;
@@ -59,15 +61,17 @@ public class SurveyModuleController {
     private final ModuleService moduleService;
 
     private final NikoNikoNotificationService nikoNikoNotificationService;
+    private final NotificationService notificationService;
 
     @Autowired
-    public SurveyModuleController(@Qualifier("SurveyService") SurveyService surveyService, @Qualifier("TwelveStepsSurveyService") TwelveStepsSurveyService twelveStepsSurveyService, @Qualifier("NikoNikoSurveyServiceImpl") NikoNikoSurveyService nikoNikoSurveyService, SurveyScheduledTask surveyScheduledTask, ModuleService moduleService, NikoNikoNotificationService nikoNikoNotificationService) {
+    public SurveyModuleController(@Qualifier("SurveyService") SurveyService surveyService, @Qualifier("TwelveStepsSurveyService") TwelveStepsSurveyService twelveStepsSurveyService, @Qualifier("NikoNikoSurveyServiceImpl") NikoNikoSurveyService nikoNikoSurveyService, SurveyScheduledTask surveyScheduledTask, ModuleService moduleService, NikoNikoNotificationService nikoNikoNotificationService, NotificationService notificationService) {
         this.surveyService = surveyService;
         this.twelveStepsSurveyService = twelveStepsSurveyService;
         this.nikoNikoSurveyService = nikoNikoSurveyService;
         this.surveyScheduledTask = surveyScheduledTask;
         this.moduleService = moduleService;
         this.nikoNikoNotificationService = nikoNikoNotificationService;
+        this.notificationService = notificationService;
     }
 
     @Operation(
@@ -126,9 +130,16 @@ public class SurveyModuleController {
     @PostMapping("/twelve_steps_module")
     @SecurityRequirement(name = "Bearer Authentication")
     public ResponseEntity<ResponseDto> completeTwelveStepsSurvey(@Valid @RequestBody SurveyTwelveStepsResponseDto surveyResponse) throws JsonProcessingException {
-            twelveStepsSurveyService.completeSurvey(surveyResponse);
-            moduleService.closeModule(ModuleNames.TWELVE_STEPS);
-
+        Survey surveySaved = twelveStepsSurveyService.completeSurvey(surveyResponse);
+        notificationService.sendNotificationSurvey(surveySaved);
+        SurveyModule surveyModule = moduleService.closeModule(ModuleNames.TWELVE_STEPS);
+        if(surveyModule != null){
+            notificationService.sendNotificationModule(
+                    surveyModule.getTeam().getTeamLeader(),
+                    notificationService.generateBodyForCloseModule("Niko Niko"),
+                    "Cierre de modulo"
+            );
+        }
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(new ResponseDto(HttpResponses.STATUS_200,HttpResponses.MESSAGE_200));
@@ -158,7 +169,14 @@ public class SurveyModuleController {
         if (survey != null) {
             nikoNikoNotificationService.sendNikoNikoNote(surveyResponse.activityAvailable().descriptionFeeling(), survey);
         }
-        moduleService.closeModule(ModuleNames.NIKO_NIKO);
+        SurveyModule surveyModule = moduleService.closeModule(ModuleNames.NIKO_NIKO);
+        if(surveyModule != null){
+            notificationService.sendNotificationModule(
+                    surveyModule.getTeam().getTeamLeader(),
+                    notificationService.generateBodyForCloseModule("Niko Niko"),
+                    "Cierre de modulo"
+            );
+        }
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(new ResponseDto(HttpResponses.STATUS_200,HttpResponses.MESSAGE_200));

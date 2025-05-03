@@ -7,7 +7,7 @@ import com.equipo5.feelflowapp.dto.modules.CreationKudosModuleDto;
 public interface KudosService {
     KudosModule publishingModule (CreationKudosModuleDto creationKudosModule);
 
-    void closeModule();
+    KudosModule closeModule();
 
     boolean isModuleKudosAvailable();
 }

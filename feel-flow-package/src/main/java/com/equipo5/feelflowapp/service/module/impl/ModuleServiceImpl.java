@@ -171,7 +171,7 @@ public class ModuleServiceImpl implements ModuleService {
     }
 
     @Override
-    public void closeModule(ModuleNames moduleNames) {
+    public SurveyModule closeModule(ModuleNames moduleNames) {
         Optional<SurveyModule> surveyModule = this.getSurveyModuleActiveForCurrentUserByModuleName(moduleNames);
 
         if (surveyModule.isPresent()){
@@ -187,25 +187,27 @@ public class ModuleServiceImpl implements ModuleService {
 
                     if(isModuleCloseToday){
                         surveyModule.get().setModuleState(ModuleState.FINISHED);
-                        moduleRepository.save(surveyModule.get());
+                        SurveyModule surveyModuleSaved = moduleRepository.save(surveyModule.get());
                         notificationService.sendNotificationModule(
                                 surveyModule.get().getTeam().getRegularUsers(),
                                 notificationService.generateBodyForCloseModule("Niko Niko"),
                                 "Cierre de modulo"
                         );
+                        return surveyModuleSaved;
                     }
                 }else if(TWELVE_STEPS.equals(moduleNames)){
                     surveyModule.get().setModuleState(ModuleState.FINISHED);
-                    moduleRepository.save(surveyModule.get());
+                    SurveyModule surveyModuleSaved = moduleRepository.save(surveyModule.get());
                     notificationService.sendNotificationModule(
                             surveyModule.get().getTeam().getRegularUsers(),
                             notificationService.generateBodyForCloseModule("12 pasos de la felicidad"),
                             "Cierre de modulo"
                     );
+                    return surveyModuleSaved;
                 }
             }
         }
-
+        return null;
     }
 
     @Override

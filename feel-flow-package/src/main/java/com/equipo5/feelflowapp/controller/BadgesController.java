@@ -2,12 +2,14 @@ package com.equipo5.feelflowapp.controller;
 
 import com.equipo5.feelflowapp.constants.response.HttpResponses;
 import com.equipo5.feelflowapp.domain.modules.kudos.Badge;
+import com.equipo5.feelflowapp.domain.modules.kudos.KudosModule;
 import com.equipo5.feelflowapp.dto.badges.*;
 import com.equipo5.feelflowapp.dto.response.ErrorResponseDto;
 import com.equipo5.feelflowapp.dto.response.ResponseDto;
 import com.equipo5.feelflowapp.service.badges.BadgesService;
 import com.equipo5.feelflowapp.service.module.kudos.KudosService;
 import com.equipo5.feelflowapp.service.notification.NotificationService;
+import com.equipo5.feelflowapp.service.notification.kudos.KudosNotificationService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -42,6 +44,8 @@ public class BadgesController {
 
     private final NotificationService notificationService;
 
+    private final KudosNotificationService kudosNotificationService;
+
     @Operation(
             summary = "Send Badge REST API",
             description = "REST API to send badge to other member of team"
@@ -71,7 +75,13 @@ public class BadgesController {
     public ResponseEntity<ResponseDto> sendBadge(@RequestBody BadgesAwardedDto badgesAwardedDto) {
         Badge badge = badgesService.sendBadge(badgesAwardedDto);
         if(badge != null) {
-            kudosService.closeModule();
+            KudosModule kudosModule = kudosService.closeModule();
+            kudosNotificationService.sendKudosNotificationToLeader(badge);
+
+            if (kudosModule != null){
+                kudosNotificationService.sendKudosClosedNotificationToLeader(kudosModule);
+            }
+
             return ResponseEntity
                     .status(HttpStatus.OK)
                     .body(new ResponseDto(HttpResponses.STATUS_200,HttpResponses.MESSAGE_200));

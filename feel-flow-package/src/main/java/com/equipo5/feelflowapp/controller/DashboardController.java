@@ -7,6 +7,8 @@ import com.equipo5.feelflowapp.dto.dashboard.kudos.KudosSummaryData;
 import com.equipo5.feelflowapp.dto.dashboard.nikoniko.NikoNikoSummaryData;
 import com.equipo5.feelflowapp.dto.modules.ModuleAndUsersDto;
 import com.equipo5.feelflowapp.dto.modules.TwelveStepsResponseAvgDto;
+import com.equipo5.feelflowapp.dto.notifications.NotificationKudosPanelDto;
+import com.equipo5.feelflowapp.dto.notifications.NotificationNikoNikoPanelDto;
 import com.equipo5.feelflowapp.service.dashboard.DashboardService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -156,6 +158,38 @@ public class DashboardController {
     public GeneralSummaryDto getGeneralSummaryData(){
 
         return null;
+    }
+
+    @Operation(
+            summary = "Get notification for Kudos Panel",
+            description = "REST API to get data of the last badges sent"
+    )
+    @ApiResponses({
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "HTTP Request Success"
+            )
+    })
+    @GetMapping("/notification_kudos_panel")
+    @SecurityRequirement(name = "Bearer Authentication")
+    public List<NotificationKudosPanelDto> getNotificationKudosPanelDto(){
+        return this.dashboardService.getNotificationKudosPanelDto();
+    }
+
+    @Operation(
+            summary = "Get notification for Niko Niko Panel",
+            description = "REST API to get data of the Niko Niko"
+    )
+    @ApiResponses({
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "HTTP Request Success"
+            )
+    })
+    @GetMapping("/notification_niko_niko_panel")
+    @SecurityRequirement(name = "Bearer Authentication")
+    public List<NotificationNikoNikoPanelDto> getNotificationNikoNikoPanelDto(){
+        return this.dashboardService.getNotificationNikoNikoPanelDto();
     }
 
 }

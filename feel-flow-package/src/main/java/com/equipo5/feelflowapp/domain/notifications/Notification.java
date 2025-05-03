@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
+@Inheritance(strategy = InheritanceType.JOINED)
 public class Notification {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

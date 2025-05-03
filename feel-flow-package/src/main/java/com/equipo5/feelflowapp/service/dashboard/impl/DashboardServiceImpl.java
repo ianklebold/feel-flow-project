@@ -13,6 +13,8 @@ import com.equipo5.feelflowapp.dto.dashboard.TeamAndModulesDto;
 import com.equipo5.feelflowapp.dto.dashboard.nikoniko.NikoNikoSummaryData;
 import com.equipo5.feelflowapp.dto.modules.ModuleAndUsersDto;
 import com.equipo5.feelflowapp.dto.modules.TwelveStepsResponseAvgDto;
+import com.equipo5.feelflowapp.dto.notifications.NotificationKudosPanelDto;
+import com.equipo5.feelflowapp.dto.notifications.NotificationNikoNikoPanelDto;
 import com.equipo5.feelflowapp.dto.tablebadge.TableBadgeAwardedDto;
 import com.equipo5.feelflowapp.dto.team.TeamDTO;
 import com.equipo5.feelflowapp.dto.team.TeamListDTO;
@@ -25,6 +27,8 @@ import com.equipo5.feelflowapp.service.dashboard.DashboardService;
 import com.equipo5.feelflowapp.service.module.ModuleService;
 import com.equipo5.feelflowapp.service.module.nikoniko.NikoNikoService;
 import com.equipo5.feelflowapp.service.module.twelveSteps.TwelveStepsService;
+import com.equipo5.feelflowapp.service.notification.kudos.KudosNotificationService;
+import com.equipo5.feelflowapp.service.notification.nikoniko.NikoNikoNotificationService;
 import com.equipo5.feelflowapp.service.survey.impl.SurveyService;
 import com.equipo5.feelflowapp.service.tablebadge.kudos.TableBadgeService;
 import com.equipo5.feelflowapp.service.team.TeamService;
@@ -57,11 +61,13 @@ public class DashboardServiceImpl implements DashboardService {
     private final KudosSummaryDataMapper kudosSummaryDataMapper;
 
     private final UserService userService;
+    private final KudosNotificationService kudosNotificationService;
+    private final NikoNikoNotificationService nikoNikoNotificationService;
 
     private final UserRepository userRepository;
 
     @Autowired
-    public DashboardServiceImpl(@Qualifier("SurveyService") SurveyService surveyService, TeamService teamService, TeamRepository teamRepository, TwelveStepsService twelveStepsService, ModuleService moduleService, ModuleMapper moduleMapper, UserMapper userMapper, NikoNikoService nikoNikoService, TableBadgeService tableBadgeService, KudosSummaryDataMapper kudosSummaryDataMapper, UserService userService, UserRepository userRepository) {
+    public DashboardServiceImpl(@Qualifier("SurveyService") SurveyService surveyService, TeamService teamService, TeamRepository teamRepository, TwelveStepsService twelveStepsService, ModuleService moduleService, ModuleMapper moduleMapper, UserMapper userMapper, NikoNikoService nikoNikoService, TableBadgeService tableBadgeService, KudosSummaryDataMapper kudosSummaryDataMapper, UserService userService, UserRepository userRepository, KudosNotificationService kudosNotificationService, NikoNikoNotificationService nikoNikoNotificationService) {
         this.surveyService = surveyService;
         this.teamService = teamService;
         this.teamRepository = teamRepository;
@@ -74,6 +80,8 @@ public class DashboardServiceImpl implements DashboardService {
         this.kudosSummaryDataMapper = kudosSummaryDataMapper;
         this.userService = userService;
         this.userRepository = userRepository;
+        this.kudosNotificationService = kudosNotificationService;
+        this.nikoNikoNotificationService = nikoNikoNotificationService;
     }
 
     @Override
@@ -373,6 +381,39 @@ public class DashboardServiceImpl implements DashboardService {
     public GeneralSummaryDto getGeneralSummaryData() {
 
         return null;
+    }
+
+    @Override
+    public List<NotificationKudosPanelDto> getNotificationKudosPanelDto() {
+        List<TeamListDTO> teamListDTOS = this.teamService.getAllTeams();
+        List<NotificationKudosPanelDto> notificationKudosPanel = new ArrayList<>();
+
+
+        teamListDTOS.forEach(
+                teamListDTO -> {
+                    notificationKudosPanel.addAll(
+                            this.kudosNotificationService.getNotificationKudosLeaders( teamListDTO.getTeamLeaderDTO().getUuid() )
+                    );
+                }
+        );
+
+        return notificationKudosPanel;
+    }
+
+    @Override
+    public List<NotificationNikoNikoPanelDto> getNotificationNikoNikoPanelDto() {
+        List<TeamListDTO> teamListDTOS = this.teamService.getAllTeams();
+        List<NotificationNikoNikoPanelDto> notificationNikoNikoPanel = new ArrayList<>();
+
+        teamListDTOS.forEach(
+                teamListDTO -> {
+                    notificationNikoNikoPanel.addAll(
+                            this.nikoNikoNotificationService.getNotificationKudosLeaders( teamListDTO.getTeamLeaderDTO().getUuid() )
+                    );
+                }
+        );
+
+        return notificationNikoNikoPanel;
     }
 
     private double getNumberOfActivitiesWithPointsDistinctOfZero(List<Survey> surveys, int activityNumber) {

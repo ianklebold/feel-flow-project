@@ -82,7 +82,7 @@ public class KudosServiceImpl implements KudosService {
     }
 
     @Override
-    public void closeModule() {
+    public KudosModule closeModule() {
 
         var username = userService.getUsernameByCurrentUser();
 
@@ -108,11 +108,12 @@ public class KudosServiceImpl implements KudosService {
             if (isReadyToClose){
                 kudosModule.get().setModuleClosedDate(LocalDate.now());
                 kudosModule.get().setModuleState(ModuleState.FINISHED);
-                kudosRepository.save(kudosModule.get());
+                KudosModule kudosModuleSaved = kudosRepository.save(kudosModule.get());
+                return kudosModuleSaved;
             }
 
         }
-
+        return null;
     }
 
     @Override

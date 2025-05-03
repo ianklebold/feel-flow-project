@@ -5,7 +5,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import java.time.LocalDate;
 
 @Schema(
-        name = "NotificationDto",
+        name = "NotificationKudosDto",
         description = "Schema to hold notification information"
 )
 public record NotificationKudosPanelDto(
