@@ -21,6 +21,8 @@ import com.equipo5.feelflowapp.repository.team.TeamRepository;
 import com.equipo5.feelflowapp.repository.users.UserRepository;
 import com.equipo5.feelflowapp.repository.users.regularuser.RegularUserRepository;
 import com.equipo5.feelflowapp.service.activity.ActivityService;
+import com.equipo5.feelflowapp.service.dashboard.DashboardService;
+import com.equipo5.feelflowapp.service.images.ImagesService;
 import com.equipo5.feelflowapp.service.module.ModuleService;
 import com.equipo5.feelflowapp.service.survey.impl.SurveyServiceImpl;
 import com.equipo5.feelflowapp.service.survey.nikoniko.NikoNikoSurveyService;
@@ -37,8 +39,9 @@ import java.util.Optional;
 @Service("NikoNikoSurveyServiceImpl")
 public class NikoNikoSurveyServiceImpl extends SurveyServiceImpl implements NikoNikoSurveyService {
     public NikoNikoSurveyServiceImpl(SurveyRepository surveyRepository, UserRepository userRepository, RegularUserRepository regularUserRepository, TeamRepository teamRepository, ModuleRepository moduleRepository, UserService userService, SurveyMapper surveyMapper, ModuleService moduleService,
-                                     ActivityService activityService, ActivityMapper activityMapper) {
-        super(surveyRepository, userRepository, regularUserRepository, teamRepository, moduleRepository, userService, surveyMapper, moduleService, activityMapper);
+                                     ActivityService activityService, ActivityMapper activityMapper, ImagesService imagesService) {
+        super(surveyRepository, userRepository, regularUserRepository, teamRepository, moduleRepository, userService, surveyMapper, moduleService, activityMapper,
+                imagesService);
         this.activityService = activityService;
     }
 

@@ -13,7 +13,6 @@ import java.time.LocalDateTime;
 public record NotificationDto(
         @Schema(description = "Title of notification", example = "Hello sam is me")  String title,
         @Schema(description = "Body of notification", example = "The present message is going to...")  String body,
-        @Schema(description = "Type of notification", example = "KUDOS") NotificationTypeEnum notificationType,
-        @Schema(description = "creationDate") LocalDateTime creationDate
-
+        @Schema(description = "Type of notification") NotificationTypeEnum notificationType,
+        @Schema(description = "Creation date") LocalDateTime creationDate
 ) {}

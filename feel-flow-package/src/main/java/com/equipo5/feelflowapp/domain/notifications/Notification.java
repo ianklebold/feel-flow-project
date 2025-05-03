@@ -4,11 +4,7 @@ import com.equipo5.feelflowapp.domain.enumerations.notification.NotificationType
 import com.equipo5.feelflowapp.domain.users.User;
 import jakarta.persistence.*;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
-import lombok.NoArgsConstructor;
-import lombok.AllArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
@@ -19,6 +15,7 @@ import java.time.LocalDateTime;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class Notification {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

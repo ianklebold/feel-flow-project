@@ -1,11 +1,13 @@
 package com.equipo5.feelflowapp.controller;
 
 import com.equipo5.feelflowapp.constants.response.HttpResponses;
+import com.equipo5.feelflowapp.domain.modules.kudos.Badge;
 import com.equipo5.feelflowapp.dto.badges.*;
 import com.equipo5.feelflowapp.dto.response.ErrorResponseDto;
 import com.equipo5.feelflowapp.dto.response.ResponseDto;
 import com.equipo5.feelflowapp.service.badges.BadgesService;
 import com.equipo5.feelflowapp.service.module.kudos.KudosService;
+import com.equipo5.feelflowapp.service.notification.NotificationService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -38,6 +40,8 @@ public class BadgesController {
 
     private final KudosService kudosService;
 
+    private final NotificationService notificationService;
+
     @Operation(
             summary = "Send Badge REST API",
             description = "REST API to send badge to other member of team"
@@ -65,11 +69,18 @@ public class BadgesController {
     @SecurityRequirement(name = "Bearer Authentication")
     @PostMapping()
     public ResponseEntity<ResponseDto> sendBadge(@RequestBody BadgesAwardedDto badgesAwardedDto) {
-        badgesService.sendBadge(badgesAwardedDto);
-        kudosService.closeModule();
-        return ResponseEntity
-                .status(HttpStatus.OK)
-                .body(new ResponseDto(HttpResponses.STATUS_200,HttpResponses.MESSAGE_200));
+        Badge badge = badgesService.sendBadge(badgesAwardedDto);
+        if(badge != null) {
+            kudosService.closeModule();
+            return ResponseEntity
+                    .status(HttpStatus.OK)
+                    .body(new ResponseDto(HttpResponses.STATUS_200,HttpResponses.MESSAGE_200));
+        }else{
+            return ResponseEntity
+                    .status(HttpStatus.NOT_FOUND)
+                    .body(new ResponseDto(HttpResponses.STATUS_404,HttpResponses.MESSAGE_404_NOT_FOUND));
+        }
+
     }
 
     @Operation(

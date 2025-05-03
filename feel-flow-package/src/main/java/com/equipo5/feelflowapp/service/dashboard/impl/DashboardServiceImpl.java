@@ -6,7 +6,6 @@ import com.equipo5.feelflowapp.domain.enumerations.modules.ModuleNames;
 import com.equipo5.feelflowapp.domain.modules.ActivityNikoNiko;
 import com.equipo5.feelflowapp.domain.modules.Module;
 import com.equipo5.feelflowapp.domain.modules.Survey;
-import com.equipo5.feelflowapp.domain.modules.SurveyModule;
 import com.equipo5.feelflowapp.dto.dashboard.kudos.KudosSummaryData;
 import com.equipo5.feelflowapp.dto.dashboard.nikoniko.NikoNikoAvgData;
 import com.equipo5.feelflowapp.dto.dashboard.TeamAndModulesDto;
@@ -25,7 +24,7 @@ import com.equipo5.feelflowapp.service.dashboard.DashboardService;
 import com.equipo5.feelflowapp.service.module.ModuleService;
 import com.equipo5.feelflowapp.service.module.nikoniko.NikoNikoService;
 import com.equipo5.feelflowapp.service.module.twelveSteps.TwelveStepsService;
-import com.equipo5.feelflowapp.service.survey.SurveyService;
+import com.equipo5.feelflowapp.service.survey.impl.SurveyService;
 import com.equipo5.feelflowapp.service.tablebadge.kudos.TableBadgeService;
 import com.equipo5.feelflowapp.service.team.TeamService;
 import com.equipo5.feelflowapp.service.users.UserService;
@@ -36,7 +35,6 @@ import org.springframework.stereotype.Service;
 import java.time.DayOfWeek;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 import static com.equipo5.feelflowapp.constants.module.nikoniko.QuestionsConstantsNikoNiko.QUESTIONS_1_POOL_NIKO_NIKO;
@@ -127,6 +125,13 @@ public class DashboardServiceImpl implements DashboardService {
             twelveStepsResponseAvgDtos = getTwelveStepsResponseWithAvgZero();
         }
         return twelveStepsResponseAvgDtos;
+    }
+
+    public List<TwelveStepsResponseAvgDto> getTwelveStepsSurveysAveragedDataBySurvey(Survey survey) {
+        if(survey != null){
+            return getTwelveStepsResponseAvgDto(List.of(survey));
+        }
+        return null;
     }
 
     private List<TwelveStepsResponseAvgDto> getTwelveStepsResponseWithAvgZero(){

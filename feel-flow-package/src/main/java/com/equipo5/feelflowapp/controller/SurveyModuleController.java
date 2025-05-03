@@ -4,17 +4,16 @@ import com.equipo5.feelflowapp.constants.response.HttpResponses;
 import com.equipo5.feelflowapp.domain.enumerations.modules.ModuleNames;
 import com.equipo5.feelflowapp.domain.enumerations.modules.SurveyStateEnum;
 import com.equipo5.feelflowapp.domain.modules.Survey;
+import com.equipo5.feelflowapp.dto.modules.LastSurveyDto;
 import com.equipo5.feelflowapp.dto.modules.SurveyAvailableNikoNikoReponseDto;
 import com.equipo5.feelflowapp.dto.modules.SurveyDto;
-import com.equipo5.feelflowapp.dto.modules.SurveyNikoNikoResponseDto;
 import com.equipo5.feelflowapp.dto.modules.SurveyTwelveStepsResponseDto;
 import com.equipo5.feelflowapp.dto.response.ErrorResponseDto;
 import com.equipo5.feelflowapp.dto.response.ResponseDto;
 import com.equipo5.feelflowapp.jobs.module.surveys.SurveyScheduledTask;
 import com.equipo5.feelflowapp.service.module.ModuleService;
-import com.equipo5.feelflowapp.service.module.twelveSteps.TwelveStepsService;
 import com.equipo5.feelflowapp.service.notification.nikoniko.NikoNikoNotificationService;
-import com.equipo5.feelflowapp.service.survey.SurveyService;
+import com.equipo5.feelflowapp.service.survey.impl.SurveyService;
 import com.equipo5.feelflowapp.service.survey.nikoniko.NikoNikoSurveyService;
 import com.equipo5.feelflowapp.service.survey.twelvesteps.TwelveStepsSurveyService;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -103,7 +102,7 @@ public class SurveyModuleController {
     })
     @GetMapping("/last")
     @SecurityRequirement(name = "Bearer Authentication")
-    public SurveyDto getSurveysLastSurvey(){
+    public LastSurveyDto getSurveysLastSurvey(){
         return surveyService.getLastSurvey();
     }
 

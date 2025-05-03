@@ -19,4 +19,5 @@ public interface DashboardService {
     NikoNikoSummaryData getEmotionalTrendDataAvg();
     List<KudosSummaryData> getKudosData();
     List<TwelveStepsResponseAvgDto> getTwelveStepsResponseAvgDto(List<Survey> surveys);
+    List<TwelveStepsResponseAvgDto> getTwelveStepsSurveysAveragedDataBySurvey(Survey survey);
 }

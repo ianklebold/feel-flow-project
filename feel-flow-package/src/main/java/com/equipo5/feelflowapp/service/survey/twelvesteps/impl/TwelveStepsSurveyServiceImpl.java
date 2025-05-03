@@ -16,6 +16,8 @@ import com.equipo5.feelflowapp.repository.team.TeamRepository;
 import com.equipo5.feelflowapp.repository.users.UserRepository;
 import com.equipo5.feelflowapp.repository.users.regularuser.RegularUserRepository;
 import com.equipo5.feelflowapp.service.activity.ActivityService;
+import com.equipo5.feelflowapp.service.dashboard.DashboardService;
+import com.equipo5.feelflowapp.service.images.ImagesService;
 import com.equipo5.feelflowapp.service.module.ModuleService;
 import com.equipo5.feelflowapp.service.report.ReportService;
 import com.equipo5.feelflowapp.service.survey.impl.SurveyServiceImpl;
@@ -43,8 +45,9 @@ public class TwelveStepsSurveyServiceImpl extends SurveyServiceImpl implements T
     public TwelveStepsSurveyServiceImpl(SurveyRepository surveyRepository, UserRepository userRepository, UserService userService,
                                         RegularUserRepository regularUserRepository, TeamRepository teamRepository, ModuleRepository moduleRepository,
                                         SurveyMapper surveyMapper, ActivityService activityService, ActivityMapper activityMapper, ReportService reportService,
-                                        ModuleService moduleService) {
-        super(surveyRepository, userRepository,regularUserRepository,teamRepository,moduleRepository, userService, surveyMapper, moduleService, activityMapper);
+                                        ModuleService moduleService, ImagesService imagesService) {
+        super(surveyRepository, userRepository,regularUserRepository,teamRepository,moduleRepository, userService, surveyMapper, moduleService, activityMapper
+        ,imagesService);
         this.activityService = activityService;
         this.activityMapper = activityMapper;
         this.reportService = reportService;

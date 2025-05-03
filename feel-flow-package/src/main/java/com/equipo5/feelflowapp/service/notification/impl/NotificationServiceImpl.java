@@ -1,10 +1,14 @@
 package com.equipo5.feelflowapp.service.notification.impl;
 
 import com.equipo5.feelflowapp.domain.enumerations.notification.NotificationTypeEnum;
+import com.equipo5.feelflowapp.domain.modules.kudos.Badge;
 import com.equipo5.feelflowapp.domain.notifications.Notification;
+import com.equipo5.feelflowapp.domain.users.Admin;
 import com.equipo5.feelflowapp.domain.users.RegularUser;
+import com.equipo5.feelflowapp.domain.users.TeamLeader;
 import com.equipo5.feelflowapp.dto.notifications.NotificationClientDto;
 import com.equipo5.feelflowapp.dto.notifications.NotificationDto;
+import com.equipo5.feelflowapp.dto.notifications.NotificationKudosPanelDto;
 import com.equipo5.feelflowapp.dto.notifications.NotificationSessionUserDto;
 import com.equipo5.feelflowapp.dto.users.UserDTO;
 import com.equipo5.feelflowapp.mappers.notifications.NotificationMapper;
@@ -14,6 +18,7 @@ import com.equipo5.feelflowapp.repository.notifications.NotificationRepository;
 import com.equipo5.feelflowapp.service.notification.NotificationService;
 import com.equipo5.feelflowapp.service.users.UserService;
 import lombok.AllArgsConstructor;
+import org.springframework.cglib.core.Local;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 
@@ -40,6 +45,25 @@ public class NotificationServiceImpl implements NotificationService {
 
     private final UserMapper userMapper;
 
+
+    @Override
+    public void sendNotificationToKudosPanel(Badge badge) {
+        Optional<UserDTO> optionalUserDTO = userService.getSessionUser();
+        TeamLeader teamLeader = badge.getBadgeOwner().getTeam().getTeamLeader();
+
+        if(optionalUserDTO.isPresent()) {
+            Notification notificationEntity = Notification.builder()
+                    .title("Envio de Kudos")
+                    .body("Se envio un Kudos por parte la fecha :" + badge.getAwardedDate() + " Al miembro : " + badge.getBadgeOwner().getName())
+                    .wasSeen(false)
+                    .wasRead(false)
+                    .notificationOwner( this.userMapper.userDtoToUser( optionalUserDTO.get() ) )
+                    .notificationTypeEnum(NotificationTypeEnum.KUDOS)
+                    .createdAt(LocalDateTime.now())
+                    .build();
+            this.notificationRepository.save(notificationEntity);
+        }
+    }
 
     @Override
     public void sendNotification(NotificationClientDto notificationDto) {

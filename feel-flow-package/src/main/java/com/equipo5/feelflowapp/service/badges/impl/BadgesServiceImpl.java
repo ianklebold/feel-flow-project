@@ -60,7 +60,7 @@ public class BadgesServiceImpl implements BadgesService {
             BadgeName.RESOLUTOR_ESTRELLA);
 
     @Override
-    public void sendBadge(BadgesAwardedDto badgesAwardedDto) {
+    public Badge sendBadge(BadgesAwardedDto badgesAwardedDto) {
         var username = userService.getUsernameByCurrentUser();
 
         var regularUser = userRepository.findByUsername(username);
@@ -96,10 +96,12 @@ public class BadgesServiceImpl implements BadgesService {
                 Badge badge = this.createBadge( badgesAwardedDto.badgeName(), badgesAwardedDto.idMember() );
                 tableBadgeService.assignBadgeToTable(tableBadgeEntity, badge);
                 tableBadgeService.closeBadgeTable(tableBadgeEntity);
+                return badge;
             }else{
                 throw new BadgeIsNotPossibleAssignException("No es posible asignar el badge a la tabla debido a que ya fue asignado");
             }
         }
+        return null;
     }
 
     @Override

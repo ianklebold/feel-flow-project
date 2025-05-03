@@ -12,17 +12,15 @@ import com.equipo5.feelflowapp.repository.module.ModuleNikoNikoRepository;
 import com.equipo5.feelflowapp.repository.team.TeamRepository;
 import com.equipo5.feelflowapp.service.module.ModuleService;
 import com.equipo5.feelflowapp.service.module.nikoniko.NikoNikoService;
-import com.equipo5.feelflowapp.service.survey.SurveyService;
+import com.equipo5.feelflowapp.service.survey.impl.SurveyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.Optional;
 
 import static com.equipo5.feelflowapp.domain.enumerations.modules.ModuleNames.NIKO_NIKO;
-import static com.equipo5.feelflowapp.domain.enumerations.modules.ModuleNames.TWELVE_STEPS;
 
 @Service
 public class NikoNikoServiceImpl implements NikoNikoService {

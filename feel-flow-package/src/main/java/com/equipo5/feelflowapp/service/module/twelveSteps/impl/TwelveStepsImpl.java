@@ -1,10 +1,7 @@
 package com.equipo5.feelflowapp.service.module.twelveSteps.impl;
 
 import com.equipo5.feelflowapp.domain.Team;
-import com.equipo5.feelflowapp.domain.enumerations.modules.ModuleNames;
 import com.equipo5.feelflowapp.domain.enumerations.modules.ModuleState;
-import com.equipo5.feelflowapp.domain.enumerations.modules.SurveyStateEnum;
-import com.equipo5.feelflowapp.domain.modules.SurveyModule;
 import com.equipo5.feelflowapp.domain.modules.twelvesteps.TwelveStepsModule;
 import com.equipo5.feelflowapp.dto.modules.CreationTwelveStepsModuleDto;
 import com.equipo5.feelflowapp.exception.badrequest.module.ModuleAlreadyActiveException;
@@ -15,17 +12,14 @@ import com.equipo5.feelflowapp.repository.module.ModuleTwelveStepsRepository;
 import com.equipo5.feelflowapp.repository.team.TeamRepository;
 import com.equipo5.feelflowapp.service.module.ModuleService;
 import com.equipo5.feelflowapp.service.module.twelveSteps.TwelveStepsService;
-import com.equipo5.feelflowapp.service.survey.SurveyService;
+import com.equipo5.feelflowapp.service.survey.impl.SurveyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.Optional;
-import java.util.UUID;
 
 import static com.equipo5.feelflowapp.domain.enumerations.modules.ModuleNames.TWELVE_STEPS;
 

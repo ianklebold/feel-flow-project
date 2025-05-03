@@ -1,12 +1,13 @@
 package com.equipo5.feelflowapp.service.badges;
 
+import com.equipo5.feelflowapp.domain.modules.kudos.Badge;
 import com.equipo5.feelflowapp.dto.badges.*;
 
 import java.util.List;
 import java.util.UUID;
 
 public interface BadgesService {
-    void sendBadge(BadgesAwardedDto badgesAwardedDto);
+    Badge sendBadge(BadgesAwardedDto badgesAwardedDto);
 
     List<BadgesAvailableDto> getBadgesAvailableToSend();
 
