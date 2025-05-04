@@ -77,6 +77,7 @@ public class BadgesController {
         if(badge != null) {
             KudosModule kudosModule = kudosService.closeModule();
             kudosNotificationService.sendKudosNotificationToLeader(badge);
+            kudosNotificationService.sendKudosNotificationToMember(badge);
 
             if (kudosModule != null){
                 kudosNotificationService.sendKudosClosedNotificationToLeader(kudosModule);

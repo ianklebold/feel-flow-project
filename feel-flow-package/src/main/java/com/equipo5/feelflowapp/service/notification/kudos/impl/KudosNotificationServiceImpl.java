@@ -58,6 +58,19 @@ public class KudosNotificationServiceImpl implements KudosNotificationService {
     }
 
     @Override
+    public void sendKudosNotificationToMember(Badge badge) {
+        Notification notification = new Notification();
+        notification.setTitle("Kudos Recibido");
+        notification.setBody("Haz recibido un nuevo Kudos " + getKudosType(badge.getBadgeName()) + " Disponible en tu perfil" );
+        notification.setWasRead(false);
+        notification.setWasSeen(false);
+        notification.setNotificationTypeEnum(NotificationTypeEnum.KUDOS);
+        notification.setCreatedAt(LocalDateTime.now());
+        notification.setNotificationOwner(badge.getBadgeOwner());
+        notificationRepository.save(notification);
+    }
+
+    @Override
     public void sendKudosClosedNotificationToLeader(KudosModule kudosModule) {
         Notification notification = new Notification();
         notification.setTitle("Cierre de modulo Kudos");

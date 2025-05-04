@@ -3,17 +3,14 @@ package com.equipo5.feelflowapp.service.notification.impl;
 import com.equipo5.feelflowapp.domain.Team;
 import com.equipo5.feelflowapp.domain.enumerations.modules.SurveyStateEnum;
 import com.equipo5.feelflowapp.domain.enumerations.notification.NotificationTypeEnum;
+import com.equipo5.feelflowapp.domain.modules.Module;
 import com.equipo5.feelflowapp.domain.modules.Survey;
-import com.equipo5.feelflowapp.domain.modules.kudos.Badge;
 import com.equipo5.feelflowapp.domain.notifications.Notification;
-import com.equipo5.feelflowapp.domain.users.Admin;
 import com.equipo5.feelflowapp.domain.users.RegularUser;
 import com.equipo5.feelflowapp.domain.users.TeamLeader;
 import com.equipo5.feelflowapp.dto.notifications.NotificationClientDto;
 import com.equipo5.feelflowapp.dto.notifications.NotificationDto;
-import com.equipo5.feelflowapp.dto.notifications.NotificationKudosPanelDto;
 import com.equipo5.feelflowapp.dto.notifications.NotificationSessionUserDto;
-import com.equipo5.feelflowapp.dto.team.TeamListDTO;
 import com.equipo5.feelflowapp.dto.users.UserDTO;
 import com.equipo5.feelflowapp.mappers.notifications.NotificationMapper;
 import com.equipo5.feelflowapp.mappers.notifications.NotificationSessionUserMapper;
@@ -23,14 +20,12 @@ import com.equipo5.feelflowapp.service.notification.NotificationService;
 import com.equipo5.feelflowapp.service.team.TeamService;
 import com.equipo5.feelflowapp.service.users.UserService;
 import lombok.AllArgsConstructor;
-import org.springframework.cglib.core.Local;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 
@@ -106,15 +101,20 @@ public class NotificationServiceImpl implements NotificationService {
 
     @Override
     public String generateBodyForOpenedModule(String nameModule, Timestamp dateAndTimeToPublish, Timestamp dateAndTimeToClose) {
-        return "El modulo " + nameModule + "Se encuentra abierto y disponible " + "desde las " +
-                LocalDateTime.of(dateAndTimeToPublish.getYear(),dateAndTimeToPublish.getMonth(),dateAndTimeToPublish.getDay(),dateAndTimeToPublish.getHours(),dateAndTimeToPublish.getMinutes())
+        return "El modulo " + nameModule + " Se encuentra abierto y disponible " + "desde las " +
+                formatToDayMonthYearHourMinute(LocalDateTime.of(dateAndTimeToPublish.getYear(),dateAndTimeToPublish.getMonth(),dateAndTimeToPublish.getDay(),dateAndTimeToPublish.getHours(),dateAndTimeToPublish.getMinutes()))
                 + " y las " +
-                LocalDateTime.of(dateAndTimeToClose.getYear(),dateAndTimeToClose.getMonth(),dateAndTimeToClose.getDay(),dateAndTimeToClose.getHours(),dateAndTimeToClose.getMinutes());
+                formatToDayMonthYearHourMinute(LocalDateTime.of(dateAndTimeToClose.getYear(),dateAndTimeToClose.getMonth(),dateAndTimeToClose.getDay(),dateAndTimeToClose.getHours(),dateAndTimeToClose.getMinutes()));
+    }
+
+    public static String formatToDayMonthYearHourMinute(LocalDateTime dateTime) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+        return dateTime.format(formatter);
     }
 
     @Override
     public String generateBodyForCloseModule(String nameModule) {
-        return "El modulo" + nameModule + "se cerro con exito";
+        return "El modulo " + nameModule + " Se cerro con exito";
     }
 
     @Override
@@ -172,6 +172,24 @@ public class NotificationServiceImpl implements NotificationService {
             notification.setNotificationOwner(survey.getRegularUser().getTeam().getTeamLeader());
             Notification notificationCreated = this.notificationRepository.save(notification);
         }
+    }
+
+    @Override
+    public void sendNotificationSurveyAvailableNikoNiko(Module module) {
+        module.getTeam().getRegularUsers().forEach(
+                user -> {
+                    Notification notification = new Notification();
+                    notification.setTitle("Nueva encuesta de Niko Niko disponible");
+                    notification.setBody("Durante el dia tendras disponible dos encuestas Niko Niko, al finalizar la jornada y al terminarla. Exitos!");
+                    notification.setWasRead( Boolean.FALSE );
+                    notification.setWasSeen( Boolean.FALSE );
+                    notification.setCreatedAt( LocalDateTime.now() );
+                    notification.setNotificationTypeEnum(NotificationTypeEnum.GENERAL);
+                    notification.setNotificationOwner(user);
+                    Notification notificationCreated = this.notificationRepository.save(notification);
+                }
+        );
+
     }
 
 

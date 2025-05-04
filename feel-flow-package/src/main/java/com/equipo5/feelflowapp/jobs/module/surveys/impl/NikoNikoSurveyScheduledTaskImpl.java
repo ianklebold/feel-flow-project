@@ -13,6 +13,7 @@ import com.equipo5.feelflowapp.repository.activity.ActivityRepository;
 import com.equipo5.feelflowapp.repository.module.ModuleNikoNikoRepository;
 import com.equipo5.feelflowapp.repository.survey.SurveyRepository;
 import com.equipo5.feelflowapp.repository.team.TeamRepository;
+import com.equipo5.feelflowapp.service.notification.NotificationService;
 import com.equipo5.feelflowapp.service.survey.nikoniko.NikoNikoSurveyService;
 import com.equipo5.feelflowapp.service.utils.dateservice.DateUtils;
 import lombok.extern.slf4j.Slf4j;
@@ -38,13 +39,15 @@ public class NikoNikoSurveyScheduledTaskImpl implements SurveyScheduledTask{
 
     private final SurveyRepository surveyRepository;
     private final ActivityRepository activityRepository;
+    private final NotificationService notificationService;
 
-    public NikoNikoSurveyScheduledTaskImpl(TeamRepository teamRepository, NikoNikoSurveyService nikoNikoSurveyService, ModuleNikoNikoRepository nikoNikoRepository, SurveyRepository surveyRepository, ActivityRepository activityRepository) {
+    public NikoNikoSurveyScheduledTaskImpl(TeamRepository teamRepository, NikoNikoSurveyService nikoNikoSurveyService, ModuleNikoNikoRepository nikoNikoRepository, SurveyRepository surveyRepository, ActivityRepository activityRepository, NotificationService notificationService) {
         this.teamRepository = teamRepository;
         this.nikoNikoSurveyService = nikoNikoSurveyService;
         this.nikoNikoRepository = nikoNikoRepository;
         this.surveyRepository = surveyRepository;
         this.activityRepository = activityRepository;
+        this.notificationService = notificationService;
     }
 
     @Override
@@ -68,6 +71,7 @@ public class NikoNikoSurveyScheduledTaskImpl implements SurveyScheduledTask{
                                         closeOldActivities(module);
                                         checkIfNotExistsSurveysEnabled(module);
                                         nikoNikoSurveyService.createSurveis(team.getRegularUsers(), module);
+                                        notificationService.sendNotificationSurveyAvailableNikoNiko( module );
                                         nikoNikoRepository.save( module );
                                         log.info(String.format("Niko surveis created: For User of the team %s", team.getName() ));
                                     }else if ( DateUtils.isBeforeToOtherDate( module.getDateAndTimeToClose(), null  )){

@@ -9,6 +9,7 @@ import java.util.UUID;
 
 public interface KudosNotificationService {
     void sendKudosNotificationToLeader(Badge badge);
+    void sendKudosNotificationToMember(Badge badge);
     void sendKudosClosedNotificationToLeader(KudosModule kudosModule);
     List<NotificationKudosPanelDto> getNotificationKudosLeaders(UUID idLeader);
 }

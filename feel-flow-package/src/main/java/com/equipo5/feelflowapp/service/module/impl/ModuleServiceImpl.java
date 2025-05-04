@@ -200,7 +200,7 @@ public class ModuleServiceImpl implements ModuleService {
                     SurveyModule surveyModuleSaved = moduleRepository.save(surveyModule.get());
                     notificationService.sendNotificationModule(
                             surveyModule.get().getTeam().getRegularUsers(),
-                            notificationService.generateBodyForCloseModule("12 pasos de la felicidad"),
+                            notificationService.generateBodyForCloseModule("12 Pasos De La Felicidad"),
                             "Cierre de modulo"
                     );
                     return surveyModuleSaved;

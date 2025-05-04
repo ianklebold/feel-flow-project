@@ -1,6 +1,7 @@
 package com.equipo5.feelflowapp.service.notification;
 
 import com.equipo5.feelflowapp.domain.enumerations.notification.NotificationTypeEnum;
+import com.equipo5.feelflowapp.domain.modules.Module;
 import com.equipo5.feelflowapp.domain.modules.Survey;
 import com.equipo5.feelflowapp.domain.modules.kudos.Badge;
 import com.equipo5.feelflowapp.domain.users.RegularUser;
@@ -25,5 +26,5 @@ public interface NotificationService {
     List<NotificationDto> getNotificationsByUser(NotificationTypeEnum notificationType);
 
     void sendNotificationSurvey(Survey survey);
-
+    void sendNotificationSurveyAvailableNikoNiko(Module module);
 }
