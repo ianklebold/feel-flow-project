@@ -12,8 +12,8 @@ import java.time.LocalDateTime;
 @Mapper
 public interface NotificationKudosPanelMapper {
 
-    @Mapping(source = "from", target = "from")
-    @Mapping(source = "to", target = "to")
+    @Mapping(source = "fromMember", target = "from")
+    @Mapping(source = "toMember", target = "to")
     @Mapping(source = "body", target = "badgeName")
     @Mapping(source = "createdAt", target = "creationDate", qualifiedByName = "creationDateMapper")
     NotificationKudosPanelDto notificationKudosLeaderToNotificationKudosPanelDto(NotificationKudosLeader notificationKudosLeader);
