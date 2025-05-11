@@ -1,6 +1,7 @@
 package com.equipo5.feelflowapp.controller;
 
 import com.equipo5.feelflowapp.constants.response.HttpResponses;
+import com.equipo5.feelflowapp.domain.enumerations.modules.ActivityState;
 import com.equipo5.feelflowapp.domain.enumerations.modules.ModuleNames;
 import com.equipo5.feelflowapp.domain.enumerations.modules.SurveyStateEnum;
 import com.equipo5.feelflowapp.domain.modules.Survey;
@@ -15,6 +16,7 @@ import com.equipo5.feelflowapp.jobs.module.surveys.SurveyScheduledTask;
 import com.equipo5.feelflowapp.service.module.ModuleService;
 import com.equipo5.feelflowapp.service.notification.NotificationService;
 import com.equipo5.feelflowapp.service.notification.nikoniko.NikoNikoNotificationService;
+import com.equipo5.feelflowapp.service.notification.recommendation.RecommendationService;
 import com.equipo5.feelflowapp.service.survey.impl.SurveyService;
 import com.equipo5.feelflowapp.service.survey.nikoniko.NikoNikoSurveyService;
 import com.equipo5.feelflowapp.service.survey.twelvesteps.TwelveStepsSurveyService;
@@ -62,9 +64,10 @@ public class SurveyModuleController {
 
     private final NikoNikoNotificationService nikoNikoNotificationService;
     private final NotificationService notificationService;
+    private final RecommendationService recommendationService;
 
     @Autowired
-    public SurveyModuleController(@Qualifier("SurveyService") SurveyService surveyService, @Qualifier("TwelveStepsSurveyService") TwelveStepsSurveyService twelveStepsSurveyService, @Qualifier("NikoNikoSurveyServiceImpl") NikoNikoSurveyService nikoNikoSurveyService, SurveyScheduledTask surveyScheduledTask, ModuleService moduleService, NikoNikoNotificationService nikoNikoNotificationService, NotificationService notificationService) {
+    public SurveyModuleController(@Qualifier("SurveyService") SurveyService surveyService, @Qualifier("TwelveStepsSurveyService") TwelveStepsSurveyService twelveStepsSurveyService, @Qualifier("NikoNikoSurveyServiceImpl") NikoNikoSurveyService nikoNikoSurveyService, SurveyScheduledTask surveyScheduledTask, ModuleService moduleService, NikoNikoNotificationService nikoNikoNotificationService, NotificationService notificationService,RecommendationService recommendationService) {
         this.surveyService = surveyService;
         this.twelveStepsSurveyService = twelveStepsSurveyService;
         this.nikoNikoSurveyService = nikoNikoSurveyService;
@@ -72,6 +75,7 @@ public class SurveyModuleController {
         this.moduleService = moduleService;
         this.nikoNikoNotificationService = nikoNikoNotificationService;
         this.notificationService = notificationService;
+        this.recommendationService = recommendationService;
     }
 
     @Operation(
@@ -131,6 +135,11 @@ public class SurveyModuleController {
     @SecurityRequirement(name = "Bearer Authentication")
     public ResponseEntity<ResponseDto> completeTwelveStepsSurvey(@Valid @RequestBody SurveyTwelveStepsResponseDto surveyResponse) throws JsonProcessingException {
         Survey surveySaved = twelveStepsSurveyService.completeSurvey(surveyResponse);
+
+        if( SurveyStateEnum.FINISHED.equals( surveySaved.getSurveyStateEnum() ) ){
+            recommendationService.sendRecommendationForTwelveSteps(surveySaved);
+        }
+
         notificationService.sendNotificationSurvey(surveySaved);
         SurveyModule surveyModule = moduleService.closeModule(ModuleNames.TWELVE_STEPS);
         if(surveyModule != null){
@@ -166,8 +175,14 @@ public class SurveyModuleController {
     @SecurityRequirement(name = "Bearer Authentication")
     public ResponseEntity<ResponseDto> completeNikoNikoSurvey(@Valid @RequestBody SurveyAvailableNikoNikoReponseDto surveyResponse){
         Survey survey = nikoNikoSurveyService.completeSurvey( surveyResponse );
+
         if (survey != null) {
             nikoNikoNotificationService.sendNikoNikoNote(surveyResponse.activityAvailable().descriptionFeeling(), survey);
+            if(survey.getActivities().size() == 2 && survey.getActivities().get(0) != null && survey.getActivities().get(1) != null){
+                if( ActivityState.FINISHED.equals(survey.getActivities().get(0).getActivityState()) && ActivityState.FINISHED.equals(survey.getActivities().get(1).getActivityState())){
+                    recommendationService.sendRecommendationForNikoNiko(survey);
+                }
+            }
         }
         SurveyModule surveyModule = moduleService.closeModule(ModuleNames.NIKO_NIKO);
         if(surveyModule != null){

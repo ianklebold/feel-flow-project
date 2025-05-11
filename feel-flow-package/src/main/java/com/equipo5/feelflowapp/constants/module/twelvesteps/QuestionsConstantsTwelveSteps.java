@@ -1,6 +1,9 @@
 package com.equipo5.feelflowapp.constants.module.twelvesteps;
 
 import java.util.List;
+import java.util.Map;
+
+import static java.util.Map.entry;
 
 
 public class QuestionsConstantsTwelveSteps {
@@ -32,7 +35,73 @@ public class QuestionsConstantsTwelveSteps {
         "Mindfulness",
         "Gratitud",
         "Servicial"
-);
+    );
+
+    public static final Map<String,String> RECOMMENDATION = Map.ofEntries(
+            entry("Propósito", "¡Hola! Parece que @user del equipo @equipo anda medio desconectado del propósito de lo que hace. Tal vez sea un buen momento para volver a alinear el “por qué” del trabajo con el día a día."),
+            entry("Autonomía", "Notamos que @user del equipo @equipo siente que no tiene mucha libertad para decidir cómo hacer su trabajo. Un pequeño empujón de confianza puede motivarlo mucho."),
+            entry("Maestría", "@user del equipo @equipo siente que no está creciendo en habilidades. Tal vez sea hora de ofrecerle algo nuevo que lo rete y entusiasme."),
+            entry("Social", "Parece que @user se siente algo desconectado del equipo @equipo. Reforzar los lazos puede mejorar mucho el ambiente de trabajo."),
+            entry("Descanso", "@user del equipo @equipo está señalando falta de descanso o pausas efectivas. Esto puede afectar su energía y claridad mental."),
+            entry("Disfrute", "Parece que @user no está disfrutando mucho su día a día en el equipo @equipo. Un pequeño cambio puede traerle de nuevo el gusto por lo que hace."),
+            entry("Ejercicio", "@user del equipo @equipo siente que no está cuidando su cuerpo con actividad física. Esto puede afectar tanto el ánimo como la concentración."),
+            entry("Resiliencia", "@user parece estar teniendo dificultades para sobrellevar situaciones adversas en el equipo @equipo. Un poco de contención puede fortalecerlo."),
+            entry("Alegría", "Detectamos que @user del equipo @equipo no está sintiendo alegría en su día a día laboral. Una chispa de energía puede reactivar mucho."),
+            entry("Mindfulness", "@user del equipo @equipo reporta poca capacidad de estar enfocado y presente. Tal vez necesite menos ruido y más foco."),
+            entry("Gratitud", "@user del equipo @equipo siente que hay poca gratitud en el ambiente. Cultivar el agradecimiento puede mejorar la energía general del equipo."),
+            entry("Servicial", "@user percibe que en el equipo @equipo no hay mucha actitud de ayuda o colaboración. Esto puede generar distancia o desmotivación.")
+    );
+
+    public static final Map<String, List<String>> SUGGESTION = Map.ofEntries(
+            entry("Propósito", List.of(
+                    "Hacé una breve charla 1:1 para reconectar el trabajo con el propósito más general del equipo.",
+                    "Compartí ejemplos o resultados donde se note el impacto colectivo del esfuerzo diario."
+            )),
+            entry("Autonomía", List.of(
+                    "Permití mayor libertad para definir enfoques, horarios o prioridades de tareas.",
+                    "Propone espacios donde puedan sugerir y liderar pequeñas iniciativas."
+            )),
+            entry("Maestría", List.of(
+                    "Ofrecé cursos, libros o proyectos donde pueda desarrollar nuevas competencias.",
+                    "Propone tareas fuera de su rutina habitual para que se ponga a prueba."
+            )),
+            entry("Social", List.of(
+                    "Agendá un espacio informal como café virtual o charla sin agenda.",
+                    "Proponé pequeñas dinámicas sociales en reuniones o en canales internos."
+            )),
+            entry("Descanso", List.of(
+                    "Incentivá micro pausas durante el día y respeto del horario laboral.",
+                    "Recordá que no todo es productividad: a veces, parar también es avanzar."
+            )),
+            entry("Disfrute", List.of(
+                    "Consultale qué tipo de tareas o proyectos disfruta más e intentá reequilibrar su carga.",
+                    "Incorporá toques de humor o momentos lúdicos al equipo: pequeños gestos suman."
+            )),
+            entry("Ejercicio", List.of(
+                    "Compartí recursos para moverse (gympass, pausas activas).",
+                    "Proponé desafíos de movimiento con el equipo ( estiramientos diarios, etc.)."
+            )),
+            entry("Resiliencia", List.of(
+                    "Conversá con él/ella sobre lo que viene costando más y ofrecé tu apoyo directo.",
+                    "Proponé herramientas o actividades para trabajar la resiliencia en equipo."
+            )),
+            entry("Alegría", List.of(
+                    "Celebren logros chicos con más frecuencia.",
+                    "Promové un entorno más liviano, con humor, cercanía y reconocimiento genuino."
+            )),
+            entry("Mindfulness", List.of(
+                    "Incentivá bloques sin reuniones para trabajo profundo.",
+                    "Al final de un sprint evalúa la utilidad y el provecho de los rituales ágiles implementados."
+            )),
+            entry("Gratitud", List.of(
+                    "Proponé un espacio/ceremonia (retrospective) donde todos puedan agradecer algo.",
+                    "Compartí agradecimientos/menciones por sprint vos mismo para dar el ejemplo."
+            )),
+            entry("Servicial", List.of(
+                    "Reforzá el valor de “ayudarnos mutuamente” en espacios de equipo.",
+                    "Reconocé públicamente las actitudes serviciales y propone dinámicas de colaboración cruzada."
+            ))
+    );
 
     public static final String[] ANSWERS_1_POOL_CLASSIC = {
 

@@ -6,4 +6,5 @@ public class ResponseConstantsNikoNiko {
     public static final String ANSWERS_3_POOL_NIKO_NIKO = "Normal";
     public static final String ANSWERS_4_POOL_NIKO_NIKO = "Mal";
     public static final String ANSWERS_5_POOL_NIKO_NIKO = "Muy Mal";
+    public static final String ANSWERS_PERSONAL_POOL_NIKO_NIKO = "Personal";
 }

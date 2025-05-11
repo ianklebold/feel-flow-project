@@ -2,7 +2,10 @@ package com.equipo5.feelflowapp.service.module.kudos.impl;
 
 import com.equipo5.feelflowapp.domain.Team;
 import com.equipo5.feelflowapp.domain.enumerations.modules.ModuleState;
+import com.equipo5.feelflowapp.domain.modules.kudos.Badge;
 import com.equipo5.feelflowapp.domain.modules.kudos.KudosModule;
+import com.equipo5.feelflowapp.domain.modules.kudos.TableBadge;
+import com.equipo5.feelflowapp.domain.users.RegularUser;
 import com.equipo5.feelflowapp.dto.modules.CreationKudosModuleDto;
 import com.equipo5.feelflowapp.exception.badrequest.module.ModuleAlreadyActiveException;
 import com.equipo5.feelflowapp.exception.badrequest.module.ModuleException;
@@ -21,8 +24,12 @@ import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
 import java.time.LocalDate;
+import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static com.equipo5.feelflowapp.domain.enumerations.modules.ModuleNames.KUDOS;
 
@@ -132,5 +139,29 @@ public class KudosServiceImpl implements KudosService {
             return kudosModule.isPresent();
         }
         return false;
+    }
+
+    @Override
+    public List<RegularUser> usersAwardedByModule(KudosModule kudosModule) {
+        return kudosModule.getTableBadge().stream()
+                .flatMap(
+                        tableBadge ->
+                                Stream.of(tableBadge.getMasterOfDetail(),
+                                        tableBadge.getBadgePositiveEnergy(),
+                                        tableBadge.getBadgeResolutorStar(),
+                                        tableBadge.getBadgeFriendHands()
+                                        )
+                )
+                .filter(Objects::nonNull)
+                .map(b -> (Badge) b)
+                .map(Badge::getBadgeOwner)
+                .collect(Collectors.collectingAndThen(
+                        Collectors.toMap(
+                                RegularUser::getUuid,
+                                u -> u,
+                                (u1, u2) -> u1
+                        ),
+                        m -> List.copyOf(m.values())
+                ));
     }
 }

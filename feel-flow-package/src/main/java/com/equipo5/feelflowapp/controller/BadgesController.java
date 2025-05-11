@@ -10,6 +10,7 @@ import com.equipo5.feelflowapp.service.badges.BadgesService;
 import com.equipo5.feelflowapp.service.module.kudos.KudosService;
 import com.equipo5.feelflowapp.service.notification.NotificationService;
 import com.equipo5.feelflowapp.service.notification.kudos.KudosNotificationService;
+import com.equipo5.feelflowapp.service.notification.recommendation.RecommendationService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -46,6 +47,8 @@ public class BadgesController {
 
     private final KudosNotificationService kudosNotificationService;
 
+    private final RecommendationService recommendationService;
+
     @Operation(
             summary = "Send Badge REST API",
             description = "REST API to send badge to other member of team"
@@ -81,6 +84,7 @@ public class BadgesController {
 
             if (kudosModule != null){
                 kudosNotificationService.sendKudosClosedNotificationToLeader(kudosModule);
+                recommendationService.sendRecommendationForKudos(kudosModule);
             }
 
             return ResponseEntity
