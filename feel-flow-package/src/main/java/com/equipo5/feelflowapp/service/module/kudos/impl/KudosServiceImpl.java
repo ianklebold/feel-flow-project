@@ -64,8 +64,8 @@ public class KudosServiceImpl implements KudosService {
                 throw new ModuleAlreadyActiveException("Actualmente se tiene un modulo de Kudos activo");
             }
 
-            if( creationKudosModule.dateAndTimeToClose().isBefore( creationKudosModule.dateAndTimeToPublish() )
-                    || creationKudosModule.dateAndTimeToClose().isEqual( creationKudosModule.dateAndTimeToPublish() )
+            if( creationKudosModule.dateAndTimeToClose().toLocalDateTime().isBefore( creationKudosModule.dateAndTimeToPublish().toLocalDateTime() )
+                    || creationKudosModule.dateAndTimeToClose().toLocalDateTime().isEqual( creationKudosModule.dateAndTimeToPublish().toLocalDateTime() )
             ){
                 throw new ModuleException("La fecha de cierre es igual o antes que la fecha de creacion");
             }
@@ -76,8 +76,8 @@ public class KudosServiceImpl implements KudosService {
             kudosModule.setModuleState( ModuleState.ACTIVE );
             kudosModule.setName( KUDOS.toString() );
             kudosModule.setTeam( team.get() );
-            kudosModule.setDateAndTimeToPublish(Timestamp.valueOf(creationKudosModule.dateAndTimeToPublish()));
-            kudosModule.setDateAndTimeToClose(Timestamp.valueOf(creationKudosModule.dateAndTimeToClose()));
+            kudosModule.setDateAndTimeToPublish(creationKudosModule.dateAndTimeToPublish());
+            kudosModule.setDateAndTimeToClose(creationKudosModule.dateAndTimeToClose());
 
             //Crear N Tablas de Badges.
             tableBadgeService.createTableBadge(kudosModule);

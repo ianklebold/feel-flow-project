@@ -102,9 +102,13 @@ public class NotificationServiceImpl implements NotificationService {
     @Override
     public String generateBodyForOpenedModule(String nameModule, Timestamp dateAndTimeToPublish, Timestamp dateAndTimeToClose) {
         return "El modulo " + nameModule + " Se encuentra abierto y disponible " + "desde las " +
-                formatToDayMonthYearHourMinute(LocalDateTime.of(dateAndTimeToPublish.getYear(),dateAndTimeToPublish.getMonth(),dateAndTimeToPublish.getDay(),dateAndTimeToPublish.getHours(),dateAndTimeToPublish.getMinutes()))
+                formatToDayMonthYearHourMinute(
+                        dateAndTimeToPublish.toLocalDateTime()
+                )
                 + " y las " +
-                formatToDayMonthYearHourMinute(LocalDateTime.of(dateAndTimeToClose.getYear(),dateAndTimeToClose.getMonth(),dateAndTimeToClose.getDay(),dateAndTimeToClose.getHours(),dateAndTimeToClose.getMinutes()));
+                formatToDayMonthYearHourMinute(
+                        dateAndTimeToClose.toLocalDateTime()
+                );
     }
 
     public static String formatToDayMonthYearHourMinute(LocalDateTime dateTime) {
