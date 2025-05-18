@@ -10,4 +10,19 @@ public class ResponseQuestionsConstants {
     public static final String OPTION_FOUR = "CUATRO";
 
     public static final String OPTION_FIVE = "CINCO";
+
+
+
+    public static final String RESPONSE_OPTION_ONE = "1.";
+
+    public static final String RESPONSE_OPTION_TWO = "2.";
+
+    public static final String RESPONSE_OPTION_THREE = "3.";
+
+    public static final String RESPONSE_OPTION_FOUR = "4.";
+
+    public static final String RESPONSE_OPTION_FIVE = "5.";
+
+
+
 }

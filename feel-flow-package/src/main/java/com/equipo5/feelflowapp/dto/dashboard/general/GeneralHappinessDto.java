@@ -11,5 +11,5 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class GeneralHappinessDto {
     private String nameHappiness;
-    private double percentHappiness;
+    private int percentHappiness;
 }

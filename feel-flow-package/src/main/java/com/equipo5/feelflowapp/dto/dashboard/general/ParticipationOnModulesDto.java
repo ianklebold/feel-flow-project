@@ -11,5 +11,5 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class ParticipationOnModulesDto {
     private String name;
-    private double participationPercentage;
+    private int participationPercentage;
 }

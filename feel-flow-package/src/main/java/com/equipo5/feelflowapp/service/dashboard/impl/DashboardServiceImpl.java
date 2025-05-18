@@ -6,7 +6,10 @@ import com.equipo5.feelflowapp.domain.enumerations.modules.ModuleNames;
 import com.equipo5.feelflowapp.domain.modules.ActivityNikoNiko;
 import com.equipo5.feelflowapp.domain.modules.Module;
 import com.equipo5.feelflowapp.domain.modules.Survey;
+import com.equipo5.feelflowapp.dto.dashboard.general.GeneralHappinessDto;
 import com.equipo5.feelflowapp.dto.dashboard.general.GeneralSummaryDto;
+import com.equipo5.feelflowapp.dto.dashboard.general.KudosSentDto;
+import com.equipo5.feelflowapp.dto.dashboard.general.ParticipationOnModulesDto;
 import com.equipo5.feelflowapp.dto.dashboard.kudos.KudosSummaryData;
 import com.equipo5.feelflowapp.dto.dashboard.nikoniko.NikoNikoAvgData;
 import com.equipo5.feelflowapp.dto.dashboard.TeamAndModulesDto;
@@ -25,6 +28,7 @@ import com.equipo5.feelflowapp.repository.team.TeamRepository;
 import com.equipo5.feelflowapp.repository.users.UserRepository;
 import com.equipo5.feelflowapp.service.dashboard.DashboardService;
 import com.equipo5.feelflowapp.service.module.ModuleService;
+import com.equipo5.feelflowapp.service.module.kudos.KudosService;
 import com.equipo5.feelflowapp.service.module.nikoniko.NikoNikoService;
 import com.equipo5.feelflowapp.service.module.twelveSteps.TwelveStepsService;
 import com.equipo5.feelflowapp.service.notification.kudos.KudosNotificationService;
@@ -65,9 +69,10 @@ public class DashboardServiceImpl implements DashboardService {
     private final NikoNikoNotificationService nikoNikoNotificationService;
 
     private final UserRepository userRepository;
+    private final KudosService kudosService;
 
     @Autowired
-    public DashboardServiceImpl(@Qualifier("SurveyService") SurveyService surveyService, TeamService teamService, TeamRepository teamRepository, TwelveStepsService twelveStepsService, ModuleService moduleService, ModuleMapper moduleMapper, UserMapper userMapper, NikoNikoService nikoNikoService, TableBadgeService tableBadgeService, KudosSummaryDataMapper kudosSummaryDataMapper, UserService userService, UserRepository userRepository, KudosNotificationService kudosNotificationService, NikoNikoNotificationService nikoNikoNotificationService) {
+    public DashboardServiceImpl(@Qualifier("SurveyService") SurveyService surveyService, TeamService teamService, TeamRepository teamRepository, TwelveStepsService twelveStepsService, ModuleService moduleService, ModuleMapper moduleMapper, UserMapper userMapper, NikoNikoService nikoNikoService, TableBadgeService tableBadgeService, KudosSummaryDataMapper kudosSummaryDataMapper, UserService userService, UserRepository userRepository, KudosNotificationService kudosNotificationService, NikoNikoNotificationService nikoNikoNotificationService, KudosService kudosService) {
         this.surveyService = surveyService;
         this.teamService = teamService;
         this.teamRepository = teamRepository;
@@ -82,6 +87,7 @@ public class DashboardServiceImpl implements DashboardService {
         this.userRepository = userRepository;
         this.kudosNotificationService = kudosNotificationService;
         this.nikoNikoNotificationService = nikoNikoNotificationService;
+        this.kudosService = kudosService;
     }
 
     @Override
@@ -379,8 +385,35 @@ public class DashboardServiceImpl implements DashboardService {
 
     @Override
     public GeneralSummaryDto getGeneralSummaryData() {
+        List<Team> teams = this.teamService.getAllTeamsEntities();
+        ParticipationOnModulesDto participationOnModulesDto = new ParticipationOnModulesDto();
+        participationOnModulesDto.setName("Participacion en Modulos");
+        participationOnModulesDto.setParticipationPercentage((int) (moduleService.getGeneralPercentOfModulesCompleted( teams ) * 100));
 
-        return null;
+        KudosSentDto kudosSentDto = new KudosSentDto();
+        kudosSentDto.setName("Kudos Enviados");
+        kudosSentDto.setKudosQuantity(0);
+
+        GeneralHappinessDto generalHappinessDto = new GeneralHappinessDto();
+        generalHappinessDto.setNameHappiness("Felicidad General");
+        generalHappinessDto.setPercentHappiness(0);
+
+        teams.forEach(
+                team -> {
+                    kudosSentDto.setKudosQuantity( kudosSentDto.getKudosQuantity() +  kudosService.countOfKudosSent( team ) );
+                    generalHappinessDto.setPercentHappiness((int) (generalHappinessDto.getPercentHappiness() + moduleService.getGeneralPercentOfHappiness(team)) * 100);
+                }
+        );
+
+
+        GeneralSummaryDto generalSummaryDto = new GeneralSummaryDto(
+                this.kudosService.getEmotionalStateByKudosHappiness( (double) generalHappinessDto.getPercentHappiness() / 100 ),
+                generalHappinessDto,
+                kudosSentDto,
+                participationOnModulesDto
+        );
+
+        return generalSummaryDto;
     }
 
     @Override

@@ -355,8 +355,7 @@ public class ModuleServiceImpl implements ModuleService {
     }
 
     @Override
-    public double getGeneralPercentOfModulesCompleted() {
-        List<Team> teams = teamService.getAllTeamsEntities();
+    public double getGeneralPercentOfModulesCompleted( List<Team> teams ) {
         AtomicReference<Double> total = new AtomicReference<>((double) 0);
 
         if (teams.size() == 1){
@@ -370,6 +369,16 @@ public class ModuleServiceImpl implements ModuleService {
             );
         }
         return total.get() / teams.size() * 1/3;
+    }
+
+    @Override
+    public double getGeneralPercentOfHappiness(Team team) {
+
+        double total = 0;
+
+        total = twelveStepsService.happinessByTwelveStepsModule(team) + nikoService.happinessByNikoNikoModule(team) + kudosService.happinessByKudosModule(team);
+
+        return total;
     }
 
     private double getPercentOfCompletedModules(List<SurveyModule> modulesTwelveSteps, int numberOfMembers){

@@ -16,5 +16,6 @@ public interface TwelveStepsService {
 
     double percentOfModuleCompleted(Team team);
 
+    double happinessByTwelveStepsModule(Team team);
 
 }

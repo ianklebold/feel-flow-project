@@ -20,4 +20,6 @@ public interface KudosService {
     double percentOfModuleCompleted(Team team);
 
     int countOfKudosSent(Team team);
+    double happinessByKudosModule(Team team);
+    String getEmotionalStateByKudosHappiness(double happiness);
 }

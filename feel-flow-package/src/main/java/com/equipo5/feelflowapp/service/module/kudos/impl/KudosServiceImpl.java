@@ -206,12 +206,45 @@ public class KudosServiceImpl implements KudosService {
 
         List<TableBadgeAwardedDto> kudosSummaryData =  tableBadgeService.getTableBadgeDto(List.of(kudosModule));
 
-        return kudosSummaryData.stream()
-                        .map( kudos -> kudos.getMaestroDetalleBadge().getCountAwarded() +
-                                kudos.getEnergiaPositivaBadge().getCountAwarded() +
-                                kudos.getManosAmigasBadge().getCountAwarded() +
-                                kudos.getResolutorEstrellaBadge().getCountAwarded()
-                        ).reduce(0, Integer::sum);
+        return getCountOfKudosSent( kudosSummaryData );
 
     }
+
+    private int getCountOfKudosSent(List<TableBadgeAwardedDto> kudosSummaryData){
+        return kudosSummaryData.stream()
+                .map( kudos -> kudos.getMaestroDetalleBadge().getCountAwarded() +
+                        kudos.getEnergiaPositivaBadge().getCountAwarded() +
+                        kudos.getManosAmigasBadge().getCountAwarded() +
+                        kudos.getResolutorEstrellaBadge().getCountAwarded()
+                ).reduce(0, Integer::sum);
+    }
+
+    @Override
+    public double happinessByKudosModule(Team team) {
+        int countOfMembers = team.getRegularUsers().size();
+        List<Module> modules =  this.moduleRepository.findModulesByNameAndTeamOrderByIdDescCreationDateDesc(KUDOS.toString(), team);
+        KudosModule kudosModule = (KudosModule) modules.get(0);
+        List<TableBadgeAwardedDto> kudosSummaryData =  tableBadgeService.getTableBadgeDto(List.of(kudosModule));
+
+
+        long countOfKudosSent = getCountOfKudosSent(kudosSummaryData);
+        long countMaxOfKudosForSend = (long) (3 + (team.getRegularUsers().size() - 1)) * team.getRegularUsers().size();
+        long countOfMembersWhoSentFriendHands = kudosSummaryData.stream()
+                .filter( kudosSummary -> kudosSummary.getManosAmigasBadge() != null && kudosSummary.getManosAmigasBadge().getCountAwarded() > 0 )
+                .count();
+
+        return ( (double) countOfMembersWhoSentFriendHands / countOfMembers ) * 0.7 / ( (double) countOfKudosSent / countMaxOfKudosForSend) * 0.3;
+    }
+
+    @Override
+    public String getEmotionalStateByKudosHappiness(double happiness) {
+
+        if (happiness >= 0.5){
+            return "Positivo";
+        }
+
+        return "Negativo";
+
+    }
+
 }

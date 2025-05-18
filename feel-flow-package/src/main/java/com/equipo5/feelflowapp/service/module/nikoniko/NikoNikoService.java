@@ -10,4 +10,5 @@ public interface NikoNikoService {
     NikoNikoModule publishingModule (CreationNikoNikoModule creationNikoNikoModule);
     double getValueByAnswer (String answer);
     double percentOfModuleCompleted(Team team);
+    double happinessByNikoNikoModule(Team team);
 }

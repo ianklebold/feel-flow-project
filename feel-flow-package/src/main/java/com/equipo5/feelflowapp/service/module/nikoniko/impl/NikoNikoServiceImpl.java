@@ -18,6 +18,7 @@ import com.equipo5.feelflowapp.repository.module.ModuleRepository;
 import com.equipo5.feelflowapp.repository.team.TeamRepository;
 import com.equipo5.feelflowapp.service.module.ModuleService;
 import com.equipo5.feelflowapp.service.module.nikoniko.NikoNikoService;
+import com.equipo5.feelflowapp.service.point.PointService;
 import com.equipo5.feelflowapp.service.survey.impl.SurveyService;
 import com.equipo5.feelflowapp.service.team.TeamService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,6 +53,9 @@ public class NikoNikoServiceImpl implements NikoNikoService {
 
     @Autowired
     private ModuleRepository moduleRepository;
+
+    @Autowired
+    private PointService pointService;
 
     @Override
     public NikoNikoModule publishingModule(CreationNikoNikoModule creationNikoNikoModule) {
@@ -136,6 +140,32 @@ public class NikoNikoServiceImpl implements NikoNikoService {
             }
 
         return 0;
+    }
+
+    @Override
+    public double happinessByNikoNikoModule(Team team) {
+        List<Module> modules =  this.moduleRepository.findModulesByNameAndTeamOrderByIdDescCreationDateDesc(NIKO_NIKO.toString(), team);
+        double points = 0d;
+        if (!modules.isEmpty()){
+            SurveyModule lastSurveyModule = (SurveyModule) modules.get(0);
+            double totalOfPoints = this.pointService.getTotalOfPointsPossibleNikoNiko(lastSurveyModule.getSurveys(),team.getRegularUsers().size());
+
+            points = team.getRegularUsers().stream().map(
+                    user ->
+                         lastSurveyModule.getSurveys()
+                                .stream()
+                                .filter( survey -> survey.getRegularUser().getUuid().equals( user.getUuid()) )
+                                .map( survey -> {
+                                    return pointService.getPointsByNikoNikoSurvey( survey );
+                                })
+                                .reduce(0d,Double::sum)
+
+            ).reduce(0d,Double::sum);
+
+            return ( points / team.getRegularUsers().size() ) / totalOfPoints;
+        }
+
+        return points;
     }
 
     private boolean isActivityCompleted(Activity activity){

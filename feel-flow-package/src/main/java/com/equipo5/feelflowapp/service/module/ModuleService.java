@@ -49,5 +49,7 @@ public interface ModuleService {
 
     List<KudosModule> getModulesBy(String name, Team team);
 
-    double getGeneralPercentOfModulesCompleted();
+    double getGeneralPercentOfModulesCompleted(List<Team> teams);
+
+    double getGeneralPercentOfHappiness(Team teams);
 }

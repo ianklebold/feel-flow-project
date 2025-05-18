@@ -156,8 +156,7 @@ public class DashboardController {
     @GetMapping("/general_summary")
     @SecurityRequirement(name = "Bearer Authentication")
     public GeneralSummaryDto getGeneralSummaryData(){
-
-        return null;
+        return this.dashboardService.getGeneralSummaryData();
     }
 
     @Operation(
