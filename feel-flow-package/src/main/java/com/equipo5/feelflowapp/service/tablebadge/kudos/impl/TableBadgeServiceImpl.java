@@ -97,6 +97,25 @@ public class TableBadgeServiceImpl implements TableBadgeService {
         return false;
     }
 
+    public boolean isAtLeastSentOneKudos(TableBadge tableBadge){
+        return tableBadge.getBadgePositiveEnergy().getBadgeOwner() != null
+                || tableBadge.getMasterOfDetail().getBadgeOwner() != null
+                || tableBadge.getBadgeResolutorStar().getBadgeOwner() != null
+                || tableBadge.getBadgeFriendHands().stream().anyMatch( kudos -> kudos.getBadgeOwner() != null );
+
+    }
+
+    @Override
+    public int countOfKudosSentByTable(TableBadge tableBadge) {
+        int countOfKudos = 0;
+        List<TableBadgeAwardedDto> tableBadgeAwardedDtos = this.getTableBadgeDto()
+
+
+
+
+        return countOfKudos;
+    }
+
     @Override
     public void assignBadgeToTable(TableBadge tableBadge, Badge badge) {
 
@@ -147,6 +166,10 @@ public class TableBadgeServiceImpl implements TableBadgeService {
     @Override
     public List<TableBadgeAwardedDto> getTableBadgeDto(Team team) {
         List<KudosModule> moduleList =  this.moduleService.getModulesBy(ModuleNames.KUDOS.toString(), team);
+        return getTableBadgeDto(moduleList);
+    }
+
+    public List<TableBadgeAwardedDto> getTableBadgeDto(List<KudosModule> moduleList){
         List<TableBadgeAwardedDto> tableBadgeAwardedDtos = new ArrayList<>();
         if(!moduleList.isEmpty()) {
             //1. Obtener todos los usuarios del equipo perteneciente al modulo
@@ -155,12 +178,12 @@ public class TableBadgeServiceImpl implements TableBadgeService {
             moduleList.stream()
                     .flatMap(module -> module.getTableBadge().stream() )
                     .forEach( tableBadges ->{
-                        //2. Obtener todos los badges dados en un modulo.
-                        if (tableBadges.getBadgePositiveEnergy() != null) badges.add(tableBadges.getBadgePositiveEnergy());
-                        if (tableBadges.getMasterOfDetail() != null) badges.add(tableBadges.getMasterOfDetail());
-                        if (tableBadges.getBadgeResolutorStar() != null) badges.add(tableBadges.getBadgeResolutorStar());
-                        if (!tableBadges.getBadgeFriendHands().isEmpty()) badges.addAll(tableBadges.getBadgeFriendHands());
-                        }
+                                //2. Obtener todos los badges dados en un modulo.
+                                if (tableBadges.getBadgePositiveEnergy() != null) badges.add(tableBadges.getBadgePositiveEnergy());
+                                if (tableBadges.getMasterOfDetail() != null) badges.add(tableBadges.getMasterOfDetail());
+                                if (tableBadges.getBadgeResolutorStar() != null) badges.add(tableBadges.getBadgeResolutorStar());
+                                if (!tableBadges.getBadgeFriendHands().isEmpty()) badges.addAll(tableBadges.getBadgeFriendHands());
+                            }
                     );
 
             if (!badges.isEmpty()) {
@@ -186,7 +209,6 @@ public class TableBadgeServiceImpl implements TableBadgeService {
             }
 
         }
-
         return tableBadgeAwardedDtos;
     }
 

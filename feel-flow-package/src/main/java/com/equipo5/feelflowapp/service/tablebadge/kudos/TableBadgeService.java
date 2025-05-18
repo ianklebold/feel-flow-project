@@ -24,5 +24,11 @@ public interface TableBadgeService {
 
     List<TableBadgeAwardedDto> getTableBadgeDto(Team team);
 
+    List<TableBadgeAwardedDto> getTableBadgeDto(List<KudosModule> moduleList);
+
     int getNumberTotalOfBadgesBy(TableBadgeAwardedDto tableBadgeAwardedDto);
+
+    boolean isAtLeastSentOneKudos(TableBadge tableBadge);
+
+    int countOfKudosSentByTable(TableBadge tableBadge);
 }

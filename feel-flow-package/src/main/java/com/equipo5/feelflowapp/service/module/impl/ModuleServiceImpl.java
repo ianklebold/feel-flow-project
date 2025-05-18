@@ -6,14 +6,11 @@ import com.equipo5.feelflowapp.domain.enumerations.modules.ModuleNames;
 import com.equipo5.feelflowapp.domain.enumerations.modules.ModuleState;
 import com.equipo5.feelflowapp.domain.enumerations.modules.SurveyStateEnum;
 import com.equipo5.feelflowapp.domain.modules.Module;
-import com.equipo5.feelflowapp.domain.modules.Survey;
 import com.equipo5.feelflowapp.domain.modules.SurveyModule;
 import com.equipo5.feelflowapp.domain.modules.kudos.KudosModule;
-import com.equipo5.feelflowapp.domain.modules.nikoniko.NikoNikoModule;
 import com.equipo5.feelflowapp.domain.users.RegularUser;
 import com.equipo5.feelflowapp.dto.dashboard.general.ParticipationOnModulesDto;
 import com.equipo5.feelflowapp.dto.modules.ModuleSurveyDto;
-import com.equipo5.feelflowapp.dto.team.TeamListDTO;
 import com.equipo5.feelflowapp.mappers.modules.ModuleSurveyMapper;
 import com.equipo5.feelflowapp.repository.module.ModuleRepository;
 import com.equipo5.feelflowapp.repository.module.specification.ModuleSpecification;
@@ -22,6 +19,9 @@ import com.equipo5.feelflowapp.repository.team.TeamRepository;
 import com.equipo5.feelflowapp.repository.users.regularuser.RegularUserRepository;
 import com.equipo5.feelflowapp.service.enterprise.EnterpriseService;
 import com.equipo5.feelflowapp.service.module.ModuleService;
+import com.equipo5.feelflowapp.service.module.kudos.KudosService;
+import com.equipo5.feelflowapp.service.module.nikoniko.NikoNikoService;
+import com.equipo5.feelflowapp.service.module.twelveSteps.TwelveStepsService;
 import com.equipo5.feelflowapp.service.notification.NotificationService;
 import com.equipo5.feelflowapp.service.team.TeamService;
 import com.equipo5.feelflowapp.service.users.UserService;
@@ -31,6 +31,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.*;
+import java.util.concurrent.atomic.AtomicReference;
 
 import static com.equipo5.feelflowapp.domain.enumerations.modules.ModuleNames.*;
 
@@ -50,6 +51,9 @@ public class ModuleServiceImpl implements ModuleService {
     private final ModuleSurveyMapper moduleSurveyMapper;
     private final EnterpriseService enterpriseService;
     private final TeamService teamService;
+    private final TwelveStepsService twelveStepsService;
+    private final NikoNikoService nikoService;
+    private final KudosService kudosService;
 
     @Override
     public boolean isAnyModuleActive(final String name,final List<Module> modules) {
@@ -353,36 +357,19 @@ public class ModuleServiceImpl implements ModuleService {
     @Override
     public double getGeneralPercentOfModulesCompleted() {
         List<Team> teams = teamService.getAllTeamsEntities();
+        AtomicReference<Double> total = new AtomicReference<>((double) 0);
 
-        int numberTotalOfModulesActives = 0;
-        int numberTotalOfMembers = teamService.getNumberOfMembersOfTeam(teams);
-        List<SurveyModule> modulesTwelveSteps = new ArrayList<>();
-        List<SurveyModule> modulesNikoNiko = new ArrayList<>();
-        List<KudosModule> kudosModules = new ArrayList<>();
-
-
-        teams.forEach(
-                team -> {
-                    modulesTwelveSteps.addAll( getModulesSurveyByTeamAndModuleNameAndModuleState(ModuleNames.TWELVE_STEPS, team, ModuleState.ACTIVE) );
-                    modulesNikoNiko.addAll( getModulesSurveyByTeamAndModuleNameAndModuleState(NIKO_NIKO, team, ModuleState.ACTIVE) );
-                    kudosModules.addAll( getKudosModuleByTeamAndModuleNameAndModuleState( KUDOS, team, ModuleState.ACTIVE ) );
-                }
-        );
-        double percentOfCompletedTwelveStepsModule = getPercentOfCompletedModules( modulesTwelveSteps, numberTotalOfMembers );
-        double percentOfCompletedNikoNikoModule = getPercentOfCompletedModules( modulesNikoNiko, numberTotalOfMembers );
-        double percentOfCompletedKudosModule = getPercentOfCompletedKudosModule( kudosModules, numberTotalOfMembers );
-
-        if ( !modulesTwelveSteps.isEmpty() ){
-            numberTotalOfModulesActives = numberTotalOfModulesActives + 1;
+        if (teams.size() == 1){
+            Team team = teams.get(0);
+            total.set(twelveStepsService.percentOfModuleCompleted(team) + nikoService.percentOfModuleCompleted(team) + kudosService.percentOfModuleCompleted(team));
+        }else {
+            teams.forEach(
+                    team -> {
+                        total.set(twelveStepsService.percentOfModuleCompleted(team) + nikoService.percentOfModuleCompleted(team) + kudosService.percentOfModuleCompleted(team));
+                    }
+            );
         }
-        if ( !modulesNikoNiko.isEmpty() ){
-            numberTotalOfModulesActives = numberTotalOfModulesActives + 1;
-        }
-        if ( !kudosModules.isEmpty() ){
-            numberTotalOfModulesActives = numberTotalOfModulesActives + 1;
-        }
-
-        return (percentOfCompletedTwelveStepsModule + percentOfCompletedNikoNikoModule + percentOfCompletedKudosModule) / numberTotalOfModulesActives;
+        return total.get() / teams.size() * 1/3;
     }
 
     private double getPercentOfCompletedModules(List<SurveyModule> modulesTwelveSteps, int numberOfMembers){

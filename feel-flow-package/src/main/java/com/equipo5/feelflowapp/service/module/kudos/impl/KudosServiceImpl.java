@@ -2,19 +2,24 @@ package com.equipo5.feelflowapp.service.module.kudos.impl;
 
 import com.equipo5.feelflowapp.domain.Team;
 import com.equipo5.feelflowapp.domain.enumerations.modules.ModuleState;
+import com.equipo5.feelflowapp.domain.modules.Module;
 import com.equipo5.feelflowapp.domain.modules.kudos.Badge;
 import com.equipo5.feelflowapp.domain.modules.kudos.KudosModule;
 import com.equipo5.feelflowapp.domain.modules.kudos.TableBadge;
 import com.equipo5.feelflowapp.domain.users.RegularUser;
+import com.equipo5.feelflowapp.dto.dashboard.kudos.KudosSummaryData;
 import com.equipo5.feelflowapp.dto.modules.CreationKudosModuleDto;
+import com.equipo5.feelflowapp.dto.tablebadge.TableBadgeAwardedDto;
 import com.equipo5.feelflowapp.exception.badrequest.module.ModuleAlreadyActiveException;
 import com.equipo5.feelflowapp.exception.badrequest.module.ModuleException;
 import com.equipo5.feelflowapp.exception.notfound.NotFoundException;
 import com.equipo5.feelflowapp.exception.notfound.NotFoundTeamException;
 import com.equipo5.feelflowapp.repository.module.KudosRepository;
+import com.equipo5.feelflowapp.repository.module.ModuleRepository;
 import com.equipo5.feelflowapp.repository.team.TeamRepository;
 import com.equipo5.feelflowapp.repository.users.UserRepository;
 import com.equipo5.feelflowapp.repository.users.regularuser.RegularUserRepository;
+import com.equipo5.feelflowapp.service.dashboard.DashboardService;
 import com.equipo5.feelflowapp.service.module.ModuleService;
 import com.equipo5.feelflowapp.service.module.kudos.KudosService;
 import com.equipo5.feelflowapp.service.tablebadge.kudos.TableBadgeService;
@@ -22,13 +27,11 @@ import com.equipo5.feelflowapp.service.users.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.sql.Timestamp;
 import java.time.LocalDate;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 import static com.equipo5.feelflowapp.domain.enumerations.modules.ModuleNames.KUDOS;
@@ -50,6 +53,10 @@ public class KudosServiceImpl implements KudosService {
     protected final UserRepository userRepository;
 
     protected final RegularUserRepository regularUserRepository;
+
+    protected final ModuleRepository moduleRepository;
+
+    protected final DashboardService dashboardService;
 
     @Override
     public KudosModule publishingModule(CreationKudosModuleDto creationKudosModule) {
@@ -163,5 +170,48 @@ public class KudosServiceImpl implements KudosService {
                         ),
                         m -> List.copyOf(m.values())
                 ));
+    }
+
+    @Override
+    public double percentOfModuleCompleted(Team team) {
+
+        AtomicInteger completed = new AtomicInteger();
+        completed.set(0);
+
+
+            int cantOfMembers = team.getRegularUsers().size();
+            List<Module> modules =  this.moduleRepository.findModulesByNameAndTeamOrderByIdDescCreationDateDesc(KUDOS.toString(), team);
+
+            if (!modules.isEmpty()){
+                KudosModule kudosModule = (KudosModule) modules.get(0);
+
+                kudosModule.getTableBadge()
+                        .forEach(
+                                kudosTable -> {
+                                    if ( tableBadgeService.isAtLeastSentOneKudos(kudosTable) ) {
+                                        completed.incrementAndGet();
+                                    }
+                                }
+                        );
+            }
+
+            return (double) completed.get() / cantOfMembers;
+    }
+
+    @Override
+    public int countOfKudosSent(Team team) {
+
+        List<Module> modules =  this.moduleRepository.findModulesByNameAndTeamOrderByIdDescCreationDateDesc(KUDOS.toString(), team);
+        KudosModule kudosModule = (KudosModule) modules.get(0);
+
+        List<TableBadgeAwardedDto> kudosSummaryData =  tableBadgeService.getTableBadgeDto(List.of(kudosModule));
+
+        return kudosSummaryData.stream()
+                        .map( kudos -> kudos.getMaestroDetalleBadge().getCountAwarded() +
+                                kudos.getEnergiaPositivaBadge().getCountAwarded() +
+                                kudos.getManosAmigasBadge().getCountAwarded() +
+                                kudos.getResolutorEstrellaBadge().getCountAwarded()
+                        ).reduce(0, Integer::sum);
+
     }
 }

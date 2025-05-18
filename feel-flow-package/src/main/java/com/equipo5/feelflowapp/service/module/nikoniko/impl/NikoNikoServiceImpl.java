@@ -2,23 +2,35 @@ package com.equipo5.feelflowapp.service.module.nikoniko.impl;
 
 import com.equipo5.feelflowapp.constants.module.nikoniko.ResponseConstantsNikoNiko;
 import com.equipo5.feelflowapp.domain.Team;
+import com.equipo5.feelflowapp.domain.enumerations.modules.ActivityState;
+import com.equipo5.feelflowapp.domain.enumerations.modules.ModuleNames;
 import com.equipo5.feelflowapp.domain.enumerations.modules.ModuleState;
+import com.equipo5.feelflowapp.domain.modules.Activity;
+import com.equipo5.feelflowapp.domain.modules.Module;
+import com.equipo5.feelflowapp.domain.modules.SurveyModule;
 import com.equipo5.feelflowapp.domain.modules.nikoniko.NikoNikoModule;
 import com.equipo5.feelflowapp.dto.modules.CreationNikoNikoModule;
 import com.equipo5.feelflowapp.exception.badrequest.module.ModuleAlreadyActiveException;
 import com.equipo5.feelflowapp.exception.badrequest.module.ModuleException;
 import com.equipo5.feelflowapp.exception.notfound.NotFoundTeamException;
 import com.equipo5.feelflowapp.repository.module.ModuleNikoNikoRepository;
+import com.equipo5.feelflowapp.repository.module.ModuleRepository;
 import com.equipo5.feelflowapp.repository.team.TeamRepository;
 import com.equipo5.feelflowapp.service.module.ModuleService;
 import com.equipo5.feelflowapp.service.module.nikoniko.NikoNikoService;
 import com.equipo5.feelflowapp.service.survey.impl.SurveyService;
+import com.equipo5.feelflowapp.service.team.TeamService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
 import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.temporal.ChronoUnit;
+import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import static com.equipo5.feelflowapp.domain.enumerations.modules.ModuleNames.NIKO_NIKO;
 
@@ -38,6 +50,8 @@ public class NikoNikoServiceImpl implements NikoNikoService {
     @Autowired
     private ModuleNikoNikoRepository moduleNikoNikoRepository;
 
+    @Autowired
+    private ModuleRepository moduleRepository;
 
     @Override
     public NikoNikoModule publishingModule(CreationNikoNikoModule creationNikoNikoModule) {
@@ -85,4 +99,57 @@ public class NikoNikoServiceImpl implements NikoNikoService {
             default -> 0d;
         };
     }
+
+    @Override
+    public double percentOfModuleCompleted(Team team) {
+        final int[] completed = {0};
+        AtomicInteger completedByUser = new AtomicInteger();
+            int cantOfMembers = team.getRegularUsers().size();
+
+            List<Module> modules =  this.moduleRepository.findModulesByNameAndTeamOrderByIdDescCreationDateDesc(NIKO_NIKO.toString(), team);
+
+            if (!modules.isEmpty()){
+                SurveyModule lastSurveyModule = (SurveyModule) modules.get(0);
+                long cantOfSurveys = daysBetween(lastSurveyModule.getDateAndTimeToPublish(), lastSurveyModule.getDateAndTimeToClose());
+
+                //Obtener la cantidad de encuestas posibles.. NencuestasPosibles
+                //Obtener la cantiudad de encuestas completadas por usuario.. XencuestasCompletadas
+                //Porcentaje de xencuestasCompletadas/NecuestasPosibles = porcentaje Modulo completado por usuario
+
+                // Sumatoria de  porcentaje Modulo completado por usuario divido la cantidad de miembros da el porcentaje total.
+
+                team.getRegularUsers().forEach(user -> {
+                    lastSurveyModule.getSurveys()
+                            .stream()
+                            .filter(survey -> survey.getRegularUser().getUuid().equals( user.getUuid() ))
+                            .forEach( survey -> {
+                                if (survey.getActivities().size() == 2 && isActivityCompleted( survey.getActivities().get(0) ) && isActivityCompleted( survey.getActivities().get(1) )){
+                                    completedByUser.incrementAndGet();
+                                }
+                            });
+                    completed[0] = (int) (completed[0] + ( completedByUser.get() / cantOfSurveys ));
+                    completedByUser.set(0);
+                });
+
+                return (double) completed[0] /cantOfMembers;
+
+            }
+
+        return 0;
+    }
+
+    private boolean isActivityCompleted(Activity activity){
+        return ActivityState.FINISHED.equals(activity.getActivityState());
+    }
+
+    public static long daysBetween(Timestamp ts1, Timestamp ts2) {
+        LocalDate d1 = ts1.toInstant()
+                .atZone(ZoneId.systemDefault())
+                .toLocalDate();
+        LocalDate d2 = ts2.toInstant()
+                .atZone(ZoneId.systemDefault())
+                .toLocalDate();
+        return ChronoUnit.DAYS.between(d1, d2);
+    }
+
 }

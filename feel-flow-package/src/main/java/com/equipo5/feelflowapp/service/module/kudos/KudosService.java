@@ -1,5 +1,6 @@
 package com.equipo5.feelflowapp.service.module.kudos;
 
+import com.equipo5.feelflowapp.domain.Team;
 import com.equipo5.feelflowapp.domain.modules.kudos.KudosModule;
 import com.equipo5.feelflowapp.domain.users.RegularUser;
 import com.equipo5.feelflowapp.dto.modules.CreationKudosModuleDto;
@@ -15,4 +16,8 @@ public interface KudosService {
     boolean isModuleKudosAvailable();
 
     List<RegularUser> usersAwardedByModule(KudosModule kudosModule);
+
+    double percentOfModuleCompleted(Team team);
+
+    int countOfKudosSent(Team team);
 }

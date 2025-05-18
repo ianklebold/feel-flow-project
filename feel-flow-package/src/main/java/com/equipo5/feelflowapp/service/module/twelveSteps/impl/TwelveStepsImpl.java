@@ -1,7 +1,11 @@
 package com.equipo5.feelflowapp.service.module.twelveSteps.impl;
 
 import com.equipo5.feelflowapp.domain.Team;
+import com.equipo5.feelflowapp.domain.enumerations.modules.ModuleNames;
 import com.equipo5.feelflowapp.domain.enumerations.modules.ModuleState;
+import com.equipo5.feelflowapp.domain.enumerations.modules.SurveyStateEnum;
+import com.equipo5.feelflowapp.domain.modules.Module;
+import com.equipo5.feelflowapp.domain.modules.SurveyModule;
 import com.equipo5.feelflowapp.domain.modules.twelvesteps.TwelveStepsModule;
 import com.equipo5.feelflowapp.dto.modules.CreationTwelveStepsModuleDto;
 import com.equipo5.feelflowapp.exception.badrequest.module.ModuleAlreadyActiveException;
@@ -13,13 +17,16 @@ import com.equipo5.feelflowapp.repository.team.TeamRepository;
 import com.equipo5.feelflowapp.service.module.ModuleService;
 import com.equipo5.feelflowapp.service.module.twelveSteps.TwelveStepsService;
 import com.equipo5.feelflowapp.service.survey.impl.SurveyService;
+import com.equipo5.feelflowapp.service.team.TeamService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import static com.equipo5.feelflowapp.domain.enumerations.modules.ModuleNames.TWELVE_STEPS;
 
@@ -100,6 +107,33 @@ public class TwelveStepsImpl implements TwelveStepsService {
             }
         }
         return 0d;
+    }
+
+    @Override
+    public double percentOfModuleCompleted(Team team) {
+
+        AtomicInteger completed = new AtomicInteger();
+        completed.set(0);
+
+            int cantOfMembers = team.getRegularUsers().size();
+
+            List<Module> modules =  this.moduleRepository.findModulesByNameAndTeamOrderByIdDescCreationDateDesc(ModuleNames.TWELVE_STEPS.toString(), team);
+
+            if (!modules.isEmpty()){
+                SurveyModule lastSurveyModule = (SurveyModule) modules.get(0);
+
+                lastSurveyModule.getSurveys().forEach(
+                        survey -> {
+                            if (SurveyStateEnum.FINISHED.equals( survey.getSurveyStateEnum() ) ||  SurveyStateEnum.CLOSED.equals( survey.getSurveyStateEnum() )){
+                                completed.getAndIncrement();
+                            }
+                        }
+                );
+                return (double) completed.get() / cantOfMembers;
+
+            }
+
+        return 0;
     }
 
 
