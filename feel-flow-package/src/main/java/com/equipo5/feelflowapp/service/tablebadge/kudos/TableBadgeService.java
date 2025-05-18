@@ -29,6 +29,4 @@ public interface TableBadgeService {
     int getNumberTotalOfBadgesBy(TableBadgeAwardedDto tableBadgeAwardedDto);
 
     boolean isAtLeastSentOneKudos(TableBadge tableBadge);
-
-    int countOfKudosSentByTable(TableBadge tableBadge);
 }

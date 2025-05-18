@@ -106,17 +106,6 @@ public class TableBadgeServiceImpl implements TableBadgeService {
     }
 
     @Override
-    public int countOfKudosSentByTable(TableBadge tableBadge) {
-        int countOfKudos = 0;
-        List<TableBadgeAwardedDto> tableBadgeAwardedDtos = this.getTableBadgeDto()
-
-
-
-
-        return countOfKudos;
-    }
-
-    @Override
     public void assignBadgeToTable(TableBadge tableBadge, Badge badge) {
 
         if( BadgeName.ENERGIA_POSITIVA.equals(badge.getBadgeName())  ){
@@ -169,6 +158,7 @@ public class TableBadgeServiceImpl implements TableBadgeService {
         return getTableBadgeDto(moduleList);
     }
 
+    @Override
     public List<TableBadgeAwardedDto> getTableBadgeDto(List<KudosModule> moduleList){
         List<TableBadgeAwardedDto> tableBadgeAwardedDtos = new ArrayList<>();
         if(!moduleList.isEmpty()) {
