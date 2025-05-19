@@ -23,6 +23,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.*;
@@ -54,8 +55,8 @@ public class BootstrapData implements CommandLineRunner {
     }
 
 
-    private String convertToBase64(byte[] bytes) {
-        return Base64.getEncoder().encodeToString(bytes);
+    private String convertToBase64(InputStream inputStream) throws IOException {
+        return Base64.getEncoder().encodeToString(inputStream.readAllBytes());
     }
 
     private void loadMembers() throws IOException {
@@ -77,7 +78,7 @@ public class BootstrapData implements CommandLineRunner {
                                     .name("member1_image")
                                     .fileType("image/jpeg")
                                     .fileData(
-                                            convertToBase64(Files.readAllBytes(Paths.get("src/main/resources/images/profile/regularuser/regular_user_1.jpeg")))
+                                            convertToBase64(new ClassPathResource("images/profile/regularuser/regular_user_1.jpeg").getInputStream())
                                     )
                                     .build()
                     )
@@ -96,7 +97,7 @@ public class BootstrapData implements CommandLineRunner {
                                     .name("member2_image")
                                     .fileType("image/jpeg")
                                     .fileData(
-                                            convertToBase64(Files.readAllBytes(Paths.get("src/main/resources/images/profile/regularuser/regular_user_2.jpeg")))
+                                            convertToBase64(new ClassPathResource(("images/profile/regularuser/regular_user_2.jpeg")).getInputStream())
                                     )
                                     .build()
                     )
@@ -115,7 +116,7 @@ public class BootstrapData implements CommandLineRunner {
                                     .name("member3_image")
                                     .fileType("image/jpeg")
                                     .fileData(
-                                            convertToBase64(Files.readAllBytes(Paths.get("src/main/resources/images/profile/regularuser/regular_user_3.jpeg")))
+                                            convertToBase64(new ClassPathResource(("images/profile/regularuser/regular_user_3.jpeg")).getInputStream())
                                     )
                                     .build()
                     )
@@ -139,7 +140,7 @@ public class BootstrapData implements CommandLineRunner {
                                     .name("member4_image")
                                     .fileType("image/jpeg")
                                     .fileData(
-                                            convertToBase64(Files.readAllBytes(Paths.get("src/main/resources/images/profile/regularuser/regular_user_4.jpeg")))
+                                            convertToBase64(new ClassPathResource(("images/profile/regularuser/regular_user_4.jpeg")).getInputStream())
                                     )
                                     .build()
                     )
@@ -158,7 +159,7 @@ public class BootstrapData implements CommandLineRunner {
                                     .name("member5_image")
                                     .fileType("image/jpeg")
                                     .fileData(
-                                            convertToBase64( Files.readAllBytes(Paths.get("src/main/resources/images/profile/regularuser/regular_user_5.jpeg")) )
+                                            convertToBase64( new ClassPathResource(("images/profile/regularuser/regular_user_5.jpeg")).getInputStream() )
                                     )
                                     .build()
                     )
@@ -177,7 +178,7 @@ public class BootstrapData implements CommandLineRunner {
                                     .name("member6_image")
                                     .fileType("image/jpeg")
                                     .fileData(
-                                            convertToBase64( Files.readAllBytes(Paths.get("src/main/resources/images/profile/regularuser/regular_user_6.jpeg")) )
+                                            convertToBase64( new ClassPathResource(("images/profile/regularuser/regular_user_6.jpeg")).getInputStream() )
                                     )
                                     .build()
                     )
@@ -201,7 +202,7 @@ public class BootstrapData implements CommandLineRunner {
                                     .name("member7_image")
                                     .fileType("image/jpeg")
                                     .fileData(
-                                           convertToBase64( Files.readAllBytes(Paths.get("src/main/resources/images/profile/regularuser/regular_user_7.jpeg")) )
+                                           convertToBase64( new ClassPathResource(("images/profile/regularuser/regular_user_7.jpeg")).getInputStream() )
                                     )
                                     .build()
                     )
@@ -220,7 +221,7 @@ public class BootstrapData implements CommandLineRunner {
                                     .name("member8_image")
                                     .fileType("image/jpeg")
                                     .fileData(
-                                            convertToBase64( Files.readAllBytes(Paths.get("src/main/resources/images/profile/regularuser/regular_user_8.jpeg")) )
+                                            convertToBase64( new ClassPathResource(("images/profile/regularuser/regular_user_8.jpeg")).getInputStream() )
                                     )
                                     .build()
                     )
@@ -239,7 +240,7 @@ public class BootstrapData implements CommandLineRunner {
                                     .name("member9_image")
                                     .fileType("image/jpeg")
                                     .fileData(
-                                            convertToBase64( Files.readAllBytes(Paths.get("src/main/resources/images/profile/regularuser/regular_user_9.jpeg")) )
+                                            convertToBase64( new ClassPathResource(("images/profile/regularuser/regular_user_9.jpeg")).getInputStream() )
                                     )
                                     .build()
                     )
@@ -263,7 +264,7 @@ public class BootstrapData implements CommandLineRunner {
                                     .name("member10_image")
                                     .fileType("image/jpeg")
                                     .fileData(
-                                           convertToBase64( Files.readAllBytes(Paths.get("src/main/resources/images/profile/regularuser/regular_user_7.jpeg")) )
+                                           convertToBase64( new ClassPathResource(("images/profile/regularuser/regular_user_7.jpeg")).getInputStream() )
                                     )
                                     .build()
                     )
@@ -282,7 +283,7 @@ public class BootstrapData implements CommandLineRunner {
                                     .name("member11_image")
                                     .fileType("image/jpeg")
                                     .fileData(
-                                            convertToBase64( Files.readAllBytes(Paths.get("src/main/resources/images/profile/regularuser/regular_user_8.jpeg")) )
+                                            convertToBase64( new ClassPathResource(("images/profile/regularuser/regular_user_8.jpeg")).getInputStream() )
                                     )
                                     .build()
                     )
@@ -301,7 +302,7 @@ public class BootstrapData implements CommandLineRunner {
                                     .name("member12_image")
                                     .fileType("image/jpeg")
                                     .fileData(
-                                            convertToBase64( Files.readAllBytes(Paths.get("src/main/resources/images/profile/regularuser/regular_user_9.jpeg")) )
+                                            convertToBase64( new ClassPathResource(("images/profile/regularuser/regular_user_9.jpeg")).getInputStream() )
                                     )
                                     .build()
                     )
@@ -325,7 +326,7 @@ public class BootstrapData implements CommandLineRunner {
                                     .name("teamleader1_image")
                                     .fileType("image/jpg")
                                     .fileData(
-                                            convertToBase64( Files.readAllBytes(Paths.get("src/main/resources/images/profile/teamleader/team_leader1.jpg")) )
+                                            convertToBase64( new ClassPathResource(("images/profile/teamleader/team_leader1.jpg")).getInputStream() )
                                     )
                                     .build()
                     )
@@ -343,7 +344,7 @@ public class BootstrapData implements CommandLineRunner {
                                     .name("team1_image")
                                     .fileType("image/jpg")
                                     .fileData(
-                                            convertToBase64( Files.readAllBytes(Paths.get("src/main/resources/images/team/team1.jpg")) )
+                                            convertToBase64( new ClassPathResource(("images/team/team1.jpg")).getInputStream() )
                                     )
                                     .build()
                     )
@@ -363,7 +364,7 @@ public class BootstrapData implements CommandLineRunner {
                                     .name("teamleader2_image")
                                     .fileType("image/jpg")
                                     .fileData(
-                                            convertToBase64( Files.readAllBytes(Paths.get("src/main/resources/images/profile/teamleader/team_leader2.jpg")) )
+                                            convertToBase64( new ClassPathResource(("images/profile/teamleader/team_leader2.jpg")).getInputStream() )
                                     )
                                     .build()
                     )
@@ -381,7 +382,7 @@ public class BootstrapData implements CommandLineRunner {
                                     .name("team2_image")
                                     .fileType("image/jpg")
                                     .fileData(
-                                            convertToBase64( Files.readAllBytes(Paths.get("src/main/resources/images/team/team2.jpg")) )
+                                            convertToBase64( new ClassPathResource(("images/team/team2.jpg")).getInputStream() )
                                     )
                                     .build()
                     )
@@ -401,7 +402,7 @@ public class BootstrapData implements CommandLineRunner {
                                     .name("teamleader3_image")
                                     .fileType("image/jpg")
                                     .fileData(
-                                            convertToBase64( Files.readAllBytes(Paths.get("src/main/resources/images/profile/teamleader/team_leader3.jpg")) )
+                                            convertToBase64( new ClassPathResource(("images/profile/teamleader/team_leader3.jpg")).getInputStream() )
                                     )
                                     .build()
                     )
@@ -419,7 +420,7 @@ public class BootstrapData implements CommandLineRunner {
                                     .name("team3_image")
                                     .fileType("image/jpg")
                                     .fileData(
-                                            convertToBase64( Files.readAllBytes(Paths.get("src/main/resources/images/team/team3.jpg")) )
+                                            convertToBase64( new ClassPathResource(("images/team/team3.jpg")).getInputStream() )
                                     )
                                     .build()
                     )
@@ -439,7 +440,7 @@ public class BootstrapData implements CommandLineRunner {
                                     .name("teamleader4_image")
                                     .fileType("image/jpg")
                                     .fileData(
-                                            convertToBase64( Files.readAllBytes(Paths.get("src/main/resources/images/profile/teamleader/team_leader3.jpg")) )
+                                            convertToBase64( new ClassPathResource(("images/profile/teamleader/team_leader3.jpg")).getInputStream() )
                                     )
                                     .build()
                     )
@@ -457,7 +458,7 @@ public class BootstrapData implements CommandLineRunner {
                                     .name("team4_image")
                                     .fileType("image/jpg")
                                     .fileData(
-                                            convertToBase64( Files.readAllBytes(Paths.get("src/main/resources/images/team/team4.jpg")) )
+                                            convertToBase64( new ClassPathResource(("images/team/team4.jpg")).getInputStream() )
                                     )
                                     .build()
                     )
@@ -481,7 +482,7 @@ public class BootstrapData implements CommandLineRunner {
                                     .name("admin1_image")
                                     .fileType("image/jpg")
                                     .fileData(
-                                            convertToBase64( Files.readAllBytes(Paths.get("src/main/resources/images/profile/admin/admin1.jpg")) )
+                                            convertToBase64( new ClassPathResource(("images/profile/admin/admin1.jpg")).getInputStream() )
                                     )
                                     .build()
                     )
@@ -497,7 +498,7 @@ public class BootstrapData implements CommandLineRunner {
                                     .name("enterprise1_image")
                                     .fileType("image/jpg")
                                     .fileData(
-                                            convertToBase64( Files.readAllBytes(Paths.get("src/main/resources/images/enterprise/enterprise1.jpg")) )
+                                            convertToBase64( new ClassPathResource(("images/enterprise/enterprise1.jpg")).getInputStream() )
                                     )
                                     .build()
                     )
@@ -518,7 +519,7 @@ public class BootstrapData implements CommandLineRunner {
                                     .name("admin2_image")
                                     .fileType("image/jpg")
                                     .fileData(
-                                            convertToBase64( Files.readAllBytes(Paths.get("src/main/resources/images/profile/admin/admin2.jpg")) )
+                                            convertToBase64( new ClassPathResource(("images/profile/admin/admin2.jpg")).getInputStream() )
                                     )
                                     .build()
                     )
@@ -534,7 +535,7 @@ public class BootstrapData implements CommandLineRunner {
                                     .name("enterprise2_image")
                                     .fileType("image/jpg")
                                     .fileData(
-                                            convertToBase64( Files.readAllBytes(Paths.get("src/main/resources/images/enterprise/enterprise2.jpg")) )
+                                            convertToBase64( new ClassPathResource(("images/enterprise/enterprise2.jpg")).getInputStream() )
                                     )
                                     .build()
                     )
@@ -555,7 +556,7 @@ public class BootstrapData implements CommandLineRunner {
                                     .name("admin3_image")
                                     .fileType("image/jpg")
                                     .fileData(
-                                            convertToBase64( Files.readAllBytes(Paths.get("src/main/resources/images/profile/admin/admin3.jpg")) )
+                                            convertToBase64( new ClassPathResource(("images/profile/admin/admin3.jpg")).getInputStream() )
                                     )
                                     .build()
                     )
@@ -571,7 +572,7 @@ public class BootstrapData implements CommandLineRunner {
                                     .name("enterprise3_image")
                                     .fileType("image/jpg")
                                     .fileData(
-                                            convertToBase64( Files.readAllBytes(Paths.get("src/main/resources/images/enterprise/enterprise3.jpg")) )
+                                            convertToBase64( new ClassPathResource(("images/enterprise/enterprise3.jpg")).getInputStream() )
                                     )
                                     .build()
                     )
@@ -592,7 +593,7 @@ public class BootstrapData implements CommandLineRunner {
                                     .name("admin4_image")
                                     .fileType("image/jpg")
                                     .fileData(
-                                            convertToBase64( Files.readAllBytes(Paths.get("src/main/resources/images/profile/admin/admin3.jpg")) )
+                                            convertToBase64( new ClassPathResource(("images/profile/admin/admin3.jpg")).getInputStream() )
                                     )
                                     .build()
                     )
@@ -608,7 +609,7 @@ public class BootstrapData implements CommandLineRunner {
                                     .name("enterprise4_image")
                                     .fileType("image/jpg")
                                     .fileData(
-                                            convertToBase64( Files.readAllBytes(Paths.get("src/main/resources/images/enterprise/enterprise4.jpg")) )
+                                            convertToBase64( new ClassPathResource(("images/enterprise/enterprise4.jpg")).getInputStream() )
                                     )
                                     .build()
                     )
