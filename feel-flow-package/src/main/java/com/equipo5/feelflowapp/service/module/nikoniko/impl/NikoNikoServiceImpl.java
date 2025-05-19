@@ -9,6 +9,7 @@ import com.equipo5.feelflowapp.domain.modules.Activity;
 import com.equipo5.feelflowapp.domain.modules.Module;
 import com.equipo5.feelflowapp.domain.modules.SurveyModule;
 import com.equipo5.feelflowapp.domain.modules.nikoniko.NikoNikoModule;
+import com.equipo5.feelflowapp.domain.users.RegularUser;
 import com.equipo5.feelflowapp.dto.modules.CreationNikoNikoModule;
 import com.equipo5.feelflowapp.exception.badrequest.module.ModuleAlreadyActiveException;
 import com.equipo5.feelflowapp.exception.badrequest.module.ModuleException;
@@ -163,6 +164,28 @@ public class NikoNikoServiceImpl implements NikoNikoService {
             ).reduce(0d,Double::sum);
 
             return ( points / team.getRegularUsers().size() ) / totalOfPoints;
+        }
+
+        return points;
+    }
+
+    @Override
+    public double happinessByNikoNikoModule(Team team, RegularUser regularUser) {
+        List<Module> modules =  this.moduleRepository.findModulesByNameAndTeamOrderByIdDescCreationDateDesc(NIKO_NIKO.toString(), team);
+        double points = 0d;
+        if (!modules.isEmpty()){
+            SurveyModule lastSurveyModule = (SurveyModule) modules.get(0);
+            double totalOfPoints = this.pointService.getTotalOfPointsPossibleNikoNiko(lastSurveyModule.getSurveys());
+
+           lastSurveyModule.getSurveys()
+                   .stream()
+                   .filter( survey -> survey.getRegularUser().getUuid().equals( regularUser.getUuid()) )
+                   .map( survey -> {
+                       return pointService.getPointsByNikoNikoSurvey( survey );
+                   })
+                   .reduce(0d,Double::sum);
+
+            return (points) / totalOfPoints;
         }
 
         return points;

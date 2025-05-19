@@ -3,6 +3,7 @@ package com.equipo5.feelflowapp.service.module.twelveSteps;
 import com.equipo5.feelflowapp.domain.Team;
 import com.equipo5.feelflowapp.domain.enumerations.modules.ModuleNames;
 import com.equipo5.feelflowapp.domain.modules.twelvesteps.TwelveStepsModule;
+import com.equipo5.feelflowapp.domain.users.RegularUser;
 import com.equipo5.feelflowapp.dto.modules.CreationTwelveStepsModuleDto;
 
 import java.util.List;
@@ -17,5 +18,6 @@ public interface TwelveStepsService {
     double percentOfModuleCompleted(Team team);
 
     double happinessByTwelveStepsModule(Team team);
+    double happinessByTwelveStepsModule(Team team, RegularUser regularUser);
 
 }

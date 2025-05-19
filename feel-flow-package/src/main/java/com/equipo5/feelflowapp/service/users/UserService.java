@@ -1,5 +1,6 @@
 package com.equipo5.feelflowapp.service.users;
 
+import com.equipo5.feelflowapp.domain.users.User;
 import com.equipo5.feelflowapp.dto.users.UserDTO;
 import com.equipo5.feelflowapp.dto.users.UserUpdateDTO;
 import org.springframework.security.core.GrantedAuthority;
@@ -14,6 +15,8 @@ public interface UserService {
     Optional<UserDTO> getUserById(UUID uuid);
 
     Optional<UserDTO> getSessionUser();
+
+    Optional<User> getSessionEntityUser();
 
     Optional<? extends GrantedAuthority> getRoleByCurrentUser();
 

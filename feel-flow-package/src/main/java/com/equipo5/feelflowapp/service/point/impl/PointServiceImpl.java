@@ -56,10 +56,25 @@ public class PointServiceImpl implements PointService {
     }
 
     @Override
+    public double getTotalOfPointsPossibleNikoNiko(List<Survey> surveys){
+
+        long totalOfActivities = surveys.size();
+        return (double) ( totalOfActivities );
+
+    }
+
+    @Override
     public double getTotalOfPointsPossibleTwelveSteps(List<Survey> surveys, long sizeTeam) {
 
         long totalOfActivities = surveys.size();
         return  ( totalOfActivities * 5d ) / sizeTeam ;
+    }
+
+    @Override
+    public double getTotalOfPointsPossibleTwelveSteps(List<Survey> surveys) {
+
+        long totalOfActivities = surveys.size();
+        return  ( totalOfActivities * 5d ) ;
     }
 
     private boolean isActivityCompleted(Activity activity){

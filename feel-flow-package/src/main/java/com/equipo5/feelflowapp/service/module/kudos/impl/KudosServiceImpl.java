@@ -237,6 +237,29 @@ public class KudosServiceImpl implements KudosService {
     }
 
     @Override
+    public double happinessByKudosModule(Team team, RegularUser regularUser) {
+
+        List<Module> modules =  this.moduleRepository.findModulesByNameAndTeamOrderByIdDescCreationDateDesc(KUDOS.toString(), team);
+        KudosModule kudosModule = (KudosModule) modules.get(0);
+
+        TableBadgeAwardedDto kudosSummaryData =  tableBadgeService.getTableBadgeDto(List.of(kudosModule))
+                .stream().filter( summaryData -> summaryData.getIdUser().equals(regularUser.getUuid()) ).
+                findFirst()
+                .orElse(null);
+
+        if( kudosSummaryData != null ){
+            int wasKudosFriendHandsAwarded = ( kudosSummaryData.getManosAmigasBadge().getCountAwarded() > 0 ) ? 1 : 0;
+            long countMaxOfKudosForSend = (long) (3 + (team.getRegularUsers().size() - 1));
+            long countMaxKudosSentToUser = kudosSummaryData.getMaxCountOfBadgeAwarded();
+
+            return ( wasKudosFriendHandsAwarded * 0.7 ) + ( (double) countMaxOfKudosForSend / countMaxKudosSentToUser * 0.3 );
+
+        }
+
+        return 0;
+    }
+
+    @Override
     public String getEmotionalStateByKudosHappiness(double happiness) {
 
         if (happiness >= 0.5){

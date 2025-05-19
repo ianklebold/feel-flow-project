@@ -7,6 +7,7 @@ import com.equipo5.feelflowapp.domain.enumerations.modules.SurveyStateEnum;
 import com.equipo5.feelflowapp.domain.modules.Module;
 import com.equipo5.feelflowapp.domain.modules.SurveyModule;
 import com.equipo5.feelflowapp.domain.modules.twelvesteps.TwelveStepsModule;
+import com.equipo5.feelflowapp.domain.users.RegularUser;
 import com.equipo5.feelflowapp.dto.modules.CreationTwelveStepsModuleDto;
 import com.equipo5.feelflowapp.exception.badrequest.module.ModuleAlreadyActiveException;
 import com.equipo5.feelflowapp.exception.badrequest.module.ModuleException;
@@ -148,7 +149,7 @@ public class TwelveStepsImpl implements TwelveStepsService {
 
         if (!modules.isEmpty()) {
             SurveyModule lastSurveyModule = (SurveyModule) modules.get(0);
-            double totalOfPoints = this.pointService.getTotalOfPointsPossibleNikoNiko(lastSurveyModule.getSurveys(),team.getRegularUsers().size());
+            double totalOfPoints = this.pointService.getTotalOfPointsPossibleTwelveSteps(lastSurveyModule.getSurveys(),team.getRegularUsers().size());
 
             points = team.getRegularUsers().stream().map(
                     user ->
@@ -161,6 +162,29 @@ public class TwelveStepsImpl implements TwelveStepsService {
                                     .reduce(0d,Double::sum)
 
             ).reduce(0d,Double::sum);
+
+            return ( points / team.getRegularUsers().size() ) / totalOfPoints;
+
+        }
+        return 0;
+    }
+
+    @Override
+    public double happinessByTwelveStepsModule(Team team, RegularUser regularUser) {
+        List<Module> modules =  this.moduleRepository.findModulesByNameAndTeamOrderByIdDescCreationDateDesc(TWELVE_STEPS.toString(), team);
+        double points = 0d;
+
+        if (!modules.isEmpty()) {
+            SurveyModule lastSurveyModule = (SurveyModule) modules.get(0);
+            double totalOfPoints = this.pointService.getTotalOfPointsPossibleTwelveSteps(lastSurveyModule.getSurveys());
+
+            points = lastSurveyModule.getSurveys()
+                    .stream()
+                    .filter( survey -> survey.getRegularUser().getUuid().equals( regularUser.getUuid()) )
+                    .map( survey -> {
+                        return pointService.getPointsByTwelveStepsSurvey( survey );
+                    })
+                    .reduce(0d,Double::sum);
 
             return ( points / team.getRegularUsers().size() ) / totalOfPoints;
 

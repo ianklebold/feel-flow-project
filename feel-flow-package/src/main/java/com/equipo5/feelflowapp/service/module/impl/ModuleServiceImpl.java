@@ -381,6 +381,17 @@ public class ModuleServiceImpl implements ModuleService {
         return total;
     }
 
+    @Override
+    public double getGeneralPercentOfHappiness(Team team, RegularUser regularUser) {
+        double total = 0;
+
+        total = twelveStepsService.happinessByTwelveStepsModule(team, regularUser) +
+                nikoService.happinessByNikoNikoModule(team, regularUser) +
+                kudosService.happinessByKudosModule(team, regularUser);
+
+        return total;
+    }
+
     private double getPercentOfCompletedModules(List<SurveyModule> modulesTwelveSteps, int numberOfMembers){
          Optional<Double> percentSurveyCompleted = modulesTwelveSteps.stream().map(
                 module -> {

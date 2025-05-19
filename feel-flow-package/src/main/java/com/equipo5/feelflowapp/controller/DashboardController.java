@@ -2,6 +2,7 @@ package com.equipo5.feelflowapp.controller;
 
 import com.equipo5.feelflowapp.domain.enumerations.modules.ModuleNames;
 import com.equipo5.feelflowapp.dto.dashboard.TeamAndModulesDto;
+import com.equipo5.feelflowapp.dto.dashboard.general.GeneralHappinessDto;
 import com.equipo5.feelflowapp.dto.dashboard.general.GeneralSummaryDto;
 import com.equipo5.feelflowapp.dto.dashboard.kudos.KudosSummaryData;
 import com.equipo5.feelflowapp.dto.dashboard.nikoniko.NikoNikoSummaryData;
@@ -157,6 +158,24 @@ public class DashboardController {
     @SecurityRequirement(name = "Bearer Authentication")
     public GeneralSummaryDto getGeneralSummaryData(){
         return this.dashboardService.getGeneralSummaryData();
+    }
+
+    @Operation(
+            summary = "Get data for general happiness by user",
+            description = "REST API to get data for general summary dashboard"
+    )
+    @ApiResponses({
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "HTTP Request Success"
+            )
+    })
+    @GetMapping("/general_happiness")
+    @SecurityRequirement(name = "Bearer Authentication")
+    public GeneralHappinessDto getGeneralHappinessData(
+            @RequestParam( name = "uuidUser" , required = false) UUID uuidUser
+    ){
+        return this.dashboardService.getGeneralHappinessForUser(uuidUser);
     }
 
     @Operation(

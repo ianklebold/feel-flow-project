@@ -21,5 +21,6 @@ public interface KudosService {
 
     int countOfKudosSent(Team team);
     double happinessByKudosModule(Team team);
+    double happinessByKudosModule(Team team, RegularUser regularUser);
     String getEmotionalStateByKudosHappiness(double happiness);
 }

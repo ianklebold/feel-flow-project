@@ -6,6 +6,8 @@ import com.equipo5.feelflowapp.domain.enumerations.modules.ModuleNames;
 import com.equipo5.feelflowapp.domain.modules.ActivityNikoNiko;
 import com.equipo5.feelflowapp.domain.modules.Module;
 import com.equipo5.feelflowapp.domain.modules.Survey;
+import com.equipo5.feelflowapp.domain.users.RegularUser;
+import com.equipo5.feelflowapp.domain.users.User;
 import com.equipo5.feelflowapp.dto.dashboard.general.GeneralHappinessDto;
 import com.equipo5.feelflowapp.dto.dashboard.general.GeneralSummaryDto;
 import com.equipo5.feelflowapp.dto.dashboard.general.KudosSentDto;
@@ -44,6 +46,8 @@ import org.springframework.stereotype.Service;
 import java.time.DayOfWeek;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 import static com.equipo5.feelflowapp.constants.module.nikoniko.QuestionsConstantsNikoNiko.QUESTIONS_1_POOL_NIKO_NIKO;
@@ -447,6 +451,28 @@ public class DashboardServiceImpl implements DashboardService {
         );
 
         return notificationNikoNikoPanel;
+    }
+
+    @Override
+    public GeneralHappinessDto getGeneralHappinessForUser(UUID uuid) {
+
+        GeneralHappinessDto generalHappinessDto = new GeneralHappinessDto();
+        generalHappinessDto.setNameHappiness("Felicidad General");
+        generalHappinessDto.setPercentHappiness(0);
+        Optional<User> user;
+
+        if (uuid != null){
+            user = this.userRepository.findById( uuid );
+        }else{
+            user = this.userService.getSessionEntityUser();
+        }
+
+        if (user.isPresent()){
+            RegularUser regularUser = (RegularUser) user.get();
+            generalHappinessDto.setPercentHappiness((int) (moduleService.getGeneralPercentOfHappiness( regularUser.getTeam(), regularUser ) * 100));
+        }
+
+        return generalHappinessDto;
     }
 
     private double getNumberOfActivitiesWithPointsDistinctOfZero(List<Survey> surveys, int activityNumber) {

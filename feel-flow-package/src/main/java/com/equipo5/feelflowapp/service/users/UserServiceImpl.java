@@ -125,6 +125,13 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
+    public Optional<User> getSessionEntityUser() {
+        String username = this.getUsernameByCurrentUser();
+
+        return userRepository.findByUsername(username);
+    }
+
+    @Override
     public Optional<? extends GrantedAuthority> getRoleByCurrentUser(){
         return SecurityContextHolder.getContext()
                 .getAuthentication()

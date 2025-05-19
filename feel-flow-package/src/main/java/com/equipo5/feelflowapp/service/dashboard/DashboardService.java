@@ -3,6 +3,7 @@ package com.equipo5.feelflowapp.service.dashboard;
 import com.equipo5.feelflowapp.domain.enumerations.modules.ModuleNames;
 import com.equipo5.feelflowapp.domain.modules.Survey;
 import com.equipo5.feelflowapp.dto.dashboard.TeamAndModulesDto;
+import com.equipo5.feelflowapp.dto.dashboard.general.GeneralHappinessDto;
 import com.equipo5.feelflowapp.dto.dashboard.general.GeneralSummaryDto;
 import com.equipo5.feelflowapp.dto.dashboard.kudos.KudosSummaryData;
 import com.equipo5.feelflowapp.dto.dashboard.nikoniko.NikoNikoSummaryData;
@@ -26,4 +27,6 @@ public interface DashboardService {
     GeneralSummaryDto getGeneralSummaryData();
     List<NotificationKudosPanelDto> getNotificationKudosPanelDto();
     List<NotificationNikoNikoPanelDto> getNotificationNikoNikoPanelDto();
+
+    GeneralHappinessDto getGeneralHappinessForUser(UUID uuid);
 }

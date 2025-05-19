@@ -6,6 +6,7 @@ import com.equipo5.feelflowapp.domain.modules.Module;
 import com.equipo5.feelflowapp.domain.modules.Survey;
 import com.equipo5.feelflowapp.domain.modules.SurveyModule;
 import com.equipo5.feelflowapp.domain.modules.kudos.KudosModule;
+import com.equipo5.feelflowapp.domain.users.RegularUser;
 import com.equipo5.feelflowapp.dto.modules.ModuleSurveyDto;
 
 import java.time.LocalDate;
@@ -52,4 +53,5 @@ public interface ModuleService {
     double getGeneralPercentOfModulesCompleted(List<Team> teams);
 
     double getGeneralPercentOfHappiness(Team teams);
+    double getGeneralPercentOfHappiness(Team team, RegularUser regularUser);
 }

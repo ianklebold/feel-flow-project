@@ -41,4 +41,13 @@ public class TableBadgeAwardedDto {
         }
     }
 
+    public int getMaxCountOfBadgeAwarded(){
+        int countMaxFriendHands = (this.getManosAmigasBadge() != null)? this.getManosAmigasBadge().getCountAwarded() : 0;
+        int countResolutorEstrella = (this.getResolutorEstrellaBadge() != null)? this.getResolutorEstrellaBadge().getCountAwarded() : 0;
+        int countEnergiaPositiva = (this.getEnergiaPositivaBadge() != null)? this.getEnergiaPositivaBadge().getCountAwarded() : 0;
+        int countMaestroDetalle = (this.getMaestroDetalleBadge() != null)? this.getMaestroDetalleBadge().getCountAwarded() : 0;
+
+        return countMaxFriendHands + countResolutorEstrella + countEnergiaPositiva + countMaestroDetalle;
+    }
+
 }
