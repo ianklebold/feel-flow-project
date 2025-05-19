@@ -19,7 +19,6 @@ import com.equipo5.feelflowapp.repository.module.ModuleRepository;
 import com.equipo5.feelflowapp.repository.team.TeamRepository;
 import com.equipo5.feelflowapp.repository.users.UserRepository;
 import com.equipo5.feelflowapp.repository.users.regularuser.RegularUserRepository;
-import com.equipo5.feelflowapp.service.dashboard.DashboardService;
 import com.equipo5.feelflowapp.service.module.ModuleService;
 import com.equipo5.feelflowapp.service.module.kudos.KudosService;
 import com.equipo5.feelflowapp.service.tablebadge.kudos.TableBadgeService;
@@ -56,7 +55,6 @@ public class KudosServiceImpl implements KudosService {
 
     protected final ModuleRepository moduleRepository;
 
-    protected final DashboardService dashboardService;
 
     @Override
     public KudosModule publishingModule(CreationKudosModuleDto creationKudosModule) {

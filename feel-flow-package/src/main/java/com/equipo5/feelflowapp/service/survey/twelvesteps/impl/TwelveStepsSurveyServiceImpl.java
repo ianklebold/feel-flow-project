@@ -25,6 +25,7 @@ import com.equipo5.feelflowapp.service.survey.twelvesteps.TwelveStepsSurveyServi
 import com.equipo5.feelflowapp.service.users.UserService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -45,7 +46,7 @@ public class TwelveStepsSurveyServiceImpl extends SurveyServiceImpl implements T
     public TwelveStepsSurveyServiceImpl(SurveyRepository surveyRepository, UserRepository userRepository, UserService userService,
                                         RegularUserRepository regularUserRepository, TeamRepository teamRepository, ModuleRepository moduleRepository,
                                         SurveyMapper surveyMapper, ActivityService activityService, ActivityMapper activityMapper, ReportService reportService,
-                                        ModuleService moduleService, ImagesService imagesService) {
+                                        @Lazy ModuleService moduleService, ImagesService imagesService) {
         super(surveyRepository, userRepository,regularUserRepository,teamRepository,moduleRepository, userService, surveyMapper, moduleService, activityMapper
         ,imagesService);
         this.activityService = activityService;

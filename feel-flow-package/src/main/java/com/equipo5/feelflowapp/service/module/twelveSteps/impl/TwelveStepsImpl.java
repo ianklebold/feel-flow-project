@@ -15,11 +15,9 @@ import com.equipo5.feelflowapp.exception.notfound.NotFoundTeamException;
 import com.equipo5.feelflowapp.repository.module.ModuleRepository;
 import com.equipo5.feelflowapp.repository.module.ModuleTwelveStepsRepository;
 import com.equipo5.feelflowapp.repository.team.TeamRepository;
-import com.equipo5.feelflowapp.service.module.ModuleService;
 import com.equipo5.feelflowapp.service.module.twelveSteps.TwelveStepsService;
 import com.equipo5.feelflowapp.service.point.PointService;
 import com.equipo5.feelflowapp.service.survey.impl.SurveyService;
-import com.equipo5.feelflowapp.service.team.TeamService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -30,7 +28,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import static com.equipo5.feelflowapp.domain.enumerations.modules.ModuleNames.NIKO_NIKO;
 import static com.equipo5.feelflowapp.domain.enumerations.modules.ModuleNames.TWELVE_STEPS;
 
 @Service
@@ -39,8 +36,6 @@ public class TwelveStepsImpl implements TwelveStepsService {
     @Autowired
     private  TeamRepository teamRepository;
 
-    @Autowired
-    private  ModuleService moduleService;
 
     @Autowired
     private ModuleTwelveStepsRepository moduleTwelveStepsRepository;
@@ -64,7 +59,7 @@ public class TwelveStepsImpl implements TwelveStepsService {
         if (team.isPresent()){
             var currentTeam = team.get();
 
-            boolean existModuleActive =  moduleService.isAnyModuleActive(TWELVE_STEPS.toString(),currentTeam.getModules());
+            boolean existModuleActive =  isAnyModuleActive(TWELVE_STEPS.toString(),currentTeam.getModules());
 
             if (existModuleActive){
                 //Error retornar excepcion
@@ -95,6 +90,12 @@ public class TwelveStepsImpl implements TwelveStepsService {
             throw new NotFoundTeamException("Equipo no encontrado");
         }
 
+    }
+
+    private boolean isAnyModuleActive(final String name,final List<Module> modules) {
+        return modules.stream()
+                .filter(module -> module.getName().equals(name))
+                .anyMatch(module -> module.getModuleState().toString().equals(ModuleState.ACTIVE.toString()));
     }
 
     @Override

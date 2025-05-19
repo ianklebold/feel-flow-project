@@ -26,6 +26,7 @@ import com.equipo5.feelflowapp.service.notification.NotificationService;
 import com.equipo5.feelflowapp.service.team.TeamService;
 import com.equipo5.feelflowapp.service.users.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
@@ -36,7 +37,6 @@ import java.util.concurrent.atomic.AtomicReference;
 import static com.equipo5.feelflowapp.domain.enumerations.modules.ModuleNames.*;
 
 @Service
-@RequiredArgsConstructor
 public class ModuleServiceImpl implements ModuleService {
 
     private  final ModuleRepository moduleRepository;
@@ -54,6 +54,21 @@ public class ModuleServiceImpl implements ModuleService {
     private final TwelveStepsService twelveStepsService;
     private final NikoNikoService nikoService;
     private final KudosService kudosService;
+
+    public ModuleServiceImpl(ModuleRepository moduleRepository, RegularUserRepository regularUserRepository, UserService userService, NotificationService notificationService, SurveyRepository surveyRepository, TeamRepository teamRepository, ModuleSurveyMapper moduleSurveyMapper, EnterpriseService enterpriseService, TeamService teamService, TwelveStepsService twelveStepsService, @Lazy NikoNikoService nikoService, @Lazy KudosService kudosService) {
+        this.moduleRepository = moduleRepository;
+        this.regularUserRepository = regularUserRepository;
+        this.userService = userService;
+        this.notificationService = notificationService;
+        this.surveyRepository = surveyRepository;
+        this.teamRepository = teamRepository;
+        this.moduleSurveyMapper = moduleSurveyMapper;
+        this.enterpriseService = enterpriseService;
+        this.teamService = teamService;
+        this.twelveStepsService = twelveStepsService;
+        this.nikoService = nikoService;
+        this.kudosService = kudosService;
+    }
 
     @Override
     public boolean isAnyModuleActive(final String name,final List<Module> modules) {
