@@ -25,6 +25,9 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 
 import java.util.Arrays;
+import java.util.List;
+
+import static org.springframework.security.config.Customizer.withDefaults;
 
 @Configuration
 @EnableWebSecurity
@@ -75,24 +78,36 @@ public class SpringSecurityConfig {
                                 .anyRequest()
                                 .authenticated()
                 ).csrf(AbstractHttpConfigurer::disable)
-                .cors(AbstractHttpConfigurer::disable)
+                .cors(withDefaults())
                 .addFilter(new JwtAutheticationFilter(this.authenticationConfiguration.getAuthenticationManager(),userRepository))
                 .addFilter(new JwtValidationFilter(this.authenticationConfiguration.getAuthenticationManager()));
         return httpSecurity.build();
     }
 
+//    @Bean
+//    CorsConfigurationSource corsConfigurationSource(){
+//        CorsConfiguration config = new CorsConfiguration();
+//        config.setAllowedOrigins(
+//                Arrays.asList("http://127.0.0.1:8000", "http://127.0.0.1:5500","http://localhost:8100/","http://192.168.100.127:8100",
+//                        "http://127.0.0.1:3000","http://localhost:5173", "http://localhost:3000/")
+//        );
+//        config.setAllowedMethods(Arrays.asList("GET","POST","PUT","DELETE"));
+//        config.setAllowedHeaders(Arrays.asList("Authorization", "Cache-Control", "Content-Type"));
+//        config.setAllowCredentials(true);
+//        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+//        source.registerCorsConfiguration("/**",config);
+//        return source;
+//    }
+
     @Bean
-    CorsConfigurationSource corsConfigurationSource(){
+    CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();
-        config.setAllowedOrigins(
-                Arrays.asList("http://127.0.0.1:8000", "http://127.0.0.1:5500","http://localhost:8100/","http://192.168.100.127:8100",
-                        "http://127.0.0.1:3000","http://localhost:5173", "http://localhost:3000/")
-        );
-        config.setAllowedMethods(Arrays.asList("GET","POST","PUT","DELETE"));
-        config.setAllowedHeaders(Arrays.asList("Authorization", "Cache-Control", "Content-Type"));
-        config.setAllowCredentials(true);
+        config.setAllowedOriginPatterns(List.of("*"));     // cualquier origen
+        config.setAllowedMethods(List.of("*"));            // cualquier método HTTP
+        config.setAllowedHeaders(List.of("*"));            // cualquier header
+        config.setAllowCredentials(true);                  // si necesitas cookies/credenciales
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**",config);
+        source.registerCorsConfiguration("/**", config);
         return source;
     }
 
