@@ -249,23 +249,23 @@ public class BootstrapData implements CommandLineRunner {
 
             regularUserRepository.saveAll(List.of(regularUser7,regularUser8,regularUser9));
 
-            String uuidTeam4 = teamLeaderRepository.findTeamByUsername("tlteam4@gmail.com");
+            String uuidTeam4 = teamLeaderRepository.findTeamByUsername("matiass@gmail.com");
             Team team4 = teamRepository.findById(UUID.fromString(uuidTeam4)).get();
 
             RegularUser regularUser10 = RegularUser.builder()
                     .uuid(UUID.randomUUID())
-                    .name("member10")
-                    .surname("member10")
-                    .username("member10@gmail.com")
-                    .password(passwordEncoder.encode(PASSWORD_TEMPLATE))
+                    .name("Facundo")
+                    .surname("Bordes")
+                    .username("facub@gmail.com")
+                    .password(passwordEncoder.encode(PASSWORD_TEMPLATE_SECOND))
                     .authorities(List.of(authorityRepository.findAuthorityByTeamRoles(TeamRoles.USER_REGULAR).get()))
                     .team(team4)
                     .mediaImage(
                             MediaImage.builder()
-                                    .name("member10_image")
-                                    .fileType("image/jpeg")
+                                    .name("facu_image")
+                                    .fileType("image/jpg")
                                     .fileData(
-                                           convertToBase64( new ClassPathResource(("images/profile/regularuser/regular_user_7.jpeg")).getInputStream() )
+                                           convertToBase64( new ClassPathResource(("images/profile/regularuser/facub.jpg")).getInputStream() )
                                     )
                                     .build()
                     )
@@ -273,18 +273,18 @@ public class BootstrapData implements CommandLineRunner {
 
             RegularUser regularUser11 = RegularUser.builder()
                     .uuid(UUID.randomUUID())
-                    .name("member11")
-                    .surname("member11")
-                    .username("member11@gmail.com")
-                    .password(passwordEncoder.encode(PASSWORD_TEMPLATE))
+                    .name("Melina")
+                    .surname("Teruel")
+                    .username("melinat@gmail.com")
+                    .password(passwordEncoder.encode(PASSWORD_TEMPLATE_SECOND))
                     .authorities(List.of(authorityRepository.findAuthorityByTeamRoles(TeamRoles.USER_REGULAR).get()))
                     .team(team4)
                     .mediaImage(
                             MediaImage.builder()
-                                    .name("member11_image")
-                                    .fileType("image/jpeg")
+                                    .name("meli_image")
+                                    .fileType("image/jpg")
                                     .fileData(
-                                            convertToBase64( new ClassPathResource(("images/profile/regularuser/regular_user_8.jpeg")).getInputStream() )
+                                            convertToBase64( new ClassPathResource(("images/profile/regularuser/melit.jpg")).getInputStream() )
                                     )
                                     .build()
                     )
@@ -295,7 +295,7 @@ public class BootstrapData implements CommandLineRunner {
                     .name("member12")
                     .surname("member12")
                     .username("member12@gmail.com")
-                    .password(passwordEncoder.encode(PASSWORD_TEMPLATE))
+                    .password(passwordEncoder.encode(PASSWORD_TEMPLATE_SECOND))
                     .authorities(List.of(authorityRepository.findAuthorityByTeamRoles(TeamRoles.USER_REGULAR).get()))
                     .team(team4)
                     .mediaImage(
@@ -311,7 +311,7 @@ public class BootstrapData implements CommandLineRunner {
 
             regularUserRepository.saveAll(List.of(regularUser10,regularUser11,regularUser12));
 
-            String uuidTeam5 = teamLeaderRepository.findTeamByUsername("tlteam4@gmail.com");
+            String uuidTeam5 = teamLeaderRepository.findTeamByUsername("cesartl@gmail.com");
             Team team5 = teamRepository.findById(UUID.fromString(uuidTeam5)).get();
 
             RegularUser regularUser13 = RegularUser.builder()
@@ -503,10 +503,10 @@ public class BootstrapData implements CommandLineRunner {
 
             TeamLeader teamLeader4 = TeamLeader.builder()
                     .uuid(UUID.randomUUID())
-                    .name("tlteam4")
-                    .surname("tlteam4")
-                    .username("tlteam4@gmail.com")
-                    .password(passwordEncoder.encode(PASSWORD_TEMPLATE))
+                    .name("Matias")
+                    .surname("Snaiders")
+                    .username("matiass@gmail.com")
+                    .password(passwordEncoder.encode(PASSWORD_TEMPLATE_SECOND))
                     .authorities(List.of(authorityRepository.findAuthorityByTeamRoles(TeamRoles.TEAM_LEADER).get()))
                     .mediaImage(
                             MediaImage.builder()
@@ -521,11 +521,11 @@ public class BootstrapData implements CommandLineRunner {
 
             Team team4 = Team.builder()
                     .uuid(UUID.randomUUID())
-                    .name("team4")
+                    .name("UTN DEVS")
                     .teamLeader(teamLeader4)
-                    .descriptionProject("descripcion4")
+                    .descriptionProject("Equipo de desarrolladores utenianos")
                     .regularUsers(Collections.emptyList())
-                    .enterPrise(adminRepository.findByUsername("admin4@gmail.com").get().getEnterPrise())
+                    .enterPrise(adminRepository.findByUsername("gustavos@gmail.com").get().getEnterPrise())
                     .logo(
                             MediaImage.builder()
                                     .name("team4_image")
@@ -696,10 +696,10 @@ public class BootstrapData implements CommandLineRunner {
 
             Admin admin4 = Admin.builder()
                     .uuid(UUID.randomUUID())
-                    .name("admin4")
-                    .surname("admin4")
-                    .username("admin4@gmail.com")
-                    .password(passwordEncoder.encode(PASSWORD_TEMPLATE))
+                    .name("Gustavo")
+                    .surname("Santaolalla")
+                    .username("gustavos@gmail.com")
+                    .password(passwordEncoder.encode(PASSWORD_TEMPLATE_SECOND))
                     .authorities(List.of(authorityRepository.findAuthorityByTeamRoles(TeamRoles.ADMIN).get()))
                     .mediaImage(
                             MediaImage.builder()
@@ -714,7 +714,7 @@ public class BootstrapData implements CommandLineRunner {
 
             EnterPrise enterPrise4 = EnterPrise.builder()
                     .uuid(UUID.randomUUID())
-                    .name("EmpresaAdmin4")
+                    .name("UTN SOLUTIONS")
                     .team(Collections.emptyList())
                     .admin(admin4)
                     .logo(
