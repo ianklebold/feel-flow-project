@@ -61,7 +61,7 @@ public class BootstrapData implements CommandLineRunner {
     }
 
     private void loadMembers() throws IOException {
-        if(regularUserRepository.count() < 16){
+        if(regularUserRepository.count() < 15){
 
 
             String uuidTeam = teamLeaderRepository.findTeamByUsername("tlteam1@gmail.com");

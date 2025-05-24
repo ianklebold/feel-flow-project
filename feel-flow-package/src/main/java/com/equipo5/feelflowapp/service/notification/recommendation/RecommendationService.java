@@ -13,4 +13,5 @@ public interface RecommendationService {
     void sendRecommendationForNikoNiko(Survey survey);
     void sendRecommendationForKudos(KudosModule kudosModule);
     List<RecommendationDto> getRecommendations();
+    void sendRecommendation();
 }

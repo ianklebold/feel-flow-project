@@ -31,7 +31,7 @@ public class QuestionsConstantsTwelveSteps {
         "Disfrute",
         "Ejercicio",
         "Resiliencia",
-        "Alegria",
+        "Alegría",
         "Mindfulness",
         "Gratitud",
         "Servicial"

@@ -1,9 +1,13 @@
 package com.equipo5.feelflowapp.repository.module;
 
+import com.equipo5.feelflowapp.domain.Team;
+import com.equipo5.feelflowapp.domain.enumerations.modules.ModuleState;
 import com.equipo5.feelflowapp.domain.modules.twelvesteps.TwelveStepsModule;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+
+import java.util.List;
 
 public interface ModuleTwelveStepsRepository extends JpaRepository<TwelveStepsModule,Long> {
     @Query(value = """
@@ -13,4 +17,6 @@ public interface ModuleTwelveStepsRepository extends JpaRepository<TwelveStepsMo
             """,
             nativeQuery = true)
     String findTeamByUsername(@Param("username") String username);
+
+    List<TwelveStepsModule> findAllByModuleStateAndTeam(ModuleState state, Team team);
 }

@@ -4,16 +4,22 @@ import com.equipo5.feelflowapp.constants.module.kudos.SuggestionsConstantsKudos;
 import com.equipo5.feelflowapp.constants.module.nikoniko.ResponseConstantsNikoNiko;
 import com.equipo5.feelflowapp.constants.module.nikoniko.SuggestionsConstantsNikoNiko;
 import com.equipo5.feelflowapp.constants.module.twelvesteps.QuestionsConstantsTwelveSteps;
+import com.equipo5.feelflowapp.domain.enumerations.modules.ModuleState;
 import com.equipo5.feelflowapp.domain.enumerations.notification.NotificationTypeEnum;
 import com.equipo5.feelflowapp.domain.modules.Activity;
 import com.equipo5.feelflowapp.domain.modules.Survey;
 import com.equipo5.feelflowapp.domain.modules.kudos.KudosModule;
+import com.equipo5.feelflowapp.domain.modules.nikoniko.NikoNikoModule;
+import com.equipo5.feelflowapp.domain.modules.twelvesteps.TwelveStepsModule;
 import com.equipo5.feelflowapp.domain.notifications.Recommendation;
 import com.equipo5.feelflowapp.domain.notifications.Suggestion;
 import com.equipo5.feelflowapp.domain.users.RegularUser;
 import com.equipo5.feelflowapp.domain.users.TeamLeader;
 import com.equipo5.feelflowapp.dto.notifications.RecommendationDto;
 import com.equipo5.feelflowapp.mappers.notifications.RecommendationMapper;
+import com.equipo5.feelflowapp.repository.module.KudosRepository;
+import com.equipo5.feelflowapp.repository.module.ModuleNikoNikoRepository;
+import com.equipo5.feelflowapp.repository.module.ModuleTwelveStepsRepository;
 import com.equipo5.feelflowapp.repository.notifications.recommendation.RecommendationRepository;
 import com.equipo5.feelflowapp.repository.notifications.recommendation.SuggestionRepository;
 import com.equipo5.feelflowapp.repository.users.teamleader.TeamLeaderRepository;
@@ -43,11 +49,17 @@ public class RecommendationServiceImpl implements RecommendationService {
 
     private final RecommendationMapper recommendationMapper;
 
+    private final KudosRepository kudosRepository;
+
+    private final ModuleTwelveStepsRepository moduleTwelveStepsRepository;
+
+    private final ModuleNikoNikoRepository nikoNikoRepository;
+
     @Override
     public void sendRecommendationForTwelveSteps(Survey survey) {
 
         List<Activity> activities = survey.getActivities();
-        String user = survey.getRegularUser().getUsername() + " " + survey.getRegularUser().getSurname();
+        String user = survey.getRegularUser().getName() + " " + survey.getRegularUser().getSurname();
         String teamName = survey.getRegularUser().getTeam().getName();
 
         for (int i = 0; i < QuestionsConstantsTwelveSteps.QUESTIONS_POOL_CLASSIC_TWELVE_STEPS.size(); i++) {
@@ -132,30 +144,30 @@ public class RecommendationServiceImpl implements RecommendationService {
         List<RegularUser> usersAwardedKudos = kudosService.usersAwardedByModule(kudosModule);
         List<RegularUser> usersWithoutKudos = findUsersNotAwarded( regularUsers , usersAwardedKudos );
 
-        List<Suggestion> suggestions = suggestionRepository.saveAll(
-                SuggestionsConstantsKudos.SUGGESTIONS
-                .stream()
-                .map( suggestion -> Suggestion.builder().description(suggestion).build() )
-                .toList()
-        );
+        if(!usersWithoutKudos.isEmpty()){
+            List<Suggestion> suggestions = suggestionRepository.saveAll(
+                    SuggestionsConstantsKudos.SUGGESTIONS
+                            .stream()
+                            .map( suggestion -> Suggestion.builder().description(suggestion).build() )
+                            .toList()
+            );
 
 
-        usersWithoutKudos.forEach(
-                user -> recommendationRepository.save(
-                        Recommendation.builder()
-                                .title("Recomendacion Kudos")
-                                .body(SuggestionsConstantsKudos.RECOMMENDATION.replace("@user", user.getName() + " " + user.getSurname()))
-                                .createdAt(LocalDateTime.now())
-                                .wasRead(false)
-                                .wasSeen(false)
-                                .suggestion(suggestions)
-                                .notificationTypeEnum(NotificationTypeEnum.SUGGESTIONS)
-                                .notificationOwner(teamLeader)
-                                .build()
-                )
-        );
-
-
+            usersWithoutKudos.forEach(
+                    user -> recommendationRepository.save(
+                            Recommendation.builder()
+                                    .title("Recomendacion Kudos")
+                                    .body(SuggestionsConstantsKudos.RECOMMENDATION.replace("@user", user.getName() + " " + user.getSurname()))
+                                    .createdAt(LocalDateTime.now())
+                                    .wasRead(false)
+                                    .wasSeen(false)
+                                    .suggestion(suggestions)
+                                    .notificationTypeEnum(NotificationTypeEnum.SUGGESTIONS)
+                                    .notificationOwner(teamLeader)
+                                    .build()
+                    )
+            );
+        }
     }
 
     @Override
@@ -175,6 +187,29 @@ public class RecommendationServiceImpl implements RecommendationService {
                     .toList();
         }
         return List.of();
+    }
+
+    @Override
+    public void sendRecommendation() {
+        String currentUserName = this.userService.getUsernameByCurrentUser();
+        Optional<TeamLeader> teamLeader = this.teamLeaderRepository.findByUsername(currentUserName);
+
+        if(teamLeader.isPresent()){
+            List<TwelveStepsModule> twelveStepsModuleList = this.moduleTwelveStepsRepository.findAllByModuleStateAndTeam(ModuleState.FINISHED,teamLeader.get().getTeam());
+            List<NikoNikoModule> nikoNikoModuleList = this.nikoNikoRepository.findAllByModuleStateAndTeam(ModuleState.FINISHED, teamLeader.get().getTeam());
+            List<KudosModule> kudosModules = this.kudosRepository.findAllByModuleStateAndTeam(ModuleState.FINISHED, teamLeader.get().getTeam());
+
+
+//            twelveStepsModuleList.stream()
+//                    .flatMap( module -> module.getSurveys().stream() )
+//                    .forEach(this::sendRecommendationForTwelveSteps);
+
+//            nikoNikoModuleList.stream()
+//                    .flatMap( module -> module.getSurveys().stream() )
+//                    .forEach(this::sendRecommendationForNikoNiko);
+
+            kudosModules.forEach(this::sendRecommendationForKudos);
+        }
     }
 
     public List<RegularUser> findUsersNotAwarded(

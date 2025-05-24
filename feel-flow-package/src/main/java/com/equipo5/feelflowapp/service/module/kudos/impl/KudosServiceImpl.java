@@ -151,14 +151,15 @@ public class KudosServiceImpl implements KudosService {
         return kudosModule.getTableBadge().stream()
                 .flatMap(
                         tableBadge ->
-                                Stream.of(tableBadge.getMasterOfDetail(),
-                                        tableBadge.getBadgePositiveEnergy(),
-                                        tableBadge.getBadgeResolutorStar(),
-                                        tableBadge.getBadgeFriendHands()
-                                        )
+                                Stream.concat(
+                                        Stream.of(tableBadge.getMasterOfDetail(),
+                                                tableBadge.getBadgePositiveEnergy(),
+                                                tableBadge.getBadgeResolutorStar()
+                                        ),
+                                        tableBadge.getBadgeFriendHands().stream()
+                                )
                 )
                 .filter(Objects::nonNull)
-                .map(b -> (Badge) b)
                 .map(Badge::getBadgeOwner)
                 .collect(Collectors.collectingAndThen(
                         Collectors.toMap(
