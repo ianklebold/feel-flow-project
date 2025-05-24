@@ -45,6 +45,7 @@ public class BootstrapData implements CommandLineRunner {
     private final PasswordEncoder passwordEncoder;
 
     private static final  String PASSWORD_TEMPLATE = "RiverPlatecapo@123";
+    private static final  String PASSWORD_TEMPLATE_SECOND = "Proyectofinalfeelflow@123";
     @Override
     public void run(String... args) throws Exception {
         log.info("Corriendo datos");
@@ -60,7 +61,7 @@ public class BootstrapData implements CommandLineRunner {
     }
 
     private void loadMembers() throws IOException {
-        if(regularUserRepository.count() < 12){
+        if(regularUserRepository.count() < 16){
 
 
             String uuidTeam = teamLeaderRepository.findTeamByUsername("tlteam1@gmail.com");
@@ -309,11 +310,83 @@ public class BootstrapData implements CommandLineRunner {
                     .build();
 
             regularUserRepository.saveAll(List.of(regularUser10,regularUser11,regularUser12));
+
+            String uuidTeam5 = teamLeaderRepository.findTeamByUsername("tlteam4@gmail.com");
+            Team team5 = teamRepository.findById(UUID.fromString(uuidTeam5)).get();
+
+            RegularUser regularUser13 = RegularUser.builder()
+                    .uuid(UUID.randomUUID())
+                    .name("Graciela")
+                    .surname("Mendez")
+                    .username("graciela@gmail.com")
+                    .country("Argentina")
+                    .phoneNumber("36241234567")
+                    .description("Nueva en el equipo feel flow")
+                    .password(passwordEncoder.encode(PASSWORD_TEMPLATE_SECOND))
+                    .authorities(List.of(authorityRepository.findAuthorityByTeamRoles(TeamRoles.USER_REGULAR).get()))
+                    .team(team5)
+                    .mediaImage(
+                            MediaImage.builder()
+                                    .name("graciela_image")
+                                    .fileType("image/jpg")
+                                    .fileData(
+                                            convertToBase64( new ClassPathResource(("images/profile/regularuser/gracielam.jpg")).getInputStream() )
+                                    )
+                                    .build()
+                    )
+                    .build();
+
+            RegularUser regularUser14 = RegularUser.builder()
+                    .uuid(UUID.randomUUID())
+                    .name("Ian")
+                    .surname("Fernandez")
+                    .country("USA")
+                    .phoneNumber("36241234567")
+                    .description("Soy un hombre vencido, pero no me doy por vencido")
+                    .username("ianf@gmail.com")
+                    .password(passwordEncoder.encode(PASSWORD_TEMPLATE_SECOND))
+                    .authorities(List.of(authorityRepository.findAuthorityByTeamRoles(TeamRoles.USER_REGULAR).get()))
+                    .team(team5)
+                    .mediaImage(
+                            MediaImage.builder()
+                                    .name("ian_image")
+                                    .fileType("image/jpeg")
+                                    .fileData(
+                                            convertToBase64( new ClassPathResource(("images/profile/regularuser/ianf.jpg")).getInputStream() )
+                                    )
+                                    .build()
+                    )
+                    .build();
+
+            RegularUser regularUser15 = RegularUser.builder()
+                    .uuid(UUID.randomUUID())
+                    .name("Jorge")
+                    .surname("Menegaz")
+                    .username("jorgeh@gmail.com")
+                    .password(passwordEncoder.encode(PASSWORD_TEMPLATE_SECOND))
+                    .country("Argentina")
+                    .phoneNumber("36241234567")
+                    .description("Soy una persona curiosa.")
+                    .authorities(List.of(authorityRepository.findAuthorityByTeamRoles(TeamRoles.USER_REGULAR).get()))
+                    .team(team5)
+                    .mediaImage(
+                            MediaImage.builder()
+                                    .name("jorge_image")
+                                    .fileType("image/jpeg")
+                                    .fileData(
+                                            convertToBase64( new ClassPathResource(("images/profile/regularuser/jorgeh.jpg")).getInputStream() )
+                                    )
+                                    .build()
+                    )
+                    .build();
+
+            regularUserRepository.saveAll(List.of(regularUser13,regularUser14,regularUser15));
+
         }
     }
 
     private void loadTeamsAndTeamLeader() throws IOException {
-        if (teamLeaderRepository.count() < 4){
+        if (teamLeaderRepository.count() < 5){
             TeamLeader teamLeader1 = TeamLeader.builder()
                     .uuid(UUID.randomUUID())
                     .name("tlteam1")
@@ -465,11 +538,51 @@ public class BootstrapData implements CommandLineRunner {
                     .build();
 
             teamRepository.save(team4);
+
+            TeamLeader teamLeader5 = TeamLeader.builder()
+                    .uuid(UUID.randomUUID())
+                    .name("Cesar")
+                    .surname("Acuña")
+                    .username("cesartl@gmail.com")
+                    .password(passwordEncoder.encode(PASSWORD_TEMPLATE_SECOND))
+                    .authorities(List.of(authorityRepository.findAuthorityByTeamRoles(TeamRoles.TEAM_LEADER).get()))
+                    .mediaImage(
+                            MediaImage.builder()
+                                    .name("cesartl_image")
+                                    .fileType("image/jpg")
+                                    .fileData(
+                                            convertToBase64( new ClassPathResource(("images/profile/teamleader/cesartl.jpg")).getInputStream() )
+                                    )
+                                    .build()
+                    )
+                    .build();
+
+            Team team5 = Team.builder()
+                    .uuid(UUID.randomUUID())
+                    .name("Equipo Feel Flow")
+                    .teamLeader(teamLeader5)
+                    .descriptionProject("Este equipo es el mejor que jamas vi")
+                    .regularUsers(Collections.emptyList())
+                    .enterPrise(adminRepository.findByUsername("juanpablo@gmail.com").get().getEnterPrise())
+                    .logo(
+                            MediaImage.builder()
+                                    .name("team5_image")
+                                    .fileType("image/jpg")
+                                    .fileData(
+                                            convertToBase64( new ClassPathResource(("images/team/team5.jpg")).getInputStream() )
+                                    )
+                                    .build()
+                    )
+                    .build();
+
+            teamRepository.save(team5);
+
+
         }
     }
 
     private void loadAdminAndEnterprises() throws IOException {
-        if(adminRepository.count() < 4){
+        if(adminRepository.count() < 5){
             Admin admin1 = Admin.builder()
                     .uuid(UUID.randomUUID())
                     .name("admin1")
@@ -617,6 +730,44 @@ public class BootstrapData implements CommandLineRunner {
 
             admin4.setEnterPrise(enterPrise4);
             adminRepository.save(admin4);
+
+            Admin admin5 = Admin.builder()
+                    .uuid(UUID.randomUUID())
+                    .name("Juan Pablo")
+                    .surname("Zozaya")
+                    .username("juanpablo@gmail.com")
+                    .password(passwordEncoder.encode(PASSWORD_TEMPLATE_SECOND))
+                    .authorities(List.of(authorityRepository.findAuthorityByTeamRoles(TeamRoles.ADMIN).get()))
+                    .mediaImage(
+                            MediaImage.builder()
+                                    .name("juanpablo_image")
+                                    .fileType("image/jpg")
+                                    .fileData(
+                                            convertToBase64( new ClassPathResource(("images/profile/admin/juanpablo.jpg")).getInputStream() )
+                                    )
+                                    .build()
+                    )
+                    .build();
+
+            EnterPrise enterPrise5 = EnterPrise.builder()
+                    .uuid(UUID.randomUUID())
+                    .name("Equipo Feel Flow")
+                    .team(Collections.emptyList())
+                    .admin(admin5)
+                    .logo(
+                            MediaImage.builder()
+                                    .name("feelflow_image")
+                                    .fileType("image/jpg")
+                                    .fileData(
+                                            convertToBase64( new ClassPathResource(("images/enterprise/feelflow.jpg")).getInputStream() )
+                                    )
+                                    .build()
+                    )
+                    .build();
+
+            admin5.setEnterPrise(enterPrise5);
+            adminRepository.save(admin5);
+
         }
     }
 

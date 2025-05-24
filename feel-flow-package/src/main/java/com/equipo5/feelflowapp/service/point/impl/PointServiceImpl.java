@@ -73,7 +73,7 @@ public class PointServiceImpl implements PointService {
     @Override
     public double getTotalOfPointsPossibleTwelveSteps(List<Survey> surveys) {
 
-        long totalOfActivities = surveys.size();
+        long totalOfActivities = 12L * surveys.size();
         return  ( totalOfActivities * 5d ) ;
     }
 
