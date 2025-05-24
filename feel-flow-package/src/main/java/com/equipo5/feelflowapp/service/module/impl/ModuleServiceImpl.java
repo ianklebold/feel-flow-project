@@ -388,23 +388,37 @@ public class ModuleServiceImpl implements ModuleService {
 
     @Override
     public double getGeneralPercentOfHappiness(Team team) {
-
         double total = 0;
+        double totalModules = 0;
 
-        total = twelveStepsService.happinessByTwelveStepsModule(team) + nikoService.happinessByNikoNikoModule(team) + kudosService.happinessByKudosModule(team);
+        double totalTwelveSteps = twelveStepsService.happinessByTwelveStepsModule(team);
+        double totalNikoNikoModule = nikoService.happinessByNikoNikoModule(team);
+        double totalKudosModule = kudosService.happinessByKudosModule(team);
 
-        return total;
+        total = totalTwelveSteps + totalNikoNikoModule + totalKudosModule;
+        totalModules = countModule(totalTwelveSteps) + countModule(totalNikoNikoModule) + countModule(totalKudosModule);
+
+        return total / totalModules;
     }
 
     @Override
     public double getGeneralPercentOfHappiness(Team team, RegularUser regularUser) {
         double total = 0;
+        double totalModules = 0;
 
-        total = twelveStepsService.happinessByTwelveStepsModule(team, regularUser) +
-                nikoService.happinessByNikoNikoModule(team, regularUser) +
-                kudosService.happinessByKudosModule(team, regularUser);
+        double totalTwelveSteps = twelveStepsService.happinessByTwelveStepsModule(team, regularUser);
+        double totalNikoNikoModule = nikoService.happinessByNikoNikoModule(team, regularUser);
+        double totalKudosModule = kudosService.happinessByKudosModule(team, regularUser);
 
-        return total;
+        total = totalTwelveSteps + totalNikoNikoModule + totalKudosModule;
+
+        totalModules = countModule(totalTwelveSteps) + countModule(totalNikoNikoModule) + countModule(totalKudosModule);
+
+        return total / totalModules;
+    }
+
+    private double countModule(double module){
+        return (module > 0)? 1:0;
     }
 
     private double getPercentOfCompletedModules(List<SurveyModule> modulesTwelveSteps, int numberOfMembers){

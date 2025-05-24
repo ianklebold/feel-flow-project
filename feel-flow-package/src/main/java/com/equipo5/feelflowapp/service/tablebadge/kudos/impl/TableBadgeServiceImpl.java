@@ -98,10 +98,11 @@ public class TableBadgeServiceImpl implements TableBadgeService {
     }
 
     public boolean isAtLeastSentOneKudos(TableBadge tableBadge){
-        return tableBadge.getBadgePositiveEnergy().getBadgeOwner() != null
-                || tableBadge.getMasterOfDetail().getBadgeOwner() != null
-                || tableBadge.getBadgeResolutorStar().getBadgeOwner() != null
-                || tableBadge.getBadgeFriendHands().stream().anyMatch( kudos -> kudos.getBadgeOwner() != null );
+
+        return tableBadge.getBadgePositiveEnergy() != null
+                || tableBadge.getMasterOfDetail() != null
+                || tableBadge.getBadgeResolutorStar() != null
+                || !tableBadge.getBadgeFriendHands().isEmpty();
 
     }
 

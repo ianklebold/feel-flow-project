@@ -402,13 +402,17 @@ public class DashboardServiceImpl implements DashboardService {
         generalHappinessDto.setNameHappiness("Felicidad General");
         generalHappinessDto.setPercentHappiness(0);
 
-        teams.forEach(
-                team -> {
-                    kudosSentDto.setKudosQuantity( kudosSentDto.getKudosQuantity() +  kudosService.countOfKudosSent( team ) );
-                    generalHappinessDto.setPercentHappiness((int) (generalHappinessDto.getPercentHappiness() + moduleService.getGeneralPercentOfHappiness(team)) * 100);
-                }
-        );
+        teams.forEach(team -> {
+            kudosSentDto.setKudosQuantity(
+                    kudosSentDto.getKudosQuantity()
+                            + kudosService.countOfKudosSent(team)
+            );
 
+            double teamHappiness = moduleService.getGeneralPercentOfHappiness(team);
+            int previousPoints  = generalHappinessDto.getPercentHappiness();
+            int newPoints     = (int) (teamHappiness * 100);
+            generalHappinessDto.setPercentHappiness(previousPoints + newPoints);
+        });
 
         GeneralSummaryDto generalSummaryDto = new GeneralSummaryDto(
                 this.kudosService.getEmotionalStateByKudosHappiness( (double) generalHappinessDto.getPercentHappiness() / 100 ),

@@ -164,7 +164,7 @@ public class TwelveStepsImpl implements TwelveStepsService {
 
             ).reduce(0d,Double::sum);
 
-            return ( points / team.getRegularUsers().size() ) / totalOfPoints;
+            return ( points ) / totalOfPoints;
 
         }
         return 0;
@@ -187,7 +187,7 @@ public class TwelveStepsImpl implements TwelveStepsService {
                     })
                     .reduce(0d,Double::sum);
 
-            return ( points / team.getRegularUsers().size() ) / totalOfPoints;
+            return ( points  ) / totalOfPoints;
 
         }
         return 0;

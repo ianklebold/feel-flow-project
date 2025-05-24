@@ -7,6 +7,7 @@ import com.equipo5.feelflowapp.domain.enumerations.modules.ModuleNames;
 import com.equipo5.feelflowapp.domain.enumerations.modules.ModuleState;
 import com.equipo5.feelflowapp.domain.modules.Activity;
 import com.equipo5.feelflowapp.domain.modules.Module;
+import com.equipo5.feelflowapp.domain.modules.Survey;
 import com.equipo5.feelflowapp.domain.modules.SurveyModule;
 import com.equipo5.feelflowapp.domain.modules.nikoniko.NikoNikoModule;
 import com.equipo5.feelflowapp.domain.users.RegularUser;
@@ -30,6 +31,7 @@ import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -163,7 +165,7 @@ public class NikoNikoServiceImpl implements NikoNikoService {
 
             ).reduce(0d,Double::sum);
 
-            return ( points / team.getRegularUsers().size() ) / totalOfPoints;
+            return ( points ) / totalOfPoints;
         }
 
         return points;
@@ -175,9 +177,10 @@ public class NikoNikoServiceImpl implements NikoNikoService {
         double points = 0d;
         if (!modules.isEmpty()){
             SurveyModule lastSurveyModule = (SurveyModule) modules.get(0);
-            double totalOfPoints = this.pointService.getTotalOfPointsPossibleNikoNiko(lastSurveyModule.getSurveys());
+            List<Survey> surveys = new ArrayList<>();
+            double totalOfPoints = this.pointService.getTotalOfPointsPossibleNikoNiko(lastSurveyModule.getSurveys(), regularUser);
 
-           lastSurveyModule.getSurveys()
+            points = lastSurveyModule.getSurveys()
                    .stream()
                    .filter( survey -> survey.getRegularUser().getUuid().equals( regularUser.getUuid()) )
                    .map( survey -> {

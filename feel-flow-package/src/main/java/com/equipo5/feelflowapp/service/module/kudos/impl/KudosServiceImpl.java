@@ -211,10 +211,7 @@ public class KudosServiceImpl implements KudosService {
 
     private int getCountOfKudosSent(List<TableBadgeAwardedDto> kudosSummaryData){
         return kudosSummaryData.stream()
-                .map( kudos -> kudos.getMaestroDetalleBadge().getCountAwarded() +
-                        kudos.getEnergiaPositivaBadge().getCountAwarded() +
-                        kudos.getManosAmigasBadge().getCountAwarded() +
-                        kudos.getResolutorEstrellaBadge().getCountAwarded()
+                .map(TableBadgeAwardedDto::getMaxCountOfBadgeAwarded
                 ).reduce(0, Integer::sum);
     }
 
@@ -232,7 +229,7 @@ public class KudosServiceImpl implements KudosService {
                 .filter( kudosSummary -> kudosSummary.getManosAmigasBadge() != null && kudosSummary.getManosAmigasBadge().getCountAwarded() > 0 )
                 .count();
 
-        return ( (double) countOfMembersWhoSentFriendHands / countOfMembers ) * 0.7 / ( (double) countOfKudosSent / countMaxOfKudosForSend) * 0.3;
+        return ( (double) countOfMembersWhoSentFriendHands / countOfMembers ) * 0.7 + ( (double) countOfKudosSent / countMaxOfKudosForSend) * 0.3;
     }
 
     @Override
@@ -247,11 +244,11 @@ public class KudosServiceImpl implements KudosService {
                 .orElse(null);
 
         if( kudosSummaryData != null ){
-            int wasKudosFriendHandsAwarded = ( kudosSummaryData.getManosAmigasBadge().getCountAwarded() > 0 ) ? 1 : 0;
+            int wasKudosFriendHandsAwarded = ( kudosSummaryData.getManosAmigasBadge() != null && kudosSummaryData.getManosAmigasBadge().getCountAwarded() > 0 ) ? 1 : 0;
             long countMaxOfKudosForSend = (long) (3 + (team.getRegularUsers().size() - 1));
             long countMaxKudosSentToUser = kudosSummaryData.getMaxCountOfBadgeAwarded();
 
-            return ( wasKudosFriendHandsAwarded * 0.7 ) + ( (double) countMaxOfKudosForSend / countMaxKudosSentToUser * 0.3 );
+            return ( wasKudosFriendHandsAwarded * 0.7 ) + ( (double) countMaxKudosSentToUser  / countMaxOfKudosForSend  * 0.3 );
 
         }
 
