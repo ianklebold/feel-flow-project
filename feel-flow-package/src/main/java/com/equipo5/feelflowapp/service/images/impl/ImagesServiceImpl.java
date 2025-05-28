@@ -16,6 +16,7 @@ import com.equipo5.feelflowapp.service.enterprise.EnterpriseService;
 import com.equipo5.feelflowapp.service.images.ImagesService;
 import com.equipo5.feelflowapp.service.users.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -71,8 +72,13 @@ public class ImagesServiceImpl implements ImagesService {
 
     @Override
     public ImagesDto getImageOfTheCurrentEnterprise() {
+        Optional<? extends GrantedAuthority> role = userService.getRoleByCurrentUser();
 
-        Optional<EnterPrise> enterprise = enterpriseService.getEnterpriseByCurrentUser();
+        if (role.isEmpty()) {
+            return null;
+        }
+
+        Optional<EnterPrise> enterprise = enterpriseService.getEnterpriseByCurrentUser(role.get());
 
         if (enterprise.isPresent()) {
 
