@@ -74,11 +74,11 @@ public class TableBadgeServiceImpl implements TableBadgeService {
         }
 
         if( BadgeName.MAESTRO_DEL_DETALLE.equals(badgeName)  ){
-            return tableBadge.getBadgePositiveEnergy() == null;
+            return tableBadge.getMasterOfDetail() == null;
         }
 
         if( BadgeName.RESOLUTOR_ESTRELLA.equals(badgeName)  ){
-            return tableBadge.getBadgePositiveEnergy() == null;
+            return tableBadge.getBadgeResolutorStar() == null;
         }
 
         if( BadgeName.MANOS_AMIGAS.equals(badgeName)  ){

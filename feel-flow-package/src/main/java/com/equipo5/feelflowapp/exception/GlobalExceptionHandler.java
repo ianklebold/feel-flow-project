@@ -1,6 +1,7 @@
 package com.equipo5.feelflowapp.exception;
 
 import com.equipo5.feelflowapp.dto.response.ErrorResponseDto;
+import com.equipo5.feelflowapp.exception.badrequest.badge.BadgeIsNotPossibleAssignException;
 import com.equipo5.feelflowapp.exception.badrequest.invitation.InvitationException;
 import com.equipo5.feelflowapp.exception.badrequest.module.ModuleException;
 import com.equipo5.feelflowapp.exception.badrequest.user.UserException;
@@ -30,6 +31,17 @@ public class GlobalExceptionHandler{
 
         return ResponseEntity.badRequest().body(errorList);
     }
+
+
+    @ExceptionHandler(BadgeIsNotPossibleAssignException.class)
+    public ResponseEntity<ErrorResponseDto> handleBadgeIsNotPossibleAssignException(BadgeIsNotPossibleAssignException exception, WebRequest webRequest){
+
+        ErrorResponseDto errorResponseDto = new ErrorResponseDto(exception,webRequest.getDescription(false),HttpStatus.BAD_REQUEST);
+
+        return new ResponseEntity<>(errorResponseDto,HttpStatus.BAD_REQUEST);
+    }
+
+
 
     @ExceptionHandler(NotFoundException.class)
     public ResponseEntity<ErrorResponseDto> handleGlobalNotFoundException(NotFoundException exception, WebRequest webRequest){
