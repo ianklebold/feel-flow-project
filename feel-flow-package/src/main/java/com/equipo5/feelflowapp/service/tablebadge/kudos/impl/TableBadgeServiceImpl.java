@@ -182,6 +182,7 @@ public class TableBadgeServiceImpl implements TableBadgeService {
                         .map(regularUser ->
                                 TableBadgeAwardedDto.builder()
                                         .idUser(regularUser.getUuid())
+                                        .name(regularUser.getName() + " " + regularUser.getSurname())
                                         .username(regularUser.getUsername())
                                         .build()
                         )

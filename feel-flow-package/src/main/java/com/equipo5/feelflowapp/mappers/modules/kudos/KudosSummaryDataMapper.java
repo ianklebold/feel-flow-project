@@ -11,7 +11,7 @@ import org.mapstruct.Named;
 @Mapper
 public interface KudosSummaryDataMapper {
 
-    @Mapping(source = "username", target = "username")
+    @Mapping(source = "name", target = "name")
     @Mapping(source = "manosAmigasBadge", target = "highlight", qualifiedByName = "setHighLightDependsCountOfManosAmigasBadge")
     KudosSummaryData tableBadgeAwardedDtoToKudosSummaryData(TableBadgeAwardedDto tableBadgeAwardedDto);
 

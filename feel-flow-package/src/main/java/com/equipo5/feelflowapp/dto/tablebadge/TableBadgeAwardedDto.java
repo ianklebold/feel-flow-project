@@ -16,6 +16,7 @@ import java.util.UUID;
 @Builder
 public class TableBadgeAwardedDto {
     private UUID idUser;
+    private String name;
     private String username;
     private CountBadgeAwardedDto manosAmigasBadge;
     private CountBadgeAwardedDto resolutorEstrellaBadge;

@@ -13,6 +13,7 @@ import lombok.*;
 @Getter
 @Builder
 public class KudosSummaryData{
+    private String name;
     private String username;
     private int cantBadges;
     private boolean highlight;
