@@ -200,13 +200,13 @@ public class RecommendationServiceImpl implements RecommendationService {
             List<KudosModule> kudosModules = this.kudosRepository.findAllByModuleStateAndTeam(ModuleState.FINISHED, teamLeader.get().getTeam());
 
 
-//            twelveStepsModuleList.stream()
-//                    .flatMap( module -> module.getSurveys().stream() )
-//                    .forEach(this::sendRecommendationForTwelveSteps);
+            twelveStepsModuleList.stream()
+                    .flatMap( module -> module.getSurveys().stream() )
+                    .forEach(this::sendRecommendationForTwelveSteps);
 
-//            nikoNikoModuleList.stream()
-//                    .flatMap( module -> module.getSurveys().stream() )
-//                    .forEach(this::sendRecommendationForNikoNiko);
+            nikoNikoModuleList.stream()
+                    .flatMap( module -> module.getSurveys().stream() )
+                    .forEach(this::sendRecommendationForNikoNiko);
 
             kudosModules.forEach(this::sendRecommendationForKudos);
         }
