@@ -104,20 +104,20 @@ SET badge_resolutor_star_id = @b3
 WHERE table_badge_owner_regularuser_persona = (SELECT uuid FROM user_model WHERE username = 'melinat@gmail.com')
   AND kudos_module_kudosmodule_module      = @modA;
 
---    member12@gmail.com NO recibe ningún badge en este módulo
+--    renaildo@gmail.com NO recibe ningún badge en este módulo
 
 -- --------------------------
 -- MÓDULO 35 (ID = @modB)
 -- --------------------------
--- 1) melinat@gmail.com otorga a member12@gmail.com:
+-- 1) melinat@gmail.com otorga a renaildo@gmail.com:
 --    • ENERGIA_POSITIVA (2)
 INSERT INTO badge (awarded_date, badge_name, badge_owner_regularuser_persona)
-VALUES ('2025-11-30', 2, (SELECT uuid FROM user_model WHERE username = 'member12@gmail.com'));
+VALUES ('2025-11-30', 2, (SELECT uuid FROM user_model WHERE username = 'renaildo@gmail.com'));
 SET @b4 = LAST_INSERT_ID();
 
 --    • RESOLUTOR_ESTRELLA (1)
 INSERT INTO badge (awarded_date, badge_name, badge_owner_regularuser_persona)
-VALUES ('2025-11-30', 1, (SELECT uuid FROM user_model WHERE username = 'member12@gmail.com'));
+VALUES ('2025-11-30', 1, (SELECT uuid FROM user_model WHERE username = 'renaildo@gmail.com'));
 SET @b5 = LAST_INSERT_ID();
 
 -- Actualizo el tablero de melinat con ambos badges
@@ -129,7 +129,7 @@ WHERE table_badge_owner_regularuser_persona = (SELECT uuid FROM user_model WHERE
 
 --    • MANOS_AMIGAS (0)
 INSERT INTO badge (awarded_date, badge_name, badge_owner_regularuser_persona)
-VALUES ('2025-11-30', 0, (SELECT uuid FROM user_model WHERE username = 'member12@gmail.com'));
+VALUES ('2025-11-30', 0, (SELECT uuid FROM user_model WHERE username = 'renaildo@gmail.com'));
 SET @bf2 = LAST_INSERT_ID();
 INSERT INTO table_badge_badge_friend_hands (table_badge_id, badge_friend_hands_id)
 VALUES (
@@ -139,14 +139,14 @@ VALUES (
   @bf2
 );
 
--- 2) member12@gmail.com otorga MAESTRO_DEL_DETALLE (3) a melinat@gmail.com
+-- 2) renaildo@gmail.com otorga MAESTRO_DEL_DETALLE (3) a melinat@gmail.com
 INSERT INTO badge (awarded_date, badge_name, badge_owner_regularuser_persona)
 VALUES ('2025-11-30', 3, (SELECT uuid FROM user_model WHERE username = 'melinat@gmail.com'));
 SET @b6 = LAST_INSERT_ID();
 
 UPDATE table_badge
 SET master_of_detail_id = @b6
-WHERE table_badge_owner_regularuser_persona = (SELECT uuid FROM user_model WHERE username = 'member12@gmail.com')
+WHERE table_badge_owner_regularuser_persona = (SELECT uuid FROM user_model WHERE username = 'renaildo@gmail.com')
   AND kudos_module_kudosmodule_module      = @modB;
 
 --    facub@gmail.com NO recibe ningún badge en este módulo

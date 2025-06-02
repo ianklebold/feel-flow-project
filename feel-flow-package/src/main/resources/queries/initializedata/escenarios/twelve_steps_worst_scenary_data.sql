@@ -59,7 +59,7 @@ VALUES
     @survey1_base + 2,
     DATE(@c1_close),
     'FINISHED',
-    (SELECT uuid FROM user_model WHERE username = 'member12@gmail.com'),
+    (SELECT uuid FROM user_model WHERE username = 'renaildo@gmail.com'),
     @mod1
   );
 
@@ -84,7 +84,7 @@ VALUES
     @survey2_base + 2,
     DATE(@c2_close),
     'FINISHED',
-    (SELECT uuid FROM user_model WHERE username = 'member12@gmail.com'),
+    (SELECT uuid FROM user_model WHERE username = 'renaildo@gmail.com'),
     @mod2
   );
 
