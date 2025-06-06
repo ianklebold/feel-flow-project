@@ -104,7 +104,7 @@ public class PointServiceImpl implements PointService {
 
     private double getPointBy12TwelveStepsSurvey(Activity activity){
 
-        if (!activity.getAnswer().isEmpty()) {
+        if (activity.getAnswer() != null && !activity.getAnswer().isEmpty()) {
             return switch (activity.getAnswer().substring(0,2)) {
                 case ResponseQuestionsConstants.RESPONSE_OPTION_ONE -> 5d;
                 case ResponseQuestionsConstants.RESPONSE_OPTION_TWO -> 4d;
